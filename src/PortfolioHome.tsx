@@ -93,13 +93,13 @@ export default function PortfolioHome() {
           {/* Right column: thumbnails / highlights */}
           <aside className="lg:col-span-1 flex flex-row lg:flex-col gap-3 sm:gap-4 overflow-x-auto lg:overflow-x-visible scrollbar-hide">
             <figure className="flex-shrink-0 w-48 sm:w-56 lg:w-full overflow-hidden rounded-lg border border-theme-accent dark:border-theme-accent-dark shadow-sm">
-              <img loading="lazy" decoding="async" src="/car-art.jpg" alt="Car Art" className="w-full h-32 sm:h-44 object-cover" />
+              <img loading="lazy" decoding="async" src="/assets/car-art.jpg" alt="Car Art" className="w-full h-32 sm:h-44 object-cover" />
             </figure>
             <figure className="flex-shrink-0 w-48 sm:w-56 lg:w-full overflow-hidden rounded-lg border border-theme-accent dark:border-theme-accent-dark shadow-sm">
-              <img loading="lazy" decoding="async" src="/love2d_music_player.png" alt="Music Player" className="w-full h-32 sm:h-44 object-cover" />
+              <img loading="lazy" decoding="async" src="/assets/love2d_music_player.png" alt="Music Player" className="w-full h-32 sm:h-44 object-cover" />
             </figure>
             <figure className="flex-shrink-0 w-48 sm:w-56 lg:w-full overflow-hidden rounded-lg border border-theme-accent dark:border-theme-accent-dark shadow-sm">
-              <img loading="lazy" decoding="async" src="/comic_book_reader_sfml.png" alt="Comic Reader" className="w-full h-32 sm:h-44 object-cover" />
+              <img loading="lazy" decoding="async" src="/assets/comic_book_reader_sfml.png" alt="Comic Reader" className="w-full h-32 sm:h-44 object-cover" />
             </figure>
           </aside>
         </div>

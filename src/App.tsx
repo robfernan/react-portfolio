@@ -6,7 +6,6 @@ import PortfolioHome from './PortfolioHome';
 import Projects from './projects';
 import Art from './Art';
 import Streaming from './Streaming';
-import Blog from './Blog';
 import AviationProApp from './aviationpro/AviationProApp';
 import Footer from './Footer';
 import BackToTop from './components/ui/BackToTop';
@@ -45,12 +44,11 @@ function AppWithDynamicName() {
 
 			const toggleDarkMode = () => setDarkMode(dm => !dm);
 
-				// Theme switching logic (minimal + two subtle alternatives)
+				// Theme switching logic
 				const themes = [
 					{ key: 'minimal', icon: 'fa-circle', label: 'Minimal' },
-					{ key: 'white', icon: 'fa-circle-notch', label: 'White' },
-					{ key: 'muted', icon: 'fa-adjust', label: 'Muted' },
-					{ key: 'green', icon: 'fa-leaf', label: 'Green' },
+					{ key: 'slate', icon: 'fa-square', label: 'Slate' },
+					{ key: '90s', icon: 'fa-compact-disc', label: '90s' },
 				];
 
 				const [theme, setTheme] = React.useState(() => {
@@ -86,7 +84,7 @@ function AppWithDynamicName() {
 										<Link to="/art" className="text-theme-secondary dark:text-theme-secondary-dark hover:underline">Art</Link>
 										<Link to="/aviationpro" className="text-theme-secondary dark:text-theme-secondary-dark hover:underline">Aviation</Link>
 										<Link to="/streaming" className="text-theme-secondary dark:text-theme-secondary-dark hover:underline">Streaming</Link>
-										<Link to="/blog" className="text-theme-secondary dark:text-theme-secondary-dark hover:underline">Blog</Link>
+										<a href="https://robertfernandez1.wordpress.com/" target="_blank" rel="noopener noreferrer" className="text-theme-secondary dark:text-theme-secondary-dark hover:underline">Blog</a>
 									</div>
 
 									{/* Theme Controls */}
@@ -162,13 +160,15 @@ function AppWithDynamicName() {
 										>
 											Streaming
 										</Link>
-										<Link 
-											to="/blog" 
+										<a
+											href="https://robertfernandez1.wordpress.com/"
+											target="_blank"
+											rel="noopener noreferrer"
 											className="block py-2 text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-accent dark:hover:text-theme-accent-dark"
 											onClick={() => setMobileMenuOpen(false)}
 										>
 											Blog
-										</Link>
+										</a>
 										
 										{/* Mobile Theme Controls */}
 										<div className="pt-4 border-t border-theme-accent/20 dark:border-theme-accent-dark/20">
@@ -211,7 +211,6 @@ function AppWithDynamicName() {
 									<Route path="/art" element={<Art />} />
 									<Route path="/aviationpro/*" element={<AviationProApp darkMode={darkMode} toggleDarkMode={toggleDarkMode} />} />
 									<Route path="/streaming" element={<Streaming />} />
-									<Route path="/blog" element={<Blog />} />
 								</Routes>
 							</main>
 							<Footer theme={theme} />

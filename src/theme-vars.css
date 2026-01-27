@@ -1,4 +1,4 @@
-/* Minimal Theme */
+/* Minimal Theme - Professional (Default) */
 .theme-minimal {
   --color-background: #F2E9E4;
   --color-background-dark: #22223B;
@@ -18,67 +18,67 @@
   --color-action-dark: #C9ADA7;
 }
 
-/* Clean White Theme - minimalist but brighter */
-.theme-white {
-  --color-background: #FFFFFF;
-  --color-background-dark: #0f1720; /* used in dark mode */
-  --color-header: #f8f8f8;
-  --color-header-dark: #0b1220;
-  --color-footer: #f8f8f8;
-  --color-footer-dark: #0b1220;
-  --color-primary: #0f1720;
-  --color-primary-dark: #f8f8f8;
-  --color-secondary: #6b7280;
-  --color-secondary-dark: #9ca3af;
-  --color-accent: #374151;
-  --color-accent-dark: #d1d5db;
+/* Slate Theme - Modern & Professional */
+.theme-slate {
+  --color-background: #f5f5f5;
+  --color-background-dark: #0f172a;
+  --color-header: #e8e8e8;
+  --color-header-dark: #1e293b;
+  --color-footer: #e8e8e8;
+  --color-footer-dark: #1e293b;
+  --color-primary: #1a1a1a;
+  --color-primary-dark: #f8fafc;
+  --color-secondary: #4b5563;
+  --color-secondary-dark: #cbd5e1;
+  --color-accent: #c2410c;
+  --color-accent-dark: #f97316;
   --color-card: #ffffff;
-  --color-card-dark: #0f1720;
-  --color-action: #374151;
-  --color-action-dark: #9ca3af;
+  --color-card-dark: #1e293b;
+  --color-action: #c2410c;
+  --color-action-dark: #f97316;
 }
 
-/* Muted Charcoal Theme - low-contrast, minimalist alternative */
-.theme-muted {
-  --color-background: #f5f5f6;
-  --color-background-dark: #0f1720;
-  --color-header: #ececed;
-  --color-header-dark: #0b1220;
-  --color-footer: #ececed;
-  --color-footer-dark: #0b1220;
-  --color-primary: #111827;
-  --color-primary-dark: #e6e7e9;
-  --color-secondary: #6b6f76;
-  --color-secondary-dark: #9aa0a6;
-  --color-accent: #4b5563;
-  --color-accent-dark: #d1d5db;
+/* Midnight Theme - Deep Blue with Light Variant */
+.theme-midnight {
+  --color-background: #f8f9fa;
+  --color-background-dark: #0f172a;
+  --color-header: #e8ecf1;
+  --color-header-dark: #1e293b;
+  --color-footer: #e8ecf1;
+  --color-footer-dark: #1e293b;
+  --color-primary: #1e293b;
+  --color-primary-dark: #e2e8f0;
+  --color-secondary: #475569;
+  --color-secondary-dark: #94a3b8;
+  --color-accent: #0ea5e9;
+  --color-accent-dark: #38bdf8;
   --color-card: #ffffff;
-  --color-card-dark: #111827;
-  --color-action: #374151;
-  --color-action-dark: #9ca3af;
+  --color-card-dark: #1e293b;
+  --color-action: #0ea5e9;
+  --color-action-dark: #38bdf8;
 }
 
-/* Light Green theme with dark green contrast for dark mode */
-.theme-green {
-  --color-background: #f2fbf1; /* very light green */
-  --color-background-dark: #072014; /* deep dark green for dark mode */
-  --color-header: #e8f6e9; /* slightly darker than background for header/footer */
-  --color-header-dark: #042012; /* dark header contrast */
-  --color-footer: #e8f6e9;
-  --color-footer-dark: #042012;
-  --color-primary: #0b3d2e; /* leaf-green text */
-  --color-primary-dark: #dff3e9;
-  --color-secondary: #2f6b53;
-  --color-secondary-dark: #9ccfb8;
-  --color-accent: #3b8f66;
-  --color-accent-dark: #bfe9cf;
-  --color-card: #ffffff;
-  --color-card-dark: #08231a;
-  --color-action: #2f6b53;
-  --color-action-dark: #9ccfb8;
-}
 
-/* Scoped mappings for AviationPro so its utility classes follow the active theme variables */
+
+/* 90s Theme - Bold, Chunky, Nostalgic */
+.theme-90s {
+  --color-background: #e8d5b7;
+  --color-background-dark: #2a1f1f;
+  --color-header: #c9956f;
+  --color-header-dark: #3d2817;
+  --color-footer: #c9956f;
+  --color-footer-dark: #3d2817;
+  --color-primary: #3d2817;
+  --color-primary-dark: #e8d5b7;
+  --color-secondary: #6b4423;
+  --color-secondary-dark: #d4a574;
+  --color-accent: #8b5a3c;
+  --color-accent-dark: #d4a574;
+  --color-card: #f5ede0;
+  --color-card-dark: #3d2817;
+  --color-action: #6b4423;
+  --color-action-dark: #d4a574;
+}
 .aviation-scope {
   /* panel backgrounds */
   --ap-bg-panel: var(--color-card);
