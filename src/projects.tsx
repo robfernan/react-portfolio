@@ -75,7 +75,7 @@ const projectGroups: ProjectGroup[] = [
         description: 'Cross-platform XMB launcher with animated wave effects and dynamic theming. Single codebase deployed to web browsers, desktop (NW.js), and native Android (Capacitor).',
         impact: 'Web • Desktop • Mobile — One codebase',
         youtube: 'https://youtu.be/fo8T0u4NwW8?si=zUnyPA0dVR7eGI4L',
-        image: '/assets/projects/home_page_xmb_launcher.png'
+        image: '/assets/projects/xmbwavemenu.png'
       },
       {
         title: 'Restaurant Website',
@@ -93,7 +93,7 @@ const projectGroups: ProjectGroup[] = [
         impact: 'This site • 4 themes • Responsive design',
         github: 'https://github.com/robfernan/react-typescript-tailwindcss-portfolio',
         link: 'https://robertfernandez.dev',
-        image: '/assets/love2d_music_player.png'
+        image: '/assets/projects/personalportfolioreact.png'
       }
     ]
   },
@@ -108,7 +108,7 @@ const projectGroups: ProjectGroup[] = [
         description: 'Fully functional comic reader with page navigation, zoom, and drag support. Demonstrates advanced graphics programming, UI/UX design, and file management in C++.',
         impact: 'Desktop application • Advanced graphics',
         github: 'https://github.com/robfernan/Comic_Reader',
-        image: '/assets/comic_book_reader_sfml.png'
+        image: '/assets/projects/comicreader_sfml.png'
       },
       {
         title: 'Music Player (Vinyl/Cassette/MiniDisc)',
@@ -155,7 +155,7 @@ const projectGroups: ProjectGroup[] = [
         description: 'Modern IDE with dual implementations. Building high-performance version with Rust + GPUI (from Zed Editor) and cross-platform version with Go + Wails. A fresh take on code editors for 2026.',
         impact: 'Dual implementations • Next-gen IDE',
         github: 'https://github.com/robfernan/NeroScript',
-        image: '/assets/music_player_love2d.png'
+        image: '/assets/projects/music_player_love2d.png'
       }
     ]
   }

@@ -2,12 +2,28 @@
 
 ## 📸 Screenshots
 
+
+<b>Note:</b> The screenshots below are for the <b>Dark Minimal</b> theme. See more theme previews further down.
+
 | Home Page | Projects | Aviation | Art | Streaming |
 |-----------|----------|----------|-----|-----------|
-| ![Home](public/homepagescreenshot.png) | ![Projects](public/projectscreenshot.png) | ![Aviation](public/aviationscreenshot.png) | ![Art](public/dark90screenshot.png) | ![Streaming](public/streamingscreenshot.png) |
+| ![Home](public/screenshots/homepagescreenshot.png) | ![Projects](public/screenshots/projectscreenshot.png) | ![Aviation](public/screenshots/aviationscreenshot.png) | ![Art](public/screenshots/artscreenshot.png) | ![Streaming](public/screenshots/streamingscreenshot.png) |
 
 Other themes:  
-![Light Minimal](public/lightminimalscreenshot.png) ![Light 90s](public/light90screenshot.png) ![Light Slate](public/lightslatescreenshot.png) ![Dark 90s](public/dark90screenshot.png) ![Dark Slate](public/darkslate.png)
+
+<div align="center">
+<b>Theme Previews:</b><br>
+Light Minimal<br>
+<img src="public/screenshots/lightminimalscreenshot.png" width="200" alt="Light Minimal" />
+<br>Light 90s<br>
+<img src="public/screenshots/light90screenshot.png" width="200" alt="Light 90s" />
+<br>Light Slate<br>
+<img src="public/screenshots/lightslatescreenshot.png" width="200" alt="Light Slate" />
+<br>Dark 90s<br>
+<img src="public/screenshots/dark90screenshot.png" width="200" alt="Dark 90s" />
+<br>Dark Slate<br>
+<img src="public/screenshots/darkslate.png" width="200" alt="Dark Slate" />
+</div>
 
 # ...existing code...
 # Personal Portfolio Website - React/TypeScript/Tailwind CSS
