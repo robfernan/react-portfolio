@@ -1,5 +1,17 @@
 # Personal Portfolio Website - React/TypeScript/Tailwind CSS
 
+## 📸 Screenshots
+
+| Home Page | Projects | Aviation | Art | Streaming |
+|-----------|----------|----------|-----|-----------|
+| ![Home](public/homepagescreenshot.png) | ![Projects](public/projectscreenshot.png) | ![Aviation](public/aviationscreenshot.png) | ![Art](public/dark90screenshot.png) | ![Streaming](public/streamingscreenshot.png) |
+
+Other themes:  
+![Light Minimal](public/lightminimalscreenshot.png) ![Light 90s](public/light90screenshot.png) ![Light Slate](public/lightslatescreenshot.png) ![Dark 90s](public/dark90screenshot.png) ![Dark Slate](public/darkslate.png)
+
+# ...existing code...
+# Personal Portfolio Website - React/TypeScript/Tailwind CSS
+
 > **Modern Framework Edition** - A comprehensive multi-page portfolio built with React, TypeScript, and Tailwind CSS, showcasing my journey as a developer, artist, pilot, and content creator.
 
 **Repository**: [React Portfolio](https://github.com/robfernan/react-portfolio)  

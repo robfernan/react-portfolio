@@ -29,7 +29,7 @@ export default function Footer(_: FooterProps) {
             </a>
           ))}
         </div>
-        <div className="text-theme-secondary dark:text-theme-secondary-dark text-sm">Robert Fernandez 2025</div>
+        <div className="text-theme-secondary dark:text-theme-secondary-dark text-sm">Robert Fernandez 2026</div>
       </div>
     </footer>
   );
