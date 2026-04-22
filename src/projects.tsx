@@ -50,7 +50,6 @@ const projectGroups: ProjectGroup[] = [
         tech: 'Android Watch Face Studio',
         status: 'Finished',
         description: 'Custom minimalist watch face designed for readability and low distraction. Demonstrates wearable UI/UX design principles and platform-specific optimization.',
-        impact: 'Shipped to production',
         image: '/assets/projects/watch_face_android.png'
       }
     ]
@@ -154,7 +153,6 @@ const projectGroups: ProjectGroup[] = [
         status: 'In Development',
         description: 'Lightning-fast IDE built with Rust and GPUI (the rendering engine behind Zed Editor). Focuses on performance and responsiveness with a modern, minimalist interface designed for developers who demand speed.',
         impact: 'Next-gen IDE • Sub-millisecond rendering',
-        github: 'https://github.com/robfernan/NeroScript',
         image: '/assets/projects/nerogpui.png'
       },
       {
@@ -163,7 +161,6 @@ const projectGroups: ProjectGroup[] = [
         status: 'In Development',
         description: 'Cross-platform IDE bringing the Nero experience to Windows, macOS, and Linux. Built with Go and Wails for native performance and seamless integration with your operating system while maintaining feature parity across platforms.',
         impact: 'Cross-platform • Native performance',
-        github: 'https://github.com/robfernan/NeroScript',
         image: '/assets/projects/nerowails.png'
       }
     ]
