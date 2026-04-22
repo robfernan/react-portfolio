@@ -104,17 +104,17 @@ The site showcases my diverse background across:
 ### 🏠 Home (`PortfolioHome.tsx`)
 - Interactive timeline of my journey (2012-2025)
 - Smooth scroll-triggered animations
-- Featured projects showcase
-- Skills breakdown by category
+- Featured projects showcase (AviationPro, Hopeless Catch)
+- Circular watch face image and video demo showcase
 - Call-to-action buttons for navigation
 
 ### 💻 Coding (`Projects.tsx`)
-- **12 Polished Projects** organized into 5 categories
+- **13 Polished Projects** organized into 5 categories
 - **Featured**: AviationPro, Hopeless Catch, Android Watch Face
 - **Web & Tools**: PaperWorks Pro, XMB Wave Menu, Restaurant Website, Personal Portfolio
 - **Creative & Games**: Comic Reader (SFML), Music Player (Vinyl/Cassette/MiniDisc)
 - **Systems & Education**: PSP-Programming, PS1-Mips-Programming
-- **Tools in Progress**: NeroScript (Rust + GPUI, Go + Wails)
+- **Tools in Progress**: NeroGPUI (Rust + GPUI), NeroWails (Go + Wails)
 - Project cards with images, tech stack, status badges, and direct links
 - Responsive grid layout with smooth scroll animations
 - GitHub links, live demos, and YouTube videos
@@ -156,7 +156,7 @@ The site showcases my diverse background across:
 - `tailwind.config.js` — Tailwind CSS configuration for custom theme and plugins.
 - `vite.config.ts` — Vite build configuration.
 
-## 🎯 Featured Projects (12 Polished)
+## 🎯 Featured Projects (13 Polished)
 
 ### Production & Published
 - **AviationPro** — Professional flight planning suite for pilots (React, TypeScript, Tailwind CSS)
@@ -178,7 +178,8 @@ The site showcases my diverse background across:
 - **PS1-Mips-Programming** — PlayStation 1 MIPS assembly guides (MIPS Assembly, C, Baremetal)
 
 ### Tools in Progress
-- **NeroScript** — Modern IDE with dual implementations (Rust + GPUI, Go + Wails)
+- **NeroGPUI** — High-performance IDE with Rust + GPUI (from Zed Editor)
+- **NeroWails** — Cross-platform IDE with Go + Wails
 
 ## � React vso. Original HTML/CSS/JS Version
 
