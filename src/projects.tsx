@@ -149,13 +149,22 @@ const projectGroups: ProjectGroup[] = [
     subtitle: 'Ambitious projects pushing the boundaries',
     projects: [
       {
-        title: 'NeroScript',
-        tech: 'Rust + GPUI | Go + Wails',
+        title: 'NeroGPUI',
+        tech: 'Rust + GPUI',
         status: 'In Development',
-        description: 'Modern IDE with dual implementations. Building high-performance version with Rust + GPUI (from Zed Editor) and cross-platform version with Go + Wails. A fresh take on code editors for 2026.',
-        impact: 'Dual implementations • Next-gen IDE',
+        description: 'Lightning-fast IDE built with Rust and GPUI (the rendering engine behind Zed Editor). Focuses on performance and responsiveness with a modern, minimalist interface designed for developers who demand speed.',
+        impact: 'Next-gen IDE • Sub-millisecond rendering',
         github: 'https://github.com/robfernan/NeroScript',
-        image: '/assets/projects/music_player_love2d.png'
+        image: '/assets/projects/nerogpui.png'
+      },
+      {
+        title: 'NeroWails',
+        tech: 'Go + Wails',
+        status: 'In Development',
+        description: 'Cross-platform IDE bringing the Nero experience to Windows, macOS, and Linux. Built with Go and Wails for native performance and seamless integration with your operating system while maintaining feature parity across platforms.',
+        impact: 'Cross-platform • Native performance',
+        github: 'https://github.com/robfernan/NeroScript',
+        image: '/assets/projects/nerowails.png'
       }
     ]
   }

@@ -95,11 +95,15 @@ export default function PortfolioHome() {
             <figure className="flex-shrink-0 w-48 sm:w-56 lg:w-full overflow-hidden rounded-lg border border-theme-accent dark:border-theme-accent-dark shadow-sm">
               <img loading="lazy" decoding="async" src="/assets/home/car-art.jpg" alt="Car Art" className="w-full h-32 sm:h-44 object-cover" />
             </figure>
-            <figure className="flex-shrink-0 w-48 sm:w-56 lg:w-full overflow-hidden rounded-lg border border-theme-accent dark:border-theme-accent-dark shadow-sm">
-              <img loading="lazy" decoding="async" src="/assets/home/love2d_music_player.png" alt="Music Player" className="w-full h-32 sm:h-44 object-cover" />
+            {/* Updated: Changed music player image to circular watchfacefish image and comic reader to sfmllavalamp video demo */}
+            <figure className="flex-shrink-0 w-48 sm:w-56 lg:w-full flex items-center justify-center overflow-hidden rounded-full border border-theme-accent dark:border-theme-accent-dark shadow-sm aspect-square">
+              <img loading="lazy" decoding="async" src="/assets/home/watchfacefish.png" alt="Watch Face Fish" className="w-full h-full object-cover" />
             </figure>
             <figure className="flex-shrink-0 w-48 sm:w-56 lg:w-full overflow-hidden rounded-lg border border-theme-accent dark:border-theme-accent-dark shadow-sm">
-              <img loading="lazy" decoding="async" src="/assets/home/comic_book_reader_sfml.png" alt="Comic Reader" className="w-full h-32 sm:h-44 object-cover" />
+              <video className="w-full h-32 sm:h-44 object-cover" controls autoPlay muted loop>
+                <source src="/assets/home/sfmlavalamp.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
             </figure>
           </aside>
         </div>
