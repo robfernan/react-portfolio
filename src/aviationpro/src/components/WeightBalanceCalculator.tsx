@@ -666,7 +666,7 @@ const WeightBalanceCalculator: React.FC<WeightBalanceCalculatorProps> = ({ darkM
           <h4 className="text-lg font-semibold mb-4">Center of Gravity Envelope</h4>
           <div className="text-center">
             <img
-              src="/centerofgravitycessna172.png"
+              src="/assets/aviation/centerofgravitycessna172.png"
               alt="Cessna 172 Center of Gravity Envelope"
               className="w-full h-auto rounded-lg shadow-xl border-2 border-theme-accent/30 dark:border-theme-accent-dark/30 mx-auto"
               style={{
