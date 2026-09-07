@@ -1,137 +1,329 @@
 import React from 'react';
-import Layout from './components/layout/Layout';
 import { Link } from 'react-router-dom';
 
-// Timeline data
-const timelineData = [
-  { title: "Started Coding", date: "2012", description: "Began my journey into programming, exploring C++, game engines, and creative coding." },
-  { title: "Forest Hill Community High School — Digital Design (Entered)", date: "Aug 2015", description: "Began Digital Design studies at Forest Hill Community High School — focused on graphic and multimedia design fundamentals." },
-  { title: "ACE Mentor Program — 2nd Place", date: "May 2018", description: "Issued by ACE Mentor Program — 2nd Place in the ACE (Architect, Construction & Engineering) Mentor Program." },
-  { title: "Senior Awards Night — Forest Hill Community High School", date: "May 2018", description: "Recognized at Senior Awards Night — issued by Forest Hill Community High School." },
-  { title: "Forest Hill Community High School — Left / Senior Finish", date: "May 2019", description: "Completed senior year and left Forest Hill Community High School in May 2019." },
-  { title: "Entered Florida Atlantic University", date: "Aug 2019", description: "Started studies at FAU, pursuing interests in software, hardware, and applied computing." },
-  { title: "COP3014 — Programming Concepts & Logic", date: "Feb 24 2020", description: "Completed COP3014 coursework focusing on programming fundamentals and problem solving." },
-  { title: "CDA3201 — Intro to Logic Design (Arduino Nano Microprocessor)", date: "Jul 24 2020", description: "Completed introductory logic design coursework using Arduino Nano microprocessors and basic digital circuits." },
-  { title: "CDA3331C — Intro to Microprocessors (MSP430 TI)", date: "Aug 16 2020", description: "Covered MSP430 microcontroller programming, MIPS assembly basics, and embedded C for microprocessor applications." },
-  { title: "FAU Associations — Aerospace Experimental & Google Developer Student Club", date: "2020–2021", description: "Active member of FAU Aerospace Experimental Association and FAU GDSC — collaborated on projects and learning events." },
-  { title: "COP3813 — Intro to Internet Computing (Web Dev: HTML/CSS/JS)", date: "Jan 24 2021", description: "Introduced to web development concepts including HTML, CSS, and JavaScript through COP3813." },
-  { title: "COP4045 — Python Programming", date: "Dec 5 2021", description: "Completed COP4045 focusing on Python programming and applied scripting techniques." },
-  { title: "Left Florida Atlantic University", date: "Dec 2022", description: "Completed coursework and transitioned to focus on professional projects and independent development." },
-  { title: "Learned SFML & Love2D", date: "Jan 2023", description: "Studied and practiced SFML and Love2D for game development, which informed later game prototypes and jams." },
-  { title: "Started SSI Open Water Diver Course", date: "Feb 13 2023", description: "In Progress\nBegan SSI Open Water Diver training to pursue recreational scuba certification." },
-  { title: "Android Watch Face Studio — First Watch Face", date: "Jun 8 2023", description: "Created a first watch face using Android Watch Face Studio — a minimalist, readable design for wearable screens." },
-  { title: "Graduate SSI Open Water Diver & Enriched Air Nitrox Level 2", date: "Dec 31 2023", description: "Completed SSI Open Water Diver certification and Enriched Air Nitrox Level 2 training." },
-  { title: "First Discovery Flight for Private Pilot", date: "Feb 4 2024", description: "Completed first discovery flight towards private pilot training — an important step into aviation." },
-  { title: "First Solo Flight — Student Pilot (Private Pilot Course)", date: "Dec 21 2024", description: "Completed my first solo flight as part of private pilot training — milestone flight toward certification." },
-  { title: "Christmas Horror Game — Love2D", date: "Dec 26 2024", description: "Released a short horror-themed Love2D game built over the holiday — jam entry and experimental prototype." },
-  { title: "XMB Wave Menu — HTML/CSS/JS (PlayStation XMB style)", date: "Dec 29 2024", description: "Built a web-based PlayStation XMB-style home page and shortcut launcher with familiar wave menu navigation." },
-  { title: "Desktop Environment — Web-based OS-like UI", date: "Jan 23 2025", description: "Created an all-in-one web desktop environment that mimics an operating system with app shortcuts and windowed interfaces." },
-  { title: "Unity - Car Simulation Test", date: "Apr 8 2025", description: "Built a car simulation prototype in Unity to test physics, steering, and suspension behaviors for game prototypes." },
-  { title: "PSP Development — Minimalist PSPSDK (Tutorial)", date: "Jul 22 2025", description: "Followed a PSP PSPSDK tutorial; added custom font colors, 'Hello world', polygon drawing, a 3D cube, and PSP debug controls mapping." },
-  { title: "PS1 Development — MIPS/Assembly (Pikuma Course)", date: "Jul 25 2025", description: "Completed Pikuma's PS1 development course covering Changing Background Color, Triangle & Quads, and Gouraud shading using MIPS-Assembly concepts." },
-  { title: "Towered Solos Finished — FT Pierce (Full stop & taxi-backs)", date: "Jul 30 2025", description: "Completed towered solo operations at Ft Pierce — full-stop landings and taxi-back procedures." },
-  { title: "Hopeless Catch — Fishing Horror Game Jam", date: "Aug 28 2025", description: "Released the Hopeless Catch demo for the Fishing Horror Game Jam — my first game jam; playable build, screenshots, and dev notes.", link: "https://mungdaal321.itch.io/hopeless-catch" },
-  { title: "Defold Music Player", date: "Sep 3 2025", description: "Released a Defold-based music player demo showcasing UI and playback features." },
-  { title: "AviationPro Launch", date: "Sep 7 2025", description: "Released AviationPro on Sept 7, 2025 — a professional-grade flight planning suite for pilots and enthusiasts." },
+/* ------------------------------------------------------------------ */
+/*  Data                                                               */
+/* ------------------------------------------------------------------ */
+
+const CAPABILITIES = [
+  'Web',
+  'Desktop',
+  'Mobile',
+  'WearOS',
+  'Embedded',
+  'Retro Consoles',
 ];
 
-// Dummy Card and Button if originals are missing
-const Card: React.FC<React.PropsWithChildren<{}>> = ({ children }) => (
-  <div className="rounded-lg border p-3 sm:p-4 shadow-md bg-theme-bg dark:bg-theme-bg-dark">{children}</div>
-);
-const Button: React.FC<React.PropsWithChildren<React.ButtonHTMLAttributes<HTMLButtonElement>>> = ({ children, ...props }) => (
-  <button className="px-3 sm:px-4 py-2 rounded bg-theme-accent text-white text-sm sm:text-base hover:bg-theme-accent/90 transition-colors" {...props}>{children}</button>
-);
+type Discipline = {
+  title: string;
+  blurb: string;
+  tags: string[];
+  to?: string;
+  featured?: boolean; // larger tile in the bento grid
+};
+
+const DISCIPLINES: Discipline[] = [
+  {
+    title: 'Software & Engines',
+    blurb: 'Cross-platform apps and game tooling — from Love2D experiences to a custom OpenGL engine with Lua gameplay.',
+    tags: ['Love2D / LÖVE', 'C++ / SFML', 'Go + Wails'],
+    featured: true,
+  },
+  {
+    title: 'Embedded Projects',
+    blurb: 'Low-level and hardware work — microcontrollers, logic design, and baremetal systems programming.',
+    tags: ['MSP430', 'Arduino', 'Logic Design'],
+  },
+  {
+    title: 'Retro Consoles',
+    blurb: 'Baremetal homebrew for the machines that stay exclusive — PS1, PS2, and PSP.',
+    tags: ['PS1 MIPS', 'PS2 GS/VU1', 'PSP SDK'],
+  },
+  {
+    title: 'Cross-Platform Tools',
+    blurb: 'One codebase shipped to web, desktop, and mobile — from flight planning to document suites.',
+    tags: ['AviationPro', 'PaperWorks Pro', 'XMB Launcher'],
+    to: '/projects',
+  },
+  {
+    title: 'Art & Design',
+    blurb: 'Automotive illustration, UI/UX, and print collateral — the design side of every build.',
+    tags: ['Car Art', 'UI/UX', 'Print / Lookbook'],
+    to: '/art',
+  },
+  {
+    title: 'Streaming & Content',
+    blurb: 'Live coding, game dev, and car sketching on Twitch and YouTube as MungDaal321.',
+    tags: ['Twitch', 'YouTube', 'Devlogs'],
+    to: '/streaming',
+  },
+];
+
+type Featured = {
+  name: string;
+  description: string;
+  language?: string;
+  updated?: string;
+};
+
+/* Static, curated "Now Building" — no live GitHub fetch for now. */
+const NOW_BUILDING: Featured[] = [
+  {
+    name: 'Sony 2002 Recreation',
+    description:
+      'Recreating the iconic 2002 Sony website as a modern interactive experience — authentic layouts, motion, and detail.',
+    language: 'TypeScript',
+    updated: 'Recently',
+  },
+  {
+    name: 'Love2D Xbox Launcher',
+    description:
+      'Xbox-inspired desktop launcher built with Love2D (LÖVE) — a custom frameless draggable window, gamepad support, and smooth XMB-style navigation.',
+    language: 'Lua',
+    updated: 'Updated 2 days ago',
+  },
+];
+
+type MediaItem = {
+  src: string;
+  alt: string;
+  caption: string;
+  kind: 'image' | 'video';
+};
+
+const MEDIA: MediaItem[] = [
+  { src: '/assets/home/car-art.jpg', alt: 'Automotive illustration', caption: 'Automotive Art', kind: 'image' },
+  { src: '/assets/projects/xmbwavemenu.png', alt: 'XMB wave menu launcher', caption: 'XMB Launcher', kind: 'image' },
+  { src: '/assets/home/sfmlavalamp.mp4', alt: 'Engine lava lamp demo', caption: 'Engine / SFML Demo', kind: 'video' },
+  { src: '/assets/home/watchfacefish.png', alt: 'WearOS watch face', caption: 'WearOS Watch Face', kind: 'image' },
+];
+
+/* ------------------------------------------------------------------ */
+/*  Small building blocks                                              */
+/* ------------------------------------------------------------------ */
+
+function SectionHeading({ eyebrow, title }: { eyebrow: string; title: string }) {
+  return (
+    <div className="mb-8">
+      <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-theme-accent dark:text-theme-secondary-dark mb-3">
+        {eyebrow}
+      </p>
+      <h2 className="font-bold text-theme-primary dark:text-theme-secondary-dark">
+        {title}
+      </h2>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Page                                                               */
+/* ------------------------------------------------------------------ */
 
 export default function PortfolioHome() {
   return (
-    <Layout>
-      <section className="max-w-5xl mx-auto py-8 sm:py-12 md:py-16 px-4">
-        {/* Hero/About Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 items-start mb-8 md:mb-12">
-          <div className="lg:col-span-2">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-2 sm:mb-3 text-theme-primary dark:text-theme-primary-dark">Robert Fernandez</h1>
-            <h2 className="text-lg sm:text-xl md:text-2xl font-semibold mb-3 sm:mb-4 text-theme-accent dark:text-theme-accent-dark">About Me</h2>
-            <p className="mb-3 text-sm sm:text-base md:text-lg text-theme-secondary dark:text-theme-secondary-dark leading-relaxed">
-              I'm a passionate developer with expertise in SFML and Love2D, constantly exploring new ways to bring my ideas to life through code and design. Whether it's creating immersive games or building digital art, I strive to blend creativity and functionality in everything I do.
+    <div className="min-h-screen bg-theme-bg dark:bg-theme-bg-dark transition-colors duration-300">
+
+      <section className="max-w-6xl mx-auto px-4 py-12 sm:py-20">
+        {/* ============================ HERO (SPLIT) ============================ */}
+        <header className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-10 items-center mb-16 sm:mb-24">
+          {/* Left: identity + copy */}
+          <div className="lg:col-span-3 order-2 lg:order-1">
+            <p className="text-[11px] font-semibold tracking-[0.25em] uppercase text-theme-accent dark:text-theme-secondary-dark mb-4 flex items-center gap-3">
+              <span className="w-8 h-px bg-theme-accent dark:bg-theme-accent-dark" />
+              Portfolio · 2026
             </p>
-            <p className="mb-3 text-sm sm:text-base md:text-lg text-theme-secondary dark:text-theme-secondary-dark leading-relaxed">
-              Beyond the screen, I embrace adventure in real life as well—I'm a private pilot in training, a certified scuba diver, an avid fisherman, and a hunter. My love for exploration extends into my hobbies, which include playing adventure, survival, and horror games.
+
+            <h1 className="font-black leading-[1.05] text-theme-primary dark:text-theme-secondary-dark mb-5">
+              Robert Fernandez
+            </h1>
+
+            <p className="text-base sm:text-lg text-theme-secondary dark:text-theme-secondary-dark leading-relaxed max-w-xl mb-7">
+              Designer–Engineer building{' '}
+              <span className="text-theme-primary dark:text-theme-secondary-dark font-medium">cross-platform tools</span>{' '}
+              for web, desktop, mobile &amp; wearables — blending automotive art, aviation discipline, and UI/UX clarity.
             </p>
-            {/* Featured Work Card inserted here so it appears directly after the intro */}
-            <div className="mt-4 grid grid-cols-1 gap-4 sm:gap-6">
-              <Card>
-                <div className="flex flex-col justify-between">
-                  <div>
-                    <h3 className="text-lg sm:text-xl font-bold mb-2 text-theme-primary dark:text-theme-primary-dark">AviationPro</h3>
-                    <p className="mb-4 text-sm sm:text-base text-theme-secondary dark:text-theme-secondary-dark">A professional-grade flight planning suite for pilots and enthusiasts.</p>
-                  </div>
-                  <div>
-                    <Link to="/aviationpro"><Button>View AviationPro</Button></Link>
-                  </div>
-                </div>
-              </Card>
-              <Card>
-                <div className="flex flex-col justify-between">
-                  <div>
-                    <div className="mb-4 overflow-hidden">
-                      <iframe
-                        frameBorder="0"
-                        src="https://itch.io/embed/3836499?linkback=true"
-                        className="w-full max-w-full"
-                        style={{ maxWidth: '552px', height: '167px' }}
-                        title="Hopeless Catch on itch.io"
-                      >
-                        <a href="https://mungdaal321.itch.io/hopeless-catch">Hopeless Catch by MungDaal321</a>
-                      </iframe>
-                    </div>
-                  </div>
-                </div>
-              </Card>
+
+            {/* Capability chips */}
+            <div className="flex flex-wrap gap-2 mb-8">
+              {CAPABILITIES.map((c) => (
+                <span
+                  key={c}
+                  className="text-xs font-medium px-3 py-1.5 rounded-full border border-theme-accent/30 dark:border-theme-accent-dark text-theme-secondary dark:text-theme-secondary-dark"
+                >
+                  {c}
+                </span>
+              ))}
+            </div>
+
+            {/* CTAs */}
+            <div className="flex flex-wrap gap-3">
+              <Link
+                to="/projects"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-theme-action dark:bg-theme-action-dark text-white font-semibold hover:opacity-90 transition-opacity"
+              >
+                See the work
+                <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
+              <a
+                href="https://github.com/robfernan"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg border border-theme-accent/40 dark:border-theme-accent-dark text-theme-primary dark:text-theme-secondary-dark hover:bg-theme-accent/10 dark:hover:bg-theme-card-dark transition-colors font-medium"
+              >
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.1 11.1 0 015.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.41-2.69 5.38-5.25 5.67.41.35.78 1.05.78 2.12 0 1.53-.01 2.76-.01 3.14 0 .31.21.68.8.56A11.51 11.51 0 0023.5 12C23.5 5.65 18.35.5 12 .5z" />
+                </svg>
+                GitHub
+              </a>
             </div>
           </div>
-          {/* Right column: thumbnails / highlights */}
-          <aside className="lg:col-span-1 flex flex-row lg:flex-col gap-3 sm:gap-4 overflow-x-auto lg:overflow-x-visible scrollbar-hide">
-            <figure className="flex-shrink-0 w-48 sm:w-56 lg:w-full overflow-hidden rounded-lg border border-theme-accent dark:border-theme-accent-dark shadow-sm">
-              <img loading="lazy" decoding="async" src="/assets/home/car-art.jpg" alt="Car Art" className="w-full h-32 sm:h-44 object-cover" />
-            </figure>
-            {/* Updated: Changed music player image to circular watchfacefish image and comic reader to sfmllavalamp video demo */}
-            <figure className="flex-shrink-0 w-48 sm:w-56 lg:w-full flex items-center justify-center overflow-hidden rounded-full border border-theme-accent dark:border-theme-accent-dark shadow-sm aspect-square">
-              <img loading="lazy" decoding="async" src="/assets/home/watchfacefish.png" alt="Watch Face Fish" className="w-full h-full object-cover" />
-            </figure>
-            <figure className="flex-shrink-0 w-48 sm:w-56 lg:w-full overflow-hidden rounded-lg border border-theme-accent dark:border-theme-accent-dark shadow-sm">
-              <video className="w-full h-32 sm:h-44 object-cover" controls autoPlay muted loop>
-                <source src="/assets/home/sfmlavalamp.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-            </figure>
-          </aside>
-        </div>
 
-        {/* Timeline Section */}
-        <div className="mt-12 sm:mt-16">
-          <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-theme-primary dark:text-theme-primary-dark text-center">My Journey</h2>
-          <ol className="relative border-l-2 sm:border-l-4 border-theme-accent dark:border-theme-accent-dark max-w-5xl mx-auto pl-6 sm:pl-8 md:pl-12">
-            {timelineData.map((item, idx) => (
-              <li key={idx} className="mb-8 sm:mb-10 relative">
-                <span className="absolute -left-4 sm:-left-5 md:-left-6 top-0 flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-theme-action dark:bg-theme-action-dark rounded-full ring-2 sm:ring-4 ring-theme-bg dark:ring-theme-bg-dark z-10" style={{transform: 'translateY(0.25rem)'}}>
-                  <svg className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm1 12H9v-2h2v2zm0-4H9V6h2v4z" /></svg>
-                </span>
-                <div className="pl-4 sm:pl-6 md:pl-8">
-                  <div className="flex flex-col gap-1 sm:gap-2 mb-2">
-                    <h3 className="text-base sm:text-lg font-semibold text-theme-primary dark:text-theme-primary-dark">{item.title}</h3>
-                    <span className="bg-theme-accent dark:bg-theme-accent-dark text-white text-xs font-medium px-2 py-0.5 rounded self-start">{item.date}</span>
-                  </div>
-                  <p className="text-sm sm:text-base text-theme-secondary dark:text-theme-secondary-dark whitespace-pre-line">{item.description}</p>
-                  {item.link && (
-                    <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-sm sm:text-base text-theme-accent dark:text-theme-accent-dark font-medium underline ml-1">Play it on itch.io</a>
+          {/* Right: banner as a framed visual */}
+          <div className="lg:col-span-2 order-1 lg:order-2">
+            <figure className="deboss-frame rounded-xl overflow-hidden border border-theme-accent/20 dark:border-theme-accent-dark bg-theme-card dark:bg-theme-card-dark shadow-lg">
+              <img
+                src="/assets/home/banner.png"
+                alt="Robert Fernandez — Developer, Designer, Pilot"
+                className="w-full h-auto object-cover block"
+              />
+            </figure>
+          </div>
+        </header>
+
+        {/* ======================= NOW BUILDING (SPLIT ROW) ======================= */}
+        <section className="mb-16 sm:mb-24">
+          <SectionHeading eyebrow="In Progress" title="Now Building" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {NOW_BUILDING.map((item) => (
+              <a
+                key={item.name}
+                href="https://github.com/robfernan"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group block rounded-xl border border-theme-accent/20 dark:border-theme-accent-dark bg-theme-card dark:bg-theme-card-dark p-6 sm:p-7 hover-lift-premium"
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-[10px] font-semibold uppercase tracking-wider text-theme-accent dark:text-theme-secondary-dark">In Progress</span>
+                  {item.updated && (
+                    <span className="text-[10px] font-medium uppercase tracking-wider text-theme-secondary/70 dark:text-theme-secondary-dark">{item.updated}</span>
                   )}
                 </div>
-              </li>
+                <h3 className="font-bold mb-3 text-theme-primary dark:text-theme-secondary-dark group-hover:text-theme-accent dark:group-hover:text-theme-primary-dark transition-colors">
+                  {item.name}
+                </h3>
+                <p className="text-sm sm:text-base text-theme-secondary dark:text-theme-secondary-dark leading-relaxed mb-5">
+                  {item.description}
+                </p>
+                {item.language && (
+                  <span className="inline-flex items-center gap-2 text-xs text-theme-secondary dark:text-theme-secondary-dark">
+                    <span className="w-2.5 h-2.5 rounded-full bg-theme-accent dark:bg-theme-accent-dark" />
+                    {item.language}
+                  </span>
+                )}
+              </a>
             ))}
-          </ol>
-        </div>
+          </div>
+        </section>
+
+        {/* ========================= DISCIPLINES (BENTO) ========================= */}
+        <section className="mb-16 sm:mb-24">
+          <SectionHeading eyebrow="Capabilities" title="What I Do" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 auto-rows-[minmax(0,auto)]">
+            {DISCIPLINES.map((d) => {
+              const inner = (
+                <>
+                  <h3 className={`font-bold mb-2 text-theme-primary dark:text-theme-secondary-dark group-hover:text-theme-accent dark:group-hover:text-theme-primary-dark transition-colors ${d.featured ? 'text-2xl sm:text-3xl' : 'text-xl sm:text-2xl'}`}>
+                    {d.title}
+                  </h3>
+                  <p className="text-sm sm:text-base text-theme-secondary dark:text-theme-secondary-dark leading-relaxed mb-4">
+                    {d.blurb}
+                  </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {d.tags.map((t) => (
+                      <span key={t} className="text-[10px] font-medium px-2 py-1 rounded bg-theme-bg dark:bg-theme-card-dark border border-theme-accent/15 dark:border-theme-accent-dark text-theme-secondary dark:text-theme-secondary-dark">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </>
+              );
+              const base = 'group block rounded-xl border border-theme-accent/20 dark:border-theme-accent-dark bg-theme-card dark:bg-theme-card-dark p-5 sm:p-6 hover-lift-premium';
+              // Featured tile spans 2 columns on md+ for a bento feel.
+              const span = d.featured ? 'md:col-span-2' : '';
+              return d.to ? (
+                <Link key={d.title} to={d.to} className={`${base} ${span}`}>
+                  {inner}
+                </Link>
+              ) : (
+                <div key={d.title} className={`${base} ${span}`}>
+                  {inner}
+                </div>
+              );
+            })}
+
+            {/* CTA tile */}
+            <a
+              href="https://github.com/robfernan"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex flex-col justify-between rounded-xl border border-theme-accent/20 dark:border-theme-accent-dark bg-theme-action/10 dark:bg-theme-card-dark p-5 sm:p-6 hover-lift-premium md:col-span-3 lg:col-span-1"
+            >
+              <div>
+                <h3 className="font-bold mb-2 text-theme-primary dark:text-theme-secondary-dark">Full archive</h3>
+                <p className="text-sm sm:text-base text-theme-secondary dark:text-theme-secondary-dark leading-relaxed">
+                  Every project, tutorial, and experiment — from PS1 MIPS to Love2D launchers.
+                </p>
+              </div>
+              <span className="mt-4 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-theme-accent dark:text-theme-secondary-dark">
+                github.com/robfernan
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H8m9 0v9" />
+                </svg>
+              </span>
+            </a>
+          </div>
+        </section>
+
+        {/* ========================= MEDIA GALLERY (STACKED) ========================= */}
+        <section className="mb-6">
+          <SectionHeading eyebrow="Portfolio" title="Selected Work" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            {MEDIA.map((m) => (
+              <figure
+                key={m.src}
+                className="deboss-frame rounded-xl overflow-hidden border border-theme-accent/15 dark:border-theme-accent-dark bg-theme-card dark:bg-theme-card-dark"
+              >
+                <div className="aspect-video w-full">
+                  {m.kind === 'video' ? (
+                    <video className="w-full h-full object-cover" controls muted loop playsInline preload="metadata">
+                      <source src={m.src} type="video/mp4" />
+                    </video>
+                  ) : (
+                    <img loading="lazy" decoding="async" src={m.src} alt={m.alt} className="w-full h-full object-cover" />
+                  )}
+                </div>
+                <figcaption className="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-theme-secondary dark:text-theme-secondary-dark">
+                  {m.caption}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </section>
+
+        {/* ============================ FOOTER CTA ============================ */}
+        <footer className="mt-12 pt-8 border-t border-theme-accent/15 dark:border-theme-accent-dark flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-xs font-semibold uppercase tracking-wider text-theme-secondary dark:text-theme-secondary-dark">
+            Robert Fernandez · Developer · Designer · Pilot
+          </p>
+          <div className="flex items-center gap-5 text-sm">
+            <a href="https://github.com/robfernan" target="_blank" rel="noopener noreferrer" className="text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-accent dark:hover:text-theme-accent-dark transition-colors">GitHub</a>
+            <Link to="/art" className="text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-accent dark:hover:text-theme-accent-dark transition-colors">ArtStation</Link>
+            <Link to="/streaming" className="text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-accent dark:hover:text-theme-accent-dark transition-colors">Twitch</Link>
+          </div>
+        </footer>
       </section>
-    </Layout>
+    </div>
   );
 }

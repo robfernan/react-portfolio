@@ -1,6 +1,28 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+/* Tailwind v4: make the `dark:` variant respond to a `.dark` class on <html>
+   (the app toggles this in App.tsx) instead of the OS prefers-color-scheme. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Tailwind v4: register custom theme colors so utilities like bg-theme-bg / text-theme-primary are generated */
+@theme {
+  --color-theme-bg: var(--color-background);
+  --color-theme-bg-dark: var(--color-background-dark);
+  --color-theme-header: var(--color-header);
+  --color-theme-header-dark: var(--color-header-dark);
+  --color-theme-footer: var(--color-footer);
+  --color-theme-footer-dark: var(--color-footer-dark);
+  --color-theme-primary: var(--color-primary);
+  --color-theme-primary-dark: var(--color-primary-dark);
+  --color-theme-secondary: var(--color-secondary);
+  --color-theme-secondary-dark: var(--color-secondary-dark);
+  --color-theme-accent: var(--color-accent);
+  --color-theme-accent-dark: var(--color-accent-dark);
+  --color-theme-card: var(--color-card);
+  --color-theme-card-dark: var(--color-card-dark);
+  --color-theme-action: var(--color-action);
+  --color-theme-action-dark: var(--color-action-dark);
+}
 
 /* Base responsive setup */
 * {
@@ -114,6 +136,47 @@ body {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
+/* ===== Premium Typography (lookbook aesthetic) ===== */
+.font-display {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+.font-mono-tech {
+  font-family: 'Space Mono', ui-monospace, monospace;
+}
+
+/* Tactile paper-grain texture layer (subtle, non-interactive) */
+.paper-texture {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+/* Letterpress / deboss frame for media tiles */
+.deboss-frame {
+  box-shadow:
+    inset 1px 1px 4px rgba(0, 0, 0, 0.15),
+    inset -1px -1px 2px rgba(255, 255, 255, 0.6),
+    0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+/* High-end hover liftoff */
+.hover-lift-premium {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hover-lift-premium:hover {
+  transform: translateY(-8px) scale(1.015);
+  box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.25), 0 10px 20px -10px rgba(0, 0, 0, 0.15);
+}
+
+/* Horizontal scroll-snap gallery (iPhone SE friendly) */
+.snap-gallery {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+.snap-gallery > * {
+  scroll-snap-align: start;
+}
+
 
 /* Focus styles for accessibility */
 .focus-ring:focus {

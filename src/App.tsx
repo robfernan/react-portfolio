@@ -48,6 +48,7 @@ function AppWithDynamicName() {
 				const themes = [
 					{ key: 'minimal', icon: 'fa-circle', label: 'Minimal' },
 					{ key: 'slate', icon: 'fa-square', label: 'Slate' },
+									{ key: 'midnight', icon: 'fa-moon', label: 'Midnight' },
 					{ key: '90s', icon: 'fa-compact-disc', label: '90s' },
 				];
 

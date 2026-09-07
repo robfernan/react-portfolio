@@ -12,20 +12,27 @@
     "@fortawesome/fontawesome-free": "^7.0.1",
     "@radix-ui/react-slot": "^1.0.0",
     "autoprefixer": "^10.4.21",
-    "lucide-react": "^0.263.0",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
+    "lucide-react": "^1.42.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
     "react-router-dom": "^6.0.0"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^20.0.0",
-    "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.0",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
     "@types/react-router-dom": "*",
-    "@vitejs/plugin-react": "^5.1.2",
-    "tailwindcss": "^3.4.0",
+    "@vitejs/plugin-react": "^6.1.1",
+    "eslint": "^10.10.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.6",
+    "prettier": "^3.9.6",
+    "tailwindcss": "^4.3.3",
     "tailwindcss-animate": "^1.0.0",
-    "typescript": "^5.9.3",
-    "vite": "^4.5.14"
+    "typescript": "^7.0.2",
+    "typescript-eslint": "^8.70.0",
+    "vite": "^8.2.2"
   }
 }
