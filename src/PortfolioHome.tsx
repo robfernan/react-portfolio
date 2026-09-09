@@ -18,7 +18,8 @@ type Discipline = {
   title: string;
   blurb: string;
   tags: string[];
-  to?: string;
+  to?: string;      // internal route (e.g. /works)
+  href?: string;    // external link (e.g. ArtStation)
   featured?: boolean; // larger tile in the bento grid
 };
 
@@ -43,13 +44,13 @@ const DISCIPLINES: Discipline[] = [
     title: 'Cross-Platform Tools',
     blurb: 'One codebase shipped to web, desktop, and mobile — from flight planning to document suites.',
     tags: ['AviationPro', 'PaperWorks Pro', 'XMB Launcher'],
-    to: '/projects',
+    to: '/works',
   },
   {
     title: 'Art & Design',
     blurb: 'Automotive illustration, UI/UX, and print collateral — the design side of every build.',
     tags: ['Car Art', 'UI/UX', 'Print / Lookbook'],
-    to: '/art',
+    href: 'https://www.artstation.com/robfernan',
   },
   {
     title: 'Streaming & Content',
@@ -158,7 +159,7 @@ export default function PortfolioHome() {
             {/* CTAs */}
             <div className="flex flex-wrap gap-3">
               <Link
-                to="/projects"
+                to="/works"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-theme-action dark:bg-theme-action-dark text-white font-semibold hover:opacity-90 transition-opacity"
               >
                 See the work
@@ -252,11 +253,21 @@ export default function PortfolioHome() {
               const base = 'group block rounded-xl border border-theme-accent/20 dark:border-theme-accent-dark bg-theme-card dark:bg-theme-card-dark p-5 sm:p-6 hover-lift-premium';
               // Featured tile spans 2 columns on md+ for a bento feel.
               const span = d.featured ? 'md:col-span-2' : '';
-              return d.to ? (
-                <Link key={d.title} to={d.to} className={`${base} ${span}`}>
-                  {inner}
-                </Link>
-              ) : (
+              if (d.to) {
+                return (
+                  <Link key={d.title} to={d.to} className={`${base} ${span}`}>
+                    {inner}
+                  </Link>
+                );
+              }
+              if (d.href) {
+                return (
+                  <a key={d.title} href={d.href} target="_blank" rel="noopener noreferrer" className={`${base} ${span}`}>
+                    {inner}
+                  </a>
+                );
+              }
+              return (
                 <div key={d.title} className={`${base} ${span}`}>
                   {inner}
                 </div>
@@ -318,9 +329,9 @@ export default function PortfolioHome() {
             Robert Fernandez · Developer · Designer · Pilot
           </p>
           <div className="flex items-center gap-5 text-sm">
-            <a href="https://github.com/robfernan" target="_blank" rel="noopener noreferrer" className="text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-accent dark:hover:text-theme-accent-dark transition-colors">GitHub</a>
-            <Link to="/art" className="text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-accent dark:hover:text-theme-accent-dark transition-colors">ArtStation</Link>
-            <Link to="/streaming" className="text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-accent dark:hover:text-theme-accent-dark transition-colors">Twitch</Link>
+            <a href="https://github.com/robfernan" target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub" className="text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-accent dark:hover:text-theme-accent-dark transition-colors"><i className="fab fa-github text-lg" /></a>
+            <a href="https://www.artstation.com/robfernan" target="_blank" rel="noopener noreferrer" aria-label="ArtStation" title="ArtStation" className="text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-accent dark:hover:text-theme-accent-dark transition-colors"><i className="fab fa-artstation text-lg" /></a>
+            <a href="https://www.twitch.tv/mungdaal321" target="_blank" rel="noopener noreferrer" aria-label="Twitch" title="Twitch" className="text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-accent dark:hover:text-theme-accent-dark transition-colors"><i className="fab fa-twitch text-lg" /></a>
           </div>
         </footer>
       </section>

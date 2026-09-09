@@ -277,56 +277,39 @@ table thead th {
 }
 
 
-/* ===== 90s THEME STYLING ===== */
-.theme-90s {
-  --shadow-90s: none;
+/* ===== Y2K THEME STYLING =====
+   Kept minimal on purpose: the palette + glassy glow live in theme-vars.css.
+   No per-element borders here (that was causing the old "boxy" feel). */
+
+/* ===== Magazine page-flip transition =====
+   The Works pages are two magazine spreads. When you flip between them we
+   animate a quick 3D turn around the vertical axis, like turning a page.
+   Direction is set via --flip-dir (1 = forward/next, -1 = back/prev). */
+.magazine-stage {
+  perspective: 2400px;
 }
 
-.theme-90s button,
-.theme-90s a {
-  border: 1px solid var(--color-primary);
-  box-shadow: none;
-  transition: all 0.2s ease;
+@keyframes magazineFlipIn {
+  from {
+    opacity: 0.35;
+    transform: rotateY(calc(var(--flip-dir, 1) * -78deg)) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: rotateY(0deg) scale(1);
+  }
 }
 
-.theme-90s button:hover,
-.theme-90s a:hover {
-  transform: none;
-  box-shadow: none;
-  opacity: 0.8;
+.magazine-flip-in {
+  animation: magazineFlipIn 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  transform-origin: center center;
+  backface-visibility: hidden;
+  will-change: transform, opacity;
 }
 
-.theme-90s button:active,
-.theme-90s a:active {
-  transform: none;
-  box-shadow: none;
-}
-
-.theme-90s input,
-.theme-90s textarea,
-.theme-90s select {
-  border: 1px solid var(--color-primary);
-  box-shadow: none;
-}
-
-.theme-90s .bg-theme-card {
-  border: 1px solid var(--color-primary);
-  box-shadow: none;
-}
-
-.theme-90s header {
-  border-bottom: 1px solid var(--color-primary);
-}
-
-.theme-90s footer {
-  border-top: 1px solid var(--color-primary);
-}
-
-/* 90s theme - no special styling, just colors and thin borders */
-.theme-90s .bg-theme-bg {
-  background-color: var(--color-background);
-}
-
-.dark.theme-90s .bg-theme-bg-dark {
-  background-color: var(--color-background-dark);
+/* Respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+  .magazine-flip-in {
+    animation-duration: 1ms;
+  }
 }

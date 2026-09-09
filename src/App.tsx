@@ -3,12 +3,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import PortfolioHome from './PortfolioHome';
-import Projects from './projects';
-import Art from './Art';
+import Catalogue from './Catalogue';
+import Magazine from './magazine/Magazine';
 import Streaming from './Streaming';
 import AviationProApp from './aviationpro/AviationProApp';
 import Footer from './Footer';
 import BackToTop from './components/ui/BackToTop';
+import { ThemeProvider, type ThemeKey } from './context/ThemeContext';
 
 export default function App() {
 	return (
@@ -45,22 +46,22 @@ function AppWithDynamicName() {
 			const toggleDarkMode = () => setDarkMode(dm => !dm);
 
 				// Theme switching logic
-				const themes = [
+				const themes: { key: ThemeKey; icon: string; label: string }[] = [
 					{ key: 'minimal', icon: 'fa-circle', label: 'Minimal' },
 					{ key: 'slate', icon: 'fa-square', label: 'Slate' },
 									{ key: 'midnight', icon: 'fa-moon', label: 'Midnight' },
 					{ key: '90s', icon: 'fa-compact-disc', label: '90s' },
 				];
 
-				const [theme, setTheme] = React.useState(() => {
+				const [theme, setThemeState] = React.useState<ThemeKey>(() => {
 					const htmlClass = document.documentElement.className.match(/theme-([a-z]+)/)?.[1];
-					return htmlClass || 'minimal';
+					return (htmlClass as ThemeKey) || 'minimal';
 				});
 
-				const setThemeClass = (themeKey: string) => {
+				const setTheme = (themeKey: ThemeKey) => {
 					document.documentElement.classList.remove(...themes.map(t => `theme-${t.key}`));
 					document.documentElement.classList.add(`theme-${themeKey}`);
-					setTheme(themeKey);
+					setThemeState(themeKey);
 				};
 
 				React.useEffect(() => {
@@ -73,7 +74,8 @@ function AppWithDynamicName() {
 				const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
 				return (
-					<div className="min-h-screen bg-theme-bg dark:bg-theme-bg-dark transition-colors duration-300 flex flex-col">
+					<ThemeProvider value={{ theme, darkMode, setTheme, toggleDarkMode }}>
+				<div className="min-h-screen bg-theme-bg dark:bg-theme-bg-dark transition-colors duration-300 flex flex-col">
 						<header className="bg-theme-header dark:bg-theme-header-dark shadow transition-colors duration-300">
 							<nav className="max-w-5xl mx-auto px-4 py-3">
 								<div className="flex items-center justify-between">
@@ -81,11 +83,9 @@ function AppWithDynamicName() {
 									
 									{/* Desktop Navigation */}
 									<div className="hidden md:flex items-center space-x-6">
-										<Link to="/projects" className="text-theme-secondary dark:text-theme-secondary-dark hover:underline">Projects</Link>
-										<Link to="/art" className="text-theme-secondary dark:text-theme-secondary-dark hover:underline">Art</Link>
+										<Link to="/works" className="text-theme-secondary dark:text-theme-secondary-dark hover:underline">Works</Link>
 										<Link to="/aviationpro" className="text-theme-secondary dark:text-theme-secondary-dark hover:underline">Aviation</Link>
 										<Link to="/streaming" className="text-theme-secondary dark:text-theme-secondary-dark hover:underline">Streaming</Link>
-										<a href="https://robertfernandez1.wordpress.com/" target="_blank" rel="noopener noreferrer" className="text-theme-secondary dark:text-theme-secondary-dark hover:underline">Blog</a>
 									</div>
 
 									{/* Theme Controls */}
@@ -93,7 +93,7 @@ function AppWithDynamicName() {
 										{themes.map(t => (
 											<button
 												key={t.key}
-												onClick={() => setThemeClass(t.key)}
+												onClick={() => setTheme(t.key)}
 												className={`p-2 rounded-full border border-theme-accent dark:border-theme-accent-dark bg-theme-card dark:bg-theme-card-dark text-theme-accent dark:text-theme-accent-dark hover:bg-theme-accent hover:text-white dark:hover:bg-theme-accent-dark dark:hover:text-white transition-colors duration-300 ${theme === t.key ? 'ring-2 ring-theme-action dark:ring-theme-action-dark' : ''}`}
 												aria-label={`Switch to ${t.label} theme`}
 												title={t.label}
@@ -134,18 +134,11 @@ function AppWithDynamicName() {
 								{mobileMenuOpen && (
 									<div className="md:hidden mt-4 pb-4 space-y-3">
 										<Link 
-											to="/projects" 
+											to="/works" 
 											className="block py-2 text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-accent dark:hover:text-theme-accent-dark"
 											onClick={() => setMobileMenuOpen(false)}
 										>
-											Projects
-										</Link>
-										<Link 
-											to="/art" 
-											className="block py-2 text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-accent dark:hover:text-theme-accent-dark"
-											onClick={() => setMobileMenuOpen(false)}
-										>
-											Art
+											Works
 										</Link>
 										<Link 
 											to="/aviationpro" 
@@ -161,15 +154,7 @@ function AppWithDynamicName() {
 										>
 											Streaming
 										</Link>
-										<a
-											href="https://robertfernandez1.wordpress.com/"
-											target="_blank"
-											rel="noopener noreferrer"
-											className="block py-2 text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-accent dark:hover:text-theme-accent-dark"
-											onClick={() => setMobileMenuOpen(false)}
-										>
-											Blog
-										</a>
+
 										
 										{/* Mobile Theme Controls */}
 										<div className="pt-4 border-t border-theme-accent/20 dark:border-theme-accent-dark/20">
@@ -179,7 +164,7 @@ function AppWithDynamicName() {
 													{themes.map(t => (
 														<button
 															key={t.key}
-															onClick={() => setThemeClass(t.key)}
+															onClick={() => setTheme(t.key)}
 															className={`p-2 rounded-full border border-theme-accent dark:border-theme-accent-dark bg-theme-card dark:bg-theme-card-dark text-theme-accent dark:text-theme-accent-dark hover:bg-theme-accent hover:text-white dark:hover:bg-theme-accent-dark dark:hover:text-white transition-colors duration-300 ${theme === t.key ? 'ring-2 ring-theme-action dark:ring-theme-action-dark' : ''}`}
 															aria-label={`Switch to ${t.label} theme`}
 															title={t.label}
@@ -208,14 +193,17 @@ function AppWithDynamicName() {
 						<main className="flex-1 pb-24">
 							<Routes>
 									<Route path="/" element={<PortfolioHome />} />
-									<Route path="/projects" element={<Projects />} />
-									<Route path="/art" element={<Art />} />
-									<Route path="/aviationpro/*" element={<AviationProApp darkMode={darkMode} toggleDarkMode={toggleDarkMode} />} />
+									<Route path="/works" element={<Magazine />} />
+							<Route path="/work" element={<Catalogue />} />
+								{/* Legacy routes now render the unified catalogue */}
+								<Route path="/projects" element={<Catalogue />} />
+									<Route path="/aviationpro/*" element={<AviationProApp />} />
 									<Route path="/streaming" element={<Streaming />} />
 								</Routes>
 							</main>
 							<Footer theme={theme} />
 							<BackToTop />
 						</div>
+				</ThemeProvider>
 	);
 }
