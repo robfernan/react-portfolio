@@ -33,7 +33,7 @@ const NOW_BUILDING: Featured[] = [
       'Recreating the iconic 2002 Sony website as a modern interactive experience — authentic layouts, motion, and detail.',
     language: 'TypeScript',
     updated: 'Recently',
-    image: 'https://raw.githubusercontent.com/robfernan/sony2002-recreationsite/main/screenshot.png',
+    image: '/assets/home/sony2002recreation.png',
     href: 'https://github.com/robfernan/sony2002-recreationsite',
   },
   {
@@ -51,7 +51,7 @@ const NOW_BUILDING: Featured[] = [
       'A custom cross-platform web interface recreated from an original SEGA Dreamcast PS3 theme, with authentic XMB layouts, gamepad support, and menu navigation.',
     language: 'HTML5 · CSS · JavaScript',
     updated: 'Video feature',
-    image: 'https://i.ytimg.com/an_webp/YagOy0VBs-Q/mqdefault_6s.webp?du=3000&sqp=CMDVg9UG&rs=AOn4CLAax-CtdHLIfjGOFtZGHDlNbI8XTg',
+    image: '/assets/projects/dreamcastps3html.webp',
     href: 'https://www.youtube.com/watch?v=YagOy0VBs-Q',
   },
 ];
@@ -158,7 +158,19 @@ export default function PortfolioHome() {
                 className="group overflow-hidden rounded-xl border border-theme-accent/20 dark:border-theme-accent-dark bg-theme-card dark:bg-theme-card-dark text-left"
               >
                 <div className="aspect-[16/9] overflow-hidden bg-theme-bg dark:bg-theme-bg-dark">
-                  <img src={item.image} alt={item.name} className="h-full w-full object-cover" />
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="h-full w-full object-cover"
+                    loading="lazy"
+                    decoding="async"
+                    onError={(e) => {
+                      const img = e.currentTarget;
+                      if (img.dataset.fallbackApplied) return;
+                      img.dataset.fallbackApplied = '1';
+                      img.src = '/assets/projects/xmbwavemenu.png';
+                    }}
+                  />
                 </div>
                 <div className="p-6 sm:p-8">
                 <div className="flex items-center justify-between mb-3">

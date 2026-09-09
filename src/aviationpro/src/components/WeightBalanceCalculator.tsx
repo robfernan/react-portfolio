@@ -657,25 +657,6 @@ const WeightBalanceCalculator: React.FC<{ darkMode: boolean }> = () => {
           </main>
         </div>
 
-        <div className="fixed bottom-0 left-0 right-0 bg-[#0c0c0e] border-t border-[#27272a] px-8 py-3 flex flex-col sm:flex-row justify-between items-center z-[100] gap-4">
-          <div className="flex items-center space-x-10 text-[9px] font-black uppercase tracking-[0.4em] text-[#3f3f46]">
-            <div className="flex items-center">
-              <span className="w-1.5 h-1.5 bg-[#22c55e] rounded-full mr-2"></span>
-              NETWORK: OFFLINE_MODE
-            </div>
-            <div className="hidden md:block">ENCRYPTION: AES-256_ACTIVE</div>
-          </div>
-          <div className="flex items-center space-x-6">
-             <div className="text-[10px] text-[#dc2626] font-black uppercase tracking-[0.3em] italic animate-pulse">Critical_Data_Lock // Secure</div>
-             <div className="h-6 w-[1px] bg-[#27272a]"></div>
-             <div className="flex space-x-2">
-                {[...Array(5)].map((_, i) => (
-                  <div key={i} className={`h-2 w-5 ${i === 4 ? 'bg-[#dc2626]' : 'bg-[#27272a]'}`}></div>
-                ))}
-             </div>
-          </div>
-        </div>
-
       </div>
     </div>
   );

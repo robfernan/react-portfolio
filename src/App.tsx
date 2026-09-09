@@ -22,6 +22,7 @@ export default function App() {
 function AppWithDynamicName() {
 		const location = useLocation();
 		const isStreaming = location.pathname.startsWith('/streaming');
+		const isAviationPro = location.pathname.startsWith('/aviationpro');
 		const displayName = isStreaming ? 'MungDaal321' : 'Robert Fernandez';
 
 		// Theme and dark mode state
@@ -210,8 +211,8 @@ function AppWithDynamicName() {
 									<Route path="/resume" element={<Resume />} />
 								</Routes>
 							</main>
-							<Footer theme={theme} />
-							<BackToTop />
+							{!isAviationPro && <Footer theme={theme} />}
+							{!isAviationPro && <BackToTop />}
 						</div>
 				</ThemeProvider>
 	);

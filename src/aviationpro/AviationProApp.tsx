@@ -30,9 +30,9 @@ function AviationProApp({ darkMode = false, toggleDarkMode }: AviationProAppProp
   return (
     <div className="aviation-scope min-h-screen bg-theme-bg dark:bg-theme-bg-dark text-theme-primary dark:text-theme-primary-dark">
       <header className="border-b border-theme-accent/30 dark:border-theme-accent-dark/30 bg-theme-header dark:bg-theme-header-dark">
-        <div className="px-2 py-1 flex items-center justify-between gap-1">
+        <div className="px-2 py-1 flex items-center justify-between gap-1 max-w-[1600px] mx-auto w-full">
           <h1 className="text-lg sm:text-2xl font-bold text-theme-primary dark:text-theme-primary-dark flex-shrink-0">AviationPro</h1>
-          <nav className="flex gap-0.5 flex-1">
+          <nav className="flex gap-0.5 flex-1 justify-center overflow-x-auto no-scrollbar">
             {tabs.map(tab => (
               <button
                 key={tab.id}

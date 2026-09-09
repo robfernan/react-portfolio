@@ -76,6 +76,7 @@ export const ISSUES: Issue[] = [
       {
         title: 'Florida Window & Door Maintenance Inc.',
         format: 'CLIENT / WEB',
+        cover: '/assets/projects/FLWindowndoormaintenanceLandingPage.png',
         blurb:
           'Service-focused landing page for a Florida maintenance company — clear offerings, contact pathways, and a practical conversion-first layout built from the ground up.',
         tech: ['HTML', 'CSS', 'JavaScript'],
@@ -86,6 +87,7 @@ export const ISSUES: Issue[] = [
       {
         title: 'M&G Gutters',
         format: 'CLIENT / WEB',
+        cover: '/assets/projects/MnGuttersLandingPage.png',
         blurb:
           'A focused local-service landing page for gutter work, designed around trust, readable service information, and direct customer contact.',
         tech: ['HTML', 'CSS', 'JavaScript'],
@@ -161,7 +163,7 @@ export const ISSUES: Issue[] = [
       {
         title: 'Dreamcast PS3 Theme → HTML5 XMB',
         format: 'VIDEO / INTERFACE RECREATION',
-        cover: 'https://i.ytimg.com/an_webp/YagOy0VBs-Q/mqdefault_6s.webp?du=3000&sqp=CMDVg9UG&rs=AOn4CLAax-CtdHLIfjGOFtZGHDlNbI8XTg',
+        cover: '/assets/projects/dreamcastps3html.webp',
         blurb:
           'A custom cross-platform web interface created by extracting an original SEGA Dreamcast PS3 theme (.p3t) and rebuilding it as an interactive XMB browser homepage with authentic layouts, icons, gamepad support, and menu navigation.',
         tech: ['HTML5', 'CSS', 'JavaScript', 'Gamepad API'],
@@ -181,7 +183,7 @@ export const ISSUES: Issue[] = [
       {
         title: 'PSP Digital Comics',
         format: 'CROSS-PLATFORM / READER',
-        cover: 'https://raw.githubusercontent.com/robfernan/robfernan/main/digital_comics.png',
+        cover: '/assets/projects/psp.png',
         blurb:
           'A faithful PSP Digital Comics-style reader where users bring their own CBZ files. This is the modern cross-platform successor to the SFML Comic Reader.',
         tech: ['Wails', 'Capacitor', 'React', 'TypeScript', 'Tailwind CSS'],
