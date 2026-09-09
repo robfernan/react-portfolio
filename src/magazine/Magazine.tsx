@@ -1,32 +1,21 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { ISSUES, ART_PLATFORMS } from './data';
+import { ISSUES, ART_PLATFORMS, type Entry } from './data';
 import { FlipControls, MagazineEntry } from './MagazineUI';
 
-/* ------------------------------------------------------------------ */
-/*  The Works — a two-page magazine you flip through.                  */
-/*                                                                     */
-/*  Page 1 · "The Build"   (Software & Tools)                          */
-/*  Page 2 · "Playground"  (Games & Experiments + Studio)              */
-/*                                                                     */
-/*  Flip with the arrows, ← / → keys, or swipe.                        */
-/* ------------------------------------------------------------------ */
+const TOTAL_PAGES = ISSUES.length;
 
-const TOTAL_PAGES = 2;
+type MagazineIssue = (typeof ISSUES)[number];
 
 export default function Magazine() {
-  const [page, setPage] = useState(0); // 0-indexed: 0 = The Build, 1 = Playground
-  const [flipDir, setFlipDir] = useState<1 | -1>(1);
-  const [animKey, setAnimKey] = useState(0);
-
+  const [page, setPage] = useState(0);
+  const [previewEntry, setPreviewEntry] = useState<Entry | null>(null);
   const touchStartX = useRef<number | null>(null);
   const touchStartY = useRef<number | null>(null);
 
   const goTo = useCallback((target: number) => {
     setPage((current) => {
       if (target === current || target < 0 || target >= TOTAL_PAGES) return current;
-      setFlipDir(target > current ? 1 : -1);
-      setAnimKey((k) => k + 1); // retrigger the flip animation
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: 'auto' });
       return target;
     });
   }, []);
@@ -34,30 +23,38 @@ export default function Magazine() {
   const goPrev = useCallback(() => goTo(page - 1), [goTo, page]);
   const goNext = useCallback(() => goTo(page + 1), [goTo, page]);
 
-  // Keyboard navigation (arrow keys) — only when not typing in a field.
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      const el = e.target as HTMLElement | null;
-      if (el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable)) return;
-      if (e.key === 'ArrowRight') goNext();
-      else if (e.key === 'ArrowLeft') goPrev();
+    const onKey = (event: KeyboardEvent) => {
+      const element = event.target as HTMLElement | null;
+      if (element && (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA' || element.isContentEditable)) return;
+      if (event.key === 'ArrowRight') goNext();
+      if (event.key === 'ArrowLeft') goPrev();
     };
+
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [goNext, goPrev]);
 
-  // Swipe navigation.
-  const onTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
-    touchStartY.current = e.touches[0].clientY;
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setPreviewEntry(null);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
+  const onTouchStart = (event: React.TouchEvent) => {
+    touchStartX.current = event.touches[0].clientX;
+    touchStartY.current = event.touches[0].clientY;
   };
-  const onTouchEnd = (e: React.TouchEvent) => {
+
+  const onTouchEnd = (event: React.TouchEvent) => {
     if (touchStartX.current === null || touchStartY.current === null) return;
-    const dx = e.changedTouches[0].clientX - touchStartX.current;
-    const dy = e.changedTouches[0].clientY - touchStartY.current;
+    const dx = event.changedTouches[0].clientX - touchStartX.current;
+    const dy = event.changedTouches[0].clientY - touchStartY.current;
     touchStartX.current = null;
     touchStartY.current = null;
-    // Require a mostly-horizontal, decisive swipe.
+
     if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) {
       if (dx < 0) goNext();
       else goPrev();
@@ -67,9 +64,8 @@ export default function Magazine() {
   const issue = ISSUES[page];
 
   return (
-    <div className="min-h-screen bg-theme-bg dark:bg-theme-bg-dark transition-colors duration-300">
-      <section className="max-w-5xl mx-auto px-4 py-8 sm:py-12" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
-        {/* Masthead */}
+    <div className="min-h-screen bg-theme-bg dark:bg-theme-bg-dark">
+      <section className="max-w-7xl mx-auto px-4 py-8 sm:py-12" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
         <header className="mb-6 sm:mb-8 border-b border-theme-accent/20 dark:border-theme-accent-dark pb-5">
           <p className="text-[11px] font-semibold tracking-[0.25em] uppercase text-theme-accent dark:text-theme-secondary-dark mb-3 flex items-center gap-3">
             <span className="w-8 h-px bg-theme-accent dark:bg-theme-accent-dark" />
@@ -79,11 +75,10 @@ export default function Magazine() {
             A magazine of everything I build
           </h1>
           <p className="text-sm sm:text-base text-theme-secondary dark:text-theme-secondary-dark leading-relaxed max-w-2xl">
-            Two pages, one catalogue — software and games. Flip through it like a real magazine: use the arrows, your keyboard (← →), or swipe.
+            Three pages, one catalogue — products, client work, games, systems, and studio craft. Use the arrows to move through the archive.
           </p>
         </header>
 
-        {/* Navigation */}
         <div className="mb-6 sm:mb-8">
           <FlipControls
             canPrev={page > 0}
@@ -94,71 +89,109 @@ export default function Magazine() {
           />
         </div>
 
-        {/* The flipping page */}
-        <div className="magazine-stage">
-          <article
-            key={animKey}
-            className="magazine-flip-in rounded-2xl border border-theme-accent/20 dark:border-theme-accent-dark bg-theme-card dark:bg-theme-card-dark overflow-hidden"
-            style={{ ['--flip-dir' as string]: flipDir }}
-          >
-            {/* Page header — kicker + editorial lede (no big issue title) */}
-            <div className="relative px-5 sm:px-8 pt-6 sm:pt-8 pb-5 border-b border-theme-accent/15 dark:border-theme-accent-dark">
-              <div className="flex items-center justify-between gap-4 mb-3">
-                <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-theme-accent dark:text-theme-secondary-dark">
-                  {String(page + 1).padStart(2, '0')} · {issue.kicker}
-                </p>
-                {/* Page number, like a real magazine folio */}
-                <span className="flex-shrink-0 font-mono-tech text-xs tracking-widest text-theme-secondary/60 dark:text-theme-secondary-dark/60">
-                  {String(page + 1).padStart(2, '0')} / {String(TOTAL_PAGES).padStart(2, '0')}
-                </span>
-              </div>
-              <p className="text-sm sm:text-base text-theme-secondary dark:text-theme-secondary-dark leading-relaxed max-w-3xl">
-                {issue.intro}
-              </p>
-            </div>
-
-            {/* Entries */}
-            <div className="px-4 sm:px-8 py-5 sm:py-7 space-y-3 sm:space-y-4">
-              {issue.entries.map((entry) => (
-                <MagazineEntry key={entry.title} entry={entry} />
-              ))}
-            </div>
-
-            {/* Studio / art platforms — icon row at the bottom of every page */}
-            <div className="px-4 sm:px-8 pb-6 sm:pb-7">
-              <div className="rounded-xl border border-theme-accent/15 dark:border-theme-accent-dark bg-theme-bg dark:bg-theme-bg-dark px-3 py-3.5">
-                <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-theme-accent dark:text-theme-secondary-dark mb-3 px-1">
-                  Studio · Visual Craft
-                </p>
-                <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-3 sm:justify-around">
-                  {ART_PLATFORMS.map((a) => (
-                    <a
-                      key={a.name}
-                      href={a.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      title={`${a.name} — ${a.note}`}
-                      aria-label={`${a.name}: ${a.note}`}
-                      className="group flex items-center gap-2 rounded-lg px-2 py-1.5 hover:bg-theme-accent/10 transition-colors"
-                    >
-                      <i className={`fab ${a.icon} text-xl sm:text-2xl text-theme-secondary dark:text-theme-secondary-dark group-hover:text-theme-action dark:group-hover:text-theme-action-dark transition-colors`} />
-                      <span className="hidden md:block">
-                        <span className="block text-xs font-semibold leading-tight text-theme-primary dark:text-theme-secondary-dark">{a.name}</span>
-                        <span className="block text-[10px] leading-tight text-theme-secondary/80 dark:text-theme-secondary-dark/70">{a.note}</span>
-                      </span>
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </article>
+        <div>
+          <MagazinePage issue={issue} pageIndex={page} onOpenImage={setPreviewEntry} />
         </div>
 
-        {/* Hint */}
         <p className="mt-5 text-center text-[11px] tracking-wide text-theme-secondary/70 dark:text-theme-secondary-dark/60">
-          Tip: use ← → keys or swipe to flip pages.
+          Tip: use the arrows, keyboard, or swipe to move through the magazine.
         </p>
+
+        <StudioFooter />
       </section>
+      {previewEntry && <PreviewDialog entry={previewEntry} onClose={() => setPreviewEntry(null)} />}
+    </div>
+  );
+}
+
+function MagazinePage({ issue, pageIndex, onOpenImage }: { issue: MagazineIssue; pageIndex: number; onOpenImage: (entry: Entry) => void }) {
+  return (
+    <article className={`rounded-2xl border border-theme-accent/20 dark:border-theme-accent-dark bg-theme-card dark:bg-theme-card-dark overflow-hidden ${pageIndex === 0 ? 'border-t-4 border-t-theme-action dark:border-t-theme-action-dark' : 'border-t-4 border-t-theme-accent dark:border-t-theme-accent-dark'}`}>
+      <div className="relative px-5 sm:px-8 pt-6 sm:pt-8 pb-5 border-b border-theme-accent/15 dark:border-theme-accent-dark">
+        <div className="flex items-center justify-between gap-4 mb-3">
+          <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-theme-accent dark:text-theme-secondary-dark">
+            {String(pageIndex + 1).padStart(2, '0')} · {issue.kicker}
+          </p>
+          <span className="flex-shrink-0 font-mono-tech text-xs tracking-widest text-theme-secondary/60 dark:text-theme-secondary-dark/60">
+            {String(pageIndex + 1).padStart(2, '0')} / {String(TOTAL_PAGES).padStart(2, '0')}
+          </span>
+        </div>
+        <h2 className="text-xl font-bold text-theme-primary dark:text-theme-secondary-dark mb-2">{issue.title}</h2>
+        <p className="text-sm sm:text-base text-theme-secondary dark:text-theme-secondary-dark leading-relaxed">
+          {issue.intro}
+        </p>
+      </div>
+
+      <div className="px-4 sm:px-8 py-5 sm:py-7 space-y-3 sm:space-y-4">
+        {issue.entries.map((entry) => (
+          <MagazineEntry key={entry.title} entry={entry} onOpenImage={onOpenImage} />
+        ))}
+      </div>
+    </article>
+  );
+}
+
+function StudioFooter() {
+  return (
+    <footer className="mt-8 border-t border-theme-accent/20 dark:border-theme-accent-dark pt-6">
+      <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-theme-accent dark:text-theme-secondary-dark mb-4">Studio · Visual Craft</p>
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+        {ART_PLATFORMS.map((platform) => (
+          <a
+            key={platform.name}
+            href={platform.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            title={`${platform.name} — ${platform.note}`}
+            aria-label={`${platform.name}: ${platform.note}`}
+            className="group border border-theme-accent/15 dark:border-theme-accent-dark px-3 py-3 hover:bg-theme-accent/10"
+          >
+            <div className="flex items-center gap-2 mb-2">
+              {platform.logo ? (
+                <span className="itchio-logo" aria-hidden="true" />
+              ) : (
+                <i className={`fab ${platform.icon} text-lg text-theme-secondary dark:text-theme-secondary-dark group-hover:text-theme-action dark:group-hover:text-theme-action-dark`} aria-hidden="true" />
+              )}
+              <span className="text-xs font-semibold text-theme-primary dark:text-theme-secondary-dark">{platform.name}</span>
+            </div>
+            <span className="block text-[10px] leading-tight text-theme-secondary dark:text-theme-secondary-dark">{platform.note}</span>
+          </a>
+        ))}
+      </div>
+    </footer>
+  );
+}
+
+function PreviewDialog({ entry, onClose }: { entry: Entry; onClose: () => void }) {
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4" role="dialog" aria-modal="true" aria-label={`${entry.title} preview`}>
+      <button type="button" className="absolute inset-0 cursor-default" aria-label="Close preview" onClick={onClose} />
+      <div className="relative z-10 max-h-[90vh] w-full max-w-4xl overflow-auto border border-theme-accent/40 bg-theme-card p-3 dark:border-theme-accent-dark dark:bg-theme-card-dark sm:p-5">
+        <div className="mb-3 flex items-start justify-between gap-4">
+          <div>
+            <p className="font-mono-tech text-[10px] tracking-[0.18em] text-theme-accent dark:text-theme-accent-dark">PROJECT PREVIEW</p>
+            <h2 className="text-lg font-bold text-theme-primary dark:text-theme-secondary-dark">{entry.title}</h2>
+          </div>
+          <button type="button" onClick={onClose} className="border border-theme-accent/30 px-3 py-2 text-xs font-semibold text-theme-primary dark:border-theme-accent-dark dark:text-theme-secondary-dark" aria-label="Close preview">
+            Close
+          </button>
+        </div>
+        {entry.cover ? (
+          <img
+            src={entry.cover}
+            alt={`${entry.title} enlarged preview`}
+            className="max-h-[70vh] w-full object-contain bg-theme-bg dark:bg-theme-bg-dark"
+            onError={(event) => {
+              event.currentTarget.onerror = null;
+              event.currentTarget.src = '/assets/projects/xmbwavemenu.png';
+            }}
+          />
+        ) : (
+          <div className="flex min-h-64 items-center justify-center border border-dashed border-theme-accent/30 bg-theme-bg p-8 text-center text-sm text-theme-secondary dark:border-theme-accent-dark dark:bg-theme-bg-dark dark:text-theme-secondary-dark">
+            Screenshot coming soon for this project.
+          </div>
+        )}
+      </div>
     </div>
   );
 }

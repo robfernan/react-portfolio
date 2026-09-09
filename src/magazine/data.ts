@@ -4,6 +4,7 @@
 
 export type Entry = {
   title: string;
+  format?: string;
   cover?: string;
   blurb: string;
   tech?: string[];
@@ -18,6 +19,7 @@ export type Entry = {
 export type Issue = {
   id: string;
   kicker: string; // small label, e.g. "Software & Tools"
+  title: string;
   intro: string; // editorial lede
   entries: Entry[];
 };
@@ -25,7 +27,8 @@ export type Issue = {
 export const ISSUES: Issue[] = [
   {
     id: 'build',
-    kicker: 'Software & Tools',
+    kicker: 'Products, Client Work & Tools',
+    title: 'Products & Client Work',
     intro:
       'Production software and cross-platform tools — the engineering side of the catalogue. Flight planning, document suites, launchers, and IDEs.',
     entries: [
@@ -62,12 +65,41 @@ export const ISSUES: Issue[] = [
       },
       {
         title: 'Restaurant Website',
+        format: 'CLIENT / WEB',
         cover: '/assets/projects/restaurantmenu.png',
         blurb:
-          'Service landing page for a South Florida restaurant — menu showcase, booking system, and customer engagement optimization.',
+          'Restaurant ordering experience with a browsable menu, cart flow, and receipt option — a small business site treated as a real product rather than a static brochure.',
         tech: ['HTML', 'CSS', 'JavaScript'],
         status: 'Production',
-        impact: 'Live production site',
+        impact: 'Menu • Cart • Receipt flow',
+      },
+      {
+        title: 'Florida Window & Door Maintenance Inc.',
+        format: 'CLIENT / WEB',
+        blurb:
+          'Service-focused landing page for a Florida maintenance company — clear offerings, contact pathways, and a practical conversion-first layout built from the ground up.',
+        tech: ['HTML', 'CSS', 'JavaScript'],
+        status: 'Client Website',
+        impact: 'Live business presence • floridawindowndoormaintenance.com',
+        link: 'https://floridawindowndoormaintenance.com',
+      },
+      {
+        title: 'M&G Gutters',
+        format: 'CLIENT / WEB',
+        blurb:
+          'A focused local-service landing page for gutter work, designed around trust, readable service information, and direct customer contact.',
+        tech: ['HTML', 'CSS', 'JavaScript'],
+        status: 'Client Website',
+        impact: 'Local service landing page',
+      },
+      {
+        title: 'Florida Window & Door Invoicing / Proposal App',
+        format: 'CLIENT / CAPACITOR',
+        blurb:
+          'A lightweight business tool for creating invoices and proposals for Florida Window & Door Maintenance Inc., built as a browser-first app with a Capacitor path to mobile.',
+        tech: ['HTML', 'CSS', 'JavaScript', 'Capacitor'],
+        status: 'Business Tool',
+        impact: 'Proposals • Invoices • Mobile-ready workflow',
       },
       {
         title: 'NeroGPUI',
@@ -91,7 +123,8 @@ export const ISSUES: Issue[] = [
   },
   {
     id: 'play',
-    kicker: 'Games & Experiments',
+    kicker: 'Games, Hardware & Open Source',
+    title: 'Games & Systems',
     intro:
       'Interactive experiences, retro-console homebrew, and the fun stuff — from published games to baremetal PS1 MIPS.',
     entries: [
@@ -126,14 +159,46 @@ export const ISSUES: Issue[] = [
         impact: 'Cross-platform • retro UI design',
       },
       {
-        title: 'PSP-Programming',
-        cover: '/assets/projects/psp.png',
+        title: 'Dreamcast PS3 Theme → HTML5 XMB',
+        format: 'VIDEO / INTERFACE RECREATION',
+        cover: 'https://i.ytimg.com/an_webp/YagOy0VBs-Q/mqdefault_6s.webp?du=3000&sqp=CMDVg9UG&rs=AOn4CLAax-CtdHLIfjGOFtZGHDlNbI8XTg',
         blurb:
-          'Modern PSP homebrew tutorials and step-by-step examples — a comprehensive guide for aspiring console developers covering graphics, audio, input, and cross-platform dev.',
-        tech: ['C', 'SDL2', 'PSPSDK'],
-        status: 'Open Source',
-        impact: 'Open-source education • community resource',
-        github: 'https://github.com/robfernan/PSP-Programming',
+          'A custom cross-platform web interface created by extracting an original SEGA Dreamcast PS3 theme (.p3t) and rebuilding it as an interactive XMB browser homepage with authentic layouts, icons, gamepad support, and menu navigation.',
+        tech: ['HTML5', 'CSS', 'JavaScript', 'Gamepad API'],
+        status: 'Video Feature',
+        impact: 'Converting a Real PS3 Dreamcast Theme (.P3T) to HTML5',
+        youtube: 'https://www.youtube.com/watch?v=YagOy0VBs-Q',
+      },
+      {
+        title: 'Qualia S3 Speedometer',
+        format: 'EMBEDDED / HARDWARE',
+        blurb:
+          'Embedded dashboard experiment for the Adafruit Qualia S3 RGB 666 TFT round display — a 480×480 bitmap speedometer with a responsive needle that behaves like a car instrument.',
+        tech: ['ESP32-S3', 'Adafruit Qualia', 'Embedded C/C++', 'Bitmap UI'],
+        status: 'Embedded Experiment',
+        impact: 'Round TFT • reactive needle • automotive interface',
+      },
+      {
+        title: 'PSP Digital Comics',
+        format: 'CROSS-PLATFORM / READER',
+        cover: 'https://raw.githubusercontent.com/robfernan/robfernan/main/digital_comics.png',
+        blurb:
+          'A faithful PSP Digital Comics-style reader where users bring their own CBZ files. This is the modern cross-platform successor to the SFML Comic Reader.',
+        tech: ['Wails', 'Capacitor', 'React', 'TypeScript', 'Tailwind CSS'],
+        status: 'Cross-Platform',
+        impact: 'CBZ reader • Desktop • Mobile',
+        github: 'https://github.com/robfernan#psp-digital-comics',
+      },
+      {
+        title: 'Love2D Xbox-Inspired Launcher',
+        format: 'RETRO-TECH / DESKTOP',
+        cover: '/assets/projects/love2d_xboxlauncher.png',
+        blurb:
+          'A retro-futuristic Xbox-inspired desktop launcher in Lua/LÖVE with a frameless draggable window, procedural glowing sphere, orbital wireframe rings, bloom shader, radar grid, category menus, theme switching, shortcut management, and app launching.',
+        tech: ['Lua', 'Love2D', 'GLSL', 'Desktop UI'],
+        status: 'Active Build',
+        impact: 'Launcher • Shortcut Manager • App Launcher',
+        github: 'https://github.com/robfernan/Love2D_XboxLauncher',
       },
       {
         title: 'PS1-Mips-Programming',
@@ -147,13 +212,58 @@ export const ISSUES: Issue[] = [
       },
     ],
   },
+  {
+    id: 'studio',
+    kicker: 'Watch Faces, Graphic Design & UI/UX',
+    title: 'Studio Craft',
+    intro:
+      'The visual systems behind the software: wearable interfaces, automotive graphics, editorial layouts, and design work built with the same care as the code.',
+    entries: [
+      {
+        title: 'Wear OS Watch Face',
+        format: 'WATCH FACE / AVIATION',
+        cover: '/assets/projects/watch_face_android.png',
+        blurb: 'Aviation-minded wearable interface work with compact readouts, high-contrast data, and a visual language designed for a glance.',
+        tech: ['Wear OS', 'Android', 'UI Design'],
+        status: 'Visual System',
+        impact: 'Small-screen clarity • aviation data',
+      },
+      {
+        title: 'Fish Watch Face',
+        format: 'WATCH FACE / VISUAL SYSTEM',
+        cover: '/assets/home/watchfacefish.png',
+        blurb: 'A playful Wear OS face exploring character, color, and readable time presentation on a small circular display.',
+        tech: ['Wear OS', 'Illustration', 'Visual Design'],
+        status: 'Wearable',
+        impact: 'Character-driven interface design',
+      },
+      {
+        title: 'Automotive Concept Art',
+        format: 'GRAPHIC DESIGN / AUTOMOTIVE',
+        cover: '/assets/home/car-art.jpg',
+        blurb: 'Automotive illustration and concept work that informs the visual systems behind the software.',
+        tech: ['Automotive Art', 'Illustration', 'Composition'],
+        status: 'Graphic Design',
+        impact: 'Signature visual language',
+      },
+      {
+        title: 'Interface and Print Direction',
+        format: 'GRAPHIC DESIGN / UIUX',
+        cover: '/assets/projects/personalportfolioreact.png',
+        blurb: 'Editorial layouts, interface studies, and visual identity work across product screens and printed presentation.',
+        tech: ['UI/UX', 'Editorial', 'Visual Identity'],
+        status: 'Design Practice',
+        impact: 'Design system thinking',
+      },
+    ],
+  },
 ];
 
 export const ART_PLATFORMS = [
   { name: 'Pinterest', icon: 'fa-pinterest-p', href: 'https://www.pinterest.com/fernandez7466/_profile/', note: 'Moodboards & inspiration' },
   { name: 'ArtStation', icon: 'fa-artstation', href: 'https://www.artstation.com/robfernan', note: '3D & digital art' },
   { name: 'Behance', icon: 'fa-behance', href: 'https://www.behance.net/robertfern5088', note: 'UI/UX design' },
-  { name: 'Itch.io', icon: 'fa-gamepad', href: 'https://mungdaal321.itch.io/', note: 'Game assets & demos' },
+  { name: 'Itch.io', logo: '/images/itchio-textless-black.svg', href: 'https://mungdaal321.itch.io/', note: 'Game assets & demos' },
   { name: 'DeviantArt', icon: 'fa-deviantart', href: 'https://www.deviantart.com/rober321', note: 'Sketches & concepts' },
   { name: 'Blog', icon: 'fa-wordpress', href: 'https://robfernan.wordpress.com/', note: 'WordPress blog' },
 ];

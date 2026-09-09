@@ -24,6 +24,12 @@ const popularVideos: { category: string; items: Video[] }[] = [
   }
 ];
 
+const STREAMING_PILLARS = [
+  { label: 'CODE', detail: 'Building tools in public' },
+  { label: 'MAKE', detail: 'Art, interfaces, and hardware' },
+  { label: 'PLAY', detail: 'Games, retro tech, and experiments' },
+];
+
 export default function Streaming() {
   const [isDark, setIsDark] = useState(() => typeof document !== 'undefined' && document.documentElement.classList.contains('dark'));
 
@@ -40,20 +46,29 @@ export default function Streaming() {
   const twitchThumb = isDark ? '/assets/streaming/twitch-thumbnail-dark.jpg' : '/assets/streaming/twitch-thumbnail-light.jpg';
 
   return (
-    <div className="max-w-6xl mx-auto py-12 px-4 bg-theme-bg dark:bg-theme-bg-dark transition-colors duration-300">
+    <div className="max-w-7xl mx-auto py-12 px-4 bg-theme-bg dark:bg-theme-bg-dark transition-colors duration-300">
       <header className="mb-8 border-b border-theme-accent/20 dark:border-theme-accent-dark pb-6">
         <p className="text-[11px] font-semibold tracking-[0.25em] uppercase text-theme-accent dark:text-theme-secondary-dark mb-3 flex items-center gap-3">
           <span className="w-8 h-px bg-theme-accent dark:bg-theme-accent-dark" />
           MungDaal321 · Live
         </p>
         <h1 className="text-3xl sm:text-4xl font-black leading-[1.05] mb-3 text-theme-primary dark:text-theme-secondary-dark">Streaming</h1>
-        <p className="text-sm sm:text-base text-theme-secondary dark:text-theme-secondary-dark leading-relaxed max-w-2xl">Where I stream — live coding, art, and gaming on Twitch and YouTube.</p>
+        <p className="text-sm sm:text-base text-theme-secondary dark:text-theme-secondary-dark leading-relaxed max-w-2xl">A working notebook in public — live coding, automotive sketching, embedded experiments, aviation tools, and games.</p>
       </header>
 
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-px bg-theme-accent/20 dark:bg-theme-accent-dark/30 mb-12 border border-theme-accent/20 dark:border-theme-accent-dark">
+        {STREAMING_PILLARS.map((pillar) => (
+          <div key={pillar.label} className="bg-theme-bg dark:bg-theme-bg-dark px-5 py-5">
+            <p className="font-mono-tech text-xs tracking-[0.2em] text-theme-accent dark:text-theme-accent-dark mb-2">{pillar.label}</p>
+            <p className="text-sm font-semibold text-theme-primary dark:text-theme-primary-dark">{pillar.detail}</p>
+          </div>
+        ))}
+      </section>
+
       {/* Main Platforms Section */}
-      <div className="streaming-layout md:flex md:gap-6 mb-12">
+      <div className="streaming-layout md:grid md:grid-cols-2 md:gap-6 mb-12">
         {/* YouTube */}
-        <section className="youtube rounded border border-theme-accent dark:border-theme-accent-dark bg-theme-card dark:bg-theme-card-dark p-6 flex-1 mb-6 md:mb-0">
+        <section className="youtube border-t-4 border-red-600 dark:border-red-500 bg-theme-card dark:bg-theme-card-dark p-6 flex-1 mb-6 md:mb-0">
           <div className="flex items-center gap-3 mb-4">
             <i className="fab fa-youtube text-red-600 dark:text-red-500 text-2xl"></i>
             <h2 className="text-2xl font-semibold text-theme-primary dark:text-theme-primary-dark">YouTube</h2>
@@ -68,7 +83,7 @@ export default function Streaming() {
         </section>
 
         {/* Twitch */}
-        <section className="twitch rounded border border-theme-accent dark:border-theme-accent-dark bg-theme-card dark:bg-theme-card-dark p-6 flex-1">
+        <section className="twitch border-t-4 border-purple-600 dark:border-purple-500 bg-theme-card dark:bg-theme-card-dark p-6 flex-1">
           <div className="flex items-center gap-3 mb-4">
             <i className="fab fa-twitch text-purple-600 dark:text-purple-500 text-2xl"></i>
             <h2 className="text-2xl font-semibold text-theme-primary dark:text-theme-primary-dark">Twitch</h2>

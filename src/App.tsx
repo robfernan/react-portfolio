@@ -3,9 +3,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import PortfolioHome from './PortfolioHome';
-import Catalogue from './Catalogue';
 import Magazine from './magazine/Magazine';
 import Streaming from './Streaming';
+import Resume from './Resume';
 import AviationProApp from './aviationpro/AviationProApp';
 import Footer from './Footer';
 import BackToTop from './components/ui/BackToTop';
@@ -76,8 +76,8 @@ function AppWithDynamicName() {
 				return (
 					<ThemeProvider value={{ theme, darkMode, setTheme, toggleDarkMode }}>
 				<div className="min-h-screen bg-theme-bg dark:bg-theme-bg-dark transition-colors duration-300 flex flex-col">
-						<header className="bg-theme-header dark:bg-theme-header-dark shadow transition-colors duration-300">
-							<nav className="max-w-5xl mx-auto px-4 py-3">
+						<header className="border-b border-theme-accent/15 dark:border-theme-accent-dark bg-theme-header dark:bg-theme-header-dark shadow-sm transition-colors duration-300">
+							<nav className="max-w-7xl mx-auto px-4 py-3">
 								<div className="flex items-center justify-between">
 									<Link to="/" className="text-xl font-bold text-theme-primary dark:text-theme-primary-dark hover:underline">{displayName}</Link>
 									
@@ -86,6 +86,7 @@ function AppWithDynamicName() {
 										<Link to="/works" className="text-theme-secondary dark:text-theme-secondary-dark hover:underline">Works</Link>
 										<Link to="/aviationpro" className="text-theme-secondary dark:text-theme-secondary-dark hover:underline">Aviation</Link>
 										<Link to="/streaming" className="text-theme-secondary dark:text-theme-secondary-dark hover:underline">Streaming</Link>
+										<Link to="/resume" className="text-theme-secondary dark:text-theme-secondary-dark hover:underline">Résumé</Link>
 									</div>
 
 									{/* Theme Controls */}
@@ -154,6 +155,13 @@ function AppWithDynamicName() {
 										>
 											Streaming
 										</Link>
+										<Link 
+											to="/resume" 
+											className="block py-2 text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-accent dark:hover:text-theme-accent-dark"
+											onClick={() => setMobileMenuOpen(false)}
+										>
+											Résumé
+										</Link>
 
 										
 										{/* Mobile Theme Controls */}
@@ -194,11 +202,12 @@ function AppWithDynamicName() {
 							<Routes>
 									<Route path="/" element={<PortfolioHome />} />
 									<Route path="/works" element={<Magazine />} />
-							<Route path="/work" element={<Catalogue />} />
+									<Route path="/work" element={<Magazine />} />
 								{/* Legacy routes now render the unified catalogue */}
-								<Route path="/projects" element={<Catalogue />} />
+								<Route path="/projects" element={<Magazine />} />
 									<Route path="/aviationpro/*" element={<AviationProApp />} />
 									<Route path="/streaming" element={<Streaming />} />
+									<Route path="/resume" element={<Resume />} />
 								</Routes>
 							</main>
 							<Footer theme={theme} />

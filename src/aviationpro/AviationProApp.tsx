@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Calculator, Plane, Wind, MapPin, Navigation, FileText } from 'lucide-react';
-import { useTheme } from '../context/ThemeContext';
 import FlightPlanForm from './src/components/FlightPlanForm';
 import WeatherCalculator from './src/components/WeatherCalculator';
 import WeightBalanceCalculator from './src/components/WeightBalanceCalculator';
@@ -8,10 +7,12 @@ import CX6Calculator from './src/components/CX6Calculator';
 import NavigationTools from './src/components/NavigationTools';
 import FlightLogs from './src/components/FlightLogs';
 
-function AviationProApp() {
-  // Dark mode is now sourced from the shared ThemeContext (single source of
-  // truth), so we no longer prop-drill it down from App.tsx.
-  const { darkMode } = useTheme();
+type AviationProAppProps = {
+  darkMode?: boolean;
+  toggleDarkMode?: () => void;
+}
+
+function AviationProApp({ darkMode = false, toggleDarkMode }: AviationProAppProps) {
   const [activeTab, setActiveTab] = useState('planner');
 
   const tabs = [
@@ -23,14 +24,14 @@ function AviationProApp() {
     { id: 'logs', label: 'Flight Logs', icon: FileText }
   ];
 
+  // toggleDarkMode is provided by parent; if not provided, fall back to noop
+  const localToggle = toggleDarkMode ?? (() => {});
+
   return (
     <div className="aviation-scope min-h-screen bg-theme-bg dark:bg-theme-bg-dark text-theme-primary dark:text-theme-primary-dark">
       <header className="border-b border-theme-accent/30 dark:border-theme-accent-dark/30 bg-theme-header dark:bg-theme-header-dark">
         <div className="px-2 py-1 flex items-center justify-between gap-1">
-          <h1 className="text-lg sm:text-2xl font-bold text-theme-primary dark:text-theme-primary-dark flex-shrink-0 whitespace-nowrap">
-            <span className="sm:hidden">AVPRO</span>
-            <span className="hidden sm:inline">AviationPro</span>
-          </h1>
+          <h1 className="text-lg sm:text-2xl font-bold text-theme-primary dark:text-theme-primary-dark flex-shrink-0">AviationPro</h1>
           <nav className="flex gap-0.5 flex-1">
             {tabs.map(tab => (
               <button

@@ -14,7 +14,7 @@ type FooterProps = {
 export default function Footer(_: FooterProps) {
   return (
     <footer className="w-full py-6 bg-theme-footer dark:bg-theme-footer-dark border-t border-theme-accent dark:border-theme-accent-dark mt-12 transition-colors duration-300">
-      <div className="max-w-5xl mx-auto flex flex-col items-center justify-center px-4">
+      <div className="max-w-7xl mx-auto flex flex-col items-center justify-center px-4">
         <div className="flex space-x-6 mb-2">
           {socials.map(s => (
             <a

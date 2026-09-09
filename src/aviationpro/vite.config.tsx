@@ -5,7 +5,18 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   optimizeDeps: {
-    exclude: ['lucide-react'],
+    include: ['lucide-react'],
+  },
+  server: {
+    host: true,
+    proxy: {
+      '/aviationweather': {
+        target: 'https://aviationweather.gov',
+        changeOrigin: true,
+        secure: true,
+        rewrite: (path) => path.replace(/^\/aviationweather/, ''),
+      },
+    },
   },
   build: {
     rollupOptions: {

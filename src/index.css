@@ -24,6 +24,28 @@
   --color-theme-action-dark: var(--color-action-dark);
 }
 
+.itchio-logo {
+  display: block;
+  width: 1.5rem;
+  height: 1.5rem;
+  flex: 0 0 auto;
+  background-color: var(--color-secondary);
+  -webkit-mask: url('/images/itchio-textless-black.svg') center / contain no-repeat;
+  mask: url('/images/itchio-textless-black.svg') center / contain no-repeat;
+}
+
+.dark .itchio-logo {
+  background-color: var(--color-secondary-dark);
+}
+
+.group:hover .itchio-logo {
+  background-color: var(--color-action);
+}
+
+.dark .group:hover .itchio-logo {
+  background-color: var(--color-action-dark);
+}
+
 /* Base responsive setup */
 * {
   box-sizing: border-box;
@@ -31,102 +53,40 @@
 
 /* Smooth scrolling */
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
   -webkit-text-size-adjust: 100%;
 }
 
 body {
   overflow-x: hidden;
   min-width: 320px;
+  color: var(--color-primary);
+  background-color: var(--color-background);
+  line-height: 1.5;
+}
+
+.dark body {
+  color: var(--color-primary-dark);
+  background-color: var(--color-background-dark);
+}
+
+::selection {
+  color: var(--color-primary-dark);
+  background: var(--color-accent);
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* Prevent horizontal scroll on mobile */
 #root {
   overflow-x: hidden;
   width: 100%;
-}
-
-/* Custom animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-}
-
-.animate-fade-in-up {
-  animation: fadeInUp 0.6s ease-out forwards;
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.6s ease-out forwards;
-}
-
-.animate-slide-in-left {
-  animation: slideInLeft 0.6s ease-out forwards;
-}
-
-.animate-pulse-slow {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-/* Hover effects */
-.hover-lift {
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-}
-
-.hover-lift:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-}
-
-/* Loading skeleton */
-.skeleton {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: loading 1.5s infinite;
-}
-
-@keyframes loading {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
 }
 
 /* Gradient text */
@@ -159,15 +119,6 @@ body {
     0 1px 2px rgba(0, 0, 0, 0.08);
 }
 
-/* High-end hover liftoff */
-.hover-lift-premium {
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.hover-lift-premium:hover {
-  transform: translateY(-8px) scale(1.015);
-  box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.25), 0 10px 20px -10px rgba(0, 0, 0, 0.15);
-}
-
 /* Horizontal scroll-snap gallery (iPhone SE friendly) */
 .snap-gallery {
   scroll-snap-type: x mandatory;
@@ -184,9 +135,34 @@ body {
   outline-offset: 2px;
 }
 
-/* Smooth transitions for theme switching */
-* {
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+:focus-visible {
+  outline: 2px solid var(--color-action);
+  outline-offset: 3px;
+}
+
+.aviation-scope {
+  background-image: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--color-accent) 5%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 24px 24px;
+}
+
+.aviation-scope > main {
+  max-width: 1600px;
+  margin-inline: auto;
+}
+
+.aviation-scope input,
+.aviation-scope select,
+.aviation-scope textarea {
+  min-height: 2.5rem;
+}
+
+.aviation-scope button,
+.aviation-scope a {
+  font-weight: 600;
 }
 
 /* Mobile-friendly touch targets */
@@ -281,35 +257,18 @@ table thead th {
    Kept minimal on purpose: the palette + glassy glow live in theme-vars.css.
    No per-element borders here (that was causing the old "boxy" feel). */
 
-/* ===== Magazine page-flip transition =====
-   The Works pages are two magazine spreads. When you flip between them we
-   animate a quick 3D turn around the vertical axis, like turning a page.
-   Direction is set via --flip-dir (1 = forward/next, -1 = back/prev). */
-.magazine-stage {
-  perspective: 2400px;
+/* Motion is intentionally disabled across this portfolio. */
+html {
+  scroll-behavior: auto !important;
 }
 
-@keyframes magazineFlipIn {
-  from {
-    opacity: 0.35;
-    transform: rotateY(calc(var(--flip-dir, 1) * -78deg)) scale(0.96);
-  }
-  to {
-    opacity: 1;
-    transform: rotateY(0deg) scale(1);
-  }
+*,
+*::before,
+*::after {
+  animation: none !important;
+  transition: none !important;
 }
 
-.magazine-flip-in {
-  animation: magazineFlipIn 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
-  transform-origin: center center;
-  backface-visibility: hidden;
-  will-change: transform, opacity;
-}
-
-/* Respect users who prefer less motion */
-@media (prefers-reduced-motion: reduce) {
-  .magazine-flip-in {
-    animation-duration: 1ms;
-  }
+*:hover {
+  transform: none !important;
 }

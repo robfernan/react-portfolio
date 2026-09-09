@@ -31,8 +31,39 @@ const NavigationTools: React.FC<NavigationToolsProps> = ({ darkMode }) => {
     nauticalMiles: '',
     statuteMiles: '',
     kilometers: '',
-    feet: ''
+    feet: '',
+    gallons: '',
+    pounds: '',
+    celsius: '',
+    fahrenheit: '',
+    meters: '',
+    altitudeFeet: ''
   });
+
+  const convertFuel = (val: number, from: 'gal' | 'lbs') => {
+    const ratio = 6.0; // Standard Avgas weight
+    setConversions(prev => ({
+      ...prev,
+      gallons: from === 'gal' ? val.toString() : (val / ratio).toFixed(1),
+      pounds: from === 'lbs' ? val.toString() : (val * ratio).toFixed(1)
+    }));
+  };
+
+  const convertTemp = (val: number, from: 'c' | 'f') => {
+    setConversions(prev => ({
+      ...prev,
+      celsius: from === 'c' ? val.toString() : ((val - 32) * 5/9).toFixed(1),
+      fahrenheit: from === 'f' ? val.toString() : (val * 9/5 + 32).toFixed(1)
+    }));
+  };
+
+  const convertAlt = (val: number, from: 'm' | 'ft') => {
+    setConversions(prev => ({
+      ...prev,
+      meters: from === 'm' ? val.toString() : (val / 3.28084).toFixed(1),
+      altitudeFeet: from === 'ft' ? val.toString() : (val * 3.28084).toFixed(1)
+    }));
+  };
 
   // Aviation Weather Links
   const weatherServices = [
@@ -192,25 +223,21 @@ const NavigationTools: React.FC<NavigationToolsProps> = ({ darkMode }) => {
     <div className={`${darkMode ? 'bg-theme-card-dark' : 'bg-theme-card'} rounded-lg shadow-lg border ${
       darkMode ? 'border-theme-accent-dark/30' : 'border-theme-accent/30'
     }`}>
-      <div className={`${darkMode ? 'bg-theme-header-dark' : 'bg-theme-header'} border-b ${
-        darkMode ? 'border-theme-accent-dark/30' : 'border-theme-accent/30'
+      <div className={`${darkMode ? 'bg-slate-950 border-slate-800' : 'bg-white border-slate-200'} border-b ${
+        darkMode ? 'border-slate-800' : 'border-slate-200'
       } p-6`}>
         <h2 className="text-2xl font-bold mb-4">Navigation Tools</h2>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap bg-black border border-zinc-800 rounded-sm overflow-hidden">
           {tools.map((tool) => {
             const Icon = tool.icon;
             return (
               <button
                 key={tool.id}
                 onClick={() => setActiveTool(tool.id)}
-                className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                className={`flex items-center justify-center space-x-2 px-4 py-4 text-[9px] font-black tracking-widest border-r border-zinc-800 transition-all duration-200 ${
                   activetool === tool.id
-                    ? darkMode
-                      ? 'bg-theme-accent-dark text-white'
-                      : 'bg-theme-accent text-white'
-                    : darkMode
-                      ? 'bg-theme-card-dark text-theme-secondary-dark hover:bg-theme-accent-dark/20'
-                      : 'bg-theme-card text-theme-secondary hover:bg-theme-accent/10'
+                    ? 'bg-red-700 text-white shadow-[inset_0_0_20px_rgba(0,0,0,0.4)]'
+                    : 'text-zinc-600 hover:text-zinc-300 hover:bg-zinc-900/50'
                 }`}
               >
                 <Icon className="w-4 h-4" />
@@ -497,23 +524,63 @@ const NavigationTools: React.FC<NavigationToolsProps> = ({ darkMode }) => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-2">Feet</label>
-                  <input
-                    type="number"
-                    step="any"
-                    value={conversions.feet}
-                    onChange={(e) => {
-                      setConversions({...conversions, feet: e.target.value});
-                      const val = parseFloat(e.target.value);
-                      if (!isNaN(val)) convertUnits(val, 'ft');
-                    }}
-                    className={`w-full p-3 border rounded-lg ${
-                      darkMode 
-                        ? 'bg-theme-card-dark border-theme-accent-dark/30 text-theme-primary-dark' 
-                        : 'bg-theme-card border-theme-accent/30 text-theme-primary'
-                    }`}
-                    placeholder="607612"
-                  />
+                  <label className="block text-sm font-medium mb-2 text-red-500 uppercase tracking-tighter">Fuel (Avgas 6lb/gal)</label>
+                  <div className="grid grid-cols-2 gap-2">
+                    <input
+                      type="number"
+                      placeholder="Gal"
+                      value={conversions.gallons}
+                      onChange={e => convertFuel(parseFloat(e.target.value), 'gal')}
+                      className={`p-3 border rounded-lg bg-black border-zinc-800 text-white w-full`}
+                    />
+                    <input
+                      type="number"
+                      placeholder="Lbs"
+                      value={conversions.pounds}
+                      onChange={e => convertFuel(parseFloat(e.target.value), 'lbs')}
+                      className={`p-3 border rounded-lg bg-black border-zinc-800 text-white w-full`}
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2 text-red-500 uppercase tracking-tighter">Temperature</label>
+                  <div className="grid grid-cols-2 gap-2">
+                    <input
+                      type="number"
+                      placeholder="°C"
+                      value={conversions.celsius}
+                      onChange={e => convertTemp(parseFloat(e.target.value), 'c')}
+                      className={`p-3 border rounded-lg bg-black border-zinc-800 text-white w-full`}
+                    />
+                    <input
+                      type="number"
+                      placeholder="°F"
+                      value={conversions.fahrenheit}
+                      onChange={e => convertTemp(parseFloat(e.target.value), 'f')}
+                      className={`p-3 border rounded-lg bg-black border-zinc-800 text-white w-full`}
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2 text-red-500 uppercase tracking-tighter">Altitude / Distance</label>
+                  <div className="grid grid-cols-2 gap-2">
+                    <input
+                      type="number"
+                      placeholder="Meters"
+                      value={conversions.meters}
+                      onChange={e => convertAlt(parseFloat(e.target.value), 'm')}
+                      className={`p-3 border rounded-lg bg-black border-zinc-800 text-white w-full`}
+                    />
+                    <input
+                      type="number"
+                      placeholder="Feet"
+                      value={conversions.altitudeFeet}
+                      onChange={e => convertAlt(parseFloat(e.target.value), 'ft')}
+                      className={`p-3 border rounded-lg bg-black border-zinc-800 text-white w-full`}
+                    />
+                  </div>
                 </div>
               </div>
               
@@ -564,7 +631,7 @@ const NavigationTools: React.FC<NavigationToolsProps> = ({ darkMode }) => {
               ))}
             </div>
 
-            <div className={`p-4 rounded-lg ${darkMode ? 'bg-blue-900' : 'bg-theme-header'}`}>
+            <div className={`p-4 rounded-lg ${darkMode ? 'bg-theme-header-dark' : 'bg-theme-header'}`}>
               <h4 className="font-semibold mb-2">Weather Briefing Tips</h4>
               <ul className="text-sm space-y-1">
                 <li>• Always get an official briefing before flight</li>

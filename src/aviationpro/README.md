@@ -1,168 +1,154 @@
-# AviationPro — Professional Flight Planning Suite
+# ✈️ Aviation Pro
+### The High-Performance, Design-First Pilot Suite for Desktop, Mobile, and Wear OS.
 
-A comprehensive aviation flight planning application built with React, TypeScript, and Tailwind CSS. Designed for pilots to plan, calculate, and manage all aspects of flight operations with professional-grade tools and calculations.
+[![Built with Wails](https://img.shields.io/badge/Desktop-Wails%20(Go)-red?style=for-the-badge&logo=go)](https://wails.io/)
+[![React](https://img.shields.io/badge/Frontend-React%20%7C%20TS%20%7C%20Tailwind-blue?style=for-the-badge&logo=react)](https://reactjs.org/)
+[![Mobile Port](https://img.shields.io/badge/Mobile-Capacitor%20%7C%20Android-darkgreen?style=for-the-badge&logo=capacitor)](https://capacitorjs.com/)
+[![Wear OS](https://img.shields.io/badge/Watch-Wear%20OS%20%7C%20Pixel%20Watch-orange?style=for-the-badge&logo=androidwear)](https://developer.android.com/wear)
 
-## 🚀 Features
+**Aviation Pro** is a professional-grade pilot utility suite built for precision and visibility. Engineered with a **Unified UI Architecture**, it delivers a seamless experience across frameless desktop environments (Wails), native mobile EFBs (Capacitor), and the pilot's wrist (Wear OS).
 
-### 📋 Flight Planner
-- **Complete Flight Documentation**: Aircraft type, tail number, pilot info, fuel planning
-- **Dynamic Route Planning**: Add/remove checkpoints with automatic numbering
-- **Advanced Flight Calculations**: Distance, course, ground speed, time, and fuel consumption
-- **Comprehensive Instructions**: 8-section detailed guide covering all aspects of flight planning
-- **VOR Navigation Setup**: Frequency, radial, and identifier configuration
-- **Export Options**: Print and download flight plans with professional formatting
-- **Real-time Totals**: Automatic calculation of total distance, time, and fuel
-- **Manual vs Digital Methods**: Support for both CX-6 and manual E6B calculations
+> **Current Status:** 🚀 **Beta v1.0.0 Ready**. Now fully functional on Windows Desktop, Android Mobile (MIAD01 Optimized), and Wear OS (Pixel Watch 1/2/3).
 
-### 🧮 CX-6 Flight Computer
-- **Wind Triangle Calculations**: Headwind, crosswind, and tailwind components
-- **Fuel Calculations**: Trip fuel, reserve fuel, and endurance times
-- **Time-Speed-Distance**: TAS, GS, distance, and time calculations
-- **Pressure Altitude**: Field elevation to pressure altitude conversion
-- **Density Altitude**: Performance calculations for high-altitude airports
-- **Multiple Calculator Modes**: Wind triangle, TAS, fuel consumption, time-speed-distance
+---
 
-### 🌤️ Weather Calculator
-- **Density Altitude**: Pressure altitude and density altitude calculations
-- **Cloud Base**: Temperature/dew point cloud base approximations
-- **Performance Warnings**: Color-coded alerts for high density altitude conditions
-- **ISA Deviations**: Temperature variance from standard atmosphere
-- **Units Support**: Celsius for temperature, proper aviation units
-- **Tabbed Interface**: Easy switching between density altitude and cloud base calculations
+## 🖼️ The Multi-Platform Ecosystem
 
-### ⚖️ Weight & Balance
-- **Aircraft Loading**: Pilot, passengers, fuel, and cargo weights
-- **Center of Gravity**: CG envelope calculations and limits
-- **Moment Calculations**: Weight × arm calculations
-- **Safety Alerts**: Out-of-limits warnings and recommendations
+| **Desktop (Wails)** | **Mobile (Capacitor)** | **Watch App (Wear OS)** | **Watch Face (WFF)** |
+| :--- | :--- | :--- | :--- |
+| ![Desktop View](assets/screenshots/hero_desktop.png) | ![Mobile View](assets/screenshots/hero_mobile.png) | ![Watch App](assets/screenshots/hero_watch_app.png) | ![Watch Face](assets/screenshots/hero_watch_face.png) |
+| *Hardware-style frameless canvas.* | *Responsive, touch-ready EFB.* | *Live Sync METAR Monitor.* | *Zulu-first Aviator Face.* |
 
-### 🧭 Navigation Tools
-- **Distance Calculations**: Great circle and rhumb line distances
-- **Bearing Calculations**: True and magnetic bearings
-- **Unit Conversions**: Nautical miles, statute miles, kilometers
-- **Coordinate Conversions**: Lat/lon to various formats
-- **Multiple Calculation Methods**: Haversine formula for accurate results
-- **Aviation Weather Services**: Direct links to official weather sources
-- **Time Zone Converter**: UTC to local time conversions for international flights
+---
 
-### 📝 Flight Logs
-- **Digital Logbook**: Complete flight logging with local storage
-- **Flight Details**: Date, aircraft, route, times, and conditions
-- **Automatic Calculations**: Block time, flight time, fuel used
-- **Export Capabilities**: Download flight logs for records
-- **Persistent Storage**: Data saved locally for future sessions
+## 💰 The Value Proposition & Philosophy
+Aviation Pro is designed to disrupt the "Subscription-Heavy" aviation market. While industry standards cost hundreds per year, AVPRO provides a high-end, unified experience for a fraction of the cost.
 
-## 🛠️ Technology Stack
+**AVPRO is Open Source and free on Desktop and Web.** The mobile port (Android/Wear OS) is a one-time purchase of **$0.99** to cover publishing costs and maintenance.
 
-- **Frontend**: React 18 with TypeScript
-- **Styling**: Tailwind CSS with dark mode support
-- **Icons**: Lucide React
-- **Build Tool**: Vite
-- **State Management**: React hooks
-- **Data Persistence**: Local storage for flight logs
-- **Development**: Hot module replacement, fast refresh
+> **One-Time Purchase Policy:** We believe aviation tools should be like classic games: pay once, own it forever. Subscriptions are only worth it when you are renting massive cloud databases—for a pilot's personal utility suite, local data sovereignty is king.
 
-## 🚀 Quick Start
+| Feature | **AVPRO** | **E6BX (App)** | **LogTen Pro** | **ForeFlight** |
+| :--- | :--- | :--- | :--- | :--- |
+| **Cost** | **$0.99 (One-time)** | Outdated / Varies | $79 - $349 / yr | $99 - $360 / yr |
+| **Architecture** | **Modern / Native** | Legacy / Older Android | Subscription | Subscription |
+| **Watch Integration** | **Included (Face + App)** | None | Limited | iOS Only |
+| **Privacy** | **Local-First** | Ad-Supported (Web) | Cloud-Based | Cloud-Based |
+
+---
+
+## ⚙️ Installation & Setup
 
 ### Prerequisites
-- Node.js v18+ recommended
-- npm or yarn package manager
+*   **Node.js (v18+)** & **NPM**
+*   **Go (1.21+)** (For Desktop Wails)
+*   **Android Studio** (For Mobile/Watch builds)
+*   **Wails CLI** (`go install github.com/wailsapp/wails/v2/cmd/wails@latest`)
 
-### Installation
-
-```powershell
-# Clone or navigate to project directory
-cd 'C:\Users\User\Documents\Bolt_ai\Aviation'
-
+### 🌐 Web Deployment (Local Preview)
+To run the core flight planning logic in your browser:
+```bash
 # Install dependencies
 npm install
 
-# Start development server
+# Run Vite dev server
 npm run dev
 ```
 
-### Access Application
-# AviationPro — Professional Flight Planning Suite
+### 💻 Desktop Deployment (Wails)
+To launch the frameless desktop canvas:
+```bash
+# Navigate to the wails platform folder
+cd platforms/desktop/wails
 
-A modern, professional-grade aviation flight planning app for pilots, built with React, TypeScript, and Tailwind CSS.
-
----
-
-## ✈️ Screenshots
-
-
-<div align="center">
-
-<img src="assets/screenshots/flightplan.png" alt="Flight Planner" width="600" />
-<br><sub>Flight Planner — route, checkpoints, and calculations</sub>
-
-<img src="assets/screenshots/cx6flightcomputer.png" alt="CX-6 Flight Computer" width="600" />
-<br><sub>CX-6 Flight Computer — wind, TAS, fuel, and more</sub>
-
-<img src="assets/screenshots/Weather.png" alt="Weather Tools" width="600" />
-<br><sub>Weather Tools — density altitude, cloud base, warnings</sub>
-
-<img src="assets/screenshots/weight&balance.png" alt="Weight & Balance" width="600" />
-<br><sub>Weight & Balance — CG envelope, safety alerts</sub>
-
-<img src="assets/screenshots/navigation.png" alt="Navigation Tools" width="600" />
-<br><sub>Navigation Tools — distance, bearing, conversions, weather links</sub>
-
-<img src="assets/screenshots/flightlogs.png" alt="Flight Logs" width="600" />
-<br><sub>Flight Logs — digital logbook with export and persistent storage</sub>
-
-</div>
-
----
-
-## 🚀 Features
-
-- **Flight Planner:** Dynamic route planning, VOR setup, export options
-- **CX-6 Flight Computer:** Wind triangle, fuel, TAS, time/distance
-- **Weather Tools:** Density altitude, cloud base, performance warnings
-- **Weight & Balance:** CG envelope, safety alerts
-- **Navigation Tools:** Distance, bearing, unit/coordinate conversions, weather links, time zone converter
-- **Flight Logs:** Digital logbook with export and persistent storage
-
----
-
-## 🛠️ Tech Stack
-
-- React 18 + TypeScript
-- Tailwind CSS (dark mode)
-- Vite
-- Lucide React icons
-
----
-
-## 🚀 Quick Start
-
-```sh
-git clone https://github.com/robfernan/AviationPro.git
-cd AviationPro
-npm install
-npm run dev
+# Run in development mode
+wails dev
 ```
-Open [http://localhost:5173](http://localhost:5173) in your browser.
 
----
-
-## 📦 Build
-
-```sh
+### 📱 Mobile & Watch Deployment (Capacitor)
+Both the phone and watch apps use a unified ID (`com.aviationpro.wear.face`) for local sync.
+```bash
+# 1. Build the web assets
 npm run build
-npm run preview
+
+# 2. Sync assets to the Android project
+npx cap copy android
+
+# 3. Open in Android Studio to deploy to MIAD01 / Pixel Watch
+npx cap open android
 ```
 
 ---
 
-## 📄 License
-
-This project is for flight simulation and training. Always consult official aviation publications and current weather for actual flight planning.
-
-Built with ❤️ for aviation professionals and enthusiasts.
+## ✨ Design-First Philosophy
+Led by a creative professional, the AVPRO interface mimics real glass cockpit avionics (G1000/Garmin style).
+- **#FE0909 Tactical Red:** A unified branding palette optimized for high-visibility and night-vision preservation.
+- **Frameless Desktop Canvas:** A pure, clutter-free experience for flight desk planning.
+- **Mission-Critical Typography:** Monospaced data arrays ensure calculations remain legible and stable.
+- **Adaptive Precision:** The Tailwind grid scales perfectly from phone screens to ultra-wide monitors.
 
 ---
 
-_For detailed usage, troubleshooting, and enhancement roadmap, see the [Wiki](https://github.com/robfernan/AviationPro/wiki)._ 
-3. View pressure altitude, density altitude, and ISA deviations
+## 🛠️ Integrated Feature Modules
+
+### 🗺️ Flight Briefing Builder
+*   **Professional PDF Export:** Generate comprehensive preflight briefings with flight plans, weather, and W&B data.
+*   **Dynamic Data Sync:** Real-time integration with aviation weather APIs.
+
+### 🌤️ Weather & E6B Calculator
+*   **Atmospheric Tools:** Instant Pressure/Density Altitude conversion with ISA deviation.
+*   **CX-6 Flight Computer:** Digital math for TAS, Groundspeed, Wind Correction, and Fuel Management.
+*   **Cloud Base:** Essential VFR decision-making logic.
+
+### ⚖️ Weight & Balance
+*   **Dynamic CG Envelope:** Visual loading charts for standard trainer fleets (C172, Archer, etc.).
+*   **Safety Interlocks:** Real-time visual alerts for out-of-envelope configurations.
+
+### ⌚ Wear OS Suite (Pixel Watch Optimized)
+*   **Aviator Watch Face:** Custom "Watch Face Format" (WFF) design with dedicated Zulu and Local time readouts.
+*   **Live Data App:** A dedicated monitor showing METAR flight categories (VFR/IFR) synced instantly from the phone via the **Wearable Data Layer**.
+*   **Complications:** "SmallBox" support to bring AVPRO weather to any watch face.
+
+---
+
+## 🚀 Technical Architecture
+- **Desktop Backend:** Golang + Wails for native performance.
+- **Mobile/Web Core:** React 18 + TypeScript + Vite.
+- **Mobile Bridge:** Capacitor for high-speed native Android/iOS ports.
+- **Data Sync:** Android Wearable Data Layer API for ultra-low latency Phone-to-Watch communication.
+- **Persistence:** IndexedDB (Dexie) for robust, offline-first data storage.
+
+---
+
+## 🔒 Privacy & Data Sovereignty
+*   **100% Offline-First:** All math, calculators, and flight logs work without internet. Internet is only required for fetching live METAR/TAF data.
+*   **Zero-Cloud Architecture:** All personal flight logs, aircraft profiles, and planning data are stored locally on your device. No servers, no tracking, no data sharing. 
+*   **Data Portability:** Export your entire hangar and logbook to a single file for local backup and multi-device transfer.
+
+---
+
+## 🗺️ Roadmap & Strategy
+
+### Phase 1: Core Preflight Engine (Complete)
+- [x] **Unified Local Database:** Migrated all modules (Logs, Checklists) to a single Dexie/IndexedDB storage.
+- [x] **Hangar Profiles:** Save aircraft tail numbers with custom BEW and Arm data to eliminate repetitive entry.
+- [x] **Integrated Planning:** Connect W&B and Wind calculators directly to the Briefing Builder for one-tap planning.
+- [x] **Aviation Conversions:** Dedicated unit conversion tool (Lbs <-> Gal, Celsius <-> Fahrenheit, Meters <-> Feet).
+- [x] **VFR Color-Coding:** Full 4-category logic (VFR 🟢, MVFR 🔵, IFR 🔴, LIFR 🟣) for visual text alerts on the watch app.
+
+### Phase 2: High-Fidelity Refinements
+- [ ] **Audio Briefings:** Utilize MIAD01 high-res audio hardware for text-to-speech METAR reports.
+- [ ] **Checklist Templates:** Pre-built templates for common training aircraft (C172, Archer).
+- [ ] **Offline Weather Snapshot:** Automatic local caching of the last 4 hours of weather data to survive signal drops.
+
+### Phase 3: Community & Safety (Strategy)
+- [ ] **Data Export/Import:** Seamless .json backup for entire pilot hangar and logbook.
+- [ ] **Open-Source Math Validation:** Community-verified calculator logic to ensure POH accuracy.
+
+---
+
+## 📄 Disclaimer
+Aviation Pro is for flight simulation and pre-flight planning reference only. Final responsibility for airworthiness and calculation verification rests with the Pilot in Command (PIC).
+
+**100% OFFLINE // ONE_CODEBASE // MULTIPLE_HORIZONS**  
+*Built for the cockpit, refined for the future.*

@@ -27,13 +27,13 @@ export function FlipControls({ canPrev = false, canNext = false, onPrev, onNext,
         onClick={onPrev}
         disabled={!canPrev}
         aria-label="Previous page"
-        className={`group inline-flex items-center gap-2 rounded-full border px-4 py-3 text-sm font-semibold transition-all duration-300 ${
+        className={`inline-flex items-center gap-2 rounded-full border px-4 py-3 text-sm font-semibold ${
           canPrev
-            ? 'border-theme-accent/40 dark:border-theme-accent-dark bg-theme-card dark:bg-theme-card-dark text-theme-primary dark:text-theme-secondary-dark hover:-translate-x-0.5 hover:bg-theme-action hover:text-white dark:hover:bg-theme-action-dark'
+            ? 'border-theme-accent/40 dark:border-theme-accent-dark bg-theme-card dark:bg-theme-card-dark text-theme-primary dark:text-theme-secondary-dark hover:bg-theme-action hover:text-white dark:hover:bg-theme-action-dark'
             : 'border-transparent text-theme-secondary/40 dark:text-theme-secondary-dark/40 cursor-not-allowed'
         }`}
       >
-        <i className="fas fa-arrow-left transition-transform duration-300 group-hover:-translate-x-0.5" />
+        <i className="fas fa-arrow-left" />
         <span className="hidden sm:inline">Prev</span>
       </button>
 
@@ -50,42 +50,63 @@ export function FlipControls({ canPrev = false, canNext = false, onPrev, onNext,
         onClick={onNext}
         disabled={!canNext}
         aria-label="Next page"
-        className={`group inline-flex items-center gap-2 rounded-full border px-4 py-3 text-sm font-semibold transition-all duration-300 ${
+        className={`inline-flex items-center gap-2 rounded-full border px-4 py-3 text-sm font-semibold ${
           canNext
-            ? 'border-theme-accent/40 dark:border-theme-accent-dark bg-theme-card dark:bg-theme-card-dark text-theme-primary dark:text-theme-secondary-dark hover:translate-x-0.5 hover:bg-theme-action hover:text-white dark:hover:bg-theme-action-dark'
+            ? 'border-theme-accent/40 dark:border-theme-accent-dark bg-theme-card dark:bg-theme-card-dark text-theme-primary dark:text-theme-secondary-dark hover:bg-theme-action hover:text-white dark:hover:bg-theme-action-dark'
             : 'border-transparent text-theme-secondary/40 dark:text-theme-secondary-dark/40 cursor-not-allowed'
         }`}
       >
         <span className="hidden sm:inline">Next</span>
-        <i className="fas fa-arrow-right transition-transform duration-300 group-hover:translate-x-0.5" />
+        <i className="fas fa-arrow-right" />
       </button>
     </div>
   );
 }
 
 /** A single project rendered as a compact magazine entry (used on both pages). */
-export function MagazineEntry({ entry }: { entry: import('./data').Entry }) {
+export function MagazineEntry({ entry, onOpenImage }: { entry: import('./data').Entry; onOpenImage?: (entry: import('./data').Entry) => void }) {
   return (
     <article className="group flex gap-3 sm:gap-4 rounded-xl border border-theme-accent/15 dark:border-theme-accent-dark bg-theme-card dark:bg-theme-card-dark p-3 sm:p-4 hover-lift-premium">
       {/* Cover thumbnail */}
-      {entry.cover && (
-        <div className="relative flex-shrink-0 w-24 h-24 sm:w-32 sm:h-32 rounded-lg overflow-hidden bg-theme-bg dark:bg-theme-bg-dark deboss-frame">
+      <button
+        type="button"
+        onClick={() => onOpenImage?.(entry)}
+        className="relative flex-shrink-0 w-24 h-24 sm:w-32 sm:h-32 rounded-lg overflow-hidden bg-theme-bg dark:bg-theme-bg-dark deboss-frame text-left focus-ring"
+        aria-label={`Open larger preview for ${entry.title}`}
+      >
+        {entry.cover ? (
           <img
             loading="lazy"
             decoding="async"
             src={entry.cover}
             alt={entry.title}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.06]"
+            className="w-full h-full object-cover"
+            onError={(event) => {
+              event.currentTarget.onerror = null;
+              event.currentTarget.src = '/assets/projects/xmbwavemenu.png';
+            }}
           />
-        </div>
-      )}
+        ) : (
+          <span className="flex h-full w-full items-end p-2 text-[10px] font-semibold uppercase tracking-wider text-theme-secondary dark:text-theme-secondary-dark">
+            {entry.title}
+          </span>
+        )}
+        <span className="absolute right-1.5 bottom-1.5 rounded bg-black/60 px-1.5 py-1 text-[9px] font-semibold uppercase tracking-wider text-white">
+          View
+        </span>
+      </button>
 
       {/* Body */}
       <div className="min-w-0 flex-1">
         <div className="flex items-start justify-between gap-2 mb-1">
-          <h3 className="font-bold leading-tight text-theme-primary dark:text-theme-secondary-dark group-hover:text-theme-accent dark:group-hover:text-theme-primary-dark transition-colors">
-            {entry.title}
-          </h3>
+          <div>
+            {entry.format && (
+              <p className="font-mono-tech text-[9px] tracking-[0.15em] text-theme-accent dark:text-theme-accent-dark mb-1">{entry.format}</p>
+            )}
+            <h3 className="font-bold leading-tight text-theme-primary dark:text-theme-secondary-dark group-hover:text-theme-primary-dark">
+              {entry.title}
+            </h3>
+          </div>
           {entry.status && (
             <span className="flex-shrink-0 text-[9px] font-semibold uppercase tracking-wider px-2 py-1 rounded-full border border-theme-accent/30 dark:border-theme-accent-dark text-theme-secondary dark:text-theme-secondary-dark">
               {entry.status}

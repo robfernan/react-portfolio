@@ -19,7 +19,7 @@ export default function BackToTop() {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth',
+      behavior: 'auto',
     });
   };
 
@@ -28,7 +28,7 @@ export default function BackToTop() {
       {isVisible && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-50 p-3 bg-theme-accent dark:bg-theme-accent-dark text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 focus-ring"
+          className="fixed bottom-8 right-8 z-50 p-3 bg-theme-accent dark:bg-theme-accent-dark text-white rounded-full shadow-lg hover:shadow-xl focus-ring"
           aria-label="Back to top"
         >
           <svg

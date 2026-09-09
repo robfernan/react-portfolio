@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 /* ------------------------------------------------------------------ */
@@ -6,58 +6,14 @@ import { Link } from 'react-router-dom';
 /* ------------------------------------------------------------------ */
 
 const CAPABILITIES = [
-  'Web',
-  'Desktop',
-  'Mobile',
-  'WearOS',
-  'Embedded',
-  'Retro Consoles',
-];
-
-type Discipline = {
-  title: string;
-  blurb: string;
-  tags: string[];
-  to?: string;      // internal route (e.g. /works)
-  href?: string;    // external link (e.g. ArtStation)
-  featured?: boolean; // larger tile in the bento grid
-};
-
-const DISCIPLINES: Discipline[] = [
-  {
-    title: 'Software & Engines',
-    blurb: 'Cross-platform apps and game tooling — from Love2D experiences to a custom OpenGL engine with Lua gameplay.',
-    tags: ['Love2D / LÖVE', 'C++ / SFML', 'Go + Wails'],
-    featured: true,
-  },
-  {
-    title: 'Embedded Projects',
-    blurb: 'Low-level and hardware work — microcontrollers, logic design, and baremetal systems programming.',
-    tags: ['MSP430', 'Arduino', 'Logic Design'],
-  },
-  {
-    title: 'Retro Consoles',
-    blurb: 'Baremetal homebrew for the machines that stay exclusive — PS1, PS2, and PSP.',
-    tags: ['PS1 MIPS', 'PS2 GS/VU1', 'PSP SDK'],
-  },
-  {
-    title: 'Cross-Platform Tools',
-    blurb: 'One codebase shipped to web, desktop, and mobile — from flight planning to document suites.',
-    tags: ['AviationPro', 'PaperWorks Pro', 'XMB Launcher'],
-    to: '/works',
-  },
-  {
-    title: 'Art & Design',
-    blurb: 'Automotive illustration, UI/UX, and print collateral — the design side of every build.',
-    tags: ['Car Art', 'UI/UX', 'Print / Lookbook'],
-    href: 'https://www.artstation.com/robfernan',
-  },
-  {
-    title: 'Streaming & Content',
-    blurb: 'Live coding, game dev, and car sketching on Twitch and YouTube as MungDaal321.',
-    tags: ['Twitch', 'YouTube', 'Devlogs'],
-    to: '/streaming',
-  },
+  'Product software',
+  'Cross-platform UI',
+  'Games & engines',
+  'Embedded displays',
+  'Aviation tools',
+  'Retro systems',
+  'Wear OS',
+  'Local-first',
 ];
 
 type Featured = {
@@ -65,6 +21,8 @@ type Featured = {
   description: string;
   language?: string;
   updated?: string;
+  image: string;
+  href?: string;
 };
 
 /* Static, curated "Now Building" — no live GitHub fetch for now. */
@@ -75,28 +33,27 @@ const NOW_BUILDING: Featured[] = [
       'Recreating the iconic 2002 Sony website as a modern interactive experience — authentic layouts, motion, and detail.',
     language: 'TypeScript',
     updated: 'Recently',
+    image: 'https://raw.githubusercontent.com/robfernan/sony2002-recreationsite/main/screenshot.png',
+    href: 'https://github.com/robfernan/sony2002-recreationsite',
   },
   {
     name: 'Love2D Xbox Launcher',
     description:
       'Xbox-inspired desktop launcher built with Love2D (LÖVE) — a custom frameless draggable window, gamepad support, and smooth XMB-style navigation.',
     language: 'Lua',
-    updated: 'Updated 2 days ago',
+    updated: 'Active build',
+    image: '/assets/projects/love2d_xboxlauncher.png',
+    href: 'https://github.com/robfernan/Love2D_XboxLauncher',
   },
-];
-
-type MediaItem = {
-  src: string;
-  alt: string;
-  caption: string;
-  kind: 'image' | 'video';
-};
-
-const MEDIA: MediaItem[] = [
-  { src: '/assets/home/car-art.jpg', alt: 'Automotive illustration', caption: 'Automotive Art', kind: 'image' },
-  { src: '/assets/projects/xmbwavemenu.png', alt: 'XMB wave menu launcher', caption: 'XMB Launcher', kind: 'image' },
-  { src: '/assets/home/sfmlavalamp.mp4', alt: 'Engine lava lamp demo', caption: 'Engine / SFML Demo', kind: 'video' },
-  { src: '/assets/home/watchfacefish.png', alt: 'WearOS watch face', caption: 'WearOS Watch Face', kind: 'image' },
+  {
+    name: 'Dreamcast PS3 Theme → HTML5 XMB',
+    description:
+      'A custom cross-platform web interface recreated from an original SEGA Dreamcast PS3 theme, with authentic XMB layouts, gamepad support, and menu navigation.',
+    language: 'HTML5 · CSS · JavaScript',
+    updated: 'Video feature',
+    image: 'https://i.ytimg.com/an_webp/YagOy0VBs-Q/mqdefault_6s.webp?du=3000&sqp=CMDVg9UG&rs=AOn4CLAax-CtdHLIfjGOFtZGHDlNbI8XTg',
+    href: 'https://www.youtube.com/watch?v=YagOy0VBs-Q',
+  },
 ];
 
 /* ------------------------------------------------------------------ */
@@ -121,43 +78,42 @@ function SectionHeading({ eyebrow, title }: { eyebrow: string; title: string }) 
 /* ------------------------------------------------------------------ */
 
 export default function PortfolioHome() {
+  const [preview, setPreview] = useState<Featured | null>(null);
+
   return (
     <div className="min-h-screen bg-theme-bg dark:bg-theme-bg-dark transition-colors duration-300">
 
-      <section className="max-w-6xl mx-auto px-4 py-12 sm:py-20">
-        {/* ============================ HERO (SPLIT) ============================ */}
-        <header className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-10 items-center mb-16 sm:mb-24">
-          {/* Left: identity + copy */}
-          <div className="lg:col-span-3 order-2 lg:order-1">
+      <section className="mx-auto w-full max-w-[1600px] px-4 py-12 sm:px-6 sm:py-20 lg:px-10">
+        {/* ============================ HERO ============================ */}
+        <section className="mb-16 sm:mb-24">
+          <figure className="overflow-hidden border border-theme-accent/25 dark:border-theme-accent-dark bg-theme-card dark:bg-theme-card-dark shadow-lg">
+            <img
+              src="/assets/home/banner.png"
+              alt="Robert Fernandez — Developer, Designer, Pilot"
+              className="block h-auto w-full"
+            />
+          </figure>
+
+          <div className="grid grid-cols-1 gap-8 border-b border-theme-accent/20 dark:border-theme-accent-dark pb-10 pt-8 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16">
+            <div>
             <p className="text-[11px] font-semibold tracking-[0.25em] uppercase text-theme-accent dark:text-theme-secondary-dark mb-4 flex items-center gap-3">
               <span className="w-8 h-px bg-theme-accent dark:bg-theme-accent-dark" />
-              Portfolio · 2026
+              Cross-Platform Engineer · Digital Artist · Pilot
             </p>
 
-            <h1 className="font-black leading-[1.05] text-theme-primary dark:text-theme-secondary-dark mb-5">
+            <h1 className="mb-5 text-4xl font-black leading-none text-theme-primary dark:text-theme-secondary-dark sm:text-6xl">
               Robert Fernandez
             </h1>
 
-            <p className="text-base sm:text-lg text-theme-secondary dark:text-theme-secondary-dark leading-relaxed max-w-xl mb-7">
-              Designer–Engineer building{' '}
+            <p className="max-w-3xl text-lg leading-relaxed text-theme-secondary dark:text-theme-secondary-dark sm:text-2xl">
+              Software engineer and digital artist building{' '}
               <span className="text-theme-primary dark:text-theme-secondary-dark font-medium">cross-platform tools</span>{' '}
-              for web, desktop, mobile &amp; wearables — blending automotive art, aviation discipline, and UI/UX clarity.
+              for web, desktop, mobile, Wear OS, embedded displays, and retro consoles — blending aviation discipline with design-first interfaces.
             </p>
 
-            {/* Capability chips */}
-            <div className="flex flex-wrap gap-2 mb-8">
-              {CAPABILITIES.map((c) => (
-                <span
-                  key={c}
-                  className="text-xs font-medium px-3 py-1.5 rounded-full border border-theme-accent/30 dark:border-theme-accent-dark text-theme-secondary dark:text-theme-secondary-dark"
-                >
-                  {c}
-                </span>
-              ))}
             </div>
 
-            {/* CTAs */}
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap content-start gap-3 lg:justify-end">
               <Link
                 to="/works"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-theme-action dark:bg-theme-action-dark text-white font-semibold hover:opacity-90 transition-opacity"
@@ -178,33 +134,33 @@ export default function PortfolioHome() {
                 </svg>
                 GitHub
               </a>
+              <Link to="/resume" className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg border border-theme-accent/40 dark:border-theme-accent-dark text-theme-primary dark:text-theme-secondary-dark hover:bg-theme-accent/10 font-medium">
+                Résumé
+              </Link>
+              <div className="basis-full flex flex-wrap gap-2 pt-2 lg:justify-end">
+                {CAPABILITIES.map((c) => (
+                  <span key={c} className="text-xs font-medium px-3 py-1.5 rounded-full border border-theme-accent/30 dark:border-theme-accent-dark text-theme-secondary dark:text-theme-secondary-dark">{c}</span>
+                ))}
+              </div>
             </div>
           </div>
+        </section>
 
-          {/* Right: banner as a framed visual */}
-          <div className="lg:col-span-2 order-1 lg:order-2">
-            <figure className="deboss-frame rounded-xl overflow-hidden border border-theme-accent/20 dark:border-theme-accent-dark bg-theme-card dark:bg-theme-card-dark shadow-lg">
-              <img
-                src="/assets/home/banner.png"
-                alt="Robert Fernandez — Developer, Designer, Pilot"
-                className="w-full h-auto object-cover block"
-              />
-            </figure>
-          </div>
-        </header>
-
-        {/* ======================= NOW BUILDING (SPLIT ROW) ======================= */}
-        <section className="mb-16 sm:mb-24">
-          <SectionHeading eyebrow="In Progress" title="Now Building" />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        {/* ======================= NOW BUILDING ======================= */}
+        <section className="mb-8 sm:mb-12">
+          <SectionHeading eyebrow="Active Work" title="Now Building" />
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
             {NOW_BUILDING.map((item) => (
-              <a
+              <button
                 key={item.name}
-                href="https://github.com/robfernan"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group block rounded-xl border border-theme-accent/20 dark:border-theme-accent-dark bg-theme-card dark:bg-theme-card-dark p-6 sm:p-7 hover-lift-premium"
+                type="button"
+                onClick={() => setPreview(item)}
+                className="group overflow-hidden rounded-xl border border-theme-accent/20 dark:border-theme-accent-dark bg-theme-card dark:bg-theme-card-dark text-left"
               >
+                <div className="aspect-[16/9] overflow-hidden bg-theme-bg dark:bg-theme-bg-dark">
+                  <img src={item.image} alt={item.name} className="h-full w-full object-cover" />
+                </div>
+                <div className="p-6 sm:p-8">
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-[10px] font-semibold uppercase tracking-wider text-theme-accent dark:text-theme-secondary-dark">In Progress</span>
                   {item.updated && (
@@ -223,118 +179,34 @@ export default function PortfolioHome() {
                     {item.language}
                   </span>
                 )}
-              </a>
+                <span className="mt-5 block text-[10px] font-semibold uppercase tracking-wider text-theme-accent dark:text-theme-accent-dark">Open full preview</span>
+                </div>
+              </button>
             ))}
           </div>
         </section>
 
-        {/* ========================= DISCIPLINES (BENTO) ========================= */}
-        <section className="mb-16 sm:mb-24">
-          <SectionHeading eyebrow="Capabilities" title="What I Do" />
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 auto-rows-[minmax(0,auto)]">
-            {DISCIPLINES.map((d) => {
-              const inner = (
-                <>
-                  <h3 className={`font-bold mb-2 text-theme-primary dark:text-theme-secondary-dark group-hover:text-theme-accent dark:group-hover:text-theme-primary-dark transition-colors ${d.featured ? 'text-2xl sm:text-3xl' : 'text-xl sm:text-2xl'}`}>
-                    {d.title}
-                  </h3>
-                  <p className="text-sm sm:text-base text-theme-secondary dark:text-theme-secondary-dark leading-relaxed mb-4">
-                    {d.blurb}
-                  </p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {d.tags.map((t) => (
-                      <span key={t} className="text-[10px] font-medium px-2 py-1 rounded bg-theme-bg dark:bg-theme-card-dark border border-theme-accent/15 dark:border-theme-accent-dark text-theme-secondary dark:text-theme-secondary-dark">
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                </>
-              );
-              const base = 'group block rounded-xl border border-theme-accent/20 dark:border-theme-accent-dark bg-theme-card dark:bg-theme-card-dark p-5 sm:p-6 hover-lift-premium';
-              // Featured tile spans 2 columns on md+ for a bento feel.
-              const span = d.featured ? 'md:col-span-2' : '';
-              if (d.to) {
-                return (
-                  <Link key={d.title} to={d.to} className={`${base} ${span}`}>
-                    {inner}
-                  </Link>
-                );
-              }
-              if (d.href) {
-                return (
-                  <a key={d.title} href={d.href} target="_blank" rel="noopener noreferrer" className={`${base} ${span}`}>
-                    {inner}
-                  </a>
-                );
-              }
-              return (
-                <div key={d.title} className={`${base} ${span}`}>
-                  {inner}
-                </div>
-              );
-            })}
+        <div className="flex flex-wrap items-center justify-between gap-4 border-t border-theme-accent/20 dark:border-theme-accent-dark pt-6">
+          <p className="text-xs text-theme-secondary dark:text-theme-secondary-dark">More work, watch faces, art, and systems live in the archive.</p>
+          <Link to="/works" className="text-xs font-semibold uppercase tracking-wider text-theme-accent dark:text-theme-secondary-dark">Open Works archive</Link>
+        </div>
 
-            {/* CTA tile */}
-            <a
-              href="https://github.com/robfernan"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex flex-col justify-between rounded-xl border border-theme-accent/20 dark:border-theme-accent-dark bg-theme-action/10 dark:bg-theme-card-dark p-5 sm:p-6 hover-lift-premium md:col-span-3 lg:col-span-1"
-            >
-              <div>
-                <h3 className="font-bold mb-2 text-theme-primary dark:text-theme-secondary-dark">Full archive</h3>
-                <p className="text-sm sm:text-base text-theme-secondary dark:text-theme-secondary-dark leading-relaxed">
-                  Every project, tutorial, and experiment — from PS1 MIPS to Love2D launchers.
-                </p>
-              </div>
-              <span className="mt-4 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-theme-accent dark:text-theme-secondary-dark">
-                github.com/robfernan
-                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H8m9 0v9" />
-                </svg>
-              </span>
-            </a>
-          </div>
-        </section>
-
-        {/* ========================= MEDIA GALLERY (STACKED) ========================= */}
-        <section className="mb-6">
-          <SectionHeading eyebrow="Portfolio" title="Selected Work" />
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            {MEDIA.map((m) => (
-              <figure
-                key={m.src}
-                className="deboss-frame rounded-xl overflow-hidden border border-theme-accent/15 dark:border-theme-accent-dark bg-theme-card dark:bg-theme-card-dark"
-              >
-                <div className="aspect-video w-full">
-                  {m.kind === 'video' ? (
-                    <video className="w-full h-full object-cover" controls muted loop playsInline preload="metadata">
-                      <source src={m.src} type="video/mp4" />
-                    </video>
-                  ) : (
-                    <img loading="lazy" decoding="async" src={m.src} alt={m.alt} className="w-full h-full object-cover" />
-                  )}
-                </div>
-                <figcaption className="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-theme-secondary dark:text-theme-secondary-dark">
-                  {m.caption}
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-        </section>
-
-        {/* ============================ FOOTER CTA ============================ */}
-        <footer className="mt-12 pt-8 border-t border-theme-accent/15 dark:border-theme-accent-dark flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs font-semibold uppercase tracking-wider text-theme-secondary dark:text-theme-secondary-dark">
-            Robert Fernandez · Developer · Designer · Pilot
-          </p>
-          <div className="flex items-center gap-5 text-sm">
-            <a href="https://github.com/robfernan" target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub" className="text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-accent dark:hover:text-theme-accent-dark transition-colors"><i className="fab fa-github text-lg" /></a>
-            <a href="https://www.artstation.com/robfernan" target="_blank" rel="noopener noreferrer" aria-label="ArtStation" title="ArtStation" className="text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-accent dark:hover:text-theme-accent-dark transition-colors"><i className="fab fa-artstation text-lg" /></a>
-            <a href="https://www.twitch.tv/mungdaal321" target="_blank" rel="noopener noreferrer" aria-label="Twitch" title="Twitch" className="text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-accent dark:hover:text-theme-accent-dark transition-colors"><i className="fab fa-twitch text-lg" /></a>
-          </div>
-        </footer>
       </section>
+      {preview && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4" role="dialog" aria-modal="true" aria-label={`${preview.name} preview`}>
+          <button type="button" className="absolute inset-0 cursor-default" aria-label="Close preview" onClick={() => setPreview(null)} />
+          <div className="relative z-10 max-h-[90vh] w-full max-w-5xl overflow-auto border border-theme-accent/40 bg-theme-card p-4 dark:border-theme-accent-dark dark:bg-theme-card-dark sm:p-6">
+            <div className="mb-4 flex items-start justify-between gap-4">
+              <div><p className="font-mono-tech text-[10px] tracking-[0.2em] text-theme-accent dark:text-theme-accent-dark">NOW BUILDING</p><h2 className="text-xl font-bold text-theme-primary dark:text-theme-secondary-dark">{preview.name}</h2></div>
+              <button type="button" onClick={() => setPreview(null)} className="border border-theme-accent/30 px-3 py-2 text-xs font-semibold text-theme-primary dark:border-theme-accent-dark dark:text-theme-secondary-dark">Close</button>
+            </div>
+            <img src={preview.image} alt={`${preview.name} full preview`} className="max-h-[68vh] w-full object-contain bg-theme-bg dark:bg-theme-bg-dark" />
+            <p className="mt-4 text-sm leading-relaxed text-theme-secondary dark:text-theme-secondary-dark">{preview.description}</p>
+            {preview.href?.startsWith('http') && <a href={preview.href} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex border border-theme-accent/30 px-4 py-2 text-xs font-semibold text-theme-primary dark:border-theme-accent-dark dark:text-theme-secondary-dark">Open project</a>}
+            {preview.href === '/aviationpro' && <Link to={preview.href} onClick={() => setPreview(null)} className="mt-4 inline-flex border border-theme-accent/30 px-4 py-2 text-xs font-semibold text-theme-primary dark:border-theme-accent-dark dark:text-theme-secondary-dark">Open project</Link>}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
