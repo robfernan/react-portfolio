@@ -312,10 +312,10 @@ table thead th {
 
   /* Compress the whole resume to fit on one page at 100% scale
      (equivalent to the ~90% browser scale that made it fit). */
-  html { font-size: 7.4pt !important; }
-  body { line-height: 1.28 !important; }
-  h1 { font-size: 15pt !important; margin-bottom: 2px !important; }
-  h2, h3 { font-size: 9pt !important; }
+  html { font-size: 7.2pt !important; }
+  body { line-height: 1.25 !important; }
+  h1 { font-size: 14pt !important; margin-bottom: 2px !important; }
+  h2, h3 { font-size: 8.8pt !important; }
 
   /* Remove the container's horizontal + vertical padding so left/right
      margins are exactly what the browser sets (true zero at 0.25in). */
@@ -342,13 +342,13 @@ table thead th {
   #skill-chips { display: none !important; }
 
   /* Force Education + Selected Projects into two side-by-side columns (no
-     divider). Equal heights remove the empty gap under the shorter column that
-     was pushing Platforms onto a second page. */
+     divider, no gutter) so the right column sits flush like on the site and
+     doesn't wrap extra lines that push content onto a second page. */
   #edu-projects {
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
     align-items: start !important;
-    gap: 0 28px !important;
+    gap: 0 !important;
   }
 
   /* Tighten the space between this section and Platforms below it. */
