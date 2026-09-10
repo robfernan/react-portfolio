@@ -312,9 +312,9 @@ table thead th {
 
   /* Compress the whole resume to fit on one page at 100% scale
      (equivalent to the ~90% browser scale that made it fit). */
-  html { font-size: 7.2pt !important; }
-  body { line-height: 1.25 !important; }
-  h1 { font-size: 15pt !important; margin-bottom: 2px !important; }
+  html { font-size: 7pt !important; }
+  body { line-height: 1.22 !important; }
+  h1 { font-size: 14pt !important; margin-bottom: 2px !important; }
   h2, h3 { font-size: 8.5pt !important; }
 
   /* Remove the container's horizontal + vertical padding so left/right
@@ -330,20 +330,16 @@ table thead th {
   }
 
   /* Tighten vertical rhythm across every section and list. */
-  section { margin-bottom: 6px !important; }
+  section { margin-bottom: 5px !important; }
   article, div.space-y-8 > *, div.space-y-6 > * {
-    margin-bottom: 5px !important;
+    margin-bottom: 4px !important;
   }
   ul { margin: 2px 0 !important; }
-  li { margin-bottom: 1px !important; line-height: 1.2 !important; }
+  li { margin-bottom: 1px !important; line-height: 1.18 !important; }
 
-  /* Make skill chips solid white with a dark border so they read clearly. */
-  .inline-flex.border { background-color: #ffffff !important; border-color: #9a9a9a !important; }
-
-  /* Stack the Education + Selected Projects columns to full width in print.
-     Narrower default margins were clipping the right column, and a single
-     wide column also frees up vertical space. */
-  .md\:grid-cols-2 { grid-template-columns: 1fr !important; }
+  /* Hide the skill chips in print — the grouped list below already lists
+     every one of them, so this reclaims ~3 lines of vertical space. */
+  #skill-chips { display: none !important; }
 
   /* Keep multi-line items from splitting awkwardly across pages. */
   article, li { break-inside: avoid; page-break-inside: avoid; }

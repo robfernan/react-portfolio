@@ -189,7 +189,7 @@ export default function Resume() {
         {/* Core Technical Skills */}
         <section className="mb-12">
           <p className={`${eyebrow} mb-5`}>Core Technical Skills</p>
-          <div className="flex flex-wrap gap-2 mb-6">
+          <div id="skill-chips" className="flex flex-wrap gap-2 mb-6">
             {featuredSkills.map((skill) => (
               <span key={skill} className="inline-flex border border-theme-accent/30 dark:border-theme-accent-dark bg-theme-card/40 dark:bg-theme-card-dark/40 px-2.5 py-1 text-xs font-medium text-theme-primary dark:text-theme-secondary-dark">{skill}</span>
             ))}
