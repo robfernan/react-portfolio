@@ -243,11 +243,11 @@ export default function Resume() {
           </div>
             </div>
 
-            <div>
+            <div id="selected-projects">
               <p className={`${eyebrow} mb-5`}>Selected Projects</p>
-              <ul className="space-y-4">
+              <ul className="space-y-3">
                 {selectedProjects.map((project) => (
-                  <li key={project} className="border-l-2 border-theme-accent/40 dark:border-theme-accent-dark pl-4 text-sm leading-relaxed text-theme-secondary dark:text-theme-secondary-dark">{project}</li>
+                  <li key={project} className="border-l-2 border-theme-accent/40 dark:border-theme-accent-dark pl-3 text-sm leading-relaxed text-theme-secondary dark:text-theme-secondary-dark">{project}</li>
                 ))}
               </ul>
             </div>
@@ -255,7 +255,7 @@ export default function Resume() {
         </section>
 
         {/* Platforms */}
-        <section>
+        <section id="platforms">
           <p className={`${eyebrow} mb-3`}>Platforms</p>
           <p className="text-sm leading-relaxed text-theme-secondary dark:text-theme-secondary-dark">Web · Windows · macOS · Linux · Android · Wear OS · ESP32-S3 · PlayStation 1 · PSP · PlayStation 2</p>
         </section>
