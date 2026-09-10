@@ -7,6 +7,7 @@
 		<!-- Primary Meta Tags -->
 		<title>Robert Fernandez — Cross-Platform Software Engineer & Digital Artist</title>
 		<meta name="title" content="Robert Fernandez — Cross-Platform Software Engineer & Digital Artist" />
+		<link rel="canonical" href="https://robertfernandez.dev/" />
 		<meta name="description" content="Robert Fernandez builds design-first software across web, desktop, mobile, Wear OS, embedded displays, and retro consoles." />
 		<meta name="keywords" content="Robert Fernandez, software engineer, digital artist, AviationPro, React, TypeScript, Go, Wails, Capacitor, Love2D, retro consoles, aviation" />
 		<meta name="author" content="Robert Fernandez" />
@@ -14,16 +15,19 @@
 		<!-- Open Graph / Facebook -->
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content="https://robertfernandez.dev/" />
+		<meta property="og:site_name" content="Robert Fernandez — Portfolio" />
 		<meta property="og:title" content="Robert Fernandez — Cross-Platform Software Engineer & Digital Artist" />
 		<meta property="og:description" content="Design-first software across web, desktop, mobile, Wear OS, embedded displays, and retro consoles." />
-		<meta property="og:image" content="/assets/home/banner.png" />
+		<meta property="og:image" content="https://robertfernandez.dev/assets/home/banner.png" />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
 		
 		<!-- Twitter -->
-		<meta property="twitter:card" content="summary_large_image" />
-		<meta property="twitter:url" content="https://robertfernandez.dev/" />
-		<meta property="twitter:title" content="Robert Fernandez — Cross-Platform Software Engineer & Digital Artist" />
-		<meta property="twitter:description" content="Design-first software across web, desktop, mobile, Wear OS, embedded displays, and retro consoles." />
-		<meta property="twitter:image" content="/assets/home/banner.png" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:url" content="https://robertfernandez.dev/" />
+		<meta name="twitter:title" content="Robert Fernandez — Cross-Platform Software Engineer & Digital Artist" />
+		<meta name="twitter:description" content="Design-first software across web, desktop, mobile, Wear OS, embedded displays, and retro consoles." />
+		<meta name="twitter:image" content="https://robertfernandez.dev/assets/home/banner.png" />
 		
 		<!-- Favicon -->
 		<link rel="icon" type="image/x-icon" href="/images/favicon.ico?v=1" />
@@ -39,7 +43,32 @@
 		<!-- Theme Color -->
 		<meta name="theme-color" content="#22223B" />
 		
-		<!-- Structured Data -->
+		<!-- Structured Data: WebSite + Organization -->
+		<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@graph": [
+			{
+				"@type": "WebSite",
+				"name": "Robert Fernandez — Portfolio",
+				"url": "https://robertfernandez.dev/"
+			},
+			{
+				"@type": "Organization",
+				"name": "Robert Fernandez Software Solutions",
+				"url": "https://robertfernandez.dev/",
+				"logo": "https://robertfernandez.dev/assets/home/banner.png",
+				"sameAs": [
+					"https://github.com/robfernan",
+					"https://linkedin.com/in/robfernan",
+					"https://mungdaal321.itch.io/"
+				]
+			}
+			]
+		}
+		</script>
+
+		<!-- Structured Data: Person -->
 		<script type="application/ld+json">
 		{
 			"@context": "https://schema.org",

@@ -116,10 +116,11 @@ const NavigationTools: React.FC = () => {
       case 'ft': nm = value / 6076.12; break;
       default: return;
     }
-    setConversions({
+    setConversions(prev => ({
+      ...prev,
       nauticalMiles: nm.toFixed(3), statuteMiles: (nm * 1.15078).toFixed(3),
       kilometers: (nm * 1.852).toFixed(3), feet: (nm * 6076.12).toFixed(0)
-    });
+    }));
   };
 
   return (

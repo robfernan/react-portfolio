@@ -97,7 +97,7 @@ export const ISSUES: Issue[] = [
       {
         title: 'Florida Window & Door Invoicing / Proposal App',
         format: 'CLIENT / CAPACITOR',
-        cover: '/assets/projects/MnGGuttersLandingPage.png',
+        cover: '/assets/projects/FloridaInvoiceApp.png',
         blurb:
           'A lightweight business tool for creating invoices and proposals for Florida Window & Door Maintenance Inc., built as a browser-first app with a Capacitor path to mobile.',
         tech: ['HTML', 'CSS', 'JavaScript', 'Capacitor'],
@@ -225,7 +225,7 @@ export const ISSUES: Issue[] = [
       {
         title: 'Wear OS Watch Face',
         format: 'WATCH FACE / AVIATION',
-        cover: '/assets/projects/watch_face_android.png',
+        cover: '/assets/projects/watch_face_android_avpro.png',
         blurb: 'Aviation-minded wearable interface work with compact readouts, high-contrast data, and a visual language designed for a glance.',
         tech: ['Wear OS', 'Android', 'UI Design'],
         status: 'Visual System',

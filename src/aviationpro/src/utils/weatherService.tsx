@@ -82,7 +82,7 @@ export async function fetchMETAR(icaoCode: string): Promise<METARData | null> {
           (window as any).AndroidWatchBridge.updateWatchWeather(category);
         }
 
-        return {
+        const result = {
           icao: icaoCode.toUpperCase(),
           metar: metarData.rawOb,
         wind: {
@@ -103,7 +103,7 @@ export async function fetchMETAR(icaoCode: string): Promise<METARData | null> {
 
       // Cache the result
       weatherCache.set(cacheKey, {
-        data: { metar: result },
+        data: result,
         timestamp: Date.now(),
       });
 

@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Link } from 'react-router-dom';
 
 type SkillGroup = { label: string; items: string[] };
@@ -90,8 +90,6 @@ const selectedProjects = [
   'PSP Digital Comics — cross-platform CBZ reader inspired by the PSP Digital Comics experience.',
   'Qualia S3 Speedometer — reactive automotive instrument interface on a 480×480 round TFT.',
 ];
-
-const focusAreas = ['Cross-Platform Apps', 'Brand & UI Design', 'Responsive Web + SEO'];
 
 // At-a-glance differentiators for a skimming recruiter.
 type Highlight = { value: string; label: string };

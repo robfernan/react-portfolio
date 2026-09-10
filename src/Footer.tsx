@@ -1,5 +1,3 @@
-import React from 'react';
-
 const socials = [
   { href: 'https://github.com/robfernan', label: 'GitHub', icon: 'fa-github' },
   { href: 'https://linkedin.com/in/robfernan', label: 'LinkedIn', icon: 'fa-linkedin' },
