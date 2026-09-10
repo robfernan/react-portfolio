@@ -7,12 +7,7 @@ import CX6Calculator from './src/components/CX6Calculator';
 import NavigationTools from './src/components/NavigationTools';
 import FlightLogs from './src/components/FlightLogs';
 
-type AviationProAppProps = {
-  darkMode?: boolean;
-  toggleDarkMode?: () => void;
-}
-
-function AviationProApp({ darkMode = false, toggleDarkMode }: AviationProAppProps) {
+function AviationProApp() {
   const [activeTab, setActiveTab] = useState('planner');
 
   const tabs = [
@@ -24,11 +19,8 @@ function AviationProApp({ darkMode = false, toggleDarkMode }: AviationProAppProp
     { id: 'logs', label: 'Flight Logs', icon: FileText }
   ];
 
-  // toggleDarkMode is provided by parent; if not provided, fall back to noop
-  const localToggle = toggleDarkMode ?? (() => {});
-
   return (
-    <div className="aviation-scope min-h-screen bg-theme-bg dark:bg-theme-bg-dark text-theme-primary dark:text-theme-primary-dark">
+    <div className="min-h-screen bg-theme-bg dark:bg-theme-bg-dark text-theme-primary dark:text-theme-primary-dark">
       <header className="border-b border-theme-accent/30 dark:border-theme-accent-dark/30 bg-theme-header dark:bg-theme-header-dark">
         <div className="px-2 py-1 flex items-center justify-between gap-1 max-w-[1600px] mx-auto w-full">
           <h1 className="text-lg sm:text-2xl font-bold text-theme-primary dark:text-theme-primary-dark flex-shrink-0">AviationPro</h1>
@@ -52,12 +44,12 @@ function AviationProApp({ darkMode = false, toggleDarkMode }: AviationProAppProp
         </div>
       </header>
       <main className="p-4">
-        {activeTab === 'planner' && <FlightPlanForm darkMode={darkMode} />}
-        {activeTab === 'cx6' && <CX6Calculator darkMode={darkMode} />}
-        {activeTab === 'weather' && <WeatherCalculator darkMode={darkMode} />}
-        {activeTab === 'performance' && <WeightBalanceCalculator darkMode={darkMode} />}
-        {activeTab === 'navigation' && <NavigationTools darkMode={darkMode} />}
-        {activeTab === 'logs' && <FlightLogs darkMode={darkMode} />}
+        {activeTab === 'planner' && <FlightPlanForm />}
+        {activeTab === 'cx6' && <CX6Calculator />}
+        {activeTab === 'weather' && <WeatherCalculator />}
+        {activeTab === 'performance' && <WeightBalanceCalculator />}
+        {activeTab === 'navigation' && <NavigationTools />}
+        {activeTab === 'logs' && <FlightLogs />}
       </main>
     </div>
   );
