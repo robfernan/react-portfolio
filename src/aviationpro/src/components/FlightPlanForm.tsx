@@ -32,11 +32,7 @@ interface Checkpoint {
   vorIdent: string;
 }
 
-interface FlightPlanFormProps {
-  darkMode: boolean;
-}
-
-const FlightPlanForm: React.FC<FlightPlanFormProps> = ({ darkMode }) => {
+const FlightPlanForm: React.FC = () => {
   const [instructionsOpen, setInstructionsOpen] = useState(false);
   const [checkpoints, setCheckpoints] = useState<Checkpoint[]>([
     { 
@@ -409,32 +405,20 @@ const FlightPlanForm: React.FC<FlightPlanFormProps> = ({ darkMode }) => {
   };
 
   return (
-    <div className={`${darkMode ? 'bg-theme-card-dark' : 'bg-theme-card'} rounded-lg shadow-lg border-2 ${
-      darkMode ? 'border-theme-accent-dark' : 'border-theme-accent'
-    }`}>
+    <div className="bg-theme-card dark:bg-theme-card-dark rounded-lg shadow-lg border-2 border-theme-accent dark:border-theme-accent-dark">
       {/* Header */}
-      <div className={`${darkMode ? 'bg-theme-header-dark' : 'bg-theme-header'} border-b-2 ${
-        darkMode ? 'border-theme-accent-dark' : 'border-theme-accent'
-      } p-3 sm:p-4 md:p-6`}>
+      <div className="bg-theme-header dark:bg-theme-header-dark border-b-2 border-theme-accent dark:border-theme-accent-dark p-3 sm:p-4 md:p-6">
         <div className="flex flex-row items-center justify-between mb-3 sm:mb-4 gap-3">
           <h2 className="text-xl sm:text-2xl font-bold">FLIGHT PLAN</h2>
           <div className="flex space-x-2 flex-shrink-0">
             <button 
               onClick={handlePrint}
-              className={`p-2 rounded-lg transition-colors flex items-center justify-center ${
-              darkMode 
-                ? 'bg-theme-card-dark hover:bg-theme-accent-dark/20 text-theme-primary-dark' 
-                : 'bg-theme-card hover:bg-theme-accent/10 text-theme-primary'
-            }`}>
+              className="p-2 rounded-lg transition-colors flex items-center justify-center bg-theme-bg dark:bg-theme-bg-dark hover:bg-theme-accent/10 dark:hover:bg-theme-accent-dark/10 text-theme-primary dark:text-theme-primary-dark">
               <Printer className="w-3 h-3 sm:w-4 sm:h-4" />
             </button>
             <button 
               onClick={handleDownload}
-              className={`p-2 rounded-lg transition-colors flex items-center justify-center ${
-              darkMode 
-                ? 'bg-theme-card-dark hover:bg-theme-accent-dark/20 text-theme-primary-dark' 
-                : 'bg-theme-card hover:bg-theme-accent/10 text-theme-primary'
-            }`}>
+              className="p-2 rounded-lg transition-colors flex items-center justify-center bg-theme-bg dark:bg-theme-bg-dark hover:bg-theme-accent/10 dark:hover:bg-theme-accent-dark/10 text-theme-primary dark:text-theme-primary-dark">
               <Download className="w-3 h-3 sm:w-4 sm:h-4" />
             </button>
           </div>
@@ -447,11 +431,7 @@ const FlightPlanForm: React.FC<FlightPlanFormProps> = ({ darkMode }) => {
               type="text"
               value={flightInfo.aircraft}
               onChange={(e) => setFlightInfo({...flightInfo, aircraft: e.target.value})}
-              className={`w-full p-2 border rounded-md text-sm ${
-                darkMode 
-                  ? 'bg-theme-card-dark border-theme-accent-dark/30 text-theme-primary-dark' 
-                  : 'bg-theme-card border-theme-accent/30 text-theme-primary'
-              }`}
+              className="w-full p-2 border rounded-md text-sm bg-theme-bg dark:bg-theme-bg-dark border-theme-accent/30 dark:border-theme-accent-dark/30 text-theme-primary dark:text-theme-primary-dark"
               placeholder="C172, PA28, etc."
             />
           </div>
@@ -461,11 +441,7 @@ const FlightPlanForm: React.FC<FlightPlanFormProps> = ({ darkMode }) => {
               type="text"
               value={flightInfo.tailNumber}
               onChange={(e) => setFlightInfo({...flightInfo, tailNumber: e.target.value})}
-              className={`w-full p-2 border rounded-md text-sm ${
-                darkMode 
-                  ? 'bg-theme-card-dark border-theme-accent-dark/30 text-theme-primary-dark' 
-                  : 'bg-theme-card border-theme-accent/30 text-theme-primary'
-              }`}
+              className="w-full p-2 border rounded-md text-sm bg-theme-bg dark:bg-theme-bg-dark border-theme-accent/30 dark:border-theme-accent-dark/30 text-theme-primary dark:text-theme-primary-dark"
               placeholder="N12345"
             />
           </div>
@@ -475,11 +451,7 @@ const FlightPlanForm: React.FC<FlightPlanFormProps> = ({ darkMode }) => {
               type="text"
               value={flightInfo.pilot}
               onChange={(e) => setFlightInfo({...flightInfo, pilot: e.target.value})}
-              className={`w-full p-2 border rounded-md text-sm ${
-                darkMode 
-                  ? 'bg-theme-card-dark border-theme-accent-dark/30 text-theme-primary-dark' 
-                  : 'bg-theme-card border-theme-accent/30 text-theme-primary'
-              }`}
+              className="w-full p-2 border rounded-md text-sm bg-theme-bg dark:bg-theme-bg-dark border-theme-accent/30 dark:border-theme-accent-dark/30 text-theme-primary dark:text-theme-primary-dark"
               placeholder="Pilot Name"
             />
           </div>
@@ -489,11 +461,7 @@ const FlightPlanForm: React.FC<FlightPlanFormProps> = ({ darkMode }) => {
               type="number"
               value={flightInfo.fuelOnBoard}
               onChange={(e) => setFlightInfo({...flightInfo, fuelOnBoard: e.target.value})}
-              className={`w-full p-2 border rounded-md text-sm ${
-                darkMode 
-                  ? 'bg-theme-card-dark border-theme-accent-dark/30 text-theme-primary-dark' 
-                  : 'bg-theme-card border-theme-accent/30 text-theme-primary'
-              }`}
+              className="w-full p-2 border rounded-md text-sm bg-theme-bg dark:bg-theme-bg-dark border-theme-accent/30 dark:border-theme-accent-dark/30 text-theme-primary dark:text-theme-primary-dark"
               placeholder="40"
             />
           </div>
@@ -648,9 +616,7 @@ const FlightPlanForm: React.FC<FlightPlanFormProps> = ({ darkMode }) => {
                       step="0.1"
                       value={checkpoint.windCorrection}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'windCorrection', e.target.value)}
-                      className={`w-full p-2 border-0 bg-transparent text-center text-base ${
-                        darkMode ? 'text-white' : 'text-gray-900'
-                      }`}
+                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                     />
                   </td>
                   <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-2 min-w-[100px]">
@@ -659,9 +625,7 @@ const FlightPlanForm: React.FC<FlightPlanFormProps> = ({ darkMode }) => {
                       step="0.1"
                       value={checkpoint.trueHeading}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'trueHeading', e.target.value)}
-                      className={`w-full p-2 border-0 bg-transparent text-center text-base ${
-                        darkMode ? 'text-white' : 'text-gray-900'
-                      }`}
+                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                     />
                   </td>
                   <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-2 min-w-[100px]">
@@ -670,9 +634,7 @@ const FlightPlanForm: React.FC<FlightPlanFormProps> = ({ darkMode }) => {
                       step="0.1"
                       value={checkpoint.variation}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'variation', e.target.value)}
-                      className={`w-full p-2 border-0 bg-transparent text-center text-base ${
-                        darkMode ? 'text-white' : 'text-gray-900'
-                      }`}
+                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                     />
                   </td>
                   <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-2 min-w-[100px]">
@@ -681,9 +643,7 @@ const FlightPlanForm: React.FC<FlightPlanFormProps> = ({ darkMode }) => {
                       step="0.1"
                       value={checkpoint.magHeading}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'magHeading', e.target.value)}
-                      className={`w-full p-2 border-0 bg-transparent text-center text-base ${
-                        darkMode ? 'text-white' : 'text-gray-900'
-                      }`}
+                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                     />
                   </td>
                   <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-2 min-w-[100px]">
@@ -692,9 +652,7 @@ const FlightPlanForm: React.FC<FlightPlanFormProps> = ({ darkMode }) => {
                       step="0.1"
                       value={checkpoint.deviation}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'deviation', e.target.value)}
-                      className={`w-full p-2 border-0 bg-transparent text-center text-base ${
-                        darkMode ? 'text-white' : 'text-gray-900'
-                      }`}
+                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                     />
                   </td>
                   <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-2 min-w-[100px]">
@@ -703,9 +661,7 @@ const FlightPlanForm: React.FC<FlightPlanFormProps> = ({ darkMode }) => {
                       step="0.1"
                       value={checkpoint.compassHeading}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'compassHeading', e.target.value)}
-                      className={`w-full p-2 border-0 bg-transparent text-center text-base ${
-                        darkMode ? 'text-white' : 'text-gray-900'
-                      }`}
+                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                     />
                   </td>
                   <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-2 min-w-[100px]">
@@ -714,9 +670,7 @@ const FlightPlanForm: React.FC<FlightPlanFormProps> = ({ darkMode }) => {
                       step="0.1"
                       value={checkpoint.distance}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'distance', e.target.value)}
-                      className={`w-full p-2 border-0 bg-transparent text-center text-base ${
-                        darkMode ? 'text-white' : 'text-gray-900'
-                      }`}
+                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                     />
                   </td>
                   <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-2 min-w-[100px]">
@@ -725,9 +679,7 @@ const FlightPlanForm: React.FC<FlightPlanFormProps> = ({ darkMode }) => {
                       step="0.1"
                       value={checkpoint.remaining}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'remaining', e.target.value)}
-                      className={`w-full p-2 border-0 bg-transparent text-center text-base ${
-                        darkMode ? 'text-white' : 'text-gray-900'
-                      }`}
+                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                     />
                   </td>
                   <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-2 min-w-[100px]">
@@ -735,9 +687,7 @@ const FlightPlanForm: React.FC<FlightPlanFormProps> = ({ darkMode }) => {
                       type="number"
                       value={checkpoint.groundSpeed}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'groundSpeed', e.target.value)}
-                      className={`w-full p-2 border-0 bg-transparent text-center text-base ${
-                        darkMode ? 'text-white' : 'text-gray-900'
-                      }`}
+                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                     />
                   </td>
                   <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-2 min-w-[120px]">
@@ -745,9 +695,7 @@ const FlightPlanForm: React.FC<FlightPlanFormProps> = ({ darkMode }) => {
                       type="text"
                       value={checkpoint.est}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'est', e.target.value)}
-                      className={`w-full p-2 border-0 bg-transparent text-center text-base ${
-                        darkMode ? 'text-white' : 'text-gray-900'
-                      }`}
+                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                       placeholder="HH:MM"
                     />
                   </td>
@@ -756,9 +704,7 @@ const FlightPlanForm: React.FC<FlightPlanFormProps> = ({ darkMode }) => {
                       type="text"
                       value={checkpoint.act}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'act', e.target.value)}
-                      className={`w-full p-2 border-0 bg-transparent text-center text-base ${
-                        darkMode ? 'text-white' : 'text-gray-900'
-                      }`}
+                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                       placeholder="HH:MM"
                     />
                   </td>
@@ -768,9 +714,7 @@ const FlightPlanForm: React.FC<FlightPlanFormProps> = ({ darkMode }) => {
                       step="0.1"
                       value={checkpoint.ete}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'ete', e.target.value)}
-                      className={`w-full p-2 border-0 bg-transparent text-center text-base ${
-                        darkMode ? 'text-white' : 'text-gray-900'
-                      }`}
+                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                     />
                   </td>
                   <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-2 min-w-[100px]">
@@ -779,9 +723,7 @@ const FlightPlanForm: React.FC<FlightPlanFormProps> = ({ darkMode }) => {
                       step="0.1"
                       value={checkpoint.ate}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'ate', e.target.value)}
-                      className={`w-full p-2 border-0 bg-transparent text-center text-base ${
-                        darkMode ? 'text-white' : 'text-gray-900'
-                      }`}
+                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                     />
                   </td>
                   <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-2 min-w-[120px]">
@@ -789,9 +731,7 @@ const FlightPlanForm: React.FC<FlightPlanFormProps> = ({ darkMode }) => {
                       type="text"
                       value={checkpoint.eta}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'eta', e.target.value)}
-                      className={`w-full p-2 border-0 bg-transparent text-center text-base ${
-                        darkMode ? 'text-white' : 'text-gray-900'
-                      }`}
+                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                       placeholder="HH:MM"
                     />
                   </td>
@@ -800,9 +740,7 @@ const FlightPlanForm: React.FC<FlightPlanFormProps> = ({ darkMode }) => {
                       type="text"
                       value={checkpoint.ata}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'ata', e.target.value)}
-                      className={`w-full p-2 border-0 bg-transparent text-center text-base ${
-                        darkMode ? 'text-white' : 'text-gray-900'
-                      }`}
+                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                       placeholder="HH:MM"
                     />
                   </td>
@@ -812,9 +750,7 @@ const FlightPlanForm: React.FC<FlightPlanFormProps> = ({ darkMode }) => {
                       step="0.1"
                       value={checkpoint.fuelUsed}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'fuelUsed', e.target.value)}
-                      className={`w-full p-2 border-0 bg-transparent text-center text-base ${
-                        darkMode ? 'text-white' : 'text-gray-900'
-                      }`}
+                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                     />
                   </td>
                   <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-2 min-w-[100px]">
@@ -823,9 +759,7 @@ const FlightPlanForm: React.FC<FlightPlanFormProps> = ({ darkMode }) => {
                       step="0.1"
                       value={checkpoint.fuelRemaining}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'fuelRemaining', e.target.value)}
-                      className={`w-full p-2 border-0 bg-transparent text-center text-base ${
-                        darkMode ? 'text-white' : 'text-gray-900'
-                      }`}
+                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                     />
                   </td>
                   <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-2 min-w-[120px]">
@@ -833,9 +767,7 @@ const FlightPlanForm: React.FC<FlightPlanFormProps> = ({ darkMode }) => {
                       type="text"
                       value={checkpoint.vorFreq}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'vorFreq', e.target.value)}
-                      className={`w-full p-2 border-0 bg-transparent text-center text-base ${
-                        darkMode ? 'text-white' : 'text-gray-900'
-                      }`}
+                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                       placeholder="113.00"
                     />
                   </td>
@@ -844,9 +776,7 @@ const FlightPlanForm: React.FC<FlightPlanFormProps> = ({ darkMode }) => {
                       type="text"
                       value={checkpoint.vorRadial}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'vorRadial', e.target.value)}
-                      className={`w-full p-2 border-0 bg-transparent text-center text-base ${
-                        darkMode ? 'text-white' : 'text-gray-900'
-                      }`}
+                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                       placeholder="090"
                     />
                   </td>
@@ -855,9 +785,7 @@ const FlightPlanForm: React.FC<FlightPlanFormProps> = ({ darkMode }) => {
                       type="text"
                       value={checkpoint.vorIdent}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'vorIdent', e.target.value)}
-                      className={`w-full p-2 border-0 bg-transparent text-center text-base ${
-                        darkMode ? 'text-white' : 'text-gray-900'
-                      }`}
+                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                       placeholder="ABC"
                     />
                   </td>
@@ -899,27 +827,27 @@ const FlightPlanForm: React.FC<FlightPlanFormProps> = ({ darkMode }) => {
         </div>
 
         {/* Summary Section */}
-        <div className={`mt-8 p-6 rounded-xl shadow-lg ${darkMode ? 'bg-theme-card-dark border border-theme-accent-dark' : 'bg-theme-card border border-theme-accent'}`}>
+        <div className="mt-8 p-6 rounded-xl shadow-lg bg-theme-bg dark:bg-theme-bg-dark border border-theme-accent dark:border-theme-accent-dark">
           <h4 className="font-bold mb-6 text-xl text-theme-primary dark:text-theme-primary-dark">Flight Summary</h4>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
-            <div className={`p-4 rounded-lg shadow-sm border ${darkMode ? 'bg-theme-card-dark border-theme-accent-dark' : 'bg-theme-card border-theme-accent'}`}>
+            <div className="p-4 rounded-lg shadow-sm border bg-theme-bg dark:bg-theme-bg-dark border-theme-accent dark:border-theme-accent-dark">
               <div className="text-xs text-theme-secondary dark:text-theme-secondary-dark uppercase tracking-wide">Total Distance</div>
               <div className="text-lg font-bold text-theme-accent dark:text-theme-accent-dark">{totalDistance.toFixed(1)} nm</div>
             </div>
-            <div className={`p-4 rounded-lg shadow-sm border ${darkMode ? 'bg-theme-card-dark border-gray-500' : 'bg-theme-card border-gray-200'}`}>
-              <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Total Flight Time</div>
+            <div className="p-4 rounded-lg shadow-sm border bg-theme-bg dark:bg-theme-bg-dark border-theme-accent/30 dark:border-theme-accent-dark/30">
+              <div className="text-xs text-theme-secondary dark:text-theme-secondary-dark uppercase tracking-wide">Total Flight Time</div>
               <div className="text-lg font-bold text-theme-accent dark:text-theme-accent-dark">{Math.floor(totalETE / 60)}h {(totalETE % 60).toFixed(0)}m</div>
             </div>
-            <div className={`p-4 rounded-lg shadow-sm border ${darkMode ? 'bg-theme-card-dark border-gray-500' : 'bg-theme-card border-gray-200'}`}>
-              <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Total Fuel Required</div>
+            <div className="p-4 rounded-lg shadow-sm border bg-theme-bg dark:bg-theme-bg-dark border-theme-accent/30 dark:border-theme-accent-dark/30">
+              <div className="text-xs text-theme-secondary dark:text-theme-secondary-dark uppercase tracking-wide">Total Fuel Required</div>
               <div className="text-lg font-bold text-theme-accent dark:text-theme-accent-dark">{totalFuelUsed.toFixed(1)} gal</div>
             </div>
-            <div className={`p-4 rounded-lg shadow-sm border ${darkMode ? 'bg-theme-card-dark border-gray-500' : 'bg-theme-card border-gray-200'}`}>
-              <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Fuel on Board</div>
+            <div className="p-4 rounded-lg shadow-sm border bg-theme-bg dark:bg-theme-bg-dark border-theme-accent/30 dark:border-theme-accent-dark/30">
+              <div className="text-xs text-theme-secondary dark:text-theme-secondary-dark uppercase tracking-wide">Fuel on Board</div>
               <div className="text-lg font-bold text-theme-accent dark:text-theme-accent-dark">{flightInfo.fuelOnBoard || '---'} gal</div>
             </div>
-            <div className={`p-4 rounded-lg shadow-sm border ${darkMode ? 'bg-theme-card-dark border-gray-500' : 'bg-theme-card border-gray-200'}`}>
-              <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Fuel Reserve</div>
+            <div className="p-4 rounded-lg shadow-sm border bg-theme-bg dark:bg-theme-bg-dark border-theme-accent/30 dark:border-theme-accent-dark/30">
+              <div className="text-xs text-theme-secondary dark:text-theme-secondary-dark uppercase tracking-wide">Fuel Reserve</div>
               <div className={`text-lg font-bold ${
                 flightInfo.fuelOnBoard && (parseFloat(flightInfo.fuelOnBoard) - totalFuelUsed) < 10 
                   ? 'text-red-600 dark:text-red-400' 
@@ -929,22 +857,22 @@ const FlightPlanForm: React.FC<FlightPlanFormProps> = ({ darkMode }) => {
                 Math.max(0, parseFloat(flightInfo.fuelOnBoard) - totalFuelUsed).toFixed(1) : '---'} gal
               </div>
             </div>
-            <div className={`p-4 rounded-lg shadow-sm border ${darkMode ? 'bg-theme-card-dark border-gray-500' : 'bg-theme-card border-gray-200'}`}>
-              <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Reserve Time</div>
+            <div className="p-4 rounded-lg shadow-sm border bg-theme-bg dark:bg-theme-bg-dark border-theme-accent/30 dark:border-theme-accent-dark/30">
+              <div className="text-xs text-theme-secondary dark:text-theme-secondary-dark uppercase tracking-wide">Reserve Time</div>
               <div className="text-lg font-bold text-theme-accent dark:text-theme-accent-dark">{
                 flightInfo.fuelOnBoard && totalFuelUsed > 0 && totalETE > 0 ?
                 Math.floor(Math.max(0, ((parseFloat(flightInfo.fuelOnBoard) - totalFuelUsed) / (totalFuelUsed / totalETE)) * 60)) : '---'
               } min</div>
             </div>
-            <div className={`p-4 rounded-lg shadow-sm border ${darkMode ? 'bg-theme-card-dark border-gray-500' : 'bg-theme-card border-gray-200'}`}>
-              <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Average Ground Speed</div>
+            <div className="p-4 rounded-lg shadow-sm border bg-theme-bg dark:bg-theme-bg-dark border-theme-accent/30 dark:border-theme-accent-dark/30">
+              <div className="text-xs text-theme-secondary dark:text-theme-secondary-dark uppercase tracking-wide">Average Ground Speed</div>
               <div className="text-lg font-bold text-theme-accent dark:text-theme-accent-dark">{
                 totalDistance > 0 && totalETE > 0 ? 
                 (totalDistance / (totalETE / 60)).toFixed(0) : '---'
               } kts</div>
             </div>
-            <div className={`p-4 rounded-lg shadow-sm border ${darkMode ? 'bg-theme-card-dark border-gray-500' : 'bg-theme-card border-gray-200'}`}>
-              <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Fuel Burn Rate</div>
+            <div className="p-4 rounded-lg shadow-sm border bg-theme-bg dark:bg-theme-bg-dark border-theme-accent/30 dark:border-theme-accent-dark/30">
+              <div className="text-xs text-theme-secondary dark:text-theme-secondary-dark uppercase tracking-wide">Fuel Burn Rate</div>
               <div className="text-lg font-bold text-theme-accent dark:text-theme-accent-dark">{
                 totalDistance > 0 && totalFuelUsed > 0 && totalETE > 0 ?
                 (totalFuelUsed / (totalDistance / (totalETE / 60))).toFixed(2) : '---'
@@ -954,7 +882,7 @@ const FlightPlanForm: React.FC<FlightPlanFormProps> = ({ darkMode }) => {
         </div>
 
         {/* Instructions Section */}
-        <div className={`mt-6 sm:mt-8 rounded-lg border ${darkMode ? 'bg-theme-card-dark border-theme-accent-dark/30' : 'bg-theme-card border-theme-accent/30'}`}>
+        <div className="mt-6 sm:mt-8 rounded-lg border bg-theme-bg dark:bg-theme-bg-dark border-theme-accent/30 dark:border-theme-accent-dark/30">
           <button
             onClick={() => setInstructionsOpen(!instructionsOpen)}
             className="w-full p-4 sm:p-6 flex items-center justify-between text-left"
@@ -967,7 +895,7 @@ const FlightPlanForm: React.FC<FlightPlanFormProps> = ({ darkMode }) => {
             <div className="px-4 pb-4 sm:px-6 sm:pb-6">
 
           <div className="space-y-4 sm:space-y-6">
-            <div className={`p-4 rounded-lg ${darkMode ? 'bg-theme-card-dark' : 'bg-theme-card'}`}>
+            <div className="p-4 rounded-lg bg-theme-header dark:bg-theme-header-dark">
               <h5 className="font-semibold mb-3 text-lg text-theme-primary dark:text-theme-primary-dark">1. Getting Started - Distance & Route Planning</h5>
               <div className="space-y-2 text-sm">
                 <p><strong>Using Sectional Charts:</strong> Measure distance between airports using the scale at the bottom of the chart. Use a plotter or ruler for accuracy.</p>
@@ -977,7 +905,7 @@ const FlightPlanForm: React.FC<FlightPlanFormProps> = ({ darkMode }) => {
               </div>
             </div>
 
-            <div className={`p-4 rounded-lg ${darkMode ? 'bg-theme-card-dark' : 'bg-theme-card'}`}>
+            <div className="p-4 rounded-lg bg-theme-header dark:bg-theme-header-dark">
               <h5 className="font-semibold mb-3 text-lg text-theme-primary dark:text-theme-primary-dark">2. Filling Out the Table - Step by Step</h5>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                 <div>
@@ -999,7 +927,7 @@ const FlightPlanForm: React.FC<FlightPlanFormProps> = ({ darkMode }) => {
               </div>
             </div>
 
-            <div className={`p-4 rounded-lg ${darkMode ? 'bg-theme-card-dark' : 'bg-theme-card'}`}>
+            <div className="p-4 rounded-lg bg-theme-header dark:bg-theme-header-dark">
               <h5 className="font-semibold mb-3 text-lg text-theme-primary dark:text-theme-primary-dark">3. Navigation Calculations</h5>
               <div className="space-y-3 text-sm">
                 <div>
@@ -1021,7 +949,7 @@ const FlightPlanForm: React.FC<FlightPlanFormProps> = ({ darkMode }) => {
               </div>
             </div>
 
-            <div className={`p-4 rounded-lg ${darkMode ? 'bg-theme-card-dark' : 'bg-theme-card'}`}>
+            <div className="p-4 rounded-lg bg-theme-header dark:bg-theme-header-dark">
               <h5 className="font-semibold mb-3 text-lg text-theme-primary dark:text-theme-primary-dark">4. Using the CX-6 Flight Computer</h5>
               <div className="space-y-2 text-sm">
                 <p><strong>Wind Correction Angle (WCA):</strong> Use CX-6 to calculate wind correction from true course, wind direction/velocity, and TAS.</p>
@@ -1033,7 +961,7 @@ const FlightPlanForm: React.FC<FlightPlanFormProps> = ({ darkMode }) => {
               </div>
             </div>
 
-            <div className={`p-4 rounded-lg ${darkMode ? 'bg-theme-card-dark' : 'bg-theme-card'}`}>
+            <div className="p-4 rounded-lg bg-theme-header dark:bg-theme-header-dark">
               <h5 className="font-semibold mb-3 text-lg text-theme-primary dark:text-theme-primary-dark">5. Manual Calculations (Alternative Method)</h5>
               <div className="space-y-2 text-sm">
                 <p><strong>E6-B Flight Computer Procedures</strong></p>
@@ -1079,7 +1007,7 @@ const FlightPlanForm: React.FC<FlightPlanFormProps> = ({ darkMode }) => {
               </div>
             </div>
 
-            <div className={`p-4 rounded-lg ${darkMode ? 'bg-theme-card-dark' : 'bg-theme-card'}`}>
+            <div className="p-4 rounded-lg bg-theme-header dark:bg-theme-header-dark">
               <h5 className="font-semibold mb-3 text-lg text-theme-primary dark:text-theme-primary-dark">6. VOR Navigation Setup</h5>
               <div className="space-y-2 text-sm">
                 <p><strong>VOR Frequency:</strong> From sectional chart or airport/facility directory</p>
@@ -1089,7 +1017,7 @@ const FlightPlanForm: React.FC<FlightPlanFormProps> = ({ darkMode }) => {
               </div>
             </div>
 
-            <div className={`p-4 rounded-lg ${darkMode ? 'bg-theme-card-dark' : 'bg-theme-card'}`}>
+            <div className="p-4 rounded-lg bg-theme-header dark:bg-theme-header-dark">
               <h5 className="font-semibold mb-3 text-lg text-theme-primary dark:text-theme-primary-dark">7. In-Flight Updates</h5>
               <div className="space-y-2 text-sm">
                 <p><strong>Actual Times:</strong> Update ACT, ATA, and ATE columns during flight</p>
@@ -1099,7 +1027,7 @@ const FlightPlanForm: React.FC<FlightPlanFormProps> = ({ darkMode }) => {
               </div>
             </div>
 
-            <div className={`p-4 rounded-lg ${darkMode ? 'bg-theme-card-dark' : 'bg-theme-card'}`}>
+            <div className="p-4 rounded-lg bg-theme-header dark:bg-theme-header-dark">
               <h5 className="font-semibold mb-3 text-lg text-theme-primary dark:text-theme-primary-dark">8. Safety Considerations</h5>
               <div className="space-y-2 text-sm">
                 <p><strong>Fuel Reserves:</strong> Always plan for VFR Day (45 min), VFR Night (45 min), or IFR (45 min) reserves</p>

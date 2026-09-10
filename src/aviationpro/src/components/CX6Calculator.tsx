@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
-import { Wind, Gauge, Clock, Fuel, Zap, Scale, Send } from 'lucide-react';
+import { Wind, Gauge, Clock, Fuel, Zap, Send } from 'lucide-react';
 import { AviationMath } from '../core/aviationMath';
-// Import the full-scale W&B module we just finalized
-import WeightBalanceCalculator from './WeightBalanceCalculator';
-
 const CX6Calculator: React.FC = () => {
-  // Added 'WB' as a possible state
   const [activeTab, setActiveTab] = useState('WIND');
 
   return (
@@ -18,33 +14,15 @@ const CX6Calculator: React.FC = () => {
         <TabBtn active={activeTab === 'TSD'} onClick={() => setActiveTab('TSD')} icon={<Clock size={12}/>} label="TSD" />
         <TabBtn active={activeTab === 'FUEL'} onClick={() => setActiveTab('FUEL')} icon={<Fuel size={12}/>} label="FUEL" />
         <TabBtn active={activeTab === 'X-WIND'} onClick={() => setActiveTab('X-WIND')} icon={<Zap size={12}/>} label="X-WIND" />
-        
-        {/* NEW WEIGHT & BALANCE INTEGRATION */}
-        <TabBtn 
-          active={activeTab === 'WB'} 
-          onClick={() => setActiveTab('WB')} 
-          icon={<Scale size={12}/>} 
-          label="W&B" 
-        />
       </div>
 
       {/* 🖥️ MAIN INSTRUMENT DISPLAY */}
-      <div className="flex-1 overflow-y-auto">
-        {/* Only apply internal padding for CX6 modules; W&B handles its own padding */}
-        <div className={activeTab === 'WB' ? "" : "p-6 space-y-6"}>
-          {activeTab === 'WIND' && <WindTriangleView />}
-          {activeTab === 'TAS' && <TASView />}
-          {activeTab === 'TSD' && <TSDView />}
-          {activeTab === 'FUEL' && <FuelView />}
-          {activeTab === 'X-WIND' && <XWindView />}
-          
-          {/* THE STRATEGIC W&B ENGINE */}
-          {activeTab === 'WB' && (
-            <div className="animate-in fade-in zoom-in-95 duration-300">
-              <WeightBalanceCalculator />
-            </div>
-          )}
-        </div>
+      <div className="flex-1 overflow-y-auto p-6 space-y-6">
+        {activeTab === 'WIND' && <WindTriangleView />}
+        {activeTab === 'TAS' && <TASView />}
+        {activeTab === 'TSD' && <TSDView />}
+        {activeTab === 'FUEL' && <FuelView />}
+        {activeTab === 'X-WIND' && <XWindView />}
       </div>
     </div>
   );

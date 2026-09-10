@@ -1,11 +1,7 @@
 import { useState } from 'react';
 import { MapPin, Navigation, Ruler, Globe, Clock, ExternalLink } from 'lucide-react';
 import React from 'react';
-interface NavigationToolsProps {
-  darkMode: boolean;
-}
-
-const NavigationTools: React.FC<NavigationToolsProps> = ({ darkMode }) => {
+const NavigationTools: React.FC = () => {
   const [activetool, setActiveTool] = useState('distance');
   
   // Distance Calculator State
@@ -220,24 +216,20 @@ const NavigationTools: React.FC<NavigationToolsProps> = ({ darkMode }) => {
   };
 
   return (
-    <div className={`${darkMode ? 'bg-theme-card-dark' : 'bg-theme-card'} rounded-lg shadow-lg border ${
-      darkMode ? 'border-theme-accent-dark/30' : 'border-theme-accent/30'
-    }`}>
-      <div className={`${darkMode ? 'bg-slate-950 border-slate-800' : 'bg-white border-slate-200'} border-b ${
-        darkMode ? 'border-slate-800' : 'border-slate-200'
-      } p-6`}>
+    <div className="bg-theme-card dark:bg-theme-card-dark rounded-lg shadow-lg border border-theme-accent/30 dark:border-theme-accent-dark/30">
+      <div className="bg-theme-header dark:bg-theme-header-dark border-b border-theme-accent/30 dark:border-theme-accent-dark/30 p-6">
         <h2 className="text-2xl font-bold mb-4">Navigation Tools</h2>
-        <div className="flex flex-wrap bg-black border border-zinc-800 rounded-sm overflow-hidden">
+        <div className="flex flex-wrap bg-theme-bg dark:bg-theme-bg-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 rounded-sm overflow-hidden">
           {tools.map((tool) => {
             const Icon = tool.icon;
             return (
               <button
                 key={tool.id}
                 onClick={() => setActiveTool(tool.id)}
-                className={`flex items-center justify-center space-x-2 px-4 py-4 text-[9px] font-black tracking-widest border-r border-zinc-800 transition-all duration-200 ${
+                className={`flex items-center justify-center space-x-2 px-4 py-4 text-[9px] font-black tracking-widest border-r border-theme-accent/20 dark:border-theme-accent-dark/20 transition-all duration-200 ${
                   activetool === tool.id
-                    ? 'bg-red-700 text-white shadow-[inset_0_0_20px_rgba(0,0,0,0.4)]'
-                    : 'text-zinc-600 hover:text-zinc-300 hover:bg-zinc-900/50'
+                    ? 'bg-theme-accent dark:bg-theme-accent-dark text-white'
+                    : 'text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-primary dark:hover:text-theme-primary-dark hover:bg-theme-header dark:hover:bg-theme-header-dark'
                 }`}
               >
                 <Icon className="w-4 h-4" />
@@ -265,11 +257,7 @@ const NavigationTools: React.FC<NavigationToolsProps> = ({ darkMode }) => {
                         step="any"
                         value={distanceCalc.lat1}
                         onChange={(e) => setDistanceCalc({...distanceCalc, lat1: e.target.value})}
-                        className={`w-full p-2 border rounded ${
-                          darkMode 
-                            ? 'bg-theme-card-dark border-theme-accent-dark/30 text-theme-primary-dark' 
-                            : 'bg-theme-card border-theme-accent/30 text-theme-primary'
-                        }`}
+                        className="w-full p-2 border rounded bg-theme-card dark:bg-theme-card-dark border-theme-accent/30 dark:border-theme-accent-dark/30 text-theme-primary dark:text-theme-primary-dark"
                         placeholder="40.7128"
                       />
                     </div>
@@ -280,11 +268,7 @@ const NavigationTools: React.FC<NavigationToolsProps> = ({ darkMode }) => {
                         step="any"
                         value={distanceCalc.lon1}
                         onChange={(e) => setDistanceCalc({...distanceCalc, lon1: e.target.value})}
-                        className={`w-full p-2 border rounded ${
-                          darkMode 
-                            ? 'bg-theme-card-dark border-theme-accent-dark/30 text-theme-primary-dark' 
-                            : 'bg-theme-card border-theme-accent/30 text-theme-primary'
-                        }`}
+                        className="w-full p-2 border rounded bg-theme-card dark:bg-theme-card-dark border-theme-accent/30 dark:border-theme-accent-dark/30 text-theme-primary dark:text-theme-primary-dark"
                         placeholder="-74.0060"
                       />
                     </div>
@@ -301,11 +285,7 @@ const NavigationTools: React.FC<NavigationToolsProps> = ({ darkMode }) => {
                         step="any"
                         value={distanceCalc.lat2}
                         onChange={(e) => setDistanceCalc({...distanceCalc, lat2: e.target.value})}
-                        className={`w-full p-2 border rounded ${
-                          darkMode 
-                            ? 'bg-theme-card-dark border-theme-accent-dark/30 text-theme-primary-dark' 
-                            : 'bg-theme-card border-theme-accent/30 text-theme-primary'
-                        }`}
+                        className="w-full p-2 border rounded bg-theme-card dark:bg-theme-card-dark border-theme-accent/30 dark:border-theme-accent-dark/30 text-theme-primary dark:text-theme-primary-dark"
                         placeholder="34.0522"
                       />
                     </div>
@@ -316,11 +296,7 @@ const NavigationTools: React.FC<NavigationToolsProps> = ({ darkMode }) => {
                         step="any"
                         value={distanceCalc.lon2}
                         onChange={(e) => setDistanceCalc({...distanceCalc, lon2: e.target.value})}
-                        className={`w-full p-2 border rounded ${
-                          darkMode 
-                            ? 'bg-theme-card-dark border-theme-accent-dark/30 text-theme-primary-dark' 
-                            : 'bg-theme-card border-theme-accent/30 text-theme-primary'
-                        }`}
+                        className="w-full p-2 border rounded bg-theme-card dark:bg-theme-card-dark border-theme-accent/30 dark:border-theme-accent-dark/30 text-theme-primary dark:text-theme-primary-dark"
                         placeholder="-118.2437"
                       />
                     </div>
@@ -335,11 +311,11 @@ const NavigationTools: React.FC<NavigationToolsProps> = ({ darkMode }) => {
                 </button>
               </div>
               
-              <div className={`p-6 rounded-lg ${darkMode ? 'bg-theme-card-dark' : 'bg-theme-header'}`}>
-                <h4 className="text-lg font-semibold mb-4">Result</h4>
+              <div className={`p-6 rounded-lg bg-theme-header dark:theme-card-dark`}>
+                <h4 className="text-lg font-semibold mb-4 text-theme-primary dark:text-theme-primary-dark">Result</h4>
                 {distanceCalc.result !== null ? (
                   <div className="text-center">
-                    <div className={`text-3xl font-bold mb-2 ${darkMode ? 'text-theme-accent-dark' : 'text-theme-accent'}`}>
+                    <div className={`text-3xl font-bold mb-2 text-theme-accent dark:theme-accent-dark`}>
                       {distanceCalc.result.toFixed(1)} nm
                     </div>
                     <div className="text-sm space-y-1 opacity-75">
@@ -374,11 +350,7 @@ const NavigationTools: React.FC<NavigationToolsProps> = ({ darkMode }) => {
                         step="any"
                         value={bearingCalc.lat1}
                         onChange={(e) => setBearingCalc({...bearingCalc, lat1: e.target.value})}
-                        className={`w-full p-2 border rounded ${
-                          darkMode 
-                            ? 'bg-theme-card-dark border-theme-accent-dark/30 text-theme-primary-dark' 
-                            : 'bg-theme-card border-theme-accent/30 text-theme-primary'
-                        }`}
+                        className="w-full p-2 border rounded bg-theme-card dark:bg-theme-card-dark border-theme-accent/30 dark:border-theme-accent-dark/30 text-theme-primary dark:text-theme-primary-dark"
                       />
                     </div>
                     <div>
@@ -388,11 +360,7 @@ const NavigationTools: React.FC<NavigationToolsProps> = ({ darkMode }) => {
                         step="any"
                         value={bearingCalc.lon1}
                         onChange={(e) => setBearingCalc({...bearingCalc, lon1: e.target.value})}
-                        className={`w-full p-2 border rounded ${
-                          darkMode 
-                            ? 'bg-theme-card-dark border-theme-accent-dark/30 text-theme-primary-dark' 
-                            : 'bg-theme-card border-theme-accent/30 text-theme-primary'
-                        }`}
+                        className="w-full p-2 border rounded bg-theme-card dark:bg-theme-card-dark border-theme-accent/30 dark:border-theme-accent-dark/30 text-theme-primary dark:text-theme-primary-dark"
                       />
                     </div>
                   </div>
@@ -408,11 +376,7 @@ const NavigationTools: React.FC<NavigationToolsProps> = ({ darkMode }) => {
                         step="any"
                         value={bearingCalc.lat2}
                         onChange={(e) => setBearingCalc({...bearingCalc, lat2: e.target.value})}
-                        className={`w-full p-2 border rounded ${
-                          darkMode 
-                            ? 'bg-theme-card-dark border-theme-accent-dark/30 text-theme-primary-dark' 
-                            : 'bg-theme-card border-theme-accent/30 text-theme-primary'
-                        }`}
+                        className="w-full p-2 border rounded bg-theme-card dark:bg-theme-card-dark border-theme-accent/30 dark:border-theme-accent-dark/30 text-theme-primary dark:text-theme-primary-dark"
                       />
                     </div>
                     <div>
@@ -422,11 +386,7 @@ const NavigationTools: React.FC<NavigationToolsProps> = ({ darkMode }) => {
                         step="any"
                         value={bearingCalc.lon2}
                         onChange={(e) => setBearingCalc({...bearingCalc, lon2: e.target.value})}
-                        className={`w-full p-2 border rounded ${
-                          darkMode 
-                            ? 'bg-theme-card-dark border-theme-accent-dark/30 text-theme-primary-dark' 
-                            : 'bg-theme-card border-theme-accent/30 text-theme-primary'
-                        }`}
+                        className="w-full p-2 border rounded bg-theme-card dark:bg-theme-card-dark border-theme-accent/30 dark:border-theme-accent-dark/30 text-theme-primary dark:text-theme-primary-dark"
                       />
                     </div>
                   </div>
@@ -440,11 +400,11 @@ const NavigationTools: React.FC<NavigationToolsProps> = ({ darkMode }) => {
                 </button>
               </div>
               
-              <div className={`p-6 rounded-lg ${darkMode ? 'bg-theme-card-dark' : 'bg-theme-header'}`}>
-                <h4 className="text-lg font-semibold mb-4">Result</h4>
+              <div className={`p-6 rounded-lg bg-theme-header dark:theme-card-dark`}>
+                <h4 className="text-lg font-semibold mb-4 text-theme-primary dark:text-theme-primary-dark">Result</h4>
                 {bearingCalc.result !== null ? (
                   <div className="text-center">
-                    <div className={`text-3xl font-bold mb-2 ${darkMode ? 'text-theme-accent-dark' : 'text-theme-accent'}`}>
+                    <div className={`text-3xl font-bold mb-2 text-theme-accent dark:theme-accent-dark`}>
                       {bearingCalc.result.toFixed(1)}°
                     </div>
                     <div className="text-sm opacity-75">True Bearing</div>
@@ -477,11 +437,7 @@ const NavigationTools: React.FC<NavigationToolsProps> = ({ darkMode }) => {
                       const val = parseFloat(e.target.value);
                       if (!isNaN(val)) convertUnits(val, 'nm');
                     }}
-                    className={`w-full p-3 border rounded-lg ${
-                      darkMode 
-                        ? 'bg-theme-card-dark border-theme-accent-dark/30 text-theme-primary-dark' 
-                        : 'bg-theme-card border-theme-accent/30 text-theme-primary'
-                    }`}
+                    className="w-full p-3 border rounded-lg bg-theme-card dark:bg-theme-card-dark border-theme-accent/30 dark:border-theme-accent-dark/30 text-theme-primary dark:text-theme-primary-dark"
                     placeholder="100"
                   />
                 </div>
@@ -496,11 +452,7 @@ const NavigationTools: React.FC<NavigationToolsProps> = ({ darkMode }) => {
                       const val = parseFloat(e.target.value);
                       if (!isNaN(val)) convertUnits(val, 'sm');
                     }}
-                    className={`w-full p-3 border rounded-lg ${
-                      darkMode 
-                        ? 'bg-theme-card-dark border-theme-accent-dark/30 text-theme-primary-dark' 
-                        : 'bg-theme-card border-theme-accent/30 text-theme-primary'
-                    }`}
+                    className="w-full p-3 border rounded-lg bg-theme-card dark:bg-theme-card-dark border-theme-accent/30 dark:border-theme-accent-dark/30 text-theme-primary dark:text-theme-primary-dark"
                     placeholder="115.078"
                   />
                 </div>
@@ -515,77 +467,73 @@ const NavigationTools: React.FC<NavigationToolsProps> = ({ darkMode }) => {
                       const val = parseFloat(e.target.value);
                       if (!isNaN(val)) convertUnits(val, 'km');
                     }}
-                    className={`w-full p-3 border rounded-lg ${
-                      darkMode 
-                        ? 'bg-theme-card-dark border-theme-accent-dark/30 text-theme-primary-dark' 
-                        : 'bg-theme-card border-theme-accent/30 text-theme-primary'
-                    }`}
+                    className="w-full p-3 border rounded-lg bg-theme-card dark:bg-theme-card-dark border-theme-accent/30 dark:border-theme-accent-dark/30 text-theme-primary dark:text-theme-primary-dark"
                     placeholder="185.2"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-2 text-red-500 uppercase tracking-tighter">Fuel (Avgas 6lb/gal)</label>
+                  <label className="block text-sm font-medium mb-2 text-theme-accent dark:text-theme-accent-dark uppercase tracking-tighter">Fuel (Avgas 6lb/gal)</label>
                   <div className="grid grid-cols-2 gap-2">
                     <input
                       type="number"
                       placeholder="Gal"
                       value={conversions.gallons}
                       onChange={e => convertFuel(parseFloat(e.target.value), 'gal')}
-                      className={`p-3 border rounded-lg bg-black border-zinc-800 text-white w-full`}
+                      className="p-3 border rounded-lg bg-theme-bg dark:bg-theme-bg-dark border-theme-accent/30 dark:border-theme-accent-dark/30 text-theme-primary dark:text-theme-primary-dark w-full"
                     />
                     <input
                       type="number"
                       placeholder="Lbs"
                       value={conversions.pounds}
                       onChange={e => convertFuel(parseFloat(e.target.value), 'lbs')}
-                      className={`p-3 border rounded-lg bg-black border-zinc-800 text-white w-full`}
+                      className="p-3 border rounded-lg bg-theme-bg dark:bg-theme-bg-dark border-theme-accent/30 dark:border-theme-accent-dark/30 text-theme-primary dark:text-theme-primary-dark w-full"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2 text-red-500 uppercase tracking-tighter">Temperature</label>
+                  <label className="block text-sm font-medium mb-2 text-theme-accent dark:text-theme-accent-dark uppercase tracking-tighter">Temperature</label>
                   <div className="grid grid-cols-2 gap-2">
                     <input
                       type="number"
                       placeholder="°C"
                       value={conversions.celsius}
                       onChange={e => convertTemp(parseFloat(e.target.value), 'c')}
-                      className={`p-3 border rounded-lg bg-black border-zinc-800 text-white w-full`}
+                      className="p-3 border rounded-lg bg-theme-bg dark:bg-theme-bg-dark border-theme-accent/30 dark:border-theme-accent-dark/30 text-theme-primary dark:text-theme-primary-dark w-full"
                     />
                     <input
                       type="number"
                       placeholder="°F"
                       value={conversions.fahrenheit}
                       onChange={e => convertTemp(parseFloat(e.target.value), 'f')}
-                      className={`p-3 border rounded-lg bg-black border-zinc-800 text-white w-full`}
+                      className="p-3 border rounded-lg bg-theme-bg dark:bg-theme-bg-dark border-theme-accent/30 dark:border-theme-accent-dark/30 text-theme-primary dark:text-theme-primary-dark w-full"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2 text-red-500 uppercase tracking-tighter">Altitude / Distance</label>
+                  <label className="block text-sm font-medium mb-2 text-theme-accent dark:text-theme-accent-dark uppercase tracking-tighter">Altitude / Distance</label>
                   <div className="grid grid-cols-2 gap-2">
                     <input
                       type="number"
                       placeholder="Meters"
                       value={conversions.meters}
                       onChange={e => convertAlt(parseFloat(e.target.value), 'm')}
-                      className={`p-3 border rounded-lg bg-black border-zinc-800 text-white w-full`}
+                      className="p-3 border rounded-lg bg-theme-bg dark:bg-theme-bg-dark border-theme-accent/30 dark:border-theme-accent-dark/30 text-theme-primary dark:text-theme-primary-dark w-full"
                     />
                     <input
                       type="number"
                       placeholder="Feet"
                       value={conversions.altitudeFeet}
                       onChange={e => convertAlt(parseFloat(e.target.value), 'ft')}
-                      className={`p-3 border rounded-lg bg-black border-zinc-800 text-white w-full`}
+                      className="p-3 border rounded-lg bg-theme-bg dark:bg-theme-bg-dark border-theme-accent/30 dark:border-theme-accent-dark/30 text-theme-primary dark:text-theme-primary-dark w-full"
                     />
                   </div>
                 </div>
               </div>
               
-              <div className={`p-6 rounded-lg ${darkMode ? 'bg-theme-card-dark' : 'bg-theme-header'}`}>
-                <h4 className="text-lg font-semibold mb-4">Aviation Distance Reference</h4>
+              <div className={`p-6 rounded-lg bg-theme-header dark:theme-card-dark`}>
+                <h4 className="text-lg font-semibold mb-4 text-theme-primary dark:text-theme-primary-dark">Aviation Distance Reference</h4>
                 <div className="space-y-3 text-sm">
                   <div><strong>1 nautical mile =</strong></div>
                   <div>• 1.15078 statute miles</div>
@@ -610,7 +558,7 @@ const NavigationTools: React.FC<NavigationToolsProps> = ({ darkMode }) => {
             <h3 className="text-xl font-semibold">Official Aviation Weather Services</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {weatherServices.map((service, index) => (
-                <div key={index} className={`p-4 rounded-lg border ${darkMode ? 'bg-theme-card-dark border-theme-accent-dark/30' : 'bg-theme-header border-theme-accent/30'}`}>
+                <div key={index} className={`p-4 rounded-lg border bg-theme-header border-theme-accent/30 dark:theme-card-dark border-theme-accent-dark/30`}>
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <h4 className="font-semibold text-sm mb-1">{service.name}</h4>
@@ -631,8 +579,8 @@ const NavigationTools: React.FC<NavigationToolsProps> = ({ darkMode }) => {
               ))}
             </div>
 
-            <div className={`p-4 rounded-lg ${darkMode ? 'bg-theme-header-dark' : 'bg-theme-header'}`}>
-              <h4 className="font-semibold mb-2">Weather Briefing Tips</h4>
+            <div className={`p-4 rounded-lg bg-theme-header dark:theme-header-dark`}>
+              <h4 className="font-semibold mb-2 text-theme-primary dark:text-theme-primary-dark">Weather Briefing Tips</h4>
               <ul className="text-sm space-y-1">
                 <li>• Always get an official briefing before flight</li>
                 <li>• Check NOTAMs for airspace changes</li>
@@ -656,7 +604,7 @@ const NavigationTools: React.FC<NavigationToolsProps> = ({ darkMode }) => {
                     type="time"
                     value={timeConverter.utcTime}
                     onChange={(e) => setTimeConverter({...timeConverter, utcTime: e.target.value})}
-                    className={`w-full p-3 border rounded-lg ${darkMode ? 'bg-theme-card-dark border-theme-accent-dark/30 text-theme-primary-dark' : 'bg-theme-card border-theme-accent/30 text-theme-primary'}`}
+                    className={`w-full p-3 border rounded-lg bg-theme-card border-theme-accent/30 text-theme-primary dark:theme-card-dark border-theme-accent-dark/30 text-theme-primary-dark`}
                   />
                 </div>
                 <div>
@@ -666,7 +614,7 @@ const NavigationTools: React.FC<NavigationToolsProps> = ({ darkMode }) => {
                     step="0.5"
                     value={timeConverter.localOffset}
                     onChange={(e) => setTimeConverter({...timeConverter, localOffset: e.target.value})}
-                    className={`w-full p-3 border rounded-lg ${darkMode ? 'bg-theme-card-dark border-theme-accent-dark/30 text-theme-primary-dark' : 'bg-theme-card border-theme-accent/30 text-theme-primary'}`}
+                    className={`w-full p-3 border rounded-lg bg-theme-card border-theme-accent/30 text-theme-primary dark:theme-card-dark border-theme-accent-dark/30 text-theme-primary-dark`}
                     placeholder="-5"
                     min="-12"
                     max="14"
@@ -680,8 +628,8 @@ const NavigationTools: React.FC<NavigationToolsProps> = ({ darkMode }) => {
                 </button>
               </div>
 
-              <div className={`p-6 rounded-lg ${darkMode ? 'bg-theme-card-dark' : 'bg-theme-header'}`}>
-                <h4 className="text-lg font-semibold mb-4">Converted Time</h4>
+              <div className={`p-6 rounded-lg bg-theme-header dark:theme-card-dark`}>
+                <h4 className="text-lg font-semibold mb-4 text-theme-primary dark:text-theme-primary-dark">Converted Time</h4>
                 <div className="text-center">
                   <div className="text-3xl font-bold text-theme-accent mb-2">
                     {timeConverter.convertedTime || '--:--'}
@@ -701,9 +649,9 @@ const NavigationTools: React.FC<NavigationToolsProps> = ({ darkMode }) => {
                   </div>
                 </div>
 
-                <div className="mt-4 p-3 bg-yellow-100 dark:bg-yellow-900 rounded-lg">
-                  <h6 className="font-medium text-yellow-800 dark:text-yellow-200 text-xs mb-1">Aviation Time Reference:</h6>
-                  <p className="text-xs text-yellow-700 dark:text-yellow-300">
+                <div className="mt-4 p-3 bg-theme-accent/10 dark:bg-theme-accent-dark/10 border border-theme-accent/20 dark:border-theme-accent-dark/20 rounded-lg">
+                  <h6 className="font-medium text-theme-primary dark:text-theme-primary-dark text-xs mb-1">Aviation Time Reference:</h6>
+                  <p className="text-xs text-theme-secondary dark:text-theme-secondary-dark">
                     All aviation times are in UTC (Zulu time) unless specified otherwise
                   </p>
                 </div>
