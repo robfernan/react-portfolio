@@ -257,6 +257,65 @@ table thead th {
    Kept minimal on purpose: the palette + glassy glow live in theme-vars.css.
    No per-element borders here (that was causing the old "boxy" feel). */
 
+/* ===== PRINT / PDF (resume one-pager) =====
+   Forces a clean light layout, hides site chrome + theme controls,
+   and compresses type/spacing so it exports as a tight document. */
+@media print {
+  @page { margin: 10mm; }
+
+  html, body {
+    background: #ffffff !important;
+    color: #1a1a1a !important;
+    font-size: 9pt !important;
+    line-height: 1.35 !important;
+  }
+
+  /* Hide the app shell around the resume content. */
+  header,
+  footer,
+  .no-print {
+    display: none !important;
+  }
+
+  /* Neutralize theme tokens to a readable light palette for print. */
+  :root,
+  html.theme-minimal, html.theme-slate, html.theme-midnight, html.theme-90s {
+    --color-background: #ffffff;
+    --color-header: #ffffff;
+    --color-footer: #ffffff;
+    --color-primary: #1a1a1a;
+    --color-secondary: #374151;
+    --color-accent: #6b7280;
+    --color-card: #ffffff;
+  }
+
+  /* Flatten backgrounds, borders and shadows for a crisp document. */
+  * {
+    box-shadow: none !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .bg-theme-bg,
+  .dark.bg-theme-bg-dark { background-color: #ffffff !important; }
+
+  /* Compress the whole resume to fit on ~1-2 pages. */
+  h1 { font-size: 20pt !important; margin-bottom: 4px !important; }
+  h2, h3 { font-size: 10.5pt !important; }
+  p, li, span { font-size: 9pt !important; line-height: 1.35 !important; }
+
+  /* Tighten vertical rhythm across every section and list. */
+  .max-w-5xl { padding-top: 0 !important; padding-bottom: 0 !important; }
+  section, article, div.space-y-8 > *, div.space-y-6 > * {
+    margin-bottom: 10px !important;
+  }
+  ul { margin: 4px 0 !important; }
+  li { margin-bottom: 2px !important; }
+
+  /* Keep multi-line items from splitting awkwardly across pages. */
+  article, li { break-inside: avoid; page-break-inside: avoid; }
+}
+
 /* Motion is intentionally disabled across this portfolio. */
 html {
   scroll-behavior: auto !important;
