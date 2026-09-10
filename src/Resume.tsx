@@ -79,7 +79,7 @@ type Certification = { issuer: string; icon: string; detail: string };
 
 const certifications: Certification[] = [
   { issuer: 'Microsoft', icon: 'fab fa-microsoft', detail: 'Foundational C# · Microsoft Office Specialist (Access, PowerPoint, Excel, Word)' },
-  { issuer: 'Adobe', icon: 'fab fa-adobe', detail: 'Certified Professional — Animate, Dreamweaver, Illustrator, Photoshop CC' },
+  { issuer: 'Adobe', icon: 'fas fa-pen-nib', detail: 'Certified Professional — Animate, Dreamweaver, Illustrator, Photoshop CC' },
   { issuer: 'Web / Dev', icon: 'fas fa-code', detail: 'Responsive Web Design (freeCodeCamp) · Game Development (Sololearn) · CIW IBA' },
 ];
 
