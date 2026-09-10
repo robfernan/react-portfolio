@@ -207,7 +207,7 @@ export default function Resume() {
         {/* Education, Certifications & Selected Projects — two columns to save vertical space */}
         <section className="mb-12">
           <div id="edu-projects" className="grid grid-cols-1 gap-y-6 md:grid-cols-2 md:gap-x-8">
-            <div className="md:border-r md:border-theme-accent/30 dark:md:border-theme-accent-dark md:pr-6">
+            <div>
               <p className={`${eyebrow} mb-5`}>Education &amp; Certifications</p>
           <div className="space-y-6">
             {education.map((school) => (
@@ -243,7 +243,7 @@ export default function Resume() {
           </div>
             </div>
 
-            <div className="md:pl-8">
+            <div>
               <p className={`${eyebrow} mb-5`}>Selected Projects</p>
               <ul className="space-y-4">
                 {selectedProjects.map((project) => (
