@@ -66,12 +66,12 @@ export function FlipControls({ canPrev = false, canNext = false, onPrev, onNext,
 /** A single project rendered as a compact magazine entry (used on both pages). */
 export function MagazineEntry({ entry, onOpenImage }: { entry: import('./data').Entry; onOpenImage?: (entry: import('./data').Entry) => void }) {
   return (
-    <article className="group flex gap-3 sm:gap-4 rounded-xl border border-theme-accent/15 dark:border-theme-accent-dark bg-theme-card dark:bg-theme-card-dark p-3 sm:p-4 hover-lift-premium">
+    <article className="group flex gap-3 rounded-xl border border-theme-accent/15 dark:border-theme-accent-dark bg-theme-card dark:bg-theme-card-dark p-3 hover-lift-premium">
       {/* Cover thumbnail */}
       <button
         type="button"
         onClick={() => onOpenImage?.(entry)}
-        className="relative flex-shrink-0 w-24 h-24 sm:w-32 sm:h-32 rounded-lg overflow-hidden bg-theme-bg dark:bg-theme-bg-dark deboss-frame text-left focus-ring"
+        className="relative flex-shrink-0 w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 rounded-lg overflow-hidden bg-theme-bg dark:bg-theme-bg-dark deboss-frame text-left focus-ring"
         aria-label={`Open larger preview for ${entry.title}`}
       >
         {entry.cover ? (
@@ -103,7 +103,7 @@ export function MagazineEntry({ entry, onOpenImage }: { entry: import('./data').
             {entry.format && (
               <p className="font-mono-tech text-[9px] tracking-[0.15em] text-theme-accent dark:text-theme-accent-dark mb-1">{entry.format}</p>
             )}
-            <h3 className="font-bold leading-tight text-theme-primary dark:text-theme-secondary-dark group-hover:text-theme-primary-dark">
+            <h3 className="text-sm sm:text-base font-bold leading-tight text-theme-primary dark:text-theme-secondary-dark group-hover:text-theme-primary-dark">
               {entry.title}
             </h3>
           </div>
@@ -114,7 +114,7 @@ export function MagazineEntry({ entry, onOpenImage }: { entry: import('./data').
           )}
         </div>
 
-        <p className="text-xs sm:text-sm text-theme-secondary dark:text-theme-secondary-dark leading-relaxed line-clamp-3 mb-2">
+        <p className="text-[11px] sm:text-xs lg:text-sm text-theme-secondary dark:text-theme-secondary-dark leading-relaxed line-clamp-3 mb-2">
           {entry.blurb}
         </p>
 

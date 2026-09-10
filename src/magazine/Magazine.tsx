@@ -4,24 +4,41 @@ import { FlipControls, MagazineEntry } from './MagazineUI';
 
 const TOTAL_PAGES = ISSUES.length;
 
+/** Build an array of spreads: each spread is [left?, right?] */
+type Spread = { left?: number; right?: number };
+
+function buildSpreads(): Spread[] {
+  const spreads: Spread[] = [];
+  for (let i = 0; i < TOTAL_PAGES; i += 2) {
+    const s: Spread = {};
+    if (i < TOTAL_PAGES) s.left = i;
+    if (i + 1 < TOTAL_PAGES) s.right = i + 1;
+    spreads.push(s);
+  }
+  return spreads;
+}
+
+const SPREADS = buildSpreads();
+const TOTAL_SPREADS = SPREADS.length;
+
 type MagazineIssue = (typeof ISSUES)[number];
 
 export default function Magazine() {
-  const [page, setPage] = useState(0);
+  const [spread, setSpread] = useState(0);
   const [previewEntry, setPreviewEntry] = useState<Entry | null>(null);
   const touchStartX = useRef<number | null>(null);
   const touchStartY = useRef<number | null>(null);
 
   const goTo = useCallback((target: number) => {
-    setPage((current) => {
-      if (target === current || target < 0 || target >= TOTAL_PAGES) return current;
+    setSpread((current) => {
+      if (target === current || target < 0 || target >= TOTAL_SPREADS) return current;
       window.scrollTo({ top: 0, behavior: 'auto' });
       return target;
     });
   }, []);
 
-  const goPrev = useCallback(() => goTo(page - 1), [goTo, page]);
-  const goNext = useCallback(() => goTo(page + 1), [goTo, page]);
+  const goPrev = useCallback(() => goTo(spread - 1), [goTo, spread]);
+  const goNext = useCallback(() => goTo(spread + 1), [goTo, spread]);
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -61,12 +78,21 @@ export default function Magazine() {
     }
   };
 
-  const issue = ISSUES[page];
+  const currentSpread = SPREADS[spread];
+  const isSinglePage = currentSpread.right === undefined;
+
+  // Page range label for the controls
+  let pageLabel: string;
+  if (isSinglePage) {
+    pageLabel = `Page ${(currentSpread.left! + 1)} of ${TOTAL_PAGES}`;
+  } else {
+    pageLabel = `Pages ${currentSpread.left! + 1}–${currentSpread.right! + 1} of ${TOTAL_PAGES}`;
+  }
 
   return (
     <div className="min-h-screen bg-theme-bg dark:bg-theme-bg-dark">
-      <section className="max-w-7xl mx-auto px-4 py-8 sm:py-12" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
-        <header className="mb-6 sm:mb-8 border-b border-theme-accent/20 dark:border-theme-accent-dark pb-5">
+      <section className="max-w-[1600px] mx-auto px-3 sm:px-4 py-6 sm:py-10" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+        <header className="mb-5 sm:mb-7 border-b border-theme-accent/20 dark:border-theme-accent-dark pb-4">
           <p className="text-[11px] font-semibold tracking-[0.25em] uppercase text-theme-accent dark:text-theme-secondary-dark mb-3 flex items-center gap-3">
             <span className="w-8 h-px bg-theme-accent dark:bg-theme-accent-dark" />
             The Works · 2026
@@ -75,22 +101,28 @@ export default function Magazine() {
             A magazine of everything I build
           </h1>
           <p className="text-sm sm:text-base text-theme-secondary dark:text-theme-secondary-dark leading-relaxed max-w-2xl">
-            Three pages, one catalogue — products, client work, games, systems, and studio craft. Use the arrows to move through the archive.
+            {TOTAL_PAGES} pages, one catalogue — products, client work, games, systems, and studio craft. Use the arrows to move through the archive.
           </p>
         </header>
 
-        <div className="mb-6 sm:mb-8">
+        <div className="mb-5 sm:mb-7">
           <FlipControls
-            canPrev={page > 0}
-            canNext={page < TOTAL_PAGES - 1}
+            canPrev={spread > 0}
+            canNext={spread < TOTAL_SPREADS - 1}
             onPrev={goPrev}
             onNext={goNext}
-            centerLabel={`Page ${page + 1} of ${TOTAL_PAGES}`}
+            centerLabel={pageLabel}
           />
         </div>
 
-        <div>
-          <MagazinePage issue={issue} pageIndex={page} onOpenImage={setPreviewEntry} />
+        {/* Book spread: two pages side by side, or single centered page */}
+        <div className={`grid gap-4 sm:gap-6 ${isSinglePage ? 'grid-cols-1 max-w-[85%] mx-auto' : 'lg:grid-cols-2'}`}>
+          {currentSpread.left !== undefined && (
+            <MagazinePage issue={ISSUES[currentSpread.left]} pageIndex={currentSpread.left} onOpenImage={setPreviewEntry} />
+          )}
+          {currentSpread.right !== undefined && (
+            <MagazinePage issue={ISSUES[currentSpread.right]} pageIndex={currentSpread.right} onOpenImage={setPreviewEntry} />
+          )}
         </div>
 
         <p className="mt-5 text-center text-[11px] tracking-wide text-theme-secondary/70 dark:text-theme-secondary-dark/60">
@@ -107,8 +139,8 @@ export default function Magazine() {
 function MagazinePage({ issue, pageIndex, onOpenImage }: { issue: MagazineIssue; pageIndex: number; onOpenImage: (entry: Entry) => void }) {
   return (
     <article className={`rounded-2xl border border-theme-accent/20 dark:border-theme-accent-dark bg-theme-card dark:bg-theme-card-dark overflow-hidden ${pageIndex === 0 ? 'border-t-4 border-t-theme-action dark:border-t-theme-action-dark' : 'border-t-4 border-t-theme-accent dark:border-t-theme-accent-dark'}`}>
-      <div className="relative px-5 sm:px-8 pt-6 sm:pt-8 pb-5 border-b border-theme-accent/15 dark:border-theme-accent-dark">
-        <div className="flex items-center justify-between gap-4 mb-3">
+      <div className="relative px-4 sm:px-6 pt-5 sm:pt-7 pb-4 border-b border-theme-accent/15 dark:border-theme-accent-dark">
+        <div className="flex items-center justify-between gap-3 mb-2">
           <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-theme-accent dark:text-theme-secondary-dark">
             {String(pageIndex + 1).padStart(2, '0')} · {issue.kicker}
           </p>
@@ -116,13 +148,13 @@ function MagazinePage({ issue, pageIndex, onOpenImage }: { issue: MagazineIssue;
             {String(pageIndex + 1).padStart(2, '0')} / {String(TOTAL_PAGES).padStart(2, '0')}
           </span>
         </div>
-        <h2 className="text-xl font-bold text-theme-primary dark:text-theme-secondary-dark mb-2">{issue.title}</h2>
-        <p className="text-sm sm:text-base text-theme-secondary dark:text-theme-secondary-dark leading-relaxed">
+        <h2 className="text-lg sm:text-xl font-bold text-theme-primary dark:text-theme-secondary-dark mb-2">{issue.title}</h2>
+        <p className="text-xs sm:text-sm text-theme-secondary dark:text-theme-secondary-dark leading-relaxed">
           {issue.intro}
         </p>
       </div>
 
-      <div className="px-4 sm:px-8 py-5 sm:py-7 space-y-3 sm:space-y-4">
+      <div className="px-3 sm:px-6 py-4 sm:py-5 space-y-2.5 sm:space-y-3">
         {issue.entries.map((entry) => (
           <MagazineEntry key={entry.title} entry={entry} onOpenImage={onOpenImage} />
         ))}
