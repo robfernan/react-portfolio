@@ -341,9 +341,31 @@ table thead th {
      every one of them, so this reclaims ~3 lines of vertical space. */
   #skill-chips { display: none !important; }
 
-  /* Hide Platforms for print — it's redundant with the skills list and its
-     removal is what guarantees everything fits on a single page. */
-  #platforms { display: none !important; }
+  /* Hide the decorative highlights strip in print — every fact there already
+     appears in the body text, so this reclaims a full row of vertical space. */
+  section#highlights { display: none !important; }
+
+  /* Keep contact links readable + dark in print (they're plain text anchors). */
+  #contact-links a { color: #1a1a1a !important; }
+
+  /* Compact the resume header for print — it was eating ~200px at the top. */
+  #resume-header {
+    padding-bottom: 6px !important;
+    margin-bottom: 8px !important;
+    border-bottom-width: 1px !important;
+  }
+  /* Drop the redundant "Résumé · 2026" eyebrow line in print. */
+  #resume-header > p:first-child { display: none !important; }
+  #resume-header h1 { font-size: 18pt !important; margin-bottom: 3px !important; }
+
+  /* Remove the tagline in print (name + links are enough). The contact links
+     are now a single paragraph of inline text, so they flow on one line. */
+  #resume-header p.mt-3 { display: none !important; }
+  #contact-links {
+    white-space: nowrap !important;
+    font-size: 8pt !important;
+    line-height: 1.4 !important;
+  }
 
   /* Force Education + Selected Projects into two EQUAL side-by-side columns
      (no divider, no gutter) so the projects text matches the Certifications
@@ -353,6 +375,14 @@ table thead th {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
     align-items: start !important;
     gap: 0 24px !important;
+  }
+
+  /* Make Selected Projects a compact two-column list INSIDE its own panel so
+     it stays under the heading (not beside Education) and reclaims height. */
+  #projects-list {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+    gap: 4px 20px !important;
   }
 
   /* Keep multi-line items from splitting awkwardly across pages. */

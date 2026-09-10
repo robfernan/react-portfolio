@@ -1,19 +1,19 @@
-# Personal Portfolio Website - React/TypeScript/Tailwind CSS
+# Personal Portfolio Website — React / TypeScript / Tailwind CSS
 
-## 🌐 Live Build
+A multi-page personal portfolio built with **React 19**, **TypeScript**, and **Tailwind CSS v4**. It showcases my work as a cross-platform software engineer, digital artist, pilot, and content creator — including an embedded professional flight-planning suite (AviationPro) and a print-ready résumé.
 
-Want to see this portfolio in action? Visit the live build at **[robertfernandez.dev](https://robertfernandez.dev)**
+**Live:** [robertfernandez.dev](https://robertfernandez.dev) · **Repo:** [robfernan/react-portfolio](https://github.com/robfernan/react-portfolio)
+**Original version:** [HTML/CSS/JS Portfolio](https://github.com/robfernan/html-css-js-portfolio)
 
 ## 📸 Screenshots
 
+> The screenshots below are for the **Dark Minimal** theme. More theme previews further down.
 
-<b>Note:</b> The screenshots below are for the <b>Dark Minimal</b> theme. See more theme previews further down.
+| Home | Works (Magazine) | Aviation | Streaming |
+|------|------------------|----------|-----------|
+| ![Home](public/screenshots/homepagescreenshot.png) | ![Works](public/screenshots/projectscreenshot.png) | ![Aviation](public/screenshots/aviationscreenshot.png) | ![Streaming](public/screenshots/streamingscreenshot.png) |
 
-| Home Page | Projects | Aviation | Art | Streaming |
-|-----------|----------|----------|-----|-----------|
-| ![Home](public/screenshots/homepagescreenshot.png) | ![Projects](public/screenshots/projectscreenshot.png) | ![Aviation](public/screenshots/aviationscreenshot.png) | ![Art](public/screenshots/artscreenshot.png) | ![Streaming](public/screenshots/streamingscreenshot.png) |
-
-Other themes:  
+Other themes:
 
 <div align="center">
 <b>Theme Previews:</b><br>
@@ -29,286 +29,169 @@ Light Minimal<br>
 <img src="public/screenshots/darkslate.png" width="200" alt="Dark Slate" />
 </div>
 
-# ...existing code...
-# Personal Portfolio Website - React/TypeScript/Tailwind CSS
-
-> **Modern Framework Edition** - A comprehensive multi-page portfolio built with React, TypeScript, and Tailwind CSS, showcasing my journey as a developer, artist, pilot, and content creator.
-
-**Repository**: [React Portfolio](https://github.com/robfernan/react-portfolio)  
-**Original Version**: [HTML/CSS/JS Portfolio](https://github.com/robfernan/html-css-js-portfolio)
-
 ## 🎯 About
 
-This is my **modern, component-based rebuild** of my foundational HTML/CSS/JavaScript portfolio. It demonstrates my progression to professional-grade web development using industry-standard tools and frameworks.
+This is a **modern, component-based rebuild** of my foundational HTML/CSS/JavaScript portfolio. It demonstrates progression to professional-grade web development using industry-standard tooling:
 
-Built with:
-- **React 18** - Component-based architecture for reusability and maintainability
-- **TypeScript** - Full type safety and better developer experience
-- **Tailwind CSS** - Utility-first styling for rapid, consistent UI development
-- **Vite** - Lightning-fast build tool with Hot Module Replacement (HMR)
-- **React Router v6** - Client-side routing for seamless SPA navigation
+- **React 19** — component architecture for reusability and maintainability
+- **TypeScript** — full type safety across components and utilities
+- **Tailwind CSS v4** — utility-first styling with a custom theme-token system
+- **Vite** — fast dev server (HMR) and optimized production builds
+- **React Router v6** — client-side routing for seamless SPA navigation
 
-The site showcases my diverse background across:
-- **Software Development** (SFML, Love2D, Web Development)
-- **Digital Art & 3D Modeling**
-- **Aviation** (Student Pilot with flight planning tools)
-- **Content Creation** (Streaming and game development)
+The site spans:
+
+- **Software development** — web, desktop (Go/Wails, C++/SFML), mobile (Capacitor), Wear OS, embedded displays, retro consoles
+- **Digital art & design** — brand identity, UI/UX, Adobe Creative Cloud
+- **Aviation** — student pilot with an integrated flight-planning suite
+- **Content creation** — streaming and game development
 
 ## ✨ Features
 
 ### 🎨 Design & UX
-- **Component-Based Architecture** - Reusable React components for consistency and maintainability
-- **Responsive Design** - Mobile-first approach with Tailwind's responsive utilities
-- **Smooth Animations** - Custom CSS animations (fadeInUp, slideInLeft, pulse) with React integration
-- **Theme System** - CSS custom properties for consistent theming across components
-- **Interactive Elements** - Hover effects, transitions, and micro-interactions
+- **Component-based architecture** — reusable React components for consistency
+- **Responsive design** — mobile-first, fully supports iPhone SE (375px) viewports
+- **Theme system** — CSS custom properties (`theme-*` tokens) with 4 switchable themes + light/dark mode
+- **Interactive elements** — hover states, transitions, and micro-interactions
 
-### 🛠️ Technical Features
-- **TypeScript** - Full type safety across all components and utilities
-- **React Hooks** - Modern state management with useState, useEffect, useContext
-- **React Router v6** - Client-side routing with nested routes and lazy loading
-- **Vite** - Ultra-fast development server with HMR for instant feedback
-- **Tailwind CSS** - Utility-first CSS framework for rapid UI development
-- **Component Composition** - Reusable, composable components for DRY code
-- **Hot Module Replacement** - See changes instantly without full page reload
+### 🛠️ Technical
+- **TypeScript** — strict typing across all components and utilities
+- **React hooks & context** — state management via `useState`, `useEffect`, `ThemeProvider`
+- **Tailwind CSS v4** — utility-first styling with a custom PostCSS pipeline
+- **Vite** — HMR for instant feedback, optimized code-split production bundles
 
-### 🧮 Interactive Tools
-- **Aviation Calculators** - Cloud base, crosswind, density altitude, fuel planning
-- **Real-time Weather Integration** - Live METAR data for flight planning
-- **Weight & Balance Calculator** - Cessna 172 performance calculations
-- **Interactive Checklists** - Pre-flight procedures with progress tracking
-- **Project Filtering** - Dynamic content filtering by technology/category
-- **Image Galleries** - Responsive galleries with smooth transitions
-
-## What this repo is for
-
-- Host a living snapshot of Robert's portfolio website and project assets.
-- Provide source for the web UI (Vite + React/TypeScript + Tailwind CSS) and supporting media assets.
-- Include the `AviationPro` app sources under `src/aviationpro` for reference and development.
-- Serve as a reference for modern React portfolio architecture and component design patterns.
-
-## 🛠️ Tech Stack
-
-- **React 18** - Modern UI library with hooks and concurrent features
-- **TypeScript** - Static typing for safer, more maintainable code
-- **Tailwind CSS** - Utility-first CSS framework for rapid development
-- **Vite** - Next-generation build tool with lightning-fast HMR
-- **React Router v6** - Client-side routing for SPA navigation
-- **FontAwesome 7** - Comprehensive icon library
-- **Lucide React** - Beautiful, consistent icon components
-- **PostCSS** - CSS transformation and optimization
-- **Autoprefixer** - Automatic vendor prefixes for cross-browser support
+### 🧮 Interactive tools (AviationPro)
+- Flight planner with wind correction, fuel tracking, VOR data, print & JSON export
+- CX-6 computer: wind triangle, TAS, time-speed-distance, crosswind calculators
+- Live METAR/TAF weather fetcher with VFR/IFR/MVFR/LVFR analysis
+- Weight & balance calculator with CG envelope visualization and Go/No-Go validation
+- Navigation tools: distance/bearing, unit conversions, time-zone converter
+- Persistent logbook (Dexie/localStorage) with search, filter, sort, CSV export
 
 ## 📄 Pages Overview
 
-### 🏠 Home (`PortfolioHome.tsx`)
-- Interactive timeline of my journey (2012-2025)
-- Smooth scroll-triggered animations
-- Featured projects showcase (AviationPro, Hopeless Catch)
-- Circular watch face image and video demo showcase
-- Call-to-action buttons for navigation
+| Route | Component | Description |
+|-------|-----------|-------------|
+| `/` | `PortfolioHome.tsx` | Home — journey timeline, featured projects, watch-face showcase, CTAs |
+| `/works`, `/work`, `/projects` | `magazine/Magazine.tsx` | Works — two-page "book spread" project gallery (desktop) with art-platform links |
+| `/aviationpro/*` | `aviationpro/AviationProApp.tsx` | AviationPro — full flight-planning suite embedded in the site |
+| `/streaming` | `Streaming.tsx` | Streaming — YouTube & Twitch content, organized by category |
+| `/resume` | `Resume.tsx` | Résumé — general-overview CV with a print/PDF one-pager export |
 
-### 💻 Coding (`Projects.tsx`)
-- **13 Polished Projects** organized into 5 categories
-- **Featured**: AviationPro, Hopeless Catch, Android Watch Face
-- **Web & Tools**: PaperWorks Pro, XMB Wave Menu, Restaurant Website, Personal Portfolio
-- **Creative & Games**: Comic Reader (SFML), Music Player (Vinyl/Cassette/MiniDisc)
-- **Systems & Education**: PSP-Programming, PS1-Mips-Programming
-- **Tools in Progress**: NeroGPUI (Rust + GPUI), NeroWails (Go + Wails)
-- Project cards with images, tech stack, status badges, and direct links
-- Responsive grid layout with smooth scroll animations
-- GitHub links, live demos, and YouTube videos
+### 📝 Résumé (`/resume`)
+A **general-overview résumé** designed for recruiters who land on the site after an application. Sections: profile, professional experience (primary role + independent/freelance studio), core technical skills, education & certifications, and selected projects — with bilingual (English/Spanish) noted throughout.
 
-### 🎨 Art (`Art.tsx`)
-- Platform integration links (ArtStation, DeviantArt, Behance, etc.)
-- Interactive gallery with smooth transitions
-- 3D model viewer integration
-- Responsive image grid with lightbox functionality
+- **Print / PDF export** — a "Print / PDF" button triggers `window.print()`, and a dedicated `@media print` block in `src/index.css` produces a clean, high-contrast **single-page** document: it hides site chrome and decorative elements, forces a light palette, equalizes the Education + Selected Projects columns, and compacts spacing so everything fits on one US Letter page at 100% scale.
+- Contact links (portfolio / GitHub / LinkedIn) render in the header for both screen and print.
 
-### ✈️ AVPRO (`AviationProApp.tsx`)
-Professional flight planning suite embedded directly in the portfolio. Six modules:
+## 🛠️ Tech Stack
 
-| Tab | Description |
-|-----|-------------|
-| **Flight Planner** | Full checkpoint-based flight plan with wind correction, fuel tracking, VOR data, print & JSON export |
-| **CX-6 Computer** | Wind triangle, TAS, time-speed-distance, fuel planning, crosswind calculators |
-| **Weather Tools** | Live METAR/TAF fetcher with flight category analysis (VFR/IFR/MVFR/LVFR) |
-| **W&B** | Weight & balance calculator with CG envelope visualization, ramp/takeoff/landing telemetry, Go/No-Go validation |
-| **Navigation** | Distance/bearing calculators, unit conversions, aviation weather links, time zone converter |
-| **Flight Logs** | Persistent logbook (Dexie/localStorage) with search, filter, sort, CSV export, statistics |
+| Category | Technology |
+|----------|------------|
+| UI framework | React 19, React DOM 19 |
+| Language | TypeScript |
+| Styling | Tailwind CSS v4 (PostCSS + Autoprefixer), `tailwindcss-animate` |
+| Build tool | Vite 8 (`@vitejs/plugin-react`) |
+| Routing | React Router v6 |
+| Icons | FontAwesome Free, Lucide React |
+| Data / persistence | Dexie (+ `dexie-react-hooks`) for the AviationPro logbook |
+| PDF export | jsPDF (AviationPro) + browser print stylesheet (Résumé) |
+| UI primitives | Radix UI (`@radix-ui/react-slot`) |
 
-All components use the portfolio's theme token system (`theme-*` CSS variables) for consistent light/dark theming.
-Embedded under `src/aviationpro/`.
+## 📁 Project Structure
 
-### 📺 Streaming (`Streaming.tsx`)
-- YouTube and Twitch integration
-- Video thumbnails organized by category
-- Direct links to popular content
-- Platform-specific styling and branding
+```
+├── index.html                 # Vite entry HTML
+├── public/                    # Static assets: images, screenshots, fonts
+├── src/
+│   ├── main.tsx               # React entry point
+│   ├── App.tsx                # Router, theme provider, global header/nav + theme controls
+│   ├── PortfolioHome.tsx      # Home page (/)
+│   ├── Resume.tsx             # Résumé page (/resume) — includes print/PDF support
+│   ├── Streaming.tsx          # Streaming page (/streaming)
+│   ├── Footer.tsx             # Site footer with social links
+│   ├── index.css              # Global styles, Tailwind v4 theme tokens, @media print block
+│   ├── theme-vars.css         # CSS custom properties for the 4 switchable themes
+│   ├── context/               # ThemeProvider (theme + dark-mode state)
+│   ├── components/
+│   │   ├── layout/Layout.tsx
+│   │   └── ui/                # Button, Card, Dialog, Input, BackToTop, LoadingSpinner, cn util
+│   ├── magazine/              # Works page: Magazine.tsx, MagazineUI.tsx, data.ts (projects + art platforms)
+│   └── aviationpro/           # Embedded AviationPro app (full sub-project under src/)
+├── tailwind.config.js         # Tailwind config (theme tokens, xs breakpoint, plugins)
+├── postcss.config.js          # PostCSS pipeline for Tailwind v4
+├── vite.config.ts             # Vite build configuration
+└── tsconfig.json              # TypeScript configuration
+```
 
-### 📝 Blog (`Blog.tsx`)
-- [Currently undecided] — May be used for devlogs, tutorials, or personal posts in the future
+## 🎯 Featured Projects
 
-## 📁 Repo layout (quick)
+### Production & published
+- **AviationPro** — professional flight-planning suite (React, TypeScript, Tailwind CSS)
+- **Hopeless Catch** — atmospheric pixel-art fishing game (Love2D, Lua) — [Play on itch.io](https://mungdaal321.itch.io/hopeless-catch)
+- **Android Watch Face** — minimalist wearable UI design (Samsung Watch Face Studio)
 
-- `public/` — images and static assets used by the site.
-- `src/` — primary site source files (React components, styles, entry points).
-  - `src/components/` — reusable React components (navigation, cards, sections, etc.).
-  - `src/*.tsx` — main page components (PortfolioHome, Projects, Art, Streaming, Blog, etc.).
-  - `src/index.css` — global styles and Tailwind directives.
-  - `src/theme-vars.css` — CSS custom properties for theming.
-  - `src/main.tsx` — React entry point.
-- `src/aviationpro/` — an included application (full project) related to AviationPro.
-- `.gitignore` — common ignores for node artifacts and IDE files.
-- `tailwind.config.js` — Tailwind CSS configuration for custom theme and plugins.
-- `vite.config.ts` — Vite build configuration.
+### Web & tools
+- **PaperWorks Pro** — all-in-one document creation suite (React, TypeScript, Tailwind CSS)
+- **XMB Wave Menu** — cross-platform launcher with wave effects (HTML/CSS/JS, NW.js, Capacitor)
+- **Restaurant website** — professional service landing page (HTML, CSS, JavaScript)
+- **Personal portfolio** — this site (React, TypeScript, Tailwind CSS)
 
-## 🎯 Featured Projects (13 Polished)
+### Creative & games
+- **Comic Reader (SFML)** — fully functional comic reader with advanced graphics (C++, SFML, OpenGL)
+- **Music Player (Vinyl/Cassette/MiniDisc)** — retro-styled cross-platform player (React, TypeScript, Tailwind CSS)
 
-### Production & Published
-- **AVPRO** — Professional flight planning suite: flight planner, CX-6 computer, weather tools, W&B calculator, navigation tools, and persistent logbook (React, TypeScript, Tailwind CSS)
-- **Hopeless Catch** — Atmospheric pixel art fishing game (Love2D, Lua) — [Play on itch.io](https://mungdaal321.itch.io/hopeless-catch)
-- **Android Watch Face** — Minimalist wearable UI design (Android Watch Face Studio)
-
-### Web & Tools
-- **PaperWorks Pro** — All-in-one document creation suite (React, TypeScript, Tailwind CSS)
-- **XMB Wave Menu** — Cross-platform launcher with wave effects (HTML/CSS/JS, NW.js, Capacitor)
-- **Restaurant Website** — Professional service landing page (HTML, CSS, JavaScript)
-- **Personal Portfolio** — This site! (React, TypeScript, Tailwind CSS)
-
-### Creative & Games
-- **Comic Reader (SFML)** — Fully functional comic reader with advanced graphics (C++, SFML, OpenGL)
-- **Music Player (Vinyl/Cassette/MiniDisc)** — Retro-styled cross-platform player (React, TypeScript, Tailwind CSS)
-
-### Systems & Education
-- **PSP-Programming** — Modern PSP homebrew tutorials (C, SDL2, PSPSDK)
-- **PS1-Mips-Programming** — PlayStation 1 MIPS assembly guides (MIPS Assembly, C, Baremetal)
-
-### Tools in Progress
-- **NeroGPUI** — High-performance IDE with Rust + GPUI (from Zed Editor)
-- **NeroWails** — Cross-platform IDE with Go + Wails
-
-## � React vso. Original HTML/CSS/JS Version
-
-This React version is a **modern rebuild** of my original HTML/CSS/JS portfolio. Both showcase the same content and features, but with different technical approaches:
-
-| Aspect | React/TypeScript/Tailwind | Original HTML/CSS/JS |
-|--------|---------------------------|----------------------|
-| **Architecture** | Component-based, reusable React components | Monolithic HTML pages with inline scripts |
-| **Styling** | Utility-first Tailwind CSS classes | Custom CSS files with manual class definitions |
-| **Type Safety** | Full TypeScript support with strict typing | No type checking (vanilla JavaScript) |
-| **State Management** | React hooks (useState, useEffect, useContext) | DOM manipulation and global variables |
-| **Routing** | React Router v6 for SPA navigation | Traditional multi-page or hash-based routing |
-| **Build Process** | Vite (fast HMR, optimized bundles) | Simple HTTP serving or manual bundling |
-| **Maintainability** | Easier to refactor and extend with components | Harder to maintain as complexity grows |
-| **Performance** | Optimized code splitting and lazy loading | Single bundle or multiple page loads |
-| **Developer Experience** | Hot Module Replacement (HMR), instant feedback | Manual refresh required for changes |
-| **Learning Value** | Modern framework best practices | Foundational web development skills |
-
-
+### Systems & education
+- **PSP Programming** — modern PSP homebrew tutorials (C, SDL2, PSPSDK)
+- **PS1 MIPS Programming** — PlayStation 1 MIPS assembly guides (MIPS Assembly, C, baremetal)
 
 ## 🚀 Development (local)
 
-You need Node.js (v16+) and npm installed. From the repository root:
+Requires Node.js and npm. From the repository root:
 
 ```bash
 # Install dependencies
 npm install
 
-# Start development server with hot reload
-npm run dev
+# Start the dev server with hot reload
+npm run dev          # typically http://localhost:5173
 
 # Build for production
 npm run build
 
-# Preview production build locally
+# Preview the production build locally
 npm run preview
 ```
 
-The development server typically runs on `http://localhost:5173` with Vite's Hot Module Replacement (HMR) enabled, so changes to components and styles are reflected instantly without a full page reload.
-
 ### Key npm scripts
+- `dev` — start Vite dev server with HMR
+- `build` — build the optimized production bundle
+- `preview` — serve the production build locally
 
-- `dev` — start Vite development server with HMR
-- `build` — build optimized production bundle
-- `preview` — serve the production build locally for testing
-
-### Development Tips
-
-- **Component Development**: Edit `.tsx` files in `src/` and see changes instantly via HMR.
-- **Styling**: Modify Tailwind classes directly in components or add custom styles in `src/index.css`.
-- **Theme Customization**: Update CSS variables in `src/theme-vars.css` or Tailwind config in `tailwind.config.js`.
-- **Type Checking**: TypeScript will catch errors during development; check the console for type issues.
-- **Browser DevTools**: React DevTools extension recommended for debugging component state and props.
-
-## 📁 Project Structure & Component Organization
-
-```
-src/
-├── components/          # Reusable React components
-│   ├── Navigation.tsx   # Header/nav bar
-│   ├── Footer.tsx       # Footer component
-│   ├── ProjectCard.tsx  # Individual project card
-│   └── ...
-├── App.tsx              # Main app router and layout
-├── PortfolioHome.tsx    # Home page
-├── Projects.tsx         # Projects page
-├── Art.tsx              # Art gallery page
-├── Streaming.tsx        # Streaming info page
-├── Blog.tsx             # Blog page (optional)
-├── main.tsx             # React entry point
-├── index.css            # Global styles + Tailwind directives
-├── theme-vars.css       # CSS custom properties for theming
-└── aviationpro/         # Nested AviationPro sub-project
-```
-
-## Styling & Theming
-
-- **Tailwind CSS**: Utility-first CSS framework for rapid UI development.
-- **Custom Theme**: CSS variables defined in `src/theme-vars.css` for consistent colors and spacing.
-- **Dark Mode**: Tailwind's dark mode support for theme switching.
-- **Responsive Design**: Mobile-first approach with Tailwind's responsive prefixes (sm, md, lg, xl).
-- **Custom Animations**: Defined in `src/index.css` (fadeInUp, slideInLeft, pulse, etc.).
+### Development tips
+- **Components** — edit `.tsx` files in `src/`; changes apply instantly via HMR.
+- **Styling** — use Tailwind utilities inline, or add custom rules to `src/index.css`.
+- **Theming** — theme palettes live in `src/theme-vars.css`; token→utility mapping is in `tailwind.config.js` and the `@theme` block in `src/index.css`.
+- **Print styles** — the résumé's one-page PDF output is controlled by the `@media print` block at the bottom of `src/index.css`.
 
 ## 🎓 Key Learnings & Best Practices
 
-This project demonstrates:
+- **Component architecture** — reusable, composable components with a shared UI kit (`components/ui`)
+- **Type safety** — interfaces and generics across data models (magazine entries, AviationPro state)
+- **Theming at scale** — CSS custom properties + Tailwind tokens for consistent light/dark theming across an embedded sub-app
+- **Responsive design** — mobile-first with iPhone SE as the minimum target; verified print layout via headless Chrome
+- **Performance** — code splitting, lazy-loaded routes, optimized bundles
+- **Accessibility** — semantic HTML, ARIA labels on icon-only controls, keyboard-navigable UI
 
-### React & TypeScript Skills
-- **Component Architecture** - Building reusable, composable components
-- **React Hooks** - Modern state management patterns (useState, useEffect, useContext)
-- **TypeScript** - Type safety, interfaces, and generic components
-- **React Router** - Client-side routing and nested routes
-- **Performance Optimization** - Code splitting, lazy loading, memoization
+## 🌟 React vs. Original HTML/CSS/JS Version
 
-### CSS & Styling Skills
-- **Tailwind CSS** - Utility-first CSS for rapid development
-- **Responsive Design** - Mobile-first approach with breakpoints
-- **CSS Animations** - Custom animations and transitions
-- **Theme System** - CSS custom properties for consistent theming
-- **Accessibility** - Semantic HTML and ARIA attributes
+| Aspect | This repo (React/TS/Tailwind) | Original (HTML/CSS/JS) |
+|--------|-------------------------------|------------------------|
+| Architecture | Component-based, reusable | Monolithic pages with inline scripts |
+| Styling | Tailwind utilities + theme tokens | Custom CSS files |
+| Type safety | Full TypeScript | Vanilla JavaScript |
+| State | React hooks & context | DOM manipulation / globals |
+| Routing | React Router (SPA) | Multi-page / hash routing |
+| Build | Vite (HMR, optimized bundles) | Static serving |
 
-### Web Development Best Practices
-- **Component Composition** - DRY principles and reusability
-- **Type Safety** - Catching errors at compile time
-- **Performance** - Optimized builds and efficient rendering
-- **Accessibility** - WCAG compliance and keyboard navigation
-- **Code Organization** - Modular structure and maintainability
-
-## 🌟 Comparison with HTML/CSS/JS Version
-
-**This Portfolio** (React/TypeScript/Tailwind):
-- Modern framework architecture with component reusability
-- Type safety with TypeScript
-- Utility-first CSS with Tailwind
-- Hot Module Replacement for instant feedback
-- Optimized production builds with code splitting
-
-**Original Portfolio** (HTML/CSS/JS):
-- Foundational web development with vanilla technologies
-- Custom CSS architecture and manual DOM manipulation
-- Direct browser serving without build process
-- Demonstrates core web fundamentals
-- Great for learning pure HTML, CSS, and JavaScript
-
-Together, they showcase my progression from foundational web development to modern, scalable application architecture.
+Together they show progression from foundational web development to modern, scalable application architecture.

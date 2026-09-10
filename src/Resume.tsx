@@ -121,12 +121,14 @@ export default function Resume() {
           <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <h1 className="text-4xl sm:text-6xl font-black leading-none text-theme-primary dark:text-theme-secondary-dark">Robert Fernandez</h1>
-              <p className="mt-4 text-lg text-theme-secondary dark:text-theme-secondary-dark">Cross-platform software engineer · digital artist · pilot</p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {focusAreas.map((area) => (
-                  <span key={area} className="inline-flex border border-theme-accent/30 dark:border-theme-accent-dark px-2.5 py-1 text-[11px] font-medium tracking-wide text-theme-secondary dark:text-theme-secondary-dark">{area}</span>
-                ))}
-              </div>
+              <p className="mt-3 text-base text-theme-secondary dark:text-theme-secondary-dark">Cross-platform software engineer · digital artist · pilot</p>
+              <p id="contact-links" className="mt-4 text-sm leading-relaxed text-theme-secondary dark:text-theme-secondary-dark">
+                <a href="https://robertfernandez.dev" target="_blank" rel="noopener noreferrer" className="hover:underline">Portfolio: robertfernandez.dev</a>
+                <span aria-hidden> · </span>
+                <a href="https://github.com/robfernan" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 hover:underline"><i aria-hidden className="fab fa-github" /> github.com/robfernan</a>
+                <span aria-hidden> · </span>
+                <a href="https://linkedin.com/in/robfernan" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 hover:underline"><i aria-hidden className="fab fa-linkedin" /> linkedin.com/in/robfernan</a>
+              </p>
             </div>
             <div className="no-print flex flex-wrap gap-2">
               <button type="button" onClick={() => window.print()} className="inline-flex items-center gap-2 border border-theme-accent/40 px-4 py-3 text-xs font-semibold uppercase tracking-wider text-theme-primary dark:border-theme-accent-dark dark:text-theme-secondary-dark hover:bg-theme-accent/10 transition-colors">
@@ -137,8 +139,8 @@ export default function Resume() {
           </div>
         </header>
 
-        {/* Highlights */}
-        <section className="mb-12">
+        {/* Highlights (decorative — hidden in print to save vertical space) */}
+        <section id="highlights" className="mb-12">
           <div className="grid grid-cols-2 gap-px overflow-hidden border border-theme-accent/25 dark:border-theme-accent-dark bg-theme-accent/20 dark:bg-theme-accent-dark sm:grid-cols-4">
             {highlights.map((h) => (
               <div key={h.label} className="bg-theme-bg dark:bg-theme-bg-dark px-3 py-4 text-center">
@@ -245,7 +247,7 @@ export default function Resume() {
 
             <div id="selected-projects">
               <p className={`${eyebrow} mb-5`}>Selected Projects</p>
-              <ul className="space-y-3">
+              <ul id="projects-list" className="space-y-3 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-3">
                 {selectedProjects.map((project) => (
                   <li key={project} className="border-l-2 border-theme-accent/40 dark:border-theme-accent-dark pl-3 text-sm leading-relaxed text-theme-secondary dark:text-theme-secondary-dark">{project}</li>
                 ))}
