@@ -80,7 +80,7 @@ The site spans:
 | `/resume` | `Resume.tsx` | Résumé — general-overview CV with a print/PDF one-pager export |
 
 ### 📝 Résumé (`/resume`)
-A **general-overview résumé** designed for recruiters who land on the site after an application. Sections: profile, professional experience (primary role + independent/freelance studio), core technical skills, education & certifications, and selected projects — with bilingual (English/Spanish) noted throughout.
+A **general-overview résumé** designed for recruiters who land on the site after an application. It opens with a name heading, tagline, and contact links, then covers professional experience (primary role + independent/freelance studio), core technical skills, education & certifications, and selected projects — with bilingual (English/Spanish) noted throughout.
 
 - **Print / PDF export** — a "Print / PDF" button triggers `window.print()`, and a dedicated `@media print` block in `src/index.css` produces a clean, high-contrast **single-page** document: it hides site chrome and decorative elements, forces a light palette, equalizes the Education + Selected Projects columns, and compacts spacing so everything fits on one US Letter page at 100% scale.
 - Contact links (portfolio / GitHub / LinkedIn) render in the header for both screen and print.

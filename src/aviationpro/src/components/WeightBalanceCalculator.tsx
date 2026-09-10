@@ -11,11 +11,9 @@ import {
   Lock,
   Unlock,
   FileText,
-  Save,
   Clipboard,
   Layers,
-  Gauge,
-  Send
+  Gauge
 } from 'lucide-react';
 import { db } from '../services/PersistenceService';
 import { Aircraft } from '../types/aviation';
@@ -185,17 +183,7 @@ const WeightBalanceCalculator: React.FC = () => {
     }
   }, [profileId, hangarPlanes]);
 
-  const handleSendToBriefing = () => {
-    // Phase 1 Integration: Save current calculation to temporary storage for Briefing module
-    const snapshot = {
-      rampWeight: results.rampW.toFixed(1),
-      takeoffWeight: results.takeoffW.toFixed(1),
-      cg: results.rampCG.toFixed(2),
-      timestamp: Date.now()
-    };
-    localStorage.setItem('latest_wb_result', JSON.stringify(snapshot));
-    alert("Weight & Balance data saved. You can now pull it into a flight briefing PDF.");
-  };
+
 
   const handleAddItem = useCallback(() => {
     const newItem: WeightItem = {
@@ -280,19 +268,7 @@ const WeightBalanceCalculator: React.FC = () => {
                 </button>
               ))}
             </div>
-            <button
-              onClick={handleSendToBriefing}
-              title="Saves the current W&B results (ramp weight, takeoff weight, CG) to local storage so they can be pulled into a flight briefing PDF."
-              className="flex items-center space-x-3 px-5 sm:px-6 py-2.5 sm:py-3 bg-theme-card dark:bg-theme-card-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 hover:border-theme-accent dark:hover:border-theme-accent-dark transition-all group"
-            >
-              <Send className="w-4 h-4 text-theme-secondary dark:text-theme-secondary-dark group-hover:text-theme-accent dark:group-hover:text-theme-accent-dark" />
-              <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest">Push to Briefing</span>
-            </button>
-            <button title="Saves the current manifest to local storage for later retrieval."
-              className="flex items-center space-x-3 px-5 sm:px-6 py-2.5 sm:py-3 bg-theme-card dark:bg-theme-card-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 hover:bg-theme-header dark:hover:bg-theme-header-dark transition-all group">
-              <Save className="w-4 h-4 text-theme-secondary dark:text-theme-secondary-dark group-hover:text-theme-primary dark:group-hover:text-theme-primary-dark" />
-              <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest">Store Manifest</span>
-            </button>
+
             <button onClick={() => window.print()} title="Print this page"
               className="p-2.5 sm:p-3 bg-theme-card dark:bg-theme-card-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 hover:bg-theme-header dark:hover:bg-theme-header-dark transition-all group">
               <Printer className="w-4 h-4 sm:w-5 sm:h-5 text-theme-secondary dark:text-theme-secondary-dark group-hover:text-theme-primary dark:group-hover:text-theme-primary-dark" />
@@ -433,6 +409,26 @@ const WeightBalanceCalculator: React.FC = () => {
                 ))}
               </div>
             </section>
+
+            <section className="bg-theme-card dark:bg-theme-card-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 p-4 sm:p-6 flex flex-col group relative overflow-hidden">
+              <h3 className="text-xs sm:text-sm font-black uppercase tracking-widest text-theme-secondary dark:text-theme-secondary-dark mb-4 flex items-center">
+                <Gauge className="w-4 h-4 sm:w-5 sm:h-5 mr-3" /> CG Envelope
+              </h3>
+              <img
+                src={cgEnvelopeImage}
+                alt="Cessna 172 center of gravity envelope"
+                className="w-full h-auto object-contain opacity-95 z-0 group-hover:opacity-100 transition-opacity my-auto"
+              />
+              <div className="relative z-10 flex flex-col items-center justify-end gap-2 sm:gap-3 mt-4">
+                <div className="w-full rounded-md border border-theme-accent/30 dark:border-theme-accent-dark/30 bg-theme-bg/80 dark:bg-theme-bg-dark/80 px-4 sm:px-5 py-3 sm:py-4 backdrop-blur-sm">
+                  <div className="flex justify-between w-full text-xs sm:text-sm lg:text-base font-black uppercase tracking-widest text-theme-primary dark:text-theme-primary-dark">
+                    <span>FWD: {limits.forwardCG}"</span>
+                    <span>CURR: {results.rampCG.toFixed(2)}"</span>
+                    <span>AFT: {limits.aftCG}"</span>
+                  </div>
+                </div>
+              </div>
+            </section>
           </aside>
 
           <main className="2xl:col-span-8 space-y-8">
@@ -569,8 +565,8 @@ const WeightBalanceCalculator: React.FC = () => {
               </div>
             </div>
 
-            <footer className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 pt-8 sm:pt-10 pb-16 sm:pb-24">
-              <div className="lg:col-span-8 bg-theme-card dark:bg-theme-card-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 p-6 sm:p-10 space-y-6 sm:space-y-8 relative overflow-hidden">
+            <footer className="grid grid-cols-1 gap-8 sm:gap-10 pt-8 sm:pt-10 pb-16 sm:pb-24">
+              <div className="bg-theme-card dark:bg-theme-card-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 p-6 sm:p-10 space-y-6 sm:space-y-8 relative overflow-hidden">
                 <div className="absolute bottom-0 right-0 p-8 opacity-[0.04] pointer-events-none">
                   <FileText size={200} />
                 </div>
@@ -595,23 +591,6 @@ const WeightBalanceCalculator: React.FC = () => {
                   </div>
                 </div>
               </div>
-
-                <div className="lg:col-span-4 bg-theme-card dark:bg-theme-card-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 p-4 sm:p-6 lg:p-8 flex flex-col justify-end group relative overflow-hidden min-h-[320px] sm:min-h-[480px] lg:min-h-[560px]">
-                  <img
-                   src={cgEnvelopeImage}
-                   alt="Cessna 172 center of gravity envelope"
-                   className="w-full h-auto object-contain p-3 sm:p-6 lg:p-8 opacity-95 z-0 group-hover:opacity-100 transition-opacity"
-                 />
-                  <div className="relative z-10 flex flex-col items-center justify-end gap-2 sm:gap-3">
-                    <div className="w-full max-w-[560px] rounded-md border border-theme-accent/30 dark:border-theme-accent-dark/30 bg-theme-bg/80 dark:bg-theme-bg-dark/80 px-4 sm:px-5 py-3 sm:py-4 backdrop-blur-sm">
-                     <div className="flex justify-between w-full text-xs sm:text-sm lg:text-base font-black uppercase tracking-widest text-theme-primary dark:text-theme-primary-dark">
-                      <span>FWD: {limits.forwardCG}"</span>
-                      <span>CURR: {results.rampCG.toFixed(2)}"</span>
-                      <span>AFT: {limits.aftCG}"</span>
-                     </div>
-                    </div>
-                  </div>
-                </div>
             </footer>
 
           </main>

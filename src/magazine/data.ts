@@ -87,7 +87,7 @@ export const ISSUES: Issue[] = [
       {
         title: 'M&G Gutters',
         format: 'CLIENT / WEB',
-        cover: '/assets/projects/MnGuttersLandingPage.png',
+        cover: '/assets/projects/MnGGuttersLandingPage.png',
         blurb:
           'A focused local-service landing page for gutter work, designed around trust, readable service information, and direct customer contact.',
         tech: ['HTML', 'CSS', 'JavaScript'],
@@ -97,6 +97,7 @@ export const ISSUES: Issue[] = [
       {
         title: 'Florida Window & Door Invoicing / Proposal App',
         format: 'CLIENT / CAPACITOR',
+        cover: '/assets/projects/MnGGuttersLandingPage.png',
         blurb:
           'A lightweight business tool for creating invoices and proposals for Florida Window & Door Maintenance Inc., built as a browser-first app with a Capacitor path to mobile.',
         tech: ['HTML', 'CSS', 'JavaScript', 'Capacitor'],
@@ -239,24 +240,7 @@ export const ISSUES: Issue[] = [
         status: 'Wearable',
         impact: 'Character-driven interface design',
       },
-      {
-        title: 'Automotive Concept Art',
-        format: 'GRAPHIC DESIGN / AUTOMOTIVE',
-        cover: '/assets/home/car-art.jpg',
-        blurb: 'Automotive illustration and concept work that informs the visual systems behind the software.',
-        tech: ['Automotive Art', 'Illustration', 'Composition'],
-        status: 'Graphic Design',
-        impact: 'Signature visual language',
-      },
-      {
-        title: 'Interface and Print Direction',
-        format: 'GRAPHIC DESIGN / UIUX',
-        cover: '/assets/projects/personalportfolioreact.png',
-        blurb: 'Editorial layouts, interface studies, and visual identity work across product screens and printed presentation.',
-        tech: ['UI/UX', 'Editorial', 'Visual Identity'],
-        status: 'Design Practice',
-        impact: 'Design system thinking',
-      },
+
     ],
   },
 ];

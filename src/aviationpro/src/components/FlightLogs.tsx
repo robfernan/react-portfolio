@@ -1,596 +1,307 @@
-import { useEffect, useMemo, useState } from 'react';
-import { Calendar, Clock, Download, Edit2, FileText, Plane, Plus, Search, Trash2 } from 'lucide-react';
-import { db } from '../services/PersistenceService';
-import { FlightLog } from '../types/aviation';
+import { CheckCircle2, Circle, Clock, FileText, Moon, Plane, Route, User, Users } from 'lucide-react';
+
+// --- PPL Requirements Data (FAA 14 CFR §61.87) ---
+interface RequirementItem {
+  id: string;
+  label: string;
+  requirement: string;
+  current: number;
+  minimum: number;
+  unit: string;
+  met: boolean;
+  note?: string;
+}
+
+const PPL_REQUIREMENTS: RequirementItem[] = [
+  {
+    id: 'total-time',
+    label: 'Total Flight Time',
+    requirement: '40 hrs minimum total time',
+    current: 126.7,
+    minimum: 40,
+    unit: 'hrs',
+    met: true,
+    note: 'Well above the 40-hour minimum'
+  },
+  {
+    id: 'dual-time',
+    label: 'Dual Instruction',
+    requirement: '20 hrs dual instruction',
+    current: 116.7,
+    minimum: 20,
+    unit: 'hrs',
+    met: true,
+    note: 'Includes all instructor-supervised flights'
+  },
+  {
+    id: 'solo-time',
+    label: 'Solo Flight Time',
+    requirement: '10 hrs solo flight time',
+    current: 10.0,
+    minimum: 10,
+    unit: 'hrs',
+    met: true,
+    note: 'Meets the 10-hour solo minimum exactly'
+  },
+  {
+    id: 'xc-time',
+    label: 'Cross Country Time',
+    requirement: '20 hrs cross country (incl. dual XC)',
+    current: 22.7,
+    minimum: 20,
+    unit: 'hrs',
+    met: true,
+    note: 'Includes both solo and dual cross-country'
+  },
+  {
+    id: 'solo-xc-time',
+    label: 'Solo Cross Country Time',
+    requirement: '5 hrs solo XC (incl. one 150nm flight)',
+    current: 4.7,
+    minimum: 5,
+    unit: 'hrs',
+    met: false,
+    note: 'Need 0.3 more hours to meet the 5-hour minimum'
+  },
+  {
+    id: 'night-time',
+    label: 'Night Flight Training',
+    requirement: '3 hrs night flight training (after sunset / before sunrise)',
+    current: 3.7,
+    minimum: 3,
+    unit: 'hrs',
+    met: true,
+    note: 'Completed — exceeds the 3-hour night minimum'
+  },
+  {
+    id: 'night-landings',
+    label: 'Night Takeoffs & Landings',
+    requirement: '10 takeoffs and full-stop landings at night',
+    current: 10,
+    minimum: 10,
+    unit: '',
+    met: true,
+    note: 'Completed'
+  },
+  {
+    id: 'sim-instruments',
+    label: 'Simulated Instruments',
+    requirement: '3 hrs simulated instrument time (dual)',
+    current: 3.0,
+    minimum: 3,
+    unit: 'hrs',
+    met: true,
+    note: 'Completed'
+  },
+  {
+    id: 'tower-ops',
+    label: 'Tower Operations',
+    requirement: 'Solo takeoffs and full-stop landings at a towered airport',
+    current: 3,
+    minimum: 1,
+    unit: '',
+    met: true,
+    note: 'Completed 7/30/2026 — F45 → KFPR → F45'
+  }
+];
 
 const FlightLogs: React.FC = () => {
-  const [flightLogs, setFlightLogs] = useState<FlightLog[]>([]);
-  const [loading, setLoading] = useState(true);
+  const asOfDate = '8/4/2026';
 
-  const [newLog, setNewLog] = useState({
-    date: new Date().toISOString().split('T')[0],
-    aircraftNNumber: '',
-    flightTime: '',
-    night: false,
-    crossCountry: false,
-    solo: false,
-    dual: false,
-    notes: ''
-  });
+  // Summary stats
+  const totalHours = 126.7;
+  const soloHours = 10.0;
+  const xcHours = 22.7;
+  const soloXcHours = 4.7;
+  const simInstrHours = 3.0;
 
-  const [isAdding, setIsAdding] = useState(false);
-  const [editingId, setEditingId] = useState<number | null>(null);
-  const [editLog, setEditLog] = useState<FlightLog | null>(null);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [dateFilter, setDateFilter] = useState<'all' | 'today' | 'week' | 'month'>('all');
-  const [sortBy, setSortBy] = useState<'date-desc' | 'date-asc' | 'time-desc' | 'time-asc'>('date-desc');
-
-  // Load and Migrate Data
-  useEffect(() => {
-    const initData = async () => {
-      try {
-        // 1. Check for legacy data in localStorage
-        const legacyData = localStorage.getItem('flightLogs');
-        if (legacyData) {
-          const logs = JSON.parse(legacyData);
-          if (Array.isArray(logs) && logs.length > 0) {
-            // Import legacy logs to Dexie
-            for (const log of logs) {
-              const { id, ...cleanLog } = log; // Remove string ID to let Dexie assign number
-              await db.flights.add({
-                ...cleanLog,
-                timestamp: cleanLog.timestamp || Date.now()
-              });
-            }
-          }
-          // 2. Clear legacy data once migrated
-          localStorage.removeItem('flightLogs');
-        }
-
-        // 3. Load from Dexie
-        const items = await db.flights.toArray();
-        setFlightLogs(items);
-      } catch (error) {
-        console.error("Logbook Migration Error:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    initData();
-  }, []);
-
-  const refreshLogs = async () => {
-    const items = await db.flights.toArray();
-    setFlightLogs(items);
+  // Calculate progress for each requirement
+  const getProgress = (item: RequirementItem) => {
+    if (item.met) return 100;
+    return Math.min(99, Math.round((item.current / item.minimum) * 100));
   };
 
-  const addFlightLog = async () => {
-    if (!newLog.aircraftNNumber.trim() || !newLog.flightTime.trim()) {
-      alert('Please fill in aircraft N-number and flight time');
-      return;
-    }
-
-    try {
-      const log: FlightLog = {
-        date: newLog.date,
-        aircraftNNumber: newLog.aircraftNNumber.toUpperCase(),
-        flightTime: newLog.flightTime,
-        night: newLog.night,
-        crossCountry: newLog.crossCountry,
-        solo: newLog.solo,
-        dual: newLog.dual,
-        notes: newLog.notes,
-        timestamp: Date.now()
-      };
-
-      await db.flights.add(log);
-      await refreshLogs();
-
-      setNewLog({
-        date: new Date().toISOString().split('T')[0],
-        aircraftNNumber: '',
-        flightTime: '',
-        night: false,
-        crossCountry: false,
-        solo: false,
-        dual: false,
-        notes: ''
-      });
-      setIsAdding(false);
-    } catch (err) {
-      console.error("Failed to add flight log:", err);
-    }
+  const remainingFor = (item: RequirementItem) => {
+    if (item.met) return null;
+    return Math.max(0, item.minimum - item.current);
   };
 
-  const startEditingLog = (log: FlightLog) => {
-    if (log.id) {
-      setEditingId(log.id);
-      setEditLog({ ...log });
-    }
-  };
-
-  const updateFlightLog = async () => {
-    if (!editLog || !editingId) return;
-    if (!editLog.aircraftNNumber.trim() || !editLog.flightTime.trim()) {
-      alert('Please fill in aircraft N-number and flight time');
-      return;
-    }
-
-    try {
-      await db.flights.update(editingId, {
-        ...editLog,
-        aircraftNNumber: editLog.aircraftNNumber.toUpperCase()
-      });
-      await refreshLogs();
-      setEditingId(null);
-      setEditLog(null);
-    } catch (err) {
-      console.error("Failed to update log:", err);
-    }
-  };
-
-  const cancelEdit = () => {
-    setEditingId(null);
-    setEditLog(null);
-  };
-
-  const deleteFlightLog = async (id: number | undefined) => {
-    if (!id) return;
-    if (window.confirm('Are you sure you want to delete this flight log?')) {
-      await db.flights.delete(id);
-      await refreshLogs();
-    }
-  };
-
-  const filteredLogs = useMemo(() => {
-    const term = searchTerm.trim().toLowerCase();
-    const now = Date.now();
-
-    return flightLogs
-      .filter((log) => {
-        const matchesSearch =
-          !term ||
-          log.aircraftNNumber.toLowerCase().includes(term) ||
-          log.notes.toLowerCase().includes(term) ||
-          log.date.includes(term);
-
-        const matchesDate =
-          dateFilter === 'all' ||
-          (dateFilter === 'today' && log.date === new Date().toISOString().split('T')[0]) ||
-          (dateFilter === 'week' && now - log.timestamp <= 7 * 24 * 60 * 60 * 1000) ||
-          (dateFilter === 'month' && now - log.timestamp <= 30 * 24 * 60 * 60 * 1000);
-
-        return matchesSearch && matchesDate;
-      })
-      .sort((a, b) => {
-        const dateDelta = new Date(a.date).getTime() - new Date(b.date).getTime();
-        const timeDelta = (parseFloat(a.flightTime) || 0) - (parseFloat(b.flightTime) || 0);
-
-        switch (sortBy) {
-          case 'date-asc':
-            return dateDelta;
-          case 'date-desc':
-            return -dateDelta;
-          case 'time-asc':
-            return timeDelta;
-          case 'time-desc':
-            return -timeDelta;
-          default:
-            return -dateDelta;
-        }
-      });
-  }, [dateFilter, flightLogs, searchTerm, sortBy]);
-
-  const totalFlightTime = flightLogs.reduce((total, log) => total + (parseFloat(log.flightTime) || 0), 0);
-  const averageFlightTime = flightLogs.length > 0 ? totalFlightTime / flightLogs.length : 0;
-  const uniqueAircraftCount = new Set(flightLogs.map((log) => log.aircraftNNumber)).size;
-  const nightFlightCount = flightLogs.filter((log) => log.night).length;
-  const crossCountryCount = flightLogs.filter((log) => log.crossCountry).length;
-  const soloFlightCount = flightLogs.filter((log) => log.solo).length;
-  const dualFlightCount = flightLogs.filter((log) => log.dual).length;
-
-  const formatFlightTime = (hours: number) => {
-    const wholeHours = Math.floor(hours);
-    const minutes = Math.round((hours - wholeHours) * 60);
-    return `${wholeHours}:${minutes.toString().padStart(2, '0')}`;
-  };
-
-  const exportToCSV = () => {
-    const headers = ['Date', 'Aircraft N-Number', 'Flight Time (hrs)', 'Night', 'Cross Country', 'Solo', 'Dual', 'Notes'];
-    const rows = filteredLogs.map((log) => [
-      log.date,
-      log.aircraftNNumber,
-      log.flightTime,
-      log.night ? 'Yes' : 'No',
-      log.crossCountry ? 'Yes' : 'No',
-      log.solo ? 'Yes' : 'No',
-      log.dual ? 'Yes' : 'No',
-      `"${log.notes.replace(/"/g, '""')}"`
-    ]);
-
-    const csv = [headers, ...rows].map((row) => row.join(',')).join('\n');
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `flight-logs-${new Date().toISOString().split('T')[0]}.csv`;
-    link.click();
-    URL.revokeObjectURL(url);
-  };
-
-  if (loading) return <div className="p-6 text-theme-secondary dark:text-theme-secondary-dark font-mono">INITIALIZING LOGBOOK...</div>;
+  // Count met vs not met
+  const metCount = PPL_REQUIREMENTS.filter(r => r.met).length;
+  const totalCount = PPL_REQUIREMENTS.length;
 
   return (
-    <div className="max-w-[1200px] mx-auto w-full rounded-lg shadow-lg border border-theme-accent/30 dark:border-theme-accent-dark/30 bg-theme-card dark:bg-theme-card-dark">
-      <div className="bg-theme-header dark:bg-theme-header-dark border-b border-theme-accent/30 dark:border-theme-accent-dark/30 p-6">
-        <div className="flex items-center justify-between gap-4">
+    <div className="max-w-[1200px] mx-auto w-full space-y-6">
+      {/* Header */}
+      <div className="bg-theme-card dark:bg-theme-card-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 rounded-lg shadow-lg overflow-hidden">
+        <div className="bg-theme-header dark:bg-theme-header-dark border-b border-theme-accent/30 dark:border-theme-accent-dark/30 p-6">
+          <div className="flex items-center justify-between gap-4 flex-wrap">
+            <div className="flex items-center space-x-3">
+              <FileText className="w-6 h-6 text-theme-accent dark:text-theme-accent-dark" />
+              <h2 className="text-xl sm:text-2xl font-bold text-theme-primary dark:text-theme-primary-dark">Flight Log Preview</h2>
+            </div>
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-theme-accent/15 dark:bg-theme-accent-dark/20 border border-theme-accent/40 dark:border-theme-accent-dark/40">
+              <CheckCircle2 className="w-4 h-4 text-theme-accent dark:text-theme-accent-dark" />
+              <span className="text-xs font-black uppercase tracking-widest text-theme-primary dark:text-theme-primary-dark">{metCount}/{totalCount} Requirements Met</span>
+            </div>
+          </div>
+          <p className="text-sm text-theme-secondary dark:text-theme-secondary-dark mt-2">
+            Read-only preview of your current flight hours and PPL progress. As of {asOfDate}.
+          </p>
+        </div>
+
+        {/* Hour Summary Cards */}
+        <div className="p-6 space-y-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+            <div className="p-4 bg-theme-bg dark:bg-theme-bg-dark rounded-lg border border-theme-accent/30 dark:border-theme-accent-dark/30 text-center">
+              <Clock className="w-5 h-5 mx-auto mb-2 text-theme-accent dark:text-theme-accent-dark" />
+              <div className="text-[10px] font-black uppercase tracking-widest text-theme-secondary dark:text-theme-secondary-dark mb-1">Total Flight Hours</div>
+              <div className="text-2xl font-black text-theme-primary dark:text-theme-primary-dark tabular-nums">{totalHours}</div>
+            </div>
+            <div className="p-4 bg-theme-bg dark:bg-theme-bg-dark rounded-lg border border-theme-accent/30 dark:border-theme-accent-dark/30 text-center">
+              <User className="w-5 h-5 mx-auto mb-2 text-theme-accent dark:text-theme-accent-dark" />
+              <div className="text-[10px] font-black uppercase tracking-widest text-theme-secondary dark:text-theme-secondary-dark mb-1">Solo Hours</div>
+              <div className="text-2xl font-black text-theme-primary dark:text-theme-primary-dark tabular-nums">{soloHours}</div>
+            </div>
+            <div className="p-4 bg-theme-bg dark:bg-theme-bg-dark rounded-lg border border-theme-accent/30 dark:border-theme-accent-dark/30 text-center">
+              <Route className="w-5 h-5 mx-auto mb-2 text-theme-accent dark:text-theme-accent-dark" />
+              <div className="text-[10px] font-black uppercase tracking-widest text-theme-secondary dark:text-theme-secondary-dark mb-1">Cross Country</div>
+              <div className="text-2xl font-black text-theme-primary dark:text-theme-primary-dark tabular-nums">{xcHours}</div>
+            </div>
+            <div className="p-4 bg-theme-bg dark:bg-theme-bg-dark rounded-lg border border-theme-accent/30 dark:border-theme-accent-dark/30 text-center">
+              <Users className="w-5 h-5 mx-auto mb-2 text-theme-accent dark:text-theme-accent-dark" />
+              <div className="text-[10px] font-black uppercase tracking-widest text-theme-secondary dark:text-theme-secondary-dark mb-1">Sim Instruments</div>
+              <div className="text-2xl font-black text-theme-primary dark:text-theme-primary-dark tabular-nums">{simInstrHours}</div>
+            </div>
+            <div className="p-4 bg-theme-bg dark:bg-theme-bg-dark rounded-lg border border-theme-accent/30 dark:border-theme-accent-dark/30 text-center">
+              <Moon className="w-5 h-5 mx-auto mb-2 text-theme-accent dark:text-theme-accent-dark" />
+              <div className="text-[10px] font-black uppercase tracking-widest text-theme-secondary dark:text-theme-secondary-dark mb-1">Night Hours</div>
+              <div className="text-2xl font-black text-theme-primary dark:text-theme-primary-dark tabular-nums">{PPL_REQUIREMENTS.find(r => r.id === 'night-time')?.current}</div>
+            </div>
+          </div>
+
+          {/* Solo Cross Country detail */}
+          <div className="p-4 bg-theme-bg/50 dark:bg-theme-bg-dark/50 rounded-lg border border-theme-accent/20 dark:border-theme-accent-dark/20">
+            <div className="flex items-center gap-3 text-sm text-theme-secondary dark:text-theme-secondary-dark">
+              <Route className="w-4 h-4 text-theme-accent dark:text-theme-accent-dark shrink-0" />
+              <span>
+                Solo Cross Country: <strong className="text-theme-primary dark:text-theme-primary-dark">{soloXcHours} hrs</strong> of {xcHours} total cross-country hours. Need <strong className="text-theme-accent dark:text-theme-accent-dark">0.3 more hrs</strong> to meet the 5-hour solo XC minimum.
+              </span>
+            </div>
+          </div>
+
+          {/* Tower Operations note */}
+          <div className="p-4 bg-theme-bg/50 dark:bg-theme-bg-dark/50 rounded-lg border border-theme-accent/20 dark:border-theme-accent-dark/20">
+            <div className="flex items-center gap-3 text-sm text-theme-secondary dark:text-theme-secondary-dark">
+              <CheckCircle2 className="w-4 h-4 text-theme-accent dark:text-theme-accent-dark shrink-0" />
+              <span>
+                Tower Operations: <strong className="text-theme-primary dark:text-theme-primary-dark">3 solo takeoffs & full-stop landings</strong> completed on 7/30/2026 (F45 → KFPR → F45). ✓ Requirement met.
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* PPL Requirements Checklist */}
+      <div className="bg-theme-card dark:bg-theme-card-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 rounded-lg shadow-lg overflow-hidden">
+        <div className="bg-theme-header dark:bg-theme-header-dark border-b border-theme-accent/30 dark:border-theme-accent-dark/30 p-6">
           <div className="flex items-center space-x-3">
-            <FileText className="w-6 h-6 text-theme-accent dark:text-theme-accent-dark" />
-            <h2 className="text-2xl font-bold text-theme-primary dark:text-theme-primary-dark">Flight Logs</h2>
+            <Plane className="w-5 h-5 text-theme-accent dark:text-theme-accent-dark" />
+            <h3 className="text-lg font-bold text-theme-primary dark:text-theme-primary-dark">Private Pilot License — Hour Requirements</h3>
           </div>
-          <div className="text-right">
-            <div className="text-sm text-theme-secondary dark:text-theme-secondary-dark">Total Flight Time</div>
-            <div className="text-xl font-bold text-theme-accent dark:text-theme-accent-dark">
-              {formatFlightTime(totalFlightTime)} hrs
+          <p className="text-xs text-theme-secondary dark:text-theme-secondary-dark mt-1">FAA 14 CFR §61.87(a) — Minimum flight time for PPL (2026)</p>
+        </div>
+
+        <div className="p-6 space-y-3">
+          {PPL_REQUIREMENTS.map((item) => {
+            const progress = getProgress(item);
+            const remaining = remainingFor(item);
+            return (
+              <div
+                key={item.id}
+                className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 p-4 rounded-lg border border-theme-accent/30 dark:border-theme-accent-dark/30 bg-theme-header dark:bg-theme-header-dark transition-all"
+              >
+                {/* Status Icon */}
+                <div className="shrink-0">
+                  {item.met ? (
+                    <CheckCircle2 className="w-6 h-6 text-theme-accent dark:text-theme-accent-dark" />
+                  ) : (
+                    <Circle className="w-6 h-6 text-theme-secondary dark:text-theme-secondary-dark" />
+                  )}
+                </div>
+
+                {/* Label & Requirement */}
+                <div className="flex-1 min-w-0">
+                  <div className="font-black text-sm uppercase tracking-wide text-theme-primary dark:text-theme-primary-dark">{item.label}</div>
+                  <div className="text-xs text-theme-secondary dark:text-theme-secondary-dark mt-0.5">{item.requirement}</div>
+                  {item.note && (
+                    <div className="text-[11px] mt-1 italic text-theme-secondary dark:text-theme-secondary-dark">
+                      {item.note}
+                    </div>
+                  )}
+                </div>
+
+                {/* Progress */}
+                <div className="flex items-center gap-3 shrink-0">
+                  <div className="w-28 sm:w-36">
+                    <div className="h-2 bg-theme-bg dark:bg-theme-bg-dark rounded-full overflow-hidden border border-theme-accent/20 dark:border-theme-accent-dark/20">
+                      <div
+                        className="h-full rounded-full transition-all duration-700 bg-theme-accent dark:bg-theme-accent-dark"
+                        style={{ width: `${progress}%` }}
+                      />
+                    </div>
+                  </div>
+                  <div className="text-right min-w-[80px]">
+                    <span className="font-black tabular-nums text-sm text-theme-primary dark:text-theme-primary-dark">
+                      {item.current}{item.unit && ` ${item.unit}`}
+                    </span>
+                    <span className="text-[10px] text-theme-secondary dark:text-theme-secondary-dark ml-1">/ {item.minimum}{item.unit}</span>
+                  </div>
+                </div>
+
+                {/* Remaining */}
+                {!item.met && remaining !== null && (
+                  <div className="shrink-0 px-3 py-1 rounded-md bg-theme-accent/15 dark:bg-theme-accent-dark/20 border border-theme-accent/40 dark:border-theme-accent-dark/40">
+                    <span className="text-[10px] font-black uppercase tracking-widest text-theme-accent dark:text-theme-accent-dark">
+                      {remaining.toFixed(1)} {item.unit} remaining
+                    </span>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Recommendations */}
+        <div className="p-6 border-t border-theme-accent/20 dark:border-theme-accent-dark/20 bg-theme-bg/30 dark:bg-theme-bg-dark/30">
+          <h4 className="text-xs font-black uppercase tracking-widest text-theme-secondary dark:text-theme-secondary-dark mb-4 flex items-center">
+            <Plane className="w-4 h-4 mr-2" /> Recommendations to Complete PPL Requirements
+          </h4>
+          <div className="space-y-3 text-sm text-theme-secondary dark:text-theme-secondary-dark">
+            <div className="flex items-start gap-3 p-3 rounded-md bg-theme-accent/10 dark:bg-theme-accent-dark/15 border border-theme-accent/25 dark:border-theme-accent-dark/25">
+              <span className="font-black text-theme-accent dark:text-theme-accent-dark shrink-0">1.</span>
+              <span><strong>Solo Cross Country:</strong> You need 0.3 more hours of solo XC time. Plan a short solo cross-country flight (even 25–50 nm) to close this gap. This is the quickest requirement to complete.</span>
+            </div>
+            <div className="flex items-start gap-3 p-3 rounded-md bg-theme-accent/10 dark:bg-theme-accent-dark/15 border border-theme-accent/25 dark:border-theme-accent-dark/25">
+              <span className="font-black text-theme-accent dark:text-theme-accent-dark shrink-0">✓</span>
+              <span><strong>Night Training:</strong> You have 3.7 of the required 3 night hours — already met. Keep building night experience for proficiency, but no further action is needed to satisfy this PPL minimum.</span>
+            </div>
+            <div className="flex items-start gap-3 p-3 rounded-md bg-theme-accent/10 dark:bg-theme-accent-dark/15 border border-theme-accent/25 dark:border-theme-accent-dark/25">
+              <span className="font-black text-theme-accent dark:text-theme-accent-dark shrink-0">✓</span>
+              <span><strong>Tower Ops:</strong> Already completed (F45 → KFPR → F45 on 7/30/2026). No further action needed.</span>
+            </div>
+            <div className="flex items-start gap-3 p-3 rounded-md bg-theme-accent/10 dark:bg-theme-accent-dark/15 border border-theme-accent/25 dark:border-theme-accent-dark/25">
+              <span className="font-black text-theme-accent dark:text-theme-accent-dark shrink-0">✓</span>
+              <span><strong>Simulated Instruments:</strong> 3.0 hrs completed. No further action needed.</span>
             </div>
           </div>
         </div>
-        <p className="text-sm text-theme-secondary dark:text-theme-secondary-dark mt-2">Log and track your flight hours with detailed records.</p>
       </div>
 
-      <div className="p-6">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between mb-6">
-          <h3 className="text-lg font-semibold text-theme-primary dark:text-theme-primary-dark">Flight Records</h3>
-          <div className="flex flex-wrap gap-2">
-            <button
-              onClick={exportToCSV}
-              className="px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center space-x-2 bg-theme-header dark:bg-theme-header-dark hover:opacity-80 text-theme-primary dark:text-theme-primary-dark"
-            >
-              <Download className="w-4 h-4" />
-              <span>Export CSV</span>
-            </button>
-            <button
-              onClick={() => setIsAdding(!isAdding)}
-              className="px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center space-x-2 bg-theme-accent dark:bg-theme-accent-dark hover:opacity-90 text-white"
-            >
-              <Plus className="w-4 h-4" />
-              <span>{isAdding ? 'Cancel' : 'Add Flight'}</span>
-            </button>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 gap-3 mb-6 lg:grid-cols-3">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-theme-secondary dark:text-theme-secondary-dark" />
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Search aircraft, notes, or date"
-              className="w-full pl-10 pr-3 py-3 border rounded-md bg-theme-bg dark:bg-theme-bg-dark border-theme-accent/30 dark:border-theme-accent-dark/30 text-theme-primary dark:text-theme-primary-dark"
-            />
-          </div>
-          <select
-            value={dateFilter}
-            onChange={(e) => setDateFilter(e.target.value as typeof dateFilter)}
-            className="w-full px-3 py-3 border rounded-md bg-theme-bg dark:bg-theme-bg-dark border-theme-accent/30 dark:border-theme-accent-dark/30 text-theme-primary dark:text-theme-primary-dark"
-          >
-            <option value="all">All dates</option>
-            <option value="today">Today</option>
-            <option value="week">Last 7 days</option>
-            <option value="month">Last 30 days</option>
-          </select>
-          <select
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
-            className="w-full px-3 py-3 border rounded-md bg-theme-bg dark:bg-theme-bg-dark border-theme-accent/30 dark:border-theme-accent-dark/30 text-theme-primary dark:text-theme-primary-dark"
-          >
-            <option value="date-desc">Newest first</option>
-            <option value="date-asc">Oldest first</option>
-            <option value="time-desc">Longest flights</option>
-            <option value="time-asc">Shortest flights</option>
-          </select>
-        </div>
-
-        {isAdding && (
-          <div className="mb-6 p-4 rounded-lg bg-theme-header dark:bg-theme-header-dark border border-theme-accent/30 dark:border-theme-accent-dark/30">
-            <h4 className="font-black uppercase tracking-widest text-xs mb-4 text-theme-secondary dark:text-theme-secondary-dark">Add New Flight Log</h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-[10px] font-black uppercase tracking-widest mb-2 text-theme-secondary dark:text-theme-secondary-dark">
-                  <Calendar className="w-3 h-3 inline mr-1" />
-                  Date
-                </label>
-                <input
-                  type="date"
-                  value={newLog.date}
-                  onChange={(e) => setNewLog({ ...newLog, date: e.target.value })}
-                  className="w-full p-3 border rounded-md bg-theme-bg dark:bg-theme-bg-dark border-theme-accent/30 dark:border-theme-accent-dark/30 text-theme-primary dark:text-theme-primary-dark text-sm"
-                />
-              </div>
-
-              <div>
-                <label className="block text-[10px] font-black uppercase tracking-widest mb-2 text-theme-secondary dark:text-theme-secondary-dark">
-                  <Plane className="w-3 h-3 inline mr-1" />
-                  Aircraft N-Number
-                </label>
-                <input
-                  type="text"
-                  placeholder="N12345"
-                  value={newLog.aircraftNNumber}
-                  onChange={(e) => setNewLog({ ...newLog, aircraftNNumber: e.target.value })}
-                  className="w-full p-3 border rounded-md bg-theme-bg dark:bg-theme-bg-dark border-theme-accent/30 dark:border-theme-accent-dark/30 text-theme-primary dark:text-theme-primary-dark text-sm"
-                />
-              </div>
-
-              <div>
-                <label className="block text-[10px] font-black uppercase tracking-widest mb-2 text-theme-secondary dark:text-theme-secondary-dark">
-                  <Clock className="w-3 h-3 inline mr-1" />
-                  Flight Time (hours)
-                </label>
-                <input
-                  type="number"
-                  step="0.1"
-                  placeholder="1.5"
-                  value={newLog.flightTime}
-                  onChange={(e) => setNewLog({ ...newLog, flightTime: e.target.value })}
-                  className="w-full p-3 border rounded-md bg-theme-bg dark:bg-theme-bg-dark border-theme-accent/30 dark:border-theme-accent-dark/30 text-theme-primary dark:text-theme-primary-dark text-sm"
-                />
-              </div>
-
-              <div className="md:col-span-2">
-                <label className="block text-[10px] font-black uppercase tracking-widest mb-2 text-theme-secondary dark:text-theme-secondary-dark">Flight Type</label>
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                  {[
-                    { key: 'night', label: 'Night' },
-                    { key: 'crossCountry', label: 'Cross Country' },
-                    { key: 'solo', label: 'Solo' },
-                    { key: 'dual', label: 'Dual' }
-                  ].map((option) => (
-                    <label key={option.key} className="flex items-center gap-2 rounded-md border border-theme-accent/30 dark:border-theme-accent-dark/30 p-3 text-[10px] font-black uppercase tracking-tighter cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={newLog[option.key as keyof typeof newLog] as boolean}
-                        onChange={(e) => setNewLog({ ...newLog, [option.key]: e.target.checked })}
-                      />
-                      <span>{option.label}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              <div className="md:col-span-2">
-                <label className="block text-[10px] font-black uppercase tracking-widest mb-2 text-theme-secondary dark:text-theme-secondary-dark">
-                  <FileText className="w-3 h-3 inline mr-1" />
-                  Notes
-                </label>
-                <textarea
-                  placeholder="Flight details, route, conditions..."
-                  value={newLog.notes}
-                  onChange={(e) => setNewLog({ ...newLog, notes: e.target.value })}
-                  rows={3}
-                  className="w-full p-3 border rounded-md bg-theme-bg dark:bg-theme-bg-dark border-theme-accent/30 dark:border-theme-accent-dark/30 text-theme-primary dark:text-theme-primary-dark text-sm"
-                />
-              </div>
-            </div>
-
-            <div className="flex justify-end space-x-3 mt-4">
-              <button
-                onClick={() => setIsAdding(false)}
-                className="px-4 py-2 rounded-md text-xs font-black uppercase tracking-widest transition-colors bg-theme-header dark:bg-theme-header-dark hover:opacity-80 text-theme-primary dark:text-theme-primary-dark"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={addFlightLog}
-                className="px-4 py-2 bg-theme-accent dark:bg-theme-accent-dark hover:opacity-90 text-white rounded-md text-xs font-black uppercase tracking-widest transition-colors"
-              >
-                Save Flight Log
-              </button>
-            </div>
-          </div>
-        )}
-
-        {editingId && editLog && (
-          <div className="mb-6 p-4 rounded-lg border-2 border-theme-accent/50 dark:border-theme-accent-dark/50 bg-theme-header dark:bg-theme-header-dark">
-            <h4 className="font-black uppercase tracking-widest text-xs mb-4 text-theme-accent dark:text-theme-accent-dark">Edit Flight Log</h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-[10px] font-black uppercase tracking-widest mb-2 text-theme-secondary dark:text-theme-secondary-dark">
-                  Date
-                </label>
-                <input
-                  type="date"
-                  value={editLog.date}
-                  onChange={(e) => setEditLog({ ...editLog, date: e.target.value })}
-                  className="w-full p-3 border rounded-md bg-theme-bg dark:bg-theme-bg-dark border-theme-accent/30 dark:border-theme-accent-dark/30 text-theme-primary dark:text-theme-primary-dark text-sm"
-                />
-              </div>
-
-              <div>
-                <label className="block text-[10px] font-black uppercase tracking-widest mb-2 text-theme-secondary dark:text-theme-secondary-dark">
-                  Aircraft N-Number
-                </label>
-                <input
-                  type="text"
-                  placeholder="N12345"
-                  value={editLog.aircraftNNumber}
-                  onChange={(e) => setEditLog({ ...editLog, aircraftNNumber: e.target.value })}
-                  className="w-full p-3 border rounded-md bg-theme-bg dark:bg-theme-bg-dark border-theme-accent/30 dark:border-theme-accent-dark/30 text-theme-primary dark:text-theme-primary-dark text-sm"
-                />
-              </div>
-
-              <div>
-                <label className="block text-[10px] font-black uppercase tracking-widest mb-2 text-theme-secondary dark:text-theme-secondary-dark">
-                  Flight Time (hours)
-                </label>
-                <input
-                  type="number"
-                  step="0.1"
-                  placeholder="1.5"
-                  value={editLog.flightTime}
-                  onChange={(e) => setEditLog({ ...editLog, flightTime: e.target.value })}
-                  className="w-full p-3 border rounded-md bg-theme-bg dark:bg-theme-bg-dark border-theme-accent/30 dark:border-theme-accent-dark/30 text-theme-primary dark:text-theme-primary-dark text-sm"
-                />
-              </div>
-
-              <div className="md:col-span-2">
-                <label className="block text-[10px] font-black uppercase tracking-widest mb-2 text-theme-secondary dark:text-theme-secondary-dark">Flight Type</label>
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                  {[
-                    { key: 'night', label: 'Night' },
-                    { key: 'crossCountry', label: 'Cross Country' },
-                    { key: 'solo', label: 'Solo' },
-                    { key: 'dual', label: 'Dual' }
-                  ].map((option) => (
-                    <label key={option.key} className="flex items-center gap-2 rounded-md border border-theme-accent/30 dark:border-theme-accent-dark/30 p-3 text-[10px] font-black uppercase tracking-tighter cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={Boolean(editLog[option.key as keyof FlightLog])}
-                        onChange={(e) => setEditLog({ ...editLog, [option.key]: e.target.checked })}
-                      />
-                      <span>{option.label}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-
-              <div className="md:col-span-2">
-                <label className="block text-[10px] font-black uppercase tracking-widest mb-2 text-theme-secondary dark:text-theme-secondary-dark">
-                  Notes
-                </label>
-                <textarea
-                  placeholder="Flight details, route, conditions..."
-                  value={editLog.notes}
-                  onChange={(e) => setEditLog({ ...editLog, notes: e.target.value })}
-                  rows={3}
-                  className="w-full p-3 border rounded-md bg-theme-bg dark:bg-theme-bg-dark border-theme-accent/30 dark:border-theme-accent-dark/30 text-theme-primary dark:text-theme-primary-dark text-sm"
-                />
-              </div>
-            </div>
-
-            <div className="flex justify-end space-x-3 mt-4">
-              <button
-                onClick={cancelEdit}
-                className="px-4 py-2 rounded-md text-xs font-black uppercase tracking-widest transition-colors bg-theme-header dark:bg-theme-header-dark hover:opacity-80 text-theme-primary dark:text-theme-primary-dark"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={updateFlightLog}
-                className="px-4 py-2 bg-theme-accent dark:bg-theme-accent-dark hover:opacity-90 text-white rounded-md text-xs font-black uppercase tracking-widest transition-colors"
-              >
-                Update
-              </button>
-            </div>
-          </div>
-        )}
-
-        <div className="rounded-lg border border-theme-accent/30 dark:border-theme-accent-dark/30 bg-theme-bg/50 dark:bg-theme-bg-dark/50 overflow-hidden">
-          {filteredLogs.length === 0 ? (
-            <div className="px-4 py-16 text-center">
-              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-theme-header dark:bg-theme-header-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 mb-6">
-                <FileText className="w-10 h-10 text-theme-secondary/50 dark:text-theme-secondary-dark/50" />
-              </div>
-              <h4 className="text-xl font-black uppercase tracking-widest text-theme-primary dark:text-theme-primary-dark mb-2">No Records Found</h4>
-              <p className="text-xs text-theme-secondary dark:text-theme-secondary-dark max-w-[200px] mx-auto uppercase tracking-tighter leading-relaxed">
-                Sync failed or no entries exist. Initialize logbook via the <span className="text-theme-accent dark:text-theme-accent-dark">+ Add Flight</span> action.
-              </p>
-            </div>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="min-w-full text-sm">
-                <thead className="bg-theme-header dark:bg-theme-header-dark text-[10px] font-black uppercase tracking-widest text-theme-secondary dark:text-theme-secondary-dark border-b border-theme-accent/30 dark:border-theme-accent-dark/30">
-                  <tr>
-                    <th className="px-4 py-4 text-left">Date</th>
-                    <th className="px-4 py-4 text-left">Aircraft</th>
-                    <th className="px-4 py-4 text-left">Time</th>
-                    <th className="px-4 py-4 text-left">Type</th>
-                    <th className="px-4 py-4 text-left">Notes</th>
-                    <th className="px-4 py-4 text-right">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredLogs.map((log) => (
-                    <tr
-                      key={log.id}
-                      className={`border-t border-theme-accent/20 dark:border-theme-accent-dark/20 hover:bg-theme-header/40 dark:hover:bg-theme-header-dark/40 transition-colors ${
-                        editingId === log.id ? 'bg-theme-accent/10 dark:bg-theme-accent-dark/10' : ''
-                      }`}
-                    >
-                      <td className="px-4 py-4 whitespace-nowrap text-theme-secondary dark:text-theme-secondary-dark font-mono">
-                        {new Date(log.date).toLocaleDateString()}
-                      </td>
-                      <td className="px-4 py-4 whitespace-nowrap">
-                        <span className="font-black text-theme-primary dark:text-theme-primary-dark tracking-widest">{log.aircraftNNumber}</span>
-                      </td>
-                      <td className="px-4 py-4 whitespace-nowrap">
-                        <span className="font-bold text-theme-accent dark:text-theme-accent-dark">{log.flightTime} HR</span>
-                      </td>
-                      <td className="px-4 py-4">
-                        <div className="flex flex-wrap gap-1">
-                          {log.night && <span className="text-[8px] font-black uppercase tracking-tighter bg-theme-header dark:bg-theme-header-dark px-1.5 py-0.5 rounded text-theme-secondary dark:text-theme-secondary-dark">Night</span>}
-                          {log.crossCountry && <span className="text-[8px] font-black uppercase tracking-tighter bg-theme-accent/15 dark:bg-theme-accent-dark/15 px-1.5 py-0.5 rounded text-theme-accent dark:text-theme-accent-dark">XC</span>}
-                          {log.solo && <span className="text-[8px] font-black uppercase tracking-tighter bg-green-500/15 px-1.5 py-0.5 rounded text-green-600 dark:text-green-400">Solo</span>}
-                          {log.dual && <span className="text-[8px] font-black uppercase tracking-tighter bg-blue-500/15 px-1.5 py-0.5 rounded text-blue-600 dark:text-blue-400">Dual</span>}
-                        </div>
-                      </td>
-                      <td className="px-4 py-4 max-w-[120px] sm:max-w-[200px] lg:max-w-[320px]">
-                        <p className="truncate text-theme-secondary/70 dark:text-theme-secondary-dark/70 text-xs italic">{log.notes || '---'}</p>
-                      </td>
-                      <td className="px-4 py-4 text-right">
-                        <div className="flex justify-end gap-2">
-                          <button onClick={() => startEditingLog(log)} className="text-theme-secondary/60 dark:text-theme-secondary-dark/60 hover:text-theme-primary dark:hover:text-theme-primary-dark"><Edit2 size={14}/></button>
-                          <button onClick={() => deleteFlightLog(log.id)} className="text-theme-secondary/60 dark:text-theme-secondary-dark/60 hover:text-red-500"><Trash2 size={14}/></button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </div>
-
-        {flightLogs.length > 0 && (
-          <div className="mt-6 p-4 bg-theme-header dark:bg-theme-header-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 rounded-lg">
-            <h4 className="text-[10px] font-black uppercase tracking-widest mb-4 text-theme-secondary dark:text-theme-secondary-dark">Logbook Statistics</h4>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-              <div className="p-3 bg-theme-bg dark:bg-theme-bg-dark rounded border border-theme-accent/30 dark:border-theme-accent-dark/30">
-                <div className="text-[9px] font-black uppercase tracking-widest text-theme-secondary dark:text-theme-secondary-dark mb-1">Total Flights</div>
-                <div className="font-bold text-xl text-theme-primary dark:text-theme-primary-dark">{flightLogs.length}</div>
-              </div>
-              <div className="p-3 bg-theme-bg dark:bg-theme-bg-dark rounded border border-theme-accent/30 dark:border-theme-accent-dark/30">
-                <div className="text-[9px] font-black uppercase tracking-widest text-theme-secondary dark:text-theme-secondary-dark mb-1">Total Hours</div>
-                <div className="font-bold text-xl text-theme-accent dark:text-theme-accent-dark">{formatFlightTime(totalFlightTime)}</div>
-              </div>
-              <div className="p-3 bg-theme-bg dark:bg-theme-bg-dark rounded border border-theme-accent/30 dark:border-theme-accent-dark/30">
-                <div className="text-[9px] font-black uppercase tracking-widest text-theme-secondary dark:text-theme-secondary-dark mb-1">Average Duration</div>
-                <div className="font-bold text-xl text-theme-primary dark:text-theme-primary-dark">{formatFlightTime(averageFlightTime)}</div>
-              </div>
-              <div className="p-3 bg-theme-bg dark:bg-theme-bg-dark rounded border border-theme-accent/30 dark:border-theme-accent-dark/30">
-                <div className="text-[9px] font-black uppercase tracking-widest text-theme-secondary dark:text-theme-secondary-dark mb-1">Aircraft Count</div>
-                <div className="font-bold text-xl text-theme-primary dark:text-theme-primary-dark">{uniqueAircraftCount}</div>
-              </div>
-            </div>
-
-            <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3">
-               {[
-                { label: 'Night', val: nightFlightCount, color: 'text-theme-secondary dark:text-theme-secondary-dark' },
-                { label: 'Cross Country', val: crossCountryCount, color: 'text-theme-accent dark:text-theme-accent-dark' },
-                { label: 'Solo', val: soloFlightCount, color: 'text-green-600 dark:text-green-400' },
-                { label: 'Dual Instruction', val: dualFlightCount, color: 'text-blue-600 dark:text-blue-400' }
-               ].map(stat => (
-                 <div key={stat.label} className="flex justify-between items-center p-2 border-b border-theme-accent/20 dark:border-theme-accent-dark/20">
-                    <span className="text-[8px] font-black uppercase tracking-widest text-theme-secondary dark:text-theme-secondary-dark">{stat.label}</span>
-                    <span className={`font-bold ${stat.color}`}>{stat.val}</span>
-                 </div>
-               ))}
-            </div>
-          </div>
-        )}
-      </div>
+      {/* Footer note */}
+      <p className="text-center text-[10px] font-black uppercase tracking-widest text-theme-secondary/50 dark:text-theme-secondary-dark/50 py-4">
+        Flight hours as of {asOfDate} · FAA Part 61.87(a) PPL Requirements · Read-only preview
+      </p>
     </div>
   );
 };

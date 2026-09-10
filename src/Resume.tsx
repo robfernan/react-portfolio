@@ -117,7 +117,6 @@ export default function Resume() {
     <div className="min-h-screen bg-theme-bg dark:bg-theme-bg-dark">
       <section className="max-w-5xl mx-auto px-4 py-10 sm:py-16">
         <header id="resume-header" className="border-b border-theme-accent/25 dark:border-theme-accent-dark pb-8 mb-10">
-          <p className={`${eyebrow} mb-4`}>Résumé · 2026</p>
           <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <h1 className="text-4xl sm:text-6xl font-black leading-none text-theme-primary dark:text-theme-secondary-dark">Robert Fernandez</h1>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Wind, Gauge, Clock, Fuel, Zap, Send } from 'lucide-react';
+import { Wind, Gauge, Clock, Fuel, Zap } from 'lucide-react';
 import { AviationMath } from '../core/aviationMath';
 const CX6Calculator: React.FC = () => {
   const [activeTab, setActiveTab] = useState('WIND');
@@ -37,20 +37,7 @@ const WindTriangleView = () => {
   const [course, setCourse] = useState(90);
   const res = AviationMath.calculateWCA(course, tas, wDir, wSpd);
 
-  const handleSendToBriefing = () => {
-    const snapshot = {
-      tas,
-      course,
-      windDir: wDir,
-      windSpd: wSpd,
-      heading: res.heading,
-      gs: res.groundSpeed,
-      wca: res.windCorrectionAngle,
-      timestamp: Date.now()
-    };
-    localStorage.setItem('latest_wind_result', JSON.stringify(snapshot));
-    alert("Wind calculation sent to Briefing Builder.");
-  };
+
 
   return (
     <div className="space-y-4">
@@ -65,12 +52,7 @@ const WindTriangleView = () => {
         <Stat label="GS" val={`${res.groundSpeed}`} />
         <Stat label="WCA" val={`${res.windCorrectionAngle}°`} color="text-theme-accent dark:text-theme-accent-dark" />
       </div>
-      <button
-        onClick={handleSendToBriefing}
-        className="w-full flex items-center justify-center gap-2 py-3 bg-theme-card dark:bg-theme-card-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 text-theme-secondary dark:text-theme-secondary-dark hover:text-white transition-all text-[9px] font-black uppercase tracking-widest"
-      >
-        <Send size={12} /> Push_To_Briefing
-      </button>
+
     </div>
   );
 };

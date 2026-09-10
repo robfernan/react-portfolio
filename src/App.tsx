@@ -87,7 +87,7 @@ function AppWithDynamicName() {
 										<Link to="/works" className="text-theme-secondary dark:text-theme-secondary-dark hover:underline">Works</Link>
 										<Link to="/aviationpro" className="text-theme-secondary dark:text-theme-secondary-dark hover:underline">Aviation</Link>
 										<Link to="/streaming" className="text-theme-secondary dark:text-theme-secondary-dark hover:underline">Streaming</Link>
-										<Link to="/resume" className="text-theme-secondary dark:text-theme-secondary-dark hover:underline">Résumé</Link>
+										<Link to="/resume" className="text-theme-secondary dark:text-theme-secondary-dark hover:underline">Resume</Link>
 									</div>
 
 									{/* Theme Controls */}
@@ -161,7 +161,7 @@ function AppWithDynamicName() {
 											className="block py-2 text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-accent dark:hover:text-theme-accent-dark"
 											onClick={() => setMobileMenuOpen(false)}
 										>
-											Résumé
+											Resume
 										</Link>
 
 										
