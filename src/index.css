@@ -341,6 +341,18 @@ table thead th {
      every one of them, so this reclaims ~3 lines of vertical space. */
   #skill-chips { display: none !important; }
 
+  /* Force Education + Selected Projects into two equal-height columns with a
+     divider. Equal heights remove the empty gap under the shorter column that
+     was pushing Platforms onto a second page. */
+  #edu-projects {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    align-items: stretch !important;
+    gap: 0 24px !important;
+  }
+  #edu-projects > div:first-child { border-right: 1px solid #cccccc !important; padding-right: 16px !important; }
+  #edu-projects > div:last-child { padding-left: 24px !important; }
+
   /* Keep multi-line items from splitting awkwardly across pages. */
   article, li { break-inside: avoid; page-break-inside: avoid; }
 }
