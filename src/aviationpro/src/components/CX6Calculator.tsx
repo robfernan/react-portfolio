@@ -85,8 +85,8 @@ const TASView = () => {
       <Input label="Indicated Airspeed" value={ias} onChange={setIas} unit="KIAS" />
       <Input label="Pressure Altitude" value={pa} onChange={setPa} unit="FT" />
       <Input label="Temperature" value={temp} onChange={setTemp} unit="°C" />
-      <div className="bg-theme-accent dark:bg-theme-accent-dark p-6 text-center">
-        <Stat label="True Airspeed" val={`${tas} KT`} color="text-white" />
+      <div className="bg-theme-header dark:bg-theme-header-dark p-4 sm:p-6 border border-theme-accent/30 dark:border-theme-accent-dark/30 text-center">
+        <Stat label="True Airspeed" val={`${tas} KT`} color="text-theme-accent dark:text-theme-accent-dark" />
       </div>
     </div>
   );
@@ -100,8 +100,8 @@ const TSDView = () => {
     <div className="space-y-4">
       <Input label="Distance" value={dist} onChange={setDist} unit="NM" />
       <Input label="Ground Speed" value={gs} onChange={setGs} unit="KT" />
-      <div className="bg-theme-header dark:bg-theme-header-dark p-6">
-        <Stat label="Time Enroute" val={`${time} HR`} />
+      <div className="bg-theme-header dark:bg-theme-header-dark p-4 sm:p-6 border border-theme-accent/30 dark:border-theme-accent-dark/30 text-center">
+        <Stat label="Time Enroute" val={`${time} HR`} color="text-theme-accent dark:text-theme-accent-dark" />
       </div>
     </div>
   );
@@ -115,8 +115,8 @@ const FuelView = () => {
     <div className="space-y-4">
       <Input label="Fuel Flow" value={flow} onChange={setFlow} unit="GPH" />
       <Input label="Flight Time" value={time} onChange={setTime} unit="HR" />
-      <div className="bg-theme-header dark:bg-theme-header-dark p-6 border-l-4 border-theme-accent dark:border-theme-accent-dark">
-        <Stat label="Total Fuel Burn" val={`${burn} GAL`} />
+      <div className="bg-theme-header dark:bg-theme-header-dark p-4 sm:p-6 border border-theme-accent/30 dark:border-theme-accent-dark/30 text-center">
+        <Stat label="Total Fuel Burn" val={`${burn} GAL`} color="text-theme-accent dark:text-theme-accent-dark" />
       </div>
     </div>
   );
@@ -132,9 +132,9 @@ const XWindView = () => {
       <Input label="Runway Heading" value={rwy} onChange={setRwy} unit="°" />
       <Input label="Wind Direction" value={wDir} onChange={setWDir} unit="°" />
       <Input label="Wind Speed" value={wSpd} onChange={setWSpd} unit="KT" />
-      <div className="bg-theme-header dark:bg-theme-header-dark p-4 border border-theme-accent/30 dark:border-theme-accent-dark/30 flex justify-between">
+      <div className="bg-theme-header dark:bg-theme-header-dark p-4 sm:p-6 border border-theme-accent/30 dark:border-theme-accent-dark/30 flex justify-between">
         <Stat label="X-WIND" val={`${res.xwind} ${res.direction}`} color="text-theme-accent dark:text-theme-accent-dark" />
-        <Stat label="HEADWIND" val={`${res.headwind}`} />
+        <Stat label="HEADWIND" val={`${res.headwind}`} color="text-theme-accent dark:text-theme-accent-dark" />
       </div>
     </div>
   );

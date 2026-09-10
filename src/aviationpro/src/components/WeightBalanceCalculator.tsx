@@ -596,22 +596,22 @@ const WeightBalanceCalculator: React.FC = () => {
                 </div>
               </div>
 
-                <a href={cgEnvelopeImage} target="_blank" rel="noopener noreferrer" className="lg:col-span-4 bg-theme-card dark:bg-theme-card-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 p-4 sm:p-6 flex flex-col justify-end group relative overflow-hidden min-h-[320px] sm:min-h-[420px] block">
+                <div className="lg:col-span-4 bg-theme-card dark:bg-theme-card-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 p-4 sm:p-6 lg:p-8 flex flex-col justify-end group relative overflow-hidden min-h-[320px] sm:min-h-[480px] lg:min-h-[560px]">
                   <img
                    src={cgEnvelopeImage}
                    alt="Cessna 172 center of gravity envelope"
-                   className="w-full h-auto object-contain p-3 sm:p-6 opacity-95 z-0 hover:opacity-100 transition-opacity cursor-zoom-in"
+                   className="w-full h-auto object-contain p-3 sm:p-6 lg:p-8 opacity-95 z-0 group-hover:opacity-100 transition-opacity"
                  />
                   <div className="relative z-10 flex flex-col items-center justify-end gap-2 sm:gap-3">
-                    <div className="w-full max-w-[560px] rounded-md border border-theme-accent/30 dark:border-theme-accent-dark/30 bg-theme-bg/80 dark:bg-theme-bg-dark/80 px-3 sm:px-4 py-2.5 sm:py-3 backdrop-blur-sm">
-                     <div className="flex justify-between w-full text-[10px] sm:text-xs font-black uppercase tracking-widest text-theme-primary dark:text-theme-primary-dark">
+                    <div className="w-full max-w-[560px] rounded-md border border-theme-accent/30 dark:border-theme-accent-dark/30 bg-theme-bg/80 dark:bg-theme-bg-dark/80 px-4 sm:px-5 py-3 sm:py-4 backdrop-blur-sm">
+                     <div className="flex justify-between w-full text-xs sm:text-sm lg:text-base font-black uppercase tracking-widest text-theme-primary dark:text-theme-primary-dark">
                       <span>FWD: {limits.forwardCG}"</span>
                       <span>CURR: {results.rampCG.toFixed(2)}"</span>
                       <span>AFT: {limits.aftCG}"</span>
                      </div>
                     </div>
                   </div>
-                </a>
+                </div>
             </footer>
 
           </main>
