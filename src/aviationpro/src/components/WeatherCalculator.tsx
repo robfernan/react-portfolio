@@ -105,7 +105,7 @@ const WeatherCalculator: React.FC = () => {
   const cloudBaseResult = calculateCloudBase();
 
   return (
-    <div className="rounded-lg shadow-lg border border-theme-accent/30 dark:border-theme-accent-dark/30 bg-theme-card dark:bg-theme-card-dark">
+    <div className="max-w-[1200px] mx-auto w-full rounded-lg shadow-lg border border-theme-accent/30 dark:border-theme-accent-dark/30 bg-theme-card dark:bg-theme-card-dark">
       <div className="bg-theme-header dark:bg-theme-header-dark border-b border-theme-accent/30 dark:border-theme-accent-dark/30 p-6">
         <div className="flex items-center space-x-3 mb-4">
           <Cloud className="w-6 h-6 text-theme-accent dark:text-theme-accent-dark" />
@@ -179,24 +179,24 @@ const WeatherCalculator: React.FC = () => {
         <div className="flex flex-wrap bg-theme-bg dark:bg-theme-bg-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 rounded-sm overflow-hidden mb-6">
           <button
             onClick={() => setActiveTool('density')}
-            className={`flex-1 min-w-[120px] py-4 px-4 text-[9px] font-black tracking-widest border-r border-theme-accent/30 dark:border-theme-accent-dark/30 transition-all ${
+            className={`flex-1 min-w-[120px] sm:min-w-[160px] py-3 sm:py-4 lg:py-5 px-4 text-[9px] sm:text-xs lg:text-sm font-black tracking-widest border-r border-theme-accent/30 dark:border-theme-accent-dark/30 transition-all ${
               activeTool === 'density'
                 ? 'bg-theme-accent dark:bg-theme-accent-dark text-white shadow-[inset_0_0_20px_rgba(0,0,0,0.4)]'
                 : 'text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-primary dark:hover:text-theme-primary-dark hover:bg-theme-card/50 dark:hover:bg-theme-card-dark/50'
             }`}
           >
-            <Gauge className="w-4 h-4 inline mr-2" />
+            <Gauge className="w-4 h-4 sm:w-5 sm:h-5 inline mr-2" />
             Density Altitude
           </button>
           <button
             onClick={() => setActiveTool('cloudbase')}
-            className={`flex-1 min-w-[120px] py-4 px-4 text-[9px] font-black tracking-widest transition-all ${
+            className={`flex-1 min-w-[120px] sm:min-w-[160px] py-3 sm:py-4 lg:py-5 px-4 text-[9px] sm:text-xs lg:text-sm font-black tracking-widest transition-all ${
               activeTool === 'cloudbase'
                 ? 'bg-theme-accent dark:bg-theme-accent-dark text-white shadow-[inset_0_0_20px_rgba(0,0,0,0.4)]'
                 : 'text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-primary dark:hover:text-theme-primary-dark hover:bg-theme-card/50 dark:hover:bg-theme-card-dark/50'
             }`}
           >
-            <Cloud className="w-4 h-4 inline mr-2" />
+            <Cloud className="w-4 h-4 sm:w-5 sm:h-5 inline mr-2" />
             Cloud Base
           </button>
         </div>

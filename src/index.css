@@ -212,6 +212,19 @@ img {
   background-color: rgba(156, 163, 175, 0.7);
 }
 
+/* Hide the native number-input spinners (the little up/down arrows)
+   so cell text is fully legible on desktop. Mobile keeps them for
+   convenience — they're small and don't crowd the field there. */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
 /* Table input styling - force text visibility only */
 table input[type="text"],
 table input[type="number"] {

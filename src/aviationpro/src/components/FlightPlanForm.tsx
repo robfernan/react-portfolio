@@ -405,7 +405,7 @@ const FlightPlanForm: React.FC = () => {
   };
 
   return (
-    <div className="bg-theme-card dark:bg-theme-card-dark rounded-lg shadow-lg border-2 border-theme-accent dark:border-theme-accent-dark">
+    <div className="max-w-[1600px] mx-auto w-full bg-theme-card dark:bg-theme-card-dark rounded-lg shadow-lg border-2 border-theme-accent dark:border-theme-accent-dark">
       {/* Header */}
       <div className="bg-theme-header dark:bg-theme-header-dark border-b-2 border-theme-accent dark:border-theme-accent-dark p-3 sm:p-4 md:p-6">
         <div className="flex flex-row items-center justify-between mb-3 sm:mb-4 gap-3">
@@ -494,29 +494,32 @@ const FlightPlanForm: React.FC = () => {
           <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-theme-bg dark:from-theme-bg-dark to-transparent pointer-events-none z-10 lg:hidden"></div>
           
           <div className="overflow-x-auto overflow-y-visible w-full" style={{ WebkitOverflowScrolling: 'touch' }}>
-            <div className="inline-block min-w-full">
-              <table className="w-full border-collapse text-xs sm:text-sm min-w-[2400px] bg-theme-card dark:bg-theme-card-dark shadow-lg rounded-lg overflow-hidden">
+            <div className="inline-block min-w-full max-w-[1600px] mx-auto">
+              {/* Mobile: 2400px forces horizontal scroll (intended).
+                  Desktop (lg+): table fits the viewport — no horizontal scroll,
+                  cells are wide enough to be legible at 1080p+. */}
+              <table className="w-full border-collapse text-xs sm:text-sm min-w-[2400px] lg:min-w-0 bg-theme-card dark:bg-theme-card-dark shadow-lg rounded-lg overflow-hidden">
             <thead>
               <tr className="bg-theme-accent dark:bg-theme-accent-dark text-white">
-                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 text-center text-xs sm:text-sm font-semibold min-w-[140px] sm:min-w-[160px]" rowSpan={2}>Checkpoint</th>
-                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 text-center text-xs sm:text-sm font-semibold" colSpan={2}>A Planned</th>
-                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 text-center text-xs sm:text-sm font-semibold" colSpan={2}>Predicted Wind</th>
-                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 text-center text-xs sm:text-sm font-semibold min-w-[60px] sm:min-w-[80px]">TEMP</th>
-                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 text-center text-xs sm:text-sm font-semibold min-w-[60px] sm:min-w-[80px]">Plan<br/>TAS</th>
-                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 text-center text-xs sm:text-sm font-semibold min-w-[60px] sm:min-w-[80px]">WCA<br/>-L +R</th>
-                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 text-center text-xs sm:text-sm font-semibold min-w-[60px] sm:min-w-[80px]">True<br/>HDG</th>
-                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 text-center text-xs sm:text-sm font-semibold min-w-[60px] sm:min-w-[80px]">Var<br/>-E +W</th>
-                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 text-center text-xs sm:text-sm font-semibold min-w-[60px] sm:min-w-[80px]">Mag<br/>HDG</th>
-                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 text-center text-xs sm:text-sm font-semibold min-w-[60px] sm:min-w-[80px]">Dev<br/>+-</th>
-                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 text-center text-xs sm:text-sm font-semibold min-w-[60px] sm:min-w-[80px]">Compass<br/>HDG</th>
-                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 text-center text-xs sm:text-sm font-semibold" colSpan={2}>Distance</th>
-                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 text-center text-xs sm:text-sm font-semibold min-w-[60px] sm:min-w-[80px]">GS</th>
-                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 text-center text-xs sm:text-sm font-semibold" colSpan={2}>Time</th>
-                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 text-center text-xs sm:text-sm font-semibold" colSpan={2}>ETE/ATE</th>
-                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 text-center text-xs sm:text-sm font-semibold" colSpan={2}>ETA/ATA</th>
-                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 text-center text-xs sm:text-sm font-semibold" colSpan={2}>Fuel</th>
-                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 text-center text-xs sm:text-sm font-semibold" colSpan={3}>VOR</th>
-                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 text-center text-xs sm:text-sm font-semibold min-w-[60px] sm:min-w-[80px]">Actions</th>
+                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 lg:p-4 text-center text-xs sm:text-sm lg:text-base font-semibold min-w-[140px] sm:min-w-[160px]" rowSpan={2}>Checkpoint</th>
+                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 lg:p-4 text-center text-xs sm:text-sm lg:text-base font-semibold" colSpan={2}>A Planned</th>
+                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 lg:p-4 text-center text-xs sm:text-sm lg:text-base font-semibold" colSpan={2}>Predicted Wind</th>
+                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 lg:p-4 text-center text-xs sm:text-sm lg:text-base font-semibold min-w-[60px] sm:min-w-[80px]">TEMP</th>
+                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 lg:p-4 text-center text-xs sm:text-sm lg:text-base font-semibold min-w-[60px] sm:min-w-[80px]">Plan<br/>TAS</th>
+                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 lg:p-4 text-center text-xs sm:text-sm lg:text-base font-semibold min-w-[60px] sm:min-w-[80px]">WCA<br/>-L +R</th>
+                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 lg:p-4 text-center text-xs sm:text-sm lg:text-base font-semibold min-w-[60px] sm:min-w-[80px]">True<br/>HDG</th>
+                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 lg:p-4 text-center text-xs sm:text-sm lg:text-base font-semibold min-w-[60px] sm:min-w-[80px]">Var<br/>-E +W</th>
+                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 lg:p-4 text-center text-xs sm:text-sm lg:text-base font-semibold min-w-[60px] sm:min-w-[80px]">Mag<br/>HDG</th>
+                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 lg:p-4 text-center text-xs sm:text-sm lg:text-base font-semibold min-w-[60px] sm:min-w-[80px]">Dev<br/>+-</th>
+                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 lg:p-4 text-center text-xs sm:text-sm lg:text-base font-semibold min-w-[60px] sm:min-w-[80px]">Compass<br/>HDG</th>
+                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 lg:p-4 text-center text-xs sm:text-sm lg:text-base font-semibold" colSpan={2}>Distance</th>
+                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 lg:p-4 text-center text-xs sm:text-sm lg:text-base font-semibold min-w-[60px] sm:min-w-[80px]">GS</th>
+                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 lg:p-4 text-center text-xs sm:text-sm lg:text-base font-semibold" colSpan={2}>Time</th>
+                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 lg:p-4 text-center text-xs sm:text-sm lg:text-base font-semibold" colSpan={2}>ETE/ATE</th>
+                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 lg:p-4 text-center text-xs sm:text-sm lg:text-base font-semibold" colSpan={2}>ETA/ATA</th>
+                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 lg:p-4 text-center text-xs sm:text-sm lg:text-base font-semibold" colSpan={2}>Fuel</th>
+                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 lg:p-4 text-center text-xs sm:text-sm lg:text-base font-semibold" colSpan={3}>VOR</th>
+                <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 lg:p-4 text-center text-xs sm:text-sm lg:text-base font-semibold min-w-[60px] sm:min-w-[80px]">Actions</th>
               </tr>
               <tr className="bg-theme-accent/90 dark:bg-theme-accent-dark/90 text-white">
                 <th className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 text-center text-[10px] sm:text-xs font-medium min-w-[60px] sm:min-w-[80px]">TC</th>
@@ -553,239 +556,239 @@ const FlightPlanForm: React.FC = () => {
                 <tr key={checkpoint.id} className={`hover:bg-theme-accent/10 dark:hover:bg-theme-accent-dark/10 transition-colors ${
                   index % 2 === 0 ? 'bg-theme-card dark:bg-theme-card-dark' : 'bg-theme-bg dark:bg-theme-bg-dark'
                 }`}>
-                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2">
+                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 lg:p-3">
                     <input
                       type="text"
                       value={checkpoint.name}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'name', e.target.value)}
-                      className="w-full min-w-[140px] p-1 sm:p-2 border-0 text-xs sm:text-sm font-semibold focus:ring-2 focus:ring-theme-accent dark:focus:ring-theme-accent-dark rounded"
+                      className="w-full min-w-[140px] p-1 sm:p-2 lg:p-3 border-0 text-xs sm:text-sm lg:text-base font-semibold focus:ring-2 focus:ring-theme-accent dark:focus:ring-theme-accent-dark rounded"
                     />
                   </td>
-                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 min-w-[70px]">
+                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 lg:p-3 min-w-[70px]">
                     <input
                       type="number"
                       value={checkpoint.trueCourse}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'trueCourse', e.target.value)}
-                      className="w-full p-1 sm:p-2 border-0 text-center text-xs sm:text-base rounded"
+                      className="w-full p-1 sm:p-2 lg:p-3 border-0 text-center text-xs sm:text-base rounded"
                     />
                   </td>
-                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 min-w-[70px]">
+                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 lg:p-3 min-w-[70px]">
                     <input
                       type="number"
                       value={checkpoint.altitude}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'altitude', e.target.value)}
-                      className="w-full p-1 sm:p-2 border-0 text-center text-xs sm:text-base rounded"
+                      className="w-full p-1 sm:p-2 lg:p-3 border-0 text-center text-xs sm:text-base rounded"
                     />
                   </td>
-                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 min-w-[70px]">
+                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 lg:p-3 min-w-[70px]">
                     <input
                       type="number"
                       value={checkpoint.windDirection}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'windDirection', e.target.value)}
-                      className="w-full p-1 sm:p-2 border-0 text-center text-xs sm:text-base rounded"
+                      className="w-full p-1 sm:p-2 lg:p-3 border-0 text-center text-xs sm:text-base rounded"
                     />
                   </td>
-                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 min-w-[70px]">
+                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 lg:p-3 min-w-[70px]">
                     <input
                       type="number"
                       value={checkpoint.windVelocity}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'windVelocity', e.target.value)}
-                      className="w-full p-1 sm:p-2 border-0 text-center text-xs sm:text-base rounded"
+                      className="w-full p-1 sm:p-2 lg:p-3 border-0 text-center text-xs sm:text-base rounded"
                     />
                   </td>
-                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 min-w-[70px]">
+                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 lg:p-3 min-w-[70px]">
                     <input
                       type="number"
                       step="0.1"
                       value={checkpoint.temperature}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'temperature', e.target.value)}
-                      className="w-full p-1 sm:p-2 border-0 text-center text-xs sm:text-base rounded"
+                      className="w-full p-1 sm:p-2 lg:p-3 border-0 text-center text-xs sm:text-base rounded"
                     />
                   </td>
-                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 min-w-[70px]">
+                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 lg:p-3 min-w-[70px]">
                     <input
                       type="number"
                       value={checkpoint.planTAS}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'planTAS', e.target.value)}
-                      className="w-full p-1 sm:p-2 border-0 text-center text-xs sm:text-base rounded"
+                      className="w-full p-1 sm:p-2 lg:p-3 border-0 text-center text-xs sm:text-base rounded"
                     />
                   </td>
-                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 min-w-[70px]">
+                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 lg:p-3 min-w-[70px]">
                     <input
                       type="number"
                       step="0.1"
                       value={checkpoint.windCorrection}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'windCorrection', e.target.value)}
-                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
+                      className="w-full p-2 lg:p-3 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                     />
                   </td>
-                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-2 min-w-[100px]">
+                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 lg:p-3 min-w-[100px]">
                     <input
                       type="number"
                       step="0.1"
                       value={checkpoint.trueHeading}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'trueHeading', e.target.value)}
-                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
+                      className="w-full p-2 lg:p-3 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                     />
                   </td>
-                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-2 min-w-[100px]">
+                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 lg:p-3 min-w-[100px]">
                     <input
                       type="number"
                       step="0.1"
                       value={checkpoint.variation}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'variation', e.target.value)}
-                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
+                      className="w-full p-2 lg:p-3 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                     />
                   </td>
-                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-2 min-w-[100px]">
+                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 lg:p-3 min-w-[100px]">
                     <input
                       type="number"
                       step="0.1"
                       value={checkpoint.magHeading}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'magHeading', e.target.value)}
-                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
+                      className="w-full p-2 lg:p-3 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                     />
                   </td>
-                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-2 min-w-[100px]">
+                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 lg:p-3 min-w-[100px]">
                     <input
                       type="number"
                       step="0.1"
                       value={checkpoint.deviation}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'deviation', e.target.value)}
-                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
+                      className="w-full p-2 lg:p-3 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                     />
                   </td>
-                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-2 min-w-[100px]">
+                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 lg:p-3 min-w-[100px]">
                     <input
                       type="number"
                       step="0.1"
                       value={checkpoint.compassHeading}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'compassHeading', e.target.value)}
-                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
+                      className="w-full p-2 lg:p-3 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                     />
                   </td>
-                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-2 min-w-[100px]">
+                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 lg:p-3 min-w-[100px]">
                     <input
                       type="number"
                       step="0.1"
                       value={checkpoint.distance}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'distance', e.target.value)}
-                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
+                      className="w-full p-2 lg:p-3 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                     />
                   </td>
-                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-2 min-w-[100px]">
+                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 lg:p-3 min-w-[100px]">
                     <input
                       type="number"
                       step="0.1"
                       value={checkpoint.remaining}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'remaining', e.target.value)}
-                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
+                      className="w-full p-2 lg:p-3 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                     />
                   </td>
-                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-2 min-w-[100px]">
+                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 lg:p-3 min-w-[100px]">
                     <input
                       type="number"
                       value={checkpoint.groundSpeed}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'groundSpeed', e.target.value)}
-                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
+                      className="w-full p-2 lg:p-3 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                     />
                   </td>
-                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-2 min-w-[120px]">
+                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 lg:p-3 min-w-[120px]">
                     <input
                       type="text"
                       value={checkpoint.est}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'est', e.target.value)}
-                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
+                      className="w-full p-2 lg:p-3 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                       placeholder="HH:MM"
                     />
                   </td>
-                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-2 min-w-[120px]">
+                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 lg:p-3 min-w-[120px]">
                     <input
                       type="text"
                       value={checkpoint.act}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'act', e.target.value)}
-                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
+                      className="w-full p-2 lg:p-3 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                       placeholder="HH:MM"
                     />
                   </td>
-                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-2 min-w-[100px]">
+                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 lg:p-3 min-w-[100px]">
                     <input
                       type="number"
                       step="0.1"
                       value={checkpoint.ete}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'ete', e.target.value)}
-                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
+                      className="w-full p-2 lg:p-3 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                     />
                   </td>
-                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-2 min-w-[100px]">
+                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 lg:p-3 min-w-[100px]">
                     <input
                       type="number"
                       step="0.1"
                       value={checkpoint.ate}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'ate', e.target.value)}
-                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
+                      className="w-full p-2 lg:p-3 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                     />
                   </td>
-                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-2 min-w-[120px]">
+                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 lg:p-3 min-w-[120px]">
                     <input
                       type="text"
                       value={checkpoint.eta}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'eta', e.target.value)}
-                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
+                      className="w-full p-2 lg:p-3 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                       placeholder="HH:MM"
                     />
                   </td>
-                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-2 min-w-[120px]">
+                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 lg:p-3 min-w-[120px]">
                     <input
                       type="text"
                       value={checkpoint.ata}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'ata', e.target.value)}
-                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
+                      className="w-full p-2 lg:p-3 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                       placeholder="HH:MM"
                     />
                   </td>
-                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-2 min-w-[100px]">
+                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 lg:p-3 min-w-[100px]">
                     <input
                       type="number"
                       step="0.1"
                       value={checkpoint.fuelUsed}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'fuelUsed', e.target.value)}
-                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
+                      className="w-full p-2 lg:p-3 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                     />
                   </td>
-                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-2 min-w-[100px]">
+                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 lg:p-3 min-w-[100px]">
                     <input
                       type="number"
                       step="0.1"
                       value={checkpoint.fuelRemaining}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'fuelRemaining', e.target.value)}
-                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
+                      className="w-full p-2 lg:p-3 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                     />
                   </td>
-                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-2 min-w-[120px]">
+                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 lg:p-3 min-w-[120px]">
                     <input
                       type="text"
                       value={checkpoint.vorFreq}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'vorFreq', e.target.value)}
-                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
+                      className="w-full p-2 lg:p-3 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                       placeholder="113.00"
                     />
                   </td>
-                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-2 min-w-[120px]">
+                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 lg:p-3 min-w-[120px]">
                     <input
                       type="text"
                       value={checkpoint.vorRadial}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'vorRadial', e.target.value)}
-                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
+                      className="w-full p-2 lg:p-3 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                       placeholder="090"
                     />
                   </td>
-                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-2 min-w-[100px]">
+                  <td className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 lg:p-3 min-w-[100px]">
                     <input
                       type="text"
                       value={checkpoint.vorIdent}
                       onChange={(e) => updateCheckpoint(checkpoint.id, 'vorIdent', e.target.value)}
-                      className="w-full p-2 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
+                      className="w-full p-2 lg:p-3 border-0 bg-transparent text-center text-base text-theme-primary dark:text-theme-primary-dark"
                       placeholder="ABC"
                     />
                   </td>

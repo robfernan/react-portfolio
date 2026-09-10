@@ -22,13 +22,13 @@ function AviationProApp() {
   return (
     <div className="min-h-screen bg-theme-bg dark:bg-theme-bg-dark text-theme-primary dark:text-theme-primary-dark">
       <header className="border-b border-theme-accent/30 dark:border-theme-accent-dark/30 bg-theme-header dark:bg-theme-header-dark">
-        <div className="px-2 py-1 flex items-center justify-between gap-1 max-w-[1600px] mx-auto w-full">
+        <div className="px-2 sm:px-4 lg:px-6 py-1.5 sm:py-2 flex items-center justify-between gap-1 max-w-[1600px] mx-auto w-full">
           <h1 className="text-lg sm:text-2xl font-bold text-theme-primary dark:text-theme-primary-dark flex-shrink-0">AVPRO</h1>
           <nav className="flex gap-0.5 flex-1 justify-center overflow-x-auto no-scrollbar">
             {tabs.map(tab => (
               <button
                 key={tab.id}
-                className={`flex items-center justify-center p-1 sm:p-2 sm:px-3 sm:py-1 rounded text-xs sm:text-sm font-medium whitespace-nowrap transition-colors flex-shrink-0 ${
+                className={`flex items-center justify-center p-1 sm:p-2 lg:px-4 lg:py-2 rounded text-xs sm:text-sm lg:text-base font-medium whitespace-nowrap transition-colors flex-shrink-0 ${
                   activeTab === tab.id 
                     ? 'bg-theme-accent dark:bg-theme-accent-dark text-white' 
                     : 'bg-theme-card dark:bg-theme-card-dark text-theme-secondary dark:text-theme-secondary-dark hover:bg-theme-accent/10 dark:hover:bg-theme-accent-dark/10'
@@ -36,14 +36,14 @@ function AviationProApp() {
                 onClick={() => setActiveTab(tab.id)}
                 title={tab.label}
               >
-                <tab.icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                <tab.icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 lg:w-5 lg:h-5" />
                 <span className="hidden sm:inline">{tab.label}</span>
               </button>
             ))}
           </nav>
         </div>
       </header>
-      <main className="p-4">
+      <main className="p-4 sm:p-6 lg:p-8 max-w-[1600px] mx-auto w-full">
         {activeTab === 'planner' && <FlightPlanForm />}
         {activeTab === 'cx6' && <CX6Calculator />}
         {activeTab === 'weather' && <WeatherCalculator />}

@@ -55,6 +55,8 @@ const NavigationTools: React.FC = () => {
   const weatherServices = [
     { name: 'Aviation Weather Center (NOAA)', url: 'https://aviationweather.gov', description: 'Official US aviation weather - METARs, TAFs, NOTAMs' },
     { name: 'National Weather Service Aviation', url: 'https://weather.gov/aviation', description: 'Aviation-specific forecasts and weather graphics' },
+    { name: 'Garmin Pilot Web', url: 'https://pilotweb.garmin.com/', description: 'Garmin flight planning, charts, and weather in the browser' },
+    { name: 'ForeFlight Web', url: 'https://plan.foreflight.com/map', description: 'ForeFlight route planning and weather maps online' },
     { name: 'SkyVector', url: 'https://skyvector.com', description: 'Free aviation charts and planning tools' },
     { name: 'AirNav', url: 'https://airnav.com', description: 'Airport and FBO information database' },
     { name: 'FlightAware', url: 'https://flightaware.com', description: 'Flight tracking and delay information' },
@@ -121,7 +123,7 @@ const NavigationTools: React.FC = () => {
   };
 
   return (
-    <div className="bg-theme-card dark:bg-theme-card-dark rounded-lg shadow-lg border border-theme-accent/30 dark:border-theme-accent-dark/30">
+    <div className="max-w-[1200px] mx-auto w-full bg-theme-card dark:bg-theme-card-dark rounded-lg shadow-lg border border-theme-accent/30 dark:border-theme-accent-dark/30">
       {/* Header + Tab Bar */}
       <div className="bg-theme-header dark:bg-theme-header-dark border-b border-theme-accent/30 dark:border-theme-accent-dark/30 p-4 sm:p-6">
         <h2 className={`text-xl sm:text-2xl font-bold mb-4 ${headingCls}`}>Navigation Tools</h2>
@@ -132,13 +134,13 @@ const NavigationTools: React.FC = () => {
               <button
                 key={tool.id}
                 onClick={() => setActiveTool(tool.id)}
-                className={`flex items-center justify-center gap-2 px-4 py-3 text-[10px] sm:text-xs font-black tracking-widest uppercase border-r border-theme-accent/20 dark:border-theme-accent-dark/20 last:border-r-0 transition-all duration-200 ${
+                className={`flex items-center justify-center gap-2 px-3 sm:px-4 lg:px-5 py-2.5 sm:py-3 lg:py-4 text-[10px] sm:text-xs lg:text-sm font-black tracking-widest uppercase border-r border-theme-accent/20 dark:border-theme-accent-dark/20 last:border-r-0 transition-all duration-200 ${
                   activetool === tool.id
                     ? 'bg-theme-accent dark:bg-theme-accent-dark text-white'
                     : 'text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-primary dark:hover:text-theme-primary-dark hover:bg-theme-header dark:hover:bg-theme-header-dark'
                 }`}
               >
-                <Icon className="w-4 h-4" />
+                <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
                 <span>{tool.label}</span>
               </button>
             );

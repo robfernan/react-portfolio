@@ -76,15 +76,15 @@
   --color-card: rgba(255, 247, 240, 0.7);
   --color-action: #f04e23;
 
-  /* ---- DARK MODE — black glass aero / frutiger ---- */
-  --color-background-dark: #060810;   /* near-black canvas (lightest of the darks) */
-  --color-header-dark: #0d1120;       /* darker than body — framed header */
-  --color-footer-dark: #0b0e1a;      /* darker than body — framed footer */
-  --color-primary-dark: #f2f6ff;     /* near-white text on dark glass */
-  --color-secondary-dark: #c3cee4;
-  --color-accent-dark: #4fd8ff;      /* glowing aqua accent */
-  --color-card-dark: rgba(20, 27, 46, 0.55);
-  --color-action-dark: #2fb6ef;
+  /* ---- DARK MODE — black glass with warm gold glow (90s CRT / VHS vibe) ---- */
+  --color-background-dark: #0a0806;   /* near-black, warm cast (no blue) */
+  --color-header-dark: #14100a;      /* darker than body — framed header */
+  --color-footer-dark: #120e08;      /* darker than body — framed footer */
+  --color-primary-dark: #f5ecd9;     /* warm off-white text on dark glass */
+  --color-secondary-dark: #d6c39a;   /* muted gold secondary */
+  --color-accent-dark: #e8b24a;      /* glowing gold accent (replaces aqua) */
+  --color-card-dark: rgba(30, 24, 14, 0.55); /* warm dark panel */
+  --color-action-dark: #d99a2e;
 }
 
 /* Soft glassy glow for the Y2K theme (no hard borders — keeps it un-boxy) */
@@ -98,7 +98,7 @@
 .dark .theme-90s [class*="rounded-xl"] {
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.08),
-    0 10px 30px rgba(79, 216, 255, 0.14);
+    0 10px 30px rgba(232, 178, 74, 0.16);
 }
 .aviation-scope {
   /* panel backgrounds */

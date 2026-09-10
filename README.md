@@ -50,8 +50,9 @@ The site spans:
 
 ### 🎨 Design & UX
 - **Component-based architecture** — reusable React components for consistency
-- **Responsive design** — mobile-first, fully supports iPhone SE (375px) viewports
+- **Responsive design** — mobile-first, fully supports iPhone SE (375px) viewports; desktop layouts tuned for 1080p+ legibility
 - **Theme system** — CSS custom properties (`theme-*` tokens) with 4 switchable themes + light/dark mode
+  - **90s theme dark mode** uses a warm gold-on-black palette (near-black canvas, glowing gold accent `#e8b24a`, warm off-white text) for a CRT/VHS feel — no blue/aqua cast.
 - **Interactive elements** — hover states, transitions, and micro-interactions
 
 ### 🛠️ Technical

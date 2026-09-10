@@ -222,7 +222,7 @@ const FlightLogs: React.FC = () => {
   if (loading) return <div className="p-6 text-theme-secondary dark:text-theme-secondary-dark font-mono">INITIALIZING LOGBOOK...</div>;
 
   return (
-    <div className="rounded-lg shadow-lg border border-theme-accent/30 dark:border-theme-accent-dark/30 bg-theme-card dark:bg-theme-card-dark">
+    <div className="max-w-[1200px] mx-auto w-full rounded-lg shadow-lg border border-theme-accent/30 dark:border-theme-accent-dark/30 bg-theme-card dark:bg-theme-card-dark">
       <div className="bg-theme-header dark:bg-theme-header-dark border-b border-theme-accent/30 dark:border-theme-accent-dark/30 p-6">
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center space-x-3">
@@ -536,7 +536,7 @@ const FlightLogs: React.FC = () => {
                           {log.dual && <span className="text-[8px] font-black uppercase tracking-tighter bg-blue-500/15 px-1.5 py-0.5 rounded text-blue-600 dark:text-blue-400">Dual</span>}
                         </div>
                       </td>
-                      <td className="px-4 py-4 max-w-[120px]">
+                      <td className="px-4 py-4 max-w-[120px] sm:max-w-[200px] lg:max-w-[320px]">
                         <p className="truncate text-theme-secondary/70 dark:text-theme-secondary-dark/70 text-xs italic">{log.notes || '---'}</p>
                       </td>
                       <td className="px-4 py-4 text-right">

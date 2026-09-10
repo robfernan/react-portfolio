@@ -13,7 +13,6 @@ import {
   FileText,
   Save,
   Clipboard,
-  History,
   Layers,
   Gauge,
   Send
@@ -78,7 +77,7 @@ interface TelemetryResults {
 // --- 2. REUSABLE ATOMIC COMPONENTS (theme-token based) ---
 
 const HUDLabel = ({ children }: { children: React.ReactNode }) => (
-  <label className="block text-[10px] font-black uppercase tracking-[0.25em] text-theme-secondary dark:text-theme-secondary-dark mb-2">
+  <label className="block text-[10px] sm:text-xs font-black uppercase tracking-widest text-theme-secondary dark:text-theme-secondary-dark mb-2">
     {children}
   </label>
 );
@@ -86,22 +85,22 @@ const HUDLabel = ({ children }: { children: React.ReactNode }) => (
 const CockpitInput = (props: React.InputHTMLAttributes<HTMLInputElement>) => (
   <input 
     {...props} 
-    className="w-full p-3 bg-theme-bg dark:bg-theme-bg-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 rounded-none text-theme-primary dark:text-theme-primary-dark font-mono text-xs focus:border-theme-accent dark:focus:border-theme-accent-dark focus:ring-1 focus:ring-theme-accent dark:focus:ring-theme-accent-dark outline-none transition-all placeholder:text-theme-secondary/50 dark:placeholder:text-theme-secondary-dark/50 tabular-nums" 
+    className="w-full p-3 sm:p-4 bg-theme-bg dark:bg-theme-bg-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 rounded-none text-theme-primary dark:text-theme-primary-dark font-mono text-sm sm:text-base focus:border-theme-accent dark:focus:border-theme-accent-dark focus:ring-1 focus:ring-theme-accent dark:focus:ring-theme-accent-dark outline-none transition-all placeholder:text-theme-secondary/50 dark:placeholder:text-theme-secondary-dark/50 tabular-nums" 
   />
 );
 
 const TelemetryCard = ({ label, value, subValue, status }: { label: string; value: string; subValue?: string; status?: 'nominal' | 'alert' | 'critical' }) => (
-  <div className={`p-6 bg-theme-card dark:bg-theme-card-dark border ${
+  <div className={`p-5 sm:p-6 bg-theme-card dark:bg-theme-card-dark border ${
     status === 'critical' ? `border-red-500/70 bg-red-500/5` : 
     status === 'alert' ? 'border-yellow-500/50 bg-yellow-500/5' : 
     `border-theme-accent/30 dark:border-theme-accent-dark/30`
   } transition-all duration-500 relative group`}>
-    <div className={`text-[9px] font-black uppercase tracking-[0.4em] ${status === 'critical' ? `text-red-500` : `text-theme-secondary dark:text-theme-secondary-dark`} mb-3`}>
+    <div className={`text-[10px] sm:text-xs font-black uppercase tracking-widest ${status === 'critical' ? `text-red-500` : `text-theme-secondary dark:text-theme-secondary-dark`} mb-3`}>
       {label}
     </div>
     <div className="flex flex-col">
-      <span className={`text-2xl font-black ${status === 'critical' ? `text-red-500` : `text-theme-primary dark:text-theme-primary-dark`}`}>{value}</span>
-      {subValue && <span className="text-[10px] font-bold text-theme-secondary dark:text-theme-secondary-dark mt-1.5 uppercase tracking-widest tabular-nums">{subValue}</span>}
+      <span className={`text-xl sm:text-2xl lg:text-3xl font-black ${status === 'critical' ? `text-red-500` : `text-theme-primary dark:text-theme-primary-dark`}`}>{value}</span>
+      {subValue && <span className="text-[10px] sm:text-xs font-bold text-theme-secondary dark:text-theme-secondary-dark mt-2 uppercase tracking-widest tabular-nums">{subValue}</span>}
     </div>
     <div className={`absolute top-0 right-0 w-1 h-full ${status === 'critical' ? `bg-red-500` : 'bg-transparent'}`}></div>
   </div>
@@ -117,7 +116,6 @@ const WeightBalanceCalculator: React.FC = () => {
   const [isLocked, setIsLocked] = useState<boolean>(true);
   const [activeCategory, setActiveCategory] = useState<'NORMAL' | 'UTILITY'>('NORMAL');
   const [weightItems, setWeightItems] = useState<WeightItem[]>([]);
-  const [sysLogs, setSysLogs] = useState<string[]>(['SYS_BOOT: OK', 'MODULE_WB: READY']);
 
   // Load Hangar
   useEffect(() => {
@@ -156,9 +154,6 @@ const WeightBalanceCalculator: React.FC = () => {
     const profile = hangarPlane || samplePlane;
 
     if (profile) {
-      const tail = 'tailNumber' in profile ? profile.tailNumber : profile.id;
-      setSysLogs(prev => [`LOAD_AIRFRAME: ${tail}`, ...prev].slice(0, 5));
-
       setLimits({
         maxWeight: profile.maxGrossWeight || profile.maxWeight || 2550,
         forwardCG: profile.forwardCG || 35.0,
@@ -199,8 +194,7 @@ const WeightBalanceCalculator: React.FC = () => {
       timestamp: Date.now()
     };
     localStorage.setItem('latest_wb_result', JSON.stringify(snapshot));
-    setSysLogs(prev => ['SYSTEM: EXPORT_TO_BRIEFING', ...prev].slice(0, 5));
-    alert("Weight & Balance data sent to Briefing Builder.");
+    alert("Weight & Balance data saved. You can now pull it into a flight briefing PDF.");
   };
 
   const handleAddItem = useCallback(() => {
@@ -213,12 +207,10 @@ const WeightBalanceCalculator: React.FC = () => {
       timestamp: Date.now()
     };
     setWeightItems(prev => [...prev, newItem]);
-    setSysLogs(prev => ['MANIFEST: ADD_ENTRY', ...prev].slice(0, 5));
   }, []);
 
   const handleRemoveItem = useCallback((id: string) => {
     setWeightItems(prev => prev.filter(item => item.id !== id || item.isLocked));
-    setSysLogs(prev => ['MANIFEST: REM_ENTRY', ...prev].slice(0, 5));
   }, []);
 
   const handleUpdateItem = useCallback((id: string, field: keyof WeightItem, value: string) => {
@@ -271,16 +263,16 @@ const WeightBalanceCalculator: React.FC = () => {
   }, [weightItems, config, limits, activeCategory]);
 
   return (
-    <div className="min-h-screen bg-theme-bg dark:bg-theme-bg-dark text-theme-primary dark:text-theme-primary-dark font-mono tracking-tighter p-4 xl:p-10 selection:bg-theme-accent/30 dark:selection:bg-theme-accent-dark/30 overflow-x-hidden">
-      <div className="max-w-[1800px] mx-auto space-y-8">
+    <div className="min-h-screen bg-theme-bg dark:bg-theme-bg-dark text-theme-primary dark:text-theme-primary-dark font-mono tracking-tighter p-4 sm:p-6 lg:p-8 xl:p-10 selection:bg-theme-accent/30 dark:selection:bg-theme-accent-dark/30 overflow-x-hidden">
+      <div className="max-w-[1600px] mx-auto space-y-8">
         
-        <div className="flex flex-wrap gap-4">
+        <div className="flex flex-wrap gap-3 sm:gap-4">
             <div className="flex border border-theme-accent/30 dark:border-theme-accent-dark/30 bg-theme-card dark:bg-theme-card-dark p-1">
               {['NORMAL', 'UTILITY'].map(cat => (
                 <button 
                   key={cat}
                   onClick={() => setActiveCategory(cat as any)}
-                  className={`px-6 py-2 text-[10px] font-black uppercase tracking-widest transition-all ${
+                  className={`px-5 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-black uppercase tracking-widest transition-all ${
                     activeCategory === cat ? 'bg-theme-accent dark:bg-theme-accent-dark text-white' : 'text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-primary dark:hover:text-theme-primary-dark'
                   }`}
                 >
@@ -290,17 +282,20 @@ const WeightBalanceCalculator: React.FC = () => {
             </div>
             <button
               onClick={handleSendToBriefing}
-              className="flex items-center space-x-3 px-6 py-3 bg-theme-card dark:bg-theme-card-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 hover:border-theme-accent dark:hover:border-theme-accent-dark transition-all group"
+              title="Saves the current W&B results (ramp weight, takeoff weight, CG) to local storage so they can be pulled into a flight briefing PDF."
+              className="flex items-center space-x-3 px-5 sm:px-6 py-2.5 sm:py-3 bg-theme-card dark:bg-theme-card-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 hover:border-theme-accent dark:hover:border-theme-accent-dark transition-all group"
             >
               <Send className="w-4 h-4 text-theme-secondary dark:text-theme-secondary-dark group-hover:text-theme-accent dark:group-hover:text-theme-accent-dark" />
-              <span className="text-[10px] font-black uppercase tracking-widest">Push_To_Briefing</span>
+              <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest">Push to Briefing</span>
             </button>
-            <button className="flex items-center space-x-3 px-6 py-3 bg-theme-card dark:bg-theme-card-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 hover:bg-theme-header dark:hover:bg-theme-header-dark transition-all group">
+            <button title="Saves the current manifest to local storage for later retrieval."
+              className="flex items-center space-x-3 px-5 sm:px-6 py-2.5 sm:py-3 bg-theme-card dark:bg-theme-card-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 hover:bg-theme-header dark:hover:bg-theme-header-dark transition-all group">
               <Save className="w-4 h-4 text-theme-secondary dark:text-theme-secondary-dark group-hover:text-theme-primary dark:group-hover:text-theme-primary-dark" />
-              <span className="text-[10px] font-black uppercase tracking-widest">Store_Manifest</span>
+              <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest">Store Manifest</span>
             </button>
-            <button onClick={() => window.print()} className="p-3 bg-theme-card dark:bg-theme-card-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 hover:bg-theme-header dark:hover:bg-theme-header-dark transition-all group">
-              <Printer className="w-5 h-5 text-theme-secondary dark:text-theme-secondary-dark group-hover:text-theme-primary dark:group-hover:text-theme-primary-dark" />
+            <button onClick={() => window.print()} title="Print this page"
+              className="p-2.5 sm:p-3 bg-theme-card dark:bg-theme-card-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 hover:bg-theme-header dark:hover:bg-theme-header-dark transition-all group">
+              <Printer className="w-4 h-4 sm:w-5 sm:h-5 text-theme-secondary dark:text-theme-secondary-dark group-hover:text-theme-primary dark:group-hover:text-theme-primary-dark" />
             </button>
           </div>
 
@@ -312,10 +307,10 @@ const WeightBalanceCalculator: React.FC = () => {
                 <Database size={120} />
               </div>
               
-              <div className="flex items-center justify-between mb-10">
+              <div className="flex items-center justify-between mb-8 sm:mb-10">
                 <div className="flex items-center space-x-3">
-                  <Gauge className="w-4 h-4 text-theme-accent dark:text-theme-accent-dark" />
-                  <h3 className="text-xs font-black uppercase tracking-[0.5em] text-theme-accent dark:text-theme-accent-dark">Airframe Parameters</h3>
+                  <Gauge className="w-4 h-4 sm:w-5 sm:h-5 text-theme-accent dark:text-theme-accent-dark" />
+                  <h3 className="text-xs sm:text-sm font-black uppercase tracking-widest text-theme-accent dark:text-theme-accent-dark">Airframe Parameters</h3>
                 </div>
                 <button 
                   onClick={() => setIsLocked(!isLocked)}
@@ -419,33 +414,21 @@ const WeightBalanceCalculator: React.FC = () => {
               </div>
             </section>
 
-            <section className="bg-theme-card dark:bg-theme-card-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 p-8">
-              <h3 className="text-xs font-black uppercase tracking-[0.4em] text-theme-secondary dark:text-theme-secondary-dark mb-6 flex items-center">
-                <History className="w-4 h-4 mr-3" /> Console_Telemetry
-              </h3>
-              <div className="space-y-3 font-mono text-[10px]">
-                {sysLogs.map((log, i) => (
-                  <div key={i} className={`flex justify-between border-b border-theme-accent/20 dark:border-theme-accent-dark/20 pb-1.5 ${i === 0 ? 'text-theme-accent dark:text-theme-accent-dark' : 'text-theme-secondary/60 dark:text-theme-secondary-dark/60'}`}>
-                    <span className="uppercase">{log}</span>
-                    <span className="italic opacity-50">SYNC_OK</span>
-                  </div>
-                ))}
-              </div>
-            </section>
 
-            <section className="bg-theme-card dark:bg-theme-card-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 p-8">
-              <h3 className="text-xs font-black uppercase tracking-[0.4em] text-theme-secondary dark:text-theme-secondary-dark mb-6 flex items-center">
-                <Layers className="w-4 h-4 mr-3" /> Liquid_Weight_Matrix
+
+            <section className="bg-theme-card dark:bg-theme-card-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 p-6 sm:p-8">
+              <h3 className="text-xs sm:text-sm font-black uppercase tracking-widest text-theme-secondary dark:text-theme-secondary-dark mb-5 sm:mb-6 flex items-center">
+                <Layers className="w-4 h-4 sm:w-5 sm:h-5 mr-3" /> Fuel Density
               </h3>
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 {[
-                  { label: 'AVGAS (100LL)', weight: '6.00 LB/GAL' },
-                  { label: 'JET A-1 FUEL', weight: '6.70 LB/GAL' },
-                  { label: 'ENGINE OIL', weight: '7.50 LB/GAL' }
+                  { label: 'Avgas (100LL)', weight: '6.00 lb/gal' },
+                  { label: 'Jet A-1 Fuel', weight: '6.70 lb/gal' },
+                  { label: 'Engine Oil', weight: '7.50 lb/gal' }
                 ].map((item, i) => (
-                  <div key={i} className="flex justify-between items-center text-[11px] border-b border-theme-accent/20 dark:border-theme-accent-dark/20 pb-3 group">
-                    <span className="text-theme-secondary dark:text-theme-secondary-dark group-hover:text-theme-primary dark:group-hover:text-theme-primary-dark transition-colors uppercase font-bold">{item.label}</span>
-                    <span className="font-black text-theme-primary dark:text-theme-primary-dark italic tracking-widest">{item.weight}</span>
+                  <div key={i} className="flex justify-between items-center text-sm sm:text-base border-b border-theme-accent/20 dark:border-theme-accent-dark/20 pb-3 group">
+                    <span className="text-theme-secondary dark:text-theme-secondary-dark group-hover:text-theme-primary dark:group-hover:text-theme-primary-dark transition-colors font-medium">{item.label}</span>
+                    <span className="font-bold text-theme-primary dark:text-theme-primary-dark tabular-nums">{item.weight}</span>
                   </div>
                 ))}
               </div>
@@ -454,81 +437,80 @@ const WeightBalanceCalculator: React.FC = () => {
 
           <main className="2xl:col-span-8 space-y-8">
             <div className="bg-theme-card dark:bg-theme-card-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 shadow-lg relative">
-              <div className="p-6 bg-theme-header dark:bg-theme-header-dark border-b border-theme-accent/30 dark:border-theme-accent-dark/30 flex flex-col sm:flex-row justify-between items-center gap-6">
-                <div className="flex items-center space-x-4">
-                   <div className="w-3 h-3 bg-theme-accent dark:bg-theme-accent-dark rounded-full animate-pulse"></div>
-                   <h3 className="text-xs font-black uppercase tracking-[0.6em] text-theme-secondary dark:text-theme-secondary-dark">Payload Manifest // ALPHA_PLAN</h3>
+              <div className="p-4 sm:p-6 bg-theme-header dark:bg-theme-header-dark border-b border-theme-accent/30 dark:border-theme-accent-dark/30 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div className="flex items-center space-x-3 sm:space-x-4">
+                   <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-theme-accent dark:bg-theme-accent-dark rounded-full animate-pulse"></div>
+                   <h3 className="text-xs sm:text-sm font-black uppercase tracking-widest text-theme-secondary dark:text-theme-secondary-dark">Payload Manifest</h3>
                 </div>
-                <div className="flex space-x-3 w-full sm:w-auto">
+                <div className="flex space-x-2 sm:space-x-3 w-full sm:w-auto">
                   <button 
                     onClick={() => setWeightItems(prev => prev.filter(it => it.isLocked))}
-                    className="p-3 bg-theme-card dark:bg-theme-card-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 hover:border-theme-accent dark:hover:border-theme-accent-dark transition-all text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-accent dark:hover:text-theme-accent-dark"
+                    title="Remove all non-locked items"
+                    className="p-2.5 sm:p-3 bg-theme-card dark:bg-theme-card-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 hover:border-theme-accent dark:hover:border-theme-accent-dark transition-all text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-accent dark:hover:text-theme-accent-dark"
                   >
-                    <Trash2 className="w-4 h-4" />
+                    <Trash2 className="w-4 h-4 sm:w-5 sm:h-5" />
                   </button>
                   <button 
                     onClick={handleAddItem}
-                    className="flex-1 sm:flex-none bg-theme-accent dark:bg-theme-accent-dark hover:opacity-90 text-white px-8 py-3 text-[10px] font-black uppercase tracking-[0.2em] rounded-none transition-all flex items-center justify-center active:scale-95"
+                    className="flex-1 sm:flex-none bg-theme-accent dark:bg-theme-accent-dark hover:opacity-90 text-white px-6 sm:px-8 py-2.5 sm:py-3 text-xs sm:text-sm font-black uppercase tracking-widest rounded-none transition-all flex items-center justify-center active:scale-95"
                   >
-                    <Plus className="w-4 h-4 mr-3" /> Insert Entry
+                    <Plus className="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3" /> Add Item
                   </button>
                 </div>
               </div>
               
-              <div className="overflow-x-auto h-[450px]" ref={scrollRef}>
+              <div className="overflow-x-auto" ref={scrollRef}>
                 <table className="w-full border-collapse">
                     <thead>
-                      <tr className="text-[10px] uppercase tracking-widest text-theme-secondary dark:text-theme-secondary-dark bg-theme-header/80 dark:bg-theme-header-dark/80 sticky top-0 z-10">
-                        <th className="p-6 text-left font-black border-b border-theme-accent/20 dark:border-theme-accent-dark/20">Component Identification</th>
-                        <th className="p-6 text-center font-black border-b border-theme-accent/20 dark:border-theme-accent-dark/20 w-48">Mass (LBS)</th>
-                        <th className="p-6 text-center font-black border-b border-theme-accent/20 dark:border-theme-accent-dark/20 w-48">Arm (IN)</th>
-                        <th className="p-6 text-right font-black border-b border-theme-accent/20 dark:border-theme-accent-dark/20 w-56">Moment (LB-IN)</th>
-                        <th className="p-6 text-center border-b border-theme-accent/20 dark:border-theme-accent-dark/20 w-20"></th>
+                      <tr className="text-xs sm:text-sm uppercase tracking-widest text-theme-secondary dark:text-theme-secondary-dark bg-theme-header/80 dark:bg-theme-header-dark/80 sticky top-0 z-10">
+                        <th className="p-4 sm:p-6 text-left font-black border-b border-theme-accent/20 dark:border-theme-accent-dark/20">Component</th>
+                        <th className="p-4 sm:p-6 text-center font-black border-b border-theme-accent/20 dark:border-theme-accent-dark/20 w-32 sm:w-48">Mass (LBS)</th>
+                        <th className="p-4 sm:p-6 text-center font-black border-b border-theme-accent/20 dark:border-theme-accent-dark/20 w-32 sm:w-48">Arm (IN)</th>
+                        <th className="p-4 sm:p-6 text-right font-black border-b border-theme-accent/20 dark:border-theme-accent-dark/20 w-40 sm:w-56">Moment</th>
+                        <th className="p-4 sm:p-6 text-center border-b border-theme-accent/20 dark:border-theme-accent-dark/20 w-16 sm:w-20"></th>
                       </tr>
                     </thead>
                     <tbody>
                       {weightItems.map((item, idx) => (
                         <tr key={item.id} className="border-b border-theme-accent/15 dark:border-theme-accent-dark/15 group hover:bg-theme-header/40 dark:hover:bg-theme-header-dark/40 transition-colors">
-                          <td className="p-2">
-                            <div className="flex items-center space-x-5">
-                              <span className="text-[9px] font-black text-theme-secondary/50 dark:text-theme-secondary-dark/50 tabular-nums">ID:{(idx + 1).toString().padStart(3, '0')}</span>
+                          <td className="p-3 sm:p-4">
+                            <div className="flex items-center space-x-3 sm:space-x-5">
+                              <span className="text-[10px] sm:text-xs font-black text-theme-secondary/50 dark:text-theme-secondary-dark/50 tabular-nums">{(idx + 1).toString().padStart(2, '0')}</span>
                               <input 
                                 type="text" 
                                 disabled={item.isLocked}
                                 value={item.name} 
-                                className={`w-full bg-transparent p-4 outline-none uppercase font-black text-xs tracking-tight ${item.isLocked ? 'text-theme-secondary dark:text-theme-secondary-dark' : 'text-theme-primary dark:text-theme-primary-dark'}`}
+                                className={`w-full bg-transparent p-3 sm:p-4 outline-none uppercase font-bold text-sm sm:text-base tracking-tight ${item.isLocked ? 'text-theme-secondary dark:text-theme-secondary-dark' : 'text-theme-primary dark:text-theme-primary-dark'}`}
                                 onChange={(e) => handleUpdateItem(item.id, 'name', e.target.value)}
                               />
                             </div>
                           </td>
-                          <td className="p-2 border-l border-theme-accent/15 dark:border-theme-accent-dark/15">
+                          <td className="p-3 sm:p-4 border-l border-theme-accent/15 dark:border-theme-accent-dark/15">
                             <input 
                               type="number" 
                               value={item.weight} 
                               placeholder="0.0"
-                              className="w-full bg-transparent p-4 text-center outline-none focus:text-theme-accent dark:focus:text-theme-accent-dark font-mono text-sm tabular-nums text-theme-primary dark:text-theme-primary-dark"
+                              className="w-full bg-transparent p-3 sm:p-4 text-center outline-none focus:text-theme-accent dark:focus:text-theme-accent-dark font-mono text-base sm:text-lg tabular-nums text-theme-primary dark:text-theme-primary-dark"
                               onChange={(e) => handleUpdateItem(item.id, 'weight', e.target.value)}
                             />
                           </td>
-                          <td className="p-2 border-l border-theme-accent/15 dark:border-theme-accent-dark/15">
+                          <td className="p-3 sm:p-4 border-l border-theme-accent/15 dark:border-theme-accent-dark/15">
                             <input 
                               type="number" 
                               disabled={item.isLocked && item.name.includes('EMPTY')}
                               value={item.arm} 
                               placeholder="0.00"
-                              className={`w-full bg-transparent p-4 text-center outline-none font-mono text-sm tabular-nums ${item.isLocked && item.name.includes('EMPTY') ? 'text-theme-secondary dark:text-theme-secondary-dark' : 'text-theme-primary dark:text-theme-primary-dark'}`}
+                              className={`w-full bg-transparent p-3 sm:p-4 text-center outline-none font-mono text-base sm:text-lg tabular-nums ${item.isLocked && item.name.includes('EMPTY') ? 'text-theme-secondary dark:text-theme-secondary-dark' : 'text-theme-primary dark:text-theme-primary-dark'}`}
                               onChange={(e) => handleUpdateItem(item.id, 'arm', e.target.value)}
                             />
                           </td>
-                          <td className="p-2 border-l border-theme-accent/15 dark:border-theme-accent-dark/15 text-right font-black text-theme-primary dark:text-theme-primary-dark pr-10 text-sm tabular-nums italic">
-                            <div className="flex items-center justify-end space-x-2">
-                               <span>{((parseFloat(item.weight) || 0) * (parseFloat(item.arm) || 0)).toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</span>
-                            </div>
+                          <td className="p-3 sm:p-4 border-l border-theme-accent/15 dark:border-theme-accent-dark/15 text-right font-black text-theme-primary dark:text-theme-primary-dark pr-6 sm:pr-10 text-base sm:text-lg tabular-nums italic">
+                            <span>{((parseFloat(item.weight) || 0) * (parseFloat(item.arm) || 0)).toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</span>
                           </td>
-                          <td className="p-2 border-l border-theme-accent/15 dark:border-theme-accent-dark/15 text-center">
+                          <td className="p-3 sm:p-4 border-l border-theme-accent/15 dark:border-theme-accent-dark/15 text-center">
                             {!item.isLocked && (
-                              <button onClick={() => handleRemoveItem(item.id)} className="text-theme-secondary/50 dark:text-theme-secondary-dark/50 hover:text-red-500 transition-colors p-3 active:scale-90">
-                                <Trash2 className="w-4 h-4" />
+                              <button onClick={() => handleRemoveItem(item.id)} className="text-theme-secondary/50 dark:text-theme-secondary-dark/50 hover:text-red-500 transition-colors p-2 sm:p-3 active:scale-90" aria-label={`Remove ${item.name}`}>
+                                <Trash2 className="w-4 h-4 sm:w-5 sm:h-5" />
                               </button>
                             )}
                           </td>
@@ -537,11 +519,11 @@ const WeightBalanceCalculator: React.FC = () => {
                     </tbody>
                     <tfoot className="sticky bottom-0 bg-theme-bg dark:bg-theme-bg-dark">
                       <tr className="bg-theme-header/60 dark:bg-theme-header-dark/60 text-theme-primary dark:text-theme-primary-dark">
-                        <td className="p-6 font-black text-xs uppercase tracking-[0.4em] text-theme-secondary dark:text-theme-secondary-dark">Ramp Gross Manifest</td>
-                        <td className="p-6 text-center font-black text-sm tabular-nums border-l border-theme-accent/20 dark:border-theme-accent-dark/20 bg-theme-accent/5 dark:bg-theme-accent-dark/5 italic">{results.rampW.toFixed(1)}</td>
-                        <td className="p-6 text-center font-black text-theme-secondary dark:text-theme-secondary-dark text-sm tabular-nums border-l border-theme-accent/20 dark:border-theme-accent-dark/20">N/A</td>
-                        <td className="p-6 text-right font-black text-sm tabular-nums border-l border-theme-accent/20 dark:border-theme-accent-dark/20 pr-10">{results.rampM.toLocaleString(undefined, {maximumFractionDigits: 1})}</td>
-                        <td className="p-6 border-l border-theme-accent/20 dark:border-theme-accent-dark/20"></td>
+                        <td className="p-4 sm:p-6 font-black text-sm sm:text-base uppercase tracking-widest text-theme-secondary dark:text-theme-secondary-dark">Ramp Gross</td>
+                        <td className="p-4 sm:p-6 text-center font-black text-lg sm:text-xl tabular-nums border-l border-theme-accent/20 dark:border-theme-accent-dark/20 bg-theme-accent/5 dark:bg-theme-accent-dark/5 italic">{results.rampW.toFixed(1)}</td>
+                        <td className="p-4 sm:p-6 text-center font-black text-theme-secondary dark:text-theme-secondary-dark text-base sm:text-lg tabular-nums border-l border-theme-accent/20 dark:border-theme-accent-dark/20">—</td>
+                        <td className="p-4 sm:p-6 text-right font-black text-lg sm:text-xl tabular-nums border-l border-theme-accent/20 dark:border-theme-accent-dark/20 pr-6 sm:pr-10">{results.rampM.toLocaleString(undefined, {maximumFractionDigits: 1})}</td>
+                        <td className="p-4 sm:p-6 border-l border-theme-accent/20 dark:border-theme-accent-dark/20"></td>
                       </tr>
                     </tfoot>
                   </table>
@@ -565,38 +547,38 @@ const WeightBalanceCalculator: React.FC = () => {
                 value={`${results.landingW.toFixed(1)} LBS`} 
                 subValue={`Arm: ${results.landingCG.toFixed(2)}"`}
               />
-              <div className={`p-8 border-2 flex flex-col justify-between transition-all duration-1000 ${results.isWeightSafe && results.isCGSafe ? 'bg-theme-accent/10 dark:bg-theme-accent-dark/10 border-theme-accent/40 dark:border-theme-accent-dark/40' : 'bg-red-500/10 border-red-500 shadow-[0_0_30px_rgba(239,68,68,0.15)]'}`}>
+              <div className={`p-6 sm:p-8 border-2 flex flex-col justify-between transition-all duration-1000 ${results.isWeightSafe && results.isCGSafe ? 'bg-theme-accent/10 dark:bg-theme-accent-dark/10 border-theme-accent/40 dark:border-theme-accent-dark/40' : 'bg-red-500/10 border-red-500 shadow-[0_0_30px_rgba(239,68,68,0.15)]'}`}>
                 <div className="flex items-center justify-between">
-                  <div className="space-y-2">
-                    <div className={`text-[10px] font-black uppercase tracking-[0.5em] ${results.isWeightSafe && results.isCGSafe ? 'text-theme-accent dark:text-theme-accent-dark' : 'text-red-500'}`}>Flight_Go_NoGo</div>
-                    <div className={`text-3xl font-black uppercase italic tracking-tighter ${results.isWeightSafe && results.isCGSafe ? 'text-theme-accent dark:text-theme-accent-dark' : 'text-red-500'}`}>
+                  <div className="space-y-2 sm:space-y-3">
+                    <div className={`text-xs sm:text-sm font-black uppercase tracking-widest ${results.isWeightSafe && results.isCGSafe ? 'text-theme-accent dark:text-theme-accent-dark' : 'text-red-500'}`}>Go / No-Go</div>
+                    <div className={`text-2xl sm:text-3xl lg:text-4xl font-black uppercase italic tracking-tighter ${results.isWeightSafe && results.isCGSafe ? 'text-theme-accent dark:text-theme-accent-dark' : 'text-red-500'}`}>
                       {results.isWeightSafe && results.isCGSafe ? 'Nominal' : 'Critical'}
                     </div>
                   </div>
                   {results.isWeightSafe && results.isCGSafe ? (
-                    <CheckCircle2 className="w-14 h-14 text-theme-accent/30 dark:text-theme-accent-dark/30" />
+                    <CheckCircle2 className="w-12 h-12 sm:w-14 sm:h-14 text-theme-accent/30 dark:text-theme-accent-dark/30" />
                   ) : (
-                    <AlertTriangle className="w-14 h-14 text-red-500 animate-pulse" />
+                    <AlertTriangle className="w-12 h-12 sm:w-14 sm:h-14 text-red-500 animate-pulse" />
                   )}
                 </div>
-                <div className="mt-6 pt-6 border-t border-theme-accent/20 dark:border-theme-accent-dark/20">
-                   <span className="text-[10px] font-black text-theme-secondary dark:text-theme-secondary-dark uppercase tracking-widest flex items-center">
-                     <Clipboard className="w-3 h-3 mr-2" /> Validation: {results.isCGSafe ? 'ENVELOPE_SECURE' : 'CG_VIOLATION'}
+                <div className="mt-5 sm:mt-6 pt-5 sm:pt-6 border-t border-theme-accent/20 dark:border-theme-accent-dark/20">
+                   <span className="text-xs sm:text-sm font-black text-theme-secondary dark:text-theme-secondary-dark uppercase tracking-widest flex items-center">
+                     <Clipboard className="w-4 h-4 mr-2" /> {results.isCGSafe ? 'Envelope Secure' : 'CG Violation'}
                    </span>
                 </div>
               </div>
             </div>
 
-            <footer className="grid grid-cols-1 lg:grid-cols-12 gap-10 pt-10 pb-24">
-              <div className="lg:col-span-8 bg-theme-card dark:bg-theme-card-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 p-10 space-y-8 relative overflow-hidden">
+            <footer className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 pt-8 sm:pt-10 pb-16 sm:pb-24">
+              <div className="lg:col-span-8 bg-theme-card dark:bg-theme-card-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 p-6 sm:p-10 space-y-6 sm:space-y-8 relative overflow-hidden">
                 <div className="absolute bottom-0 right-0 p-8 opacity-[0.04] pointer-events-none">
                   <FileText size={200} />
                 </div>
-                <div className="flex items-center space-x-4 mb-4">
-                   <Info className="w-6 h-6 text-theme-accent dark:text-theme-accent-dark" />
-                   <h4 className="text-sm font-black uppercase tracking-[0.5em] text-theme-primary dark:text-theme-primary-dark">Safety Planning Advisory</h4>
+                <div className="flex items-center space-x-3 sm:space-x-4 mb-4">
+                   <Info className="w-5 h-5 sm:w-6 sm:h-6 text-theme-accent dark:text-theme-accent-dark" />
+                   <h4 className="text-xs sm:text-sm font-black uppercase tracking-widest text-theme-primary dark:text-theme-primary-dark">Safety Planning Advisory</h4>
                 </div>
-                <div className="space-y-6 text-[11px] leading-relaxed text-theme-secondary dark:text-theme-secondary-dark font-bold">
+                <div className="space-y-5 sm:space-y-6 text-sm sm:text-base leading-relaxed text-theme-secondary dark:text-theme-secondary-dark font-medium">
                   <p className="border-l-2 border-theme-accent/30 dark:border-theme-accent-dark/30 pl-6 transition-colors hover:border-theme-accent dark:hover:border-theme-accent-dark">
                     Current total payload (excluding BEW and Fuel) is <span className="text-theme-primary dark:text-theme-primary-dark font-black italic tabular-nums">{(results.rampW - parseFloat(config.emptyWeight) - results.fuelLbs).toFixed(1)} LBS</span>. 
                     This represents <span className="text-theme-primary dark:text-theme-primary-dark font-black">{( ((results.rampW - parseFloat(config.emptyWeight) - results.fuelLbs) / (limits.maxWeight - parseFloat(config.emptyWeight))) * 100).toFixed(1)}%</span> of total useful load capacity.
@@ -607,22 +589,22 @@ const WeightBalanceCalculator: React.FC = () => {
                     </span>. 
                     Warning: Ensure this meets FAA Part 91.151 minimum reserves for Day/Night VFR flight.
                   </p>
-                  <div className="p-6 bg-theme-bg/50 dark:bg-theme-bg-dark/50 border border-red-500/30 text-[10px] uppercase font-black tracking-tighter text-theme-secondary dark:text-theme-secondary-dark flex items-start">
-                    <AlertTriangle className="w-5 h-5 text-red-500 mr-4 shrink-0" />
+                  <div className="p-4 sm:p-6 bg-theme-bg/50 dark:bg-theme-bg-dark/50 border border-red-500/30 text-xs sm:text-sm font-bold tracking-tight text-theme-secondary dark:text-theme-secondary-dark flex items-start">
+                    <AlertTriangle className="w-5 h-5 text-red-500 mr-3 sm:mr-4 shrink-0" />
                     <span>Calculations derived from POH standards. Pilots must verify current weight/balance data via actual aircraft equipment lists before flight. Final responsibility for airworthiness rests with the PIC.</span>
                   </div>
                 </div>
               </div>
 
-                <a href={cgEnvelopeImage} target="_blank" rel="noopener noreferrer" className="lg:col-span-4 bg-theme-card dark:bg-theme-card-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 p-4 sm:p-6 flex flex-col justify-end group relative overflow-hidden min-h-[360px] sm:min-h-[420px] block">
+                <a href={cgEnvelopeImage} target="_blank" rel="noopener noreferrer" className="lg:col-span-4 bg-theme-card dark:bg-theme-card-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 p-4 sm:p-6 flex flex-col justify-end group relative overflow-hidden min-h-[320px] sm:min-h-[420px] block">
                   <img
                    src={cgEnvelopeImage}
                    alt="Cessna 172 center of gravity envelope"
                    className="w-full h-auto object-contain p-3 sm:p-6 opacity-95 z-0 hover:opacity-100 transition-opacity cursor-zoom-in"
                  />
-                  <div className="relative z-10 flex flex-col items-center justify-end gap-3">
-                    <div className="w-full max-w-[560px] rounded-md border border-theme-accent/30 dark:border-theme-accent-dark/30 bg-theme-bg/80 dark:bg-theme-bg-dark/80 px-4 py-3 backdrop-blur-sm">
-                     <div className="flex justify-between w-full text-[8px] font-black uppercase tracking-widest text-theme-primary dark:text-theme-primary-dark">
+                  <div className="relative z-10 flex flex-col items-center justify-end gap-2 sm:gap-3">
+                    <div className="w-full max-w-[560px] rounded-md border border-theme-accent/30 dark:border-theme-accent-dark/30 bg-theme-bg/80 dark:bg-theme-bg-dark/80 px-3 sm:px-4 py-2.5 sm:py-3 backdrop-blur-sm">
+                     <div className="flex justify-between w-full text-[10px] sm:text-xs font-black uppercase tracking-widest text-theme-primary dark:text-theme-primary-dark">
                       <span>FWD: {limits.forwardCG}"</span>
                       <span>CURR: {results.rampCG.toFixed(2)}"</span>
                       <span>AFT: {limits.aftCG}"</span>

@@ -5,7 +5,7 @@ const CX6Calculator: React.FC = () => {
   const [activeTab, setActiveTab] = useState('WIND');
 
   return (
-    <div className={`flex flex-col h-full border ${'bg-theme-card dark:bg-theme-card-dark border-theme-accent/30 dark:border-theme-accent-dark/30'} shadow-2xl overflow-hidden`}>
+    <div className={`max-w-[1200px] mx-auto w-full flex flex-col h-full border ${'bg-theme-card dark:bg-theme-card-dark border-theme-accent/30 dark:border-theme-accent-dark/30'} shadow-2xl overflow-hidden`}>
       
       {/* 🛠️ UNIFIED MFD NAVIGATION BAR */}
       <div className="flex flex-wrap bg-theme-header dark:bg-theme-header-dark border-b border-theme-accent/30 dark:border-theme-accent-dark/30">
@@ -144,30 +144,30 @@ const XWindView = () => {
 
 const Input = ({ label, value, onChange, unit }: any) => (
   <div className="space-y-1">
-    <div className="text-[9px] font-black text-theme-secondary dark:text-theme-secondary-dark uppercase tracking-widest">{label}</div>
+    <div className="text-[9px] sm:text-xs lg:text-sm font-black text-theme-secondary dark:text-theme-secondary-dark uppercase tracking-widest">{label}</div>
     <div className="relative">
       <input 
         type="number" 
         value={value} 
         onChange={e => onChange(Number(e.target.value))} 
-        className="w-full bg-theme-card dark:bg-theme-card-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 text-theme-primary dark:text-theme-primary-dark outline-none focus:border-theme-accent dark:focus:border-theme-accent-dark text-xs font-mono" 
+        className="w-full bg-theme-card dark:bg-theme-card-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 lg:p-4 text-theme-primary dark:text-theme-primary-dark outline-none focus:border-theme-accent dark:focus:border-theme-accent-dark text-xs sm:text-sm lg:text-base font-mono" 
       />
-      <div className="absolute right-2 top-2 text-[8px] text-theme-secondary dark:text-theme-secondary-dark font-bold uppercase">{unit}</div>
+      <div className="absolute right-2 top-1/2 -translate-y-1/2 text-[8px] sm:text-[10px] lg:text-xs text-theme-secondary dark:text-theme-secondary-dark font-bold uppercase">{unit}</div>
     </div>
   </div>
 );
 
 const Stat = ({ label, val, color = "text-theme-primary dark:text-theme-primary-dark" }: any) => (
   <div>
-    <div className="text-[8px] text-theme-secondary dark:text-theme-secondary-dark uppercase mb-1 font-bold tracking-widest">{label}</div>
-    <div className={`text-xl font-black ${color}`}>{val}</div>
+    <div className="text-[8px] sm:text-[10px] lg:text-xs text-theme-secondary dark:text-theme-secondary-dark uppercase mb-1 font-bold tracking-widest">{label}</div>
+    <div className={`text-xl sm:text-2xl lg:text-3xl font-black ${color}`}>{val}</div>
   </div>
 );
 
 const TabBtn = ({ active, onClick, icon, label }: any) => (
   <button 
     onClick={onClick} 
-    className={`flex-1 min-w-[70px] flex items-center justify-center gap-2 py-4 text-[9px] font-black tracking-widest border-r border-theme-accent/30 dark:border-theme-accent-dark/30 transition-all ${
+    className={`flex-1 min-w-[70px] sm:min-w-[90px] flex items-center justify-center gap-2 py-3 sm:py-4 lg:py-5 text-[9px] sm:text-xs lg:text-sm font-black tracking-widest border-r border-theme-accent/30 dark:border-theme-accent-dark/30 transition-all ${
       active ? 'bg-theme-accent dark:bg-theme-accent-dark text-white shadow-[inset_0_0_20px_rgba(0,0,0,0.4)]' : 'text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-primary dark:hover:text-theme-primary-dark hover:bg-theme-card/50 dark:hover:bg-theme-card-dark/50'
     }`}
   >
