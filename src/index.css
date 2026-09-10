@@ -301,6 +301,10 @@ table thead th {
   .bg-theme-bg,
   .dark.bg-theme-bg-dark { background-color: #ffffff !important; }
 
+  /* Don't force the page to a full viewport height — this was creating
+     a blank second page when content sat just under one page. */
+  .min-h-screen { min-height: 0 !important; }
+
   /* Force ALL text to a readable near-black regardless of theme class. */
   h1, h2, h3, p, li, span, div {
     color: #1a1a1a !important;
@@ -335,6 +339,11 @@ table thead th {
 
   /* Make skill chips solid white with a dark border so they read clearly. */
   .inline-flex.border { background-color: #ffffff !important; border-color: #9a9a9a !important; }
+
+  /* Stack the Education + Selected Projects columns to full width in print.
+     Narrower default margins were clipping the right column, and a single
+     wide column also frees up vertical space. */
+  .md\:grid-cols-2 { grid-template-columns: 1fr !important; }
 
   /* Keep multi-line items from splitting awkwardly across pages. */
   article, li { break-inside: avoid; page-break-inside: avoid; }
