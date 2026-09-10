@@ -125,13 +125,20 @@ The site showcases my diverse background across:
 - 3D model viewer integration
 - Responsive image grid with lightbox functionality
 
-### ✈️ Aviation (`AviationProApp.tsx`)
-- Flight planning calculators and tools
-- Live METAR weather widget
-- VFR weather minimums reference table
-- Pre-flight checklist with interactive checkboxes
-- Weight & balance calculator for Cessna 172
-- Embedded as full sub-project under `src/aviationpro/`
+### ✈️ AVPRO (`AviationProApp.tsx`)
+Professional flight planning suite embedded directly in the portfolio. Six modules:
+
+| Tab | Description |
+|-----|-------------|
+| **Flight Planner** | Full checkpoint-based flight plan with wind correction, fuel tracking, VOR data, print & JSON export |
+| **CX-6 Computer** | Wind triangle, TAS, time-speed-distance, fuel planning, crosswind calculators |
+| **Weather Tools** | Live METAR/TAF fetcher with flight category analysis (VFR/IFR/MVFR/LVFR) |
+| **W&B** | Weight & balance calculator with CG envelope visualization, ramp/takeoff/landing telemetry, Go/No-Go validation |
+| **Navigation** | Distance/bearing calculators, unit conversions, aviation weather links, time zone converter |
+| **Flight Logs** | Persistent logbook (Dexie/localStorage) with search, filter, sort, CSV export, statistics |
+
+All components use the portfolio's theme token system (`theme-*` CSS variables) for consistent light/dark theming.
+Embedded under `src/aviationpro/`.
 
 ### 📺 Streaming (`Streaming.tsx`)
 - YouTube and Twitch integration
@@ -159,7 +166,7 @@ The site showcases my diverse background across:
 ## 🎯 Featured Projects (13 Polished)
 
 ### Production & Published
-- **AviationPro** — Professional flight planning suite for pilots (React, TypeScript, Tailwind CSS)
+- **AVPRO** — Professional flight planning suite: flight planner, CX-6 computer, weather tools, W&B calculator, navigation tools, and persistent logbook (React, TypeScript, Tailwind CSS)
 - **Hopeless Catch** — Atmospheric pixel art fishing game (Love2D, Lua) — [Play on itch.io](https://mungdaal321.itch.io/hopeless-catch)
 - **Android Watch Face** — Minimalist wearable UI design (Android Watch Face Studio)
 

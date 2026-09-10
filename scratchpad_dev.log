@@ -97,3 +97,6 @@ Browserslist: browsers data (caniuse-lite) is 8 months old. Please run:
       at EnvironmentPluginContainer.transform (file:///C:/Users/MungDaal321/Documents/Projects/Web%20Development/react-portfolio/node_modules/vite/dist/node/chunks/node.js:30932:51)
       at async loadAndTransform (file:///C:/Users/MungDaal321/Documents/Projects/Web%20Development/react-portfolio/node_modules/vite/dist/node/chunks/node.js:20671:26)
 [2m10:45:49 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/aviationpro/src/components/WeightBalanceCalculator.tsx[22m
+[2m11:02:19 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/aviationpro/src/components/NavigationTools.tsx[22m
+[2m11:07:08 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css[22m
+[2m11:30:55 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/index.css, /src/aviationpro/src/components/NavigationTools.tsx[22m
