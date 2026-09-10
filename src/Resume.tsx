@@ -116,7 +116,7 @@ export default function Resume() {
   return (
     <div className="min-h-screen bg-theme-bg dark:bg-theme-bg-dark">
       <section className="max-w-5xl mx-auto px-4 py-10 sm:py-16">
-        <header className="border-b border-theme-accent/25 dark:border-theme-accent-dark pb-8 mb-10">
+        <header id="resume-header" className="border-b border-theme-accent/25 dark:border-theme-accent-dark pb-8 mb-10">
           <p className={`${eyebrow} mb-4`}>Résumé · 2026</p>
           <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
             <div>
@@ -128,7 +128,7 @@ export default function Resume() {
                 ))}
               </div>
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="no-print flex flex-wrap gap-2">
               <button type="button" onClick={() => window.print()} className="inline-flex items-center gap-2 border border-theme-accent/40 px-4 py-3 text-xs font-semibold uppercase tracking-wider text-theme-primary dark:border-theme-accent-dark dark:text-theme-secondary-dark hover:bg-theme-accent/10 transition-colors">
                 <i aria-hidden className="fas fa-print" /> Print / PDF
               </button>
@@ -204,9 +204,11 @@ export default function Resume() {
           </div>
         </section>
 
-        {/* Education & Certifications */}
+        {/* Education, Certifications & Selected Projects — two columns to save vertical space */}
         <section className="mb-12">
-          <p className={`${eyebrow} mb-5`}>Education &amp; Certifications</p>
+          <div className="grid grid-cols-1 gap-x-8 md:grid-cols-2">
+            <div>
+              <p className={`${eyebrow} mb-5`}>Education &amp; Certifications</p>
           <div className="space-y-6">
             {education.map((school) => (
               <article key={school.name} className="border-l-2 border-theme-accent/40 dark:border-theme-accent-dark pl-4 sm:pl-5">
@@ -239,16 +241,17 @@ export default function Resume() {
               </ul>
             </div>
           </div>
-        </section>
+            </div>
 
-        {/* Selected Projects */}
-        <section className="mb-12">
-          <p className={`${eyebrow} mb-5`}>Selected Projects</p>
-          <ul className="space-y-4">
-            {selectedProjects.map((project) => (
-              <li key={project} className="border-l-2 border-theme-accent/40 dark:border-theme-accent-dark pl-4 text-sm leading-relaxed text-theme-secondary dark:text-theme-secondary-dark">{project}</li>
-            ))}
-          </ul>
+            <div>
+              <p className={`${eyebrow} mb-5`}>Selected Projects</p>
+              <ul className="space-y-4">
+                {selectedProjects.map((project) => (
+                  <li key={project} className="border-l-2 border-theme-accent/40 dark:border-theme-accent-dark pl-4 text-sm leading-relaxed text-theme-secondary dark:text-theme-secondary-dark">{project}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </section>
 
         {/* Platforms */}

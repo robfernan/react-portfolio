@@ -270,8 +270,9 @@ table thead th {
     line-height: 1.35 !important;
   }
 
-  /* Hide the app shell around the resume content. */
-  header,
+  /* Hide only the site chrome (top nav + theme controls) and action buttons.
+     The resume's own <header id="resume-header"> — which holds the name — stays. */
+  header:not(#resume-header),
   footer,
   .no-print {
     display: none !important;
@@ -311,8 +312,19 @@ table thead th {
   h1 { font-size: 17pt !important; margin-bottom: 2px !important; }
   h2, h3 { font-size: 9.5pt !important; }
 
+  /* Remove the container's horizontal + vertical padding so left/right
+     margins are exactly what the browser sets (true zero at 0.25in). */
+  .max-w-5xl {
+    max-width: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
   /* Tighten vertical rhythm across every section and list. */
-  .max-w-5xl { padding-top: 0 !important; padding-bottom: 0 !important; }
   section { margin-bottom: 8px !important; }
   article, div.space-y-8 > *, div.space-y-6 > * {
     margin-bottom: 7px !important;
