@@ -312,10 +312,10 @@ table thead th {
 
   /* Compress the whole resume to fit on one page at 100% scale
      (equivalent to the ~90% browser scale that made it fit). */
-  html { font-size: 7pt !important; }
-  body { line-height: 1.22 !important; }
-  h1 { font-size: 14pt !important; margin-bottom: 2px !important; }
-  h2, h3 { font-size: 8.5pt !important; }
+  html { font-size: 7.4pt !important; }
+  body { line-height: 1.28 !important; }
+  h1 { font-size: 15pt !important; margin-bottom: 2px !important; }
+  h2, h3 { font-size: 9pt !important; }
 
   /* Remove the container's horizontal + vertical padding so left/right
      margins are exactly what the browser sets (true zero at 0.25in). */
@@ -335,7 +335,7 @@ table thead th {
     margin-bottom: 4px !important;
   }
   ul { margin: 2px 0 !important; }
-  li { margin-bottom: 1px !important; line-height: 1.18 !important; }
+  li { margin-bottom: 1px !important; line-height: 1.3 !important; }
 
   /* Hide the skill chips in print — the grouped list below already lists
      every one of them, so this reclaims ~3 lines of vertical space. */
