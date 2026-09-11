@@ -110,7 +110,9 @@ jobs:
             echo "ℹ️  No changes — skipping deploy."
           else
             git commit -m "deploy: $(date -u +%Y-%m-%dT%H:%M:%SZ) [skip ci]"
-            git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" \
-                     deploy-branch:deploy --force
+            
+            # Set the remote with token auth
+            git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+            git push origin deploy-branch:deploy --force
             echo "✅ Deployed to 'deploy' branch."
           fi
