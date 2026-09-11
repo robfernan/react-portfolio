@@ -70,47 +70,31 @@ jobs:
         run: |
           set -e
 
-          # --- Git identity ---
+          # --- Trim token and verify ---
+          TOKEN=$(echo "${DEPLOY_TOKEN}" | tr -d '[:space:]')
+          echo "Token length: ${#TOKEN}"
+          if [ ${#TOKEN} -lt 30 ]; then
+            echo "ERROR: Token too short!"
+            exit 1
+          fi
+
+          # --- Create a FRESH git repo (no cached remotes/creds) ---
+          mkdir /tmp/deploy-repo
+          cd /tmp/deploy-repo
+          git init
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          # --- Create clean orphan branch with ONLY dist/ contents ---
-          git checkout --orphan deploy-branch
-
-          # Remove everything from the index
-          git rm -rf --cached . 2>/dev/null || true
-
-          # Wipe working tree (keep only .git and dist)
-          find . -maxdepth 1 ! -name '.git' ! -name 'dist' ! -name '.' -exec rm -rf {} +
-
-          # Move production files to root
-          cp -r dist/* .
-          rm -rf dist
-
-          echo "=== Deploy files ==="
+          # --- Copy production files in ---
+          cp -r ${GITHUB_WORKSPACE}/dist/* .
+          echo "=== Files to deploy ==="
           ls -la
 
-          # --- Commit & push ---
+          # --- Commit & push with PAT in URL ---
           git add -A
-
-          if git diff --cached --quiet; then
-            echo "ℹ️  No changes — skipping deploy."
-          else
-            git commit -m "deploy: $(date -u +%Y-%m-%dT%H:%M:%SZ) [skip ci]"
-            
-            # Trim any whitespace/newlines from the token
-            TOKEN=$(echo "${DEPLOY_TOKEN}" | tr -d '[:space:]')
-            echo "Token length after trim: ${#TOKEN}"
-            
-            # Clear any cached credentials that might interfere
-            git config --global --unset credential.helper 2>/dev/null || true
-            rm -f ~/.git-credentials
-            
-            # Remove default origin and add fresh remote with PAT in URL
-            git remote remove origin 2>/dev/null || true
-            git remote add deploy-origin "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-            
-            echo "Pushing to ${GITHUB_REPOSITORY} (branch: deploy)"
-            git push deploy-origin deploy-branch:deploy --force
-            echo "✅ Deployed to 'deploy' branch."
-          fi
+          git commit -m "deploy: $(date -u +%Y-%m-%dT%H:%M:%SZ) [skip ci]"
+          
+          echo "Pushing to ${GITHUB_REPOSITORY} (branch: deploy)"
+          git remote add origin "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git push origin HEAD:deploy --force
+          echo "✅ Deployed to 'deploy' branch."
