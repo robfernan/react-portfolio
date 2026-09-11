@@ -98,12 +98,19 @@ jobs:
           else
             git commit -m "deploy: $(date -u +%Y-%m-%dT%H:%M:%SZ) [skip ci]"
             
-            # Use credential helper for auth (most reliable method)
-            git config credential.helper "store"
-            echo "https://x-access-token:${DEPLOY_TOKEN}@github.com" > ~/.git-credentials
-            chmod 600 ~/.git-credentials
+            # Trim any whitespace/newlines from the token
+            TOKEN=$(echo "${DEPLOY_TOKEN}" | tr -d '[:space:]')
+            echo "Token length after trim: ${#TOKEN}"
+            
+            # Clear any cached credentials that might interfere
+            git config --global --unset credential.helper 2>/dev/null || true
+            rm -f ~/.git-credentials
+            
+            # Remove default origin and add fresh remote with PAT in URL
+            git remote remove origin 2>/dev/null || true
+            git remote add deploy-origin "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
             
             echo "Pushing to ${GITHUB_REPOSITORY} (branch: deploy)"
-            git push "https://github.com/${GITHUB_REPOSITORY}.git" deploy-branch:deploy --force
+            git push deploy-origin deploy-branch:deploy --force
             echo "✅ Deployed to 'deploy' branch."
           fi
