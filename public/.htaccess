@@ -11,7 +11,8 @@ Options -MultiViews
   RewriteEngine On
 
   # Route weather API requests to the PHP proxy (must come before SPA fallback)
-  RewriteRule ^aviationweather/api/data/(metar|taf|stationinfo)$ /api/proxy.php [QSA,L]
+  # Captures the path segment and passes it as ?path=... along with existing query params
+  RewriteRule ^aviationweather/api/data/(metar|taf|stationinfo)$ /api/proxy.php?path=$1 [QSA,L]
 </IfModule>
 
 <IfModule mod_headers.c>
