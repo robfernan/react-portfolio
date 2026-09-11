@@ -24,7 +24,7 @@ const getAirportName = async (rawToken: string): Promise<string> => {
 
   try {
     const res = await fetch(
-      `https://aviationweather.gov/api/data/station?ids=${searchIds}&format=json`
+      `https://aviationweather.gov/api/data/stationinfo?ids=${searchIds}&format=json`
     );
 
     if (res.ok) {
@@ -37,10 +37,10 @@ const getAirportName = async (rawToken: string): Promise<string> => {
       }
     }
   } catch (err) {
-    console.warn("Airport name fetch failed:", err);
+    console.warn("Station info fetch error:", err);
   }
 
-  return "Airport / Station";
+  return 'Airport';
 };
 
 const formatZuluToEastern = (zuluToken: string): string => {
@@ -292,7 +292,8 @@ const WeatherCalculator: React.FC = () => {
       if (!cleanToken) return;
 
       if (/^[A-Z]{4}$/.test(cleanToken)) {
-        elements.push({ code: cleanToken, explanation: stationName || cleanToken });
+        const displayName = (stationName && stationName !== 'Airport') ? stationName : 'Airport';
+        elements.push({ code: cleanToken, explanation: `${cleanToken} ${displayName}` });
         return;
       }
       if (/^\d{6}Z$/.test(cleanToken)) {
