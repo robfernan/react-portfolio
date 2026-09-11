@@ -17,7 +17,7 @@ const sanitizeIcaoToken = (token: string): string => {
 
 const getAirportName = async (rawToken: string): Promise<string> => {
   const code = sanitizeIcaoToken(rawToken);
-  if (!code || code.length < 3) return "";
+  if (!code) return "";
 
   const faaCode = (code.length === 4 && code.startsWith("K")) ? code.slice(1) : code;
   const searchIds = Array.from(new Set([code, faaCode])).join(",");
@@ -30,17 +30,26 @@ const getAirportName = async (rawToken: string): Promise<string> => {
     if (res.ok) {
       const data = await res.json();
       if (Array.isArray(data) && data.length > 0) {
-        const match = data.find(s => s.icaoId === code || s.faaId === faaCode || s.stationId === code) || data[0];
-        if (match && match.name) {
-          return match.name;
+        const match = data.find(s => s.icaoId === code || s.faaId === faaCode || s.stationId === code || s.id === code) || data[0];
+        if (match) {
+          const fullName = match.name || match.site || match.stationName || match.city;
+          if (fullName) return fullName;
         }
+      }
+    }
+
+    const githubRes = await fetch(`https://raw.githubusercontent.com/mwgg/Airports/master/airports/${code}.json`);
+    if (githubRes.ok) {
+      const airportData = await githubRes.json();
+      if (airportData && airportData.name) {
+        return airportData.name;
       }
     }
   } catch (err) {
     console.warn("Station info fetch error:", err);
   }
 
-  return 'Airport';
+  return code;
 };
 
 const formatZuluToEastern = (zuluToken: string): string => {
@@ -287,51 +296,100 @@ const WeatherCalculator: React.FC = () => {
     const tokens = metar.split(/\s+/);
     const elements: { code: string; explanation: string }[] = [];
 
-    tokens.forEach((token) => {
+    tokens.forEach((token, idx) => {
       const cleanToken = sanitizeIcaoToken(token);
       if (!cleanToken) return;
 
-      if (/^[A-Z]{4}$/.test(cleanToken)) {
-        const displayName = (stationName && stationName !== 'Airport') ? stationName : 'Airport';
-        elements.push({ code: cleanToken, explanation: `${cleanToken} ${displayName}` });
+      if (cleanToken === 'AUTO') {
+        elements.push({ code: cleanToken, explanation: 'Automated observation report sequence' });
         return;
       }
+      if (cleanToken === 'COR') {
+        elements.push({ code: cleanToken, explanation: 'Amended weather observation report' });
+        return;
+      }
+      if (cleanToken === 'RMK') {
+        elements.push({ code: cleanToken, explanation: 'Remarks section: Beginning of station remarks' });
+        return;
+      }
+      if (cleanToken === 'DSNT') {
+        elements.push({ code: cleanToken, explanation: 'Distant weather phenomenon observed further away' });
+        return;
+      }
+      if (cleanToken === 'LTG' || cleanToken === 'LTGCG') {
+        elements.push({ code: cleanToken, explanation: 'Lightning activity detected in the area' });
+        return;
+      }
+      if (cleanToken === 'AO1' || cleanToken === 'AO2') {
+        elements.push({ code: cleanToken, explanation: `Automated station type (${cleanToken === 'AO2' ? 'with precipitation discriminator' : 'without precipitation discriminator'})` });
+        return;
+      }
+
+      if (idx === 0 || cleanToken === sanitizeIcaoToken(icaoCode)) {
+        const displayName = stationName || cleanToken;
+        elements.push({ code: cleanToken, explanation: `Station ID: ${cleanToken} — ${displayName}` });
+        return;
+      }
+
       if (/^\d{6}Z$/.test(cleanToken)) {
         const localizedString = formatZuluToEastern(cleanToken);
         elements.push({ code: cleanToken, explanation: `Observation Timestamp: Issued at ${localizedString}` });
         return;
       }
-      if (cleanToken === 'AUTO' || cleanToken === 'COR') {
-        elements.push({ code: cleanToken, explanation: cleanToken === 'AUTO' ? 'Automated weather observation report' : 'Amended weather report' });
+
+      const windMatch = cleanToken.match(/^(\d{3}|VRB)(\d{2,3})(G(\d{2,3}))?KT$/);
+      if (windMatch) {
+        const dir = windMatch[1];
+        const speed = parseInt(windMatch[2], 10);
+        const gust = windMatch[4] ? parseInt(windMatch[4], 10) : null;
+        let windDesc = dir === 'VRB' 
+          ? `Variable wind at ${speed} knots` 
+          : `Wind blowing from ${dir}° true at ${speed} knots`;
+        if (gust) {
+          windDesc += `, gusting up to ${gust} knots`;
+        }
+        elements.push({ code: cleanToken, explanation: `Surface Wind: ${windDesc}` });
         return;
       }
-      if (/^(\d{3}|VRB)\d{2,3}(G\d{2,3})?KT$/.test(cleanToken)) {
-        elements.push({ code: cleanToken, explanation: `Surface Winds: Direction & velocity vector reported in knots` });
-        return;
-      }
-      if (/^\d+SM$/.test(cleanToken)) {
+
+      if (/^\d{1,4}(\/\d{1,4})?SM$/.test(cleanToken)) {
         elements.push({ code: cleanToken, explanation: `Visibility: Horizontal visual range is ${cleanToken}` });
         return;
       }
-      if (/^(RA|SN|DZ|TS|BR|FG|FU|HZ|SQ|VA|DS|SS|FC)/.test(cleanToken)) {
-        elements.push({ code: cleanToken, explanation: `Weather Phenomena: Active obscuration or precipitation descriptor` });
+      if (/^R\d{2}[LRC]?\/\d{4}FT$/.test(cleanToken)) {
+        elements.push({ code: cleanToken, explanation: `Runway Visual Range (RVR): Measured optical range for specific runway` });
         return;
       }
-      if (/^(FEW|SCT|BKN|OVC)\d{3}$/.test(cleanToken)) {
+      if (/^(-|\+)?(VC)?(MI|PR|BC|DR|BL|SH|TS|FZ)?(DZ|RA|SN|SG|IC|PL|GR|GS|UP|BR|FG|FU|VA|DU|SA|HZ|PY|PO|SQ|FC|SS|DS)+/.test(cleanToken)) {
+        elements.push({ code: cleanToken, explanation: `Weather Phenomenon: Active precipitation, obscuration, or descriptor qualifier` });
+        return;
+      }
+      if (/^(FEW|SCT|BKN|OVC)\d{3}(CB|TCU)?$/.test(cleanToken)) {
         const typeMap: Record<string, string> = { OVC: 'Overcast', BKN: 'Broken', SCT: 'Scattered', FEW: 'Few' };
+        const layerType = cleanToken.slice(0, 3);
         const height = parseInt(cleanToken.slice(3, 6), 10) * 100;
-        elements.push({ code: cleanToken, explanation: `Cloud Ceiling: ${typeMap[cleanToken.slice(0, 3)]} layer reported at ${height.toLocaleString()} ft AGL` });
+        elements.push({ code: cleanToken, explanation: `Cloud Layer: ${typeMap[layerType] || layerType} layer at ${height.toLocaleString()} ft AGL` });
+        return;
+      }
+      if (cleanToken === 'SKC' || cleanToken === 'CLR' || cleanToken === 'CAVOK') {
+        elements.push({ code: cleanToken, explanation: `Sky Condition: Clear skies or ceiling and visibility okay` });
         return;
       }
       if (/^(M?\d{2})\/(M?\d{2})$/.test(cleanToken)) {
-        elements.push({ code: cleanToken, explanation: `Thermodynamics: Temperature / Dew Point spread configuration` });
+        elements.push({ code: cleanToken, explanation: `Temperature / Dew Point: Ambient spread configuration` });
         return;
       }
       if (/^A\d{4}$/.test(cleanToken)) {
-        elements.push({ code: cleanToken, explanation: `Altimeter Setting: Barometric pressure reference ${cleanToken.slice(1,3)}.${cleanToken.slice(3,5)} inHg` });
+        elements.push({ code: cleanToken, explanation: `Altimeter Setting: Barometric pressure ${cleanToken.slice(1,3)}.${cleanToken.slice(3,5)} inHg` });
         return;
       }
-      elements.push({ code: cleanToken, explanation: stationName || 'Supplemental Station Remark or Metadata' });
+      if (/^SLP\d{3}$/.test(cleanToken)) {
+        const slpValue = (parseInt(cleanToken.slice(3), 10) >= 500 ? 9 : 10) + parseInt(cleanToken.slice(3), 10) / 10;
+        elements.push({ code: cleanToken, explanation: `Sea-Level Pressure: ${slpValue.toFixed(1)} hPa / mb equivalent` });
+        return;
+      }
+
+      elements.push({ code: cleanToken, explanation: stationName ? `${stationName} Meteorological Remark` : 'Supplemental Station Metadata' });
     });
     return elements;
   };
@@ -370,7 +428,7 @@ const WeatherCalculator: React.FC = () => {
               <input 
                 type="text" 
                 maxLength={5} 
-                placeholder="KPBI" 
+                placeholder="KF45" 
                 value={icaoCode} 
                 onChange={(e) => setIcaoCode(e.target.value.toUpperCase())} 
                 className="w-full p-3 border rounded-md bg-theme-card dark:bg-theme-card-dark border-theme-accent/35 dark:border-theme-accent-dark/35 text-theme-primary dark:text-theme-primary-dark uppercase tracking-widest font-mono" 
@@ -384,6 +442,12 @@ const WeatherCalculator: React.FC = () => {
               {weatherLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Navigation className="w-4 h-4" />} Fetch METAR / TAF
             </button>
           </div>
+
+          {stationName && (
+            <div className="text-sm font-bold text-theme-accent dark:text-theme-accent-dark">
+              Resolved Station Name: {stationName}
+            </div>
+          )}
 
           {weatherError && (
             <div className="flex items-start gap-3 rounded-md border border-red-300 bg-red-50 dark:bg-red-950/30 p-3 text-sm text-red-800 dark:text-red-300">
