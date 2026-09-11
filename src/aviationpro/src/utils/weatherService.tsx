@@ -47,13 +47,15 @@ const CACHE_DURATION = 30 * 60 * 1000; // 30 minutes
  * Uses the free API through the local dev proxy or Wails desktop bridge.
  */
 
-const WEATHER_PROXY_BASE = isNative
-  ? 'https://aviationweather.gov'
-  : '/aviationweather';
-
+// Web: call our PHP proxy directly (bypasses .htaccess / CORS entirely)
+// Native (Wails/desktop): hit aviationweather.gov directly
 const getWeatherUrl = (path: string, icaoCode: string) => {
   const code = icaoCode.toUpperCase();
-  return `${WEATHER_PROXY_BASE}/api/data/${path}?ids=${code}&format=json`;
+  if (isNative) {
+    return `https://aviationweather.gov/api/data/${path}?ids=${code}&format=json`;
+  }
+  // PHP proxy on Hostinger — same-origin, no CORS
+  return `/api/proxy.php?path=${path}&ids=${code}&format=json`;
 };
 export async function fetchMETAR(icaoCode: string): Promise<METARData | null> {
   const cacheKey = `metar-${icaoCode.toUpperCase()}`;

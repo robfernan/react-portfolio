@@ -23,8 +23,9 @@ const getAirportName = async (rawToken: string): Promise<string> => {
   const searchIds = Array.from(new Set([code, faaCode])).join(",");
 
   try {
+    // Use PHP proxy directly (bypasses .htaccess)
     const res = await fetch(
-      `/aviationweather/api/data/stationinfo?ids=${searchIds}&format=json`
+      `/api/proxy.php?path=stationinfo&ids=${searchIds}&format=json`
     );
 
     if (res.ok) {
