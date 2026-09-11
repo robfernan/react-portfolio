@@ -98,18 +98,10 @@ jobs:
           else
             git commit -m "deploy: $(date -u +%Y-%m-%dT%H:%M:%SZ) [skip ci]"
             
-            # Debug: verify token is set (show first/last 4 chars only)
-            TOKEN_LEN=${#DEPLOY_TOKEN}
-            echo "Token length: ${TOKEN_LEN}"
-            if [ ${TOKEN_LEN} -gt 8 ]; then
-              echo "Token: ${DEPLOY_TOKEN:0:4}...${DEPLOY_TOKEN: -4}"
-            else
-              echo "WARNING: Token seems too short or empty!"
-            fi
-            
-            # Push using token in URL (most reliable method)
-            PUSH_URL="https://x-access-token:${DEPLOY_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-            echo "Pushing to: https://x-access-token:****@github.com/${GITHUB_REPOSITORY}.git"
-            git push "${PUSH_URL}" deploy-branch:deploy --force
+            # Push using Authorization header (avoids URL parsing issues)
+            echo "Pushing to ${GITHUB_REPOSITORY} (branch: deploy)"
+            git push -H "Authorization: token ${DEPLOY_TOKEN}" \
+                   "https://github.com/${GITHUB_REPOSITORY}.git" \
+                   deploy-branch:deploy --force
             echo "✅ Deployed to 'deploy' branch."
           fi
