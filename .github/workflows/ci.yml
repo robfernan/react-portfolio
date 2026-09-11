@@ -66,7 +66,7 @@ jobs:
 
       - name: Push production files to 'deploy' branch
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
         run: |
           set -e
 
@@ -97,7 +97,7 @@ jobs:
             echo "ℹ️  No changes — skipping deploy."
           else
             git commit -m "deploy: $(date -u +%Y-%m-%dT%H:%M:%SZ) [skip ci]"
-            git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+            git remote set-url origin "https://x-access-token:${DEPLOY_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
             git push origin deploy-branch:deploy --force
             echo "✅ Deployed to 'deploy' branch."
           fi
