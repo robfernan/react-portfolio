@@ -1,15 +1,45 @@
 
 
-import React from 'react';
+import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import PortfolioHome from './PortfolioHome';
 import Magazine from './magazine/Magazine';
 import Streaming from './Streaming';
 import Resume from './Resume';
-import AviationProApp from './aviationpro/AviationProApp';
+// Code-split the heaviest route so its bundle only downloads when visited.
+const AviationProApp = React.lazy(() => import('./aviationpro/AviationProApp'));
 import Footer from './Footer';
 import BackToTop from './components/ui/BackToTop';
 import { ThemeProvider, type ThemeKey } from './context/ThemeContext';
+
+/** Lightweight loading state shown while a code-split route (AviationPro) streams in. */
+function RouteFallback() {
+	return (
+		<div className="flex min-h-[50vh] items-center justify-center">
+			<div className="flex flex-col items-center gap-3 text-theme-secondary dark:text-theme-secondary-dark" role="status" aria-live="polite">
+				<span className="h-8 w-8 animate-spin rounded-full border-2 border-theme-accent/40 dark:border-theme-accent-dark border-t-theme-action dark:border-t-theme-action-dark" />
+				<span className="text-xs font-semibold uppercase tracking-[0.2em]">Loading…</span>
+			</div>
+		</div>
+	);
+}
+
+/** Styled 404 for unknown routes (e.g. /resum) so typos don't hit a blank screen. */
+function NotFound() {
+	return (
+		<div className="flex min-h-[60vh] flex-col items-center justify-center px-4 text-center">
+			<p className="font-mono-tech text-sm tracking-[0.3em] uppercase text-theme-accent dark:text-theme-secondary-dark">Error 404</p>
+			<h1 className="mt-4 text-5xl sm:text-7xl font-black leading-none text-theme-primary dark:text-theme-secondary-dark">Lost in the clouds</h1>
+			<p className="mt-4 max-w-md text-base text-theme-secondary dark:text-theme-secondary-dark">
+				That page doesn't exist. Let's get you back to base.
+			</p>
+			<div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+				<Link to="/" className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-theme-action dark:bg-theme-action-dark text-white font-semibold hover:opacity-90 transition-opacity">Back home</Link>
+				<Link to="/works" className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-theme-accent/40 dark:border-theme-accent-dark text-theme-primary dark:text-theme-secondary-dark font-medium hover:bg-theme-accent/10 transition-colors">See the work</Link>
+			</div>
+		</div>
+	);
+}
 
 export default function App() {
 	return (
@@ -32,6 +62,19 @@ function AppWithDynamicName() {
 				}
 				return false;
 			});
+
+			// Per-page document titles — clearer browser tabs + better SEO per route.
+			const pageTitles: Record<string, string> = {
+				'': 'Robert Fernandez — Cross-Platform Software Engineer & Digital Artist',
+				'/works': 'Works · Robert Fernandez Portfolio',
+				'/aviationpro': 'AviationPro — Flight Planning Suite · Robert Fernandez',
+				'/streaming': 'Streaming · MungDaal321',
+				'/resume': 'Résumé · Robert Fernandez',
+			};
+			React.useEffect(() => {
+				const base = location.pathname.split('/')[1] || '';
+				document.title = pageTitles[base] ?? (isAviationPro ? pageTitles['/aviationpro'] : 'Robert Fernandez — Portfolio');
+			}, [location.pathname, isAviationPro]);
 
 			React.useEffect(() => {
 				document.documentElement.classList.add('theme-minimal');
@@ -77,7 +120,11 @@ function AppWithDynamicName() {
 				return (
 					<ThemeProvider value={{ theme, darkMode, setTheme, toggleDarkMode }}>
 				<div className="min-h-screen bg-theme-bg dark:bg-theme-bg-dark transition-colors duration-300 flex flex-col">
-						<header className="border-b border-theme-accent/15 dark:border-theme-accent-dark bg-theme-header dark:bg-theme-header-dark shadow-sm transition-colors duration-300">
+						{/* Skip link: first focusable element for keyboard / screen-reader users */}
+				<a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-lg focus:bg-theme-action focus:text-white focus:font-semibold">
+					Skip to content
+				</a>
+				<header className="border-b border-theme-accent/15 dark:border-theme-accent-dark bg-theme-header dark:bg-theme-header-dark shadow-sm transition-colors duration-300">
 							<nav className="max-w-7xl mx-auto px-4 py-3">
 								<div className="flex items-center justify-between">
 									<Link to="/" className="text-xl font-bold text-theme-primary dark:text-theme-primary-dark hover:underline">{displayName}</Link>
@@ -199,16 +246,25 @@ function AppWithDynamicName() {
 								)}
 							</nav>
 						</header>
-						<main className="flex-1 pb-24">
+						<main id="main-content" tabIndex={-1} className="flex-1 pb-24 focus:outline-none">
 							<Routes>
 									<Route path="/" element={<PortfolioHome />} />
 									<Route path="/works" element={<Magazine />} />
 									<Route path="/work" element={<Magazine />} />
 								{/* Legacy routes now render the unified catalogue */}
 								<Route path="/projects" element={<Magazine />} />
-									<Route path="/aviationpro/*" element={<AviationProApp />} />
+									<Route
+									path="/aviationpro/*"
+									element={
+										<Suspense fallback={<RouteFallback />}>
+											<AviationProApp />
+										</Suspense>
+									}
+								/>
 									<Route path="/streaming" element={<Streaming />} />
 									<Route path="/resume" element={<Resume />} />
+							{/* Catch-all: styled 404 for any unknown route */}
+							<Route path="*" element={<NotFound />} />
 								</Routes>
 							</main>
 							{!isAviationPro && <Footer theme={theme} />}

@@ -34,7 +34,7 @@ export const ISSUES: Issue[] = [
     entries: [
       {
         title: 'AviationPro',
-        cover: '/assets/projects/aviationpro.png',
+        cover: '/assets/projects/aviationpro.webp',
         blurb:
           'Professional-grade flight planning suite for pilots — advanced route planning, CX-6 flight computer, weather analysis, performance calculations, navigation tools, and flight logs.',
         tech: ['Go', 'Wails', 'React', 'Capacitor'],
@@ -45,7 +45,7 @@ export const ISSUES: Issue[] = [
       },
       {
         title: 'PaperWorks Pro',
-        cover: '/assets/projects/paperworkspro.png',
+        cover: '/assets/projects/paperworkspro.webp',
         blurb:
           'All-in-one document creation suite combining invoice generator, resume builder, business card designer, and PDF editor for creators and entrepreneurs.',
         tech: ['React', 'TypeScript', 'shadcn-ui', 'Vite'],
@@ -55,7 +55,7 @@ export const ISSUES: Issue[] = [
       },
       {
         title: 'XMB Wave Menu',
-        cover: '/assets/projects/xmbwavemenu.png',
+        cover: '/assets/projects/xmbwavemenu.webp',
         blurb:
           'Cross-platform XMB launcher with animated wave effects and dynamic theming. One codebase deployed to web, desktop (NW.js), and native Android (Capacitor).',
         tech: ['HTML/CSS/JS', 'NW.js', 'Capacitor'],
@@ -66,7 +66,7 @@ export const ISSUES: Issue[] = [
       {
         title: 'Restaurant Website',
         format: 'CLIENT / WEB',
-        cover: '/assets/projects/restaurantmenu.png',
+        cover: '/assets/projects/restaurantmenu.webp',
         blurb:
           'Restaurant ordering experience with a browsable menu, cart flow, and receipt option — a small business site treated as a real product rather than a static brochure.',
         tech: ['HTML', 'CSS', 'JavaScript'],
@@ -76,7 +76,7 @@ export const ISSUES: Issue[] = [
       {
         title: 'Florida Window & Door Maintenance Inc.',
         format: 'CLIENT / WEB',
-        cover: '/assets/projects/FLWindowndoormaintenanceLandingPage.png',
+        cover: '/assets/projects/FLWindowndoormaintenanceLandingPage.webp',
         blurb:
           'Service-focused landing page for a Florida maintenance company — clear offerings, contact pathways, and a practical conversion-first layout built from the ground up.',
         tech: ['HTML', 'CSS', 'JavaScript'],
@@ -87,7 +87,7 @@ export const ISSUES: Issue[] = [
       {
         title: 'M&G Gutters',
         format: 'CLIENT / WEB',
-        cover: '/assets/projects/MnGGuttersLandingPage.png',
+        cover: '/assets/projects/MnGGuttersLandingPage.webp',
         blurb:
           'A focused local-service landing page for gutter work, designed around trust, readable service information, and direct customer contact.',
         tech: ['HTML', 'CSS', 'JavaScript'],
@@ -97,7 +97,7 @@ export const ISSUES: Issue[] = [
       {
         title: 'Florida Window & Door Invoicing / Proposal App',
         format: 'CLIENT / CAPACITOR',
-        cover: '/assets/projects/FloridaInvoiceApp.png',
+        cover: '/assets/projects/FloridaInvoiceApp.webp',
         blurb:
           'A lightweight business tool for creating invoices and proposals for Florida Window & Door Maintenance Inc., built as a browser-first app with a Capacitor path to mobile.',
         tech: ['HTML', 'CSS', 'JavaScript', 'Capacitor'],
@@ -106,7 +106,7 @@ export const ISSUES: Issue[] = [
       },
       {
         title: 'NeroGPUI',
-        cover: '/assets/projects/nerogpui.png',
+        cover: '/assets/projects/nerogpui.webp',
         blurb:
           'Lightning-fast IDE built with Rust and GPUI (the rendering engine behind Zed Editor). Focused on performance, responsiveness, and a minimalist interface.',
         tech: ['Rust', 'GPUI'],
@@ -115,7 +115,7 @@ export const ISSUES: Issue[] = [
       },
       {
         title: 'NeroWails',
-        cover: '/assets/projects/nerowails.png',
+        cover: '/assets/projects/nerowails.webp',
         blurb:
           'Cross-platform IDE bringing the Nero experience to Windows, macOS, and Linux — Go + Wails for native performance with feature parity across platforms.',
         tech: ['Go', 'Wails'],
@@ -133,7 +133,7 @@ export const ISSUES: Issue[] = [
     entries: [
       {
         title: 'Hopeless Catch',
-        cover: '/assets/projects/hopelesscatch.png',
+        cover: '/assets/projects/hopelesscatch.webp',
         blurb:
           'Atmospheric pixel-art fishing game with procedurally generated landscapes and a subtle narrative twist. A peaceful adventure that hides something deeper.',
         tech: ['Love2D / LÖVE', 'Lua', 'Pixel Art'],
@@ -144,7 +144,7 @@ export const ISSUES: Issue[] = [
       },
       {
         title: 'Comic Reader (SFML)',
-        cover: '/assets/projects/comicreader_sfml.png',
+        cover: '/assets/projects/comicreader_sfml.webp',
         blurb:
           'Fully functional comic reader with page navigation, zoom, and drag support — advanced graphics programming, UI/UX design, and file management in C++.',
         tech: ['C++', 'SFML', 'OpenGL'],
@@ -154,7 +154,7 @@ export const ISSUES: Issue[] = [
       },
       {
         title: 'Music Player (Vinyl / Cassette / MiniDisc)',
-        cover: '/assets/projects/musicplayer_react.png',
+        cover: '/assets/projects/musicplayer_react.webp',
         blurb:
           'Retro-styled music player with multiple device themes. Cross-platform implementation showing design consistency across web, desktop, and mobile.',
         tech: ['React', 'TypeScript', 'NW.js', 'Capacitor'],
@@ -184,7 +184,7 @@ export const ISSUES: Issue[] = [
       {
         title: 'PSP Digital Comics',
         format: 'CROSS-PLATFORM / READER',
-        cover: '/assets/projects/psp.png',
+        cover: '/assets/projects/psp.webp',
         blurb:
           'A faithful PSP Digital Comics-style reader where users bring their own CBZ files. This is the modern cross-platform successor to the SFML Comic Reader.',
         tech: ['Wails', 'Capacitor', 'React', 'TypeScript', 'Tailwind CSS'],
@@ -195,7 +195,7 @@ export const ISSUES: Issue[] = [
       {
         title: 'Love2D Xbox-Inspired Launcher',
         format: 'RETRO-TECH / DESKTOP',
-        cover: '/assets/projects/love2d_xboxlauncher.png',
+        cover: '/assets/projects/love2d_xboxlauncher.webp',
         blurb:
           'A retro-futuristic Xbox-inspired desktop launcher in Lua/LÖVE with a frameless draggable window, procedural glowing sphere, orbital wireframe rings, bloom shader, radar grid, category menus, theme switching, shortcut management, and app launching.',
         tech: ['Lua', 'Love2D', 'GLSL', 'Desktop UI'],
@@ -205,7 +205,7 @@ export const ISSUES: Issue[] = [
       },
       {
         title: 'PS1-Mips-Programming',
-        cover: '/assets/projects/ps1project.png',
+        cover: '/assets/projects/ps1project.webp',
         blurb:
           'PlayStation 1 MIPS assembly programming guides and baremetal demos — an educational resource for low-level systems programming and retro console development.',
         tech: ['MIPS Assembly', 'C', 'Baremetal'],
@@ -225,7 +225,7 @@ export const ISSUES: Issue[] = [
       {
         title: 'Wear OS Watch Face',
         format: 'WATCH FACE / AVIATION',
-        cover: '/assets/projects/watch_face_android_avpro.png',
+        cover: '/assets/projects/watch_face_android_avpro.webp',
         blurb: 'Aviation-minded wearable interface work with compact readouts, high-contrast data, and a visual language designed for a glance.',
         tech: ['Wear OS', 'Android', 'UI Design'],
         status: 'Visual System',
@@ -234,7 +234,7 @@ export const ISSUES: Issue[] = [
       {
         title: 'Fish Watch Face',
         format: 'WATCH FACE / VISUAL SYSTEM',
-        cover: '/assets/home/watchfacefish.png',
+        cover: '/assets/home/watchfacefish.webp',
         blurb: 'A playful Wear OS face exploring character, color, and readable time presentation on a small circular display.',
         tech: ['Wear OS', 'Illustration', 'Visual Design'],
         status: 'Wearable',

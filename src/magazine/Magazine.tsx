@@ -215,7 +215,7 @@ function PreviewDialog({ entry, onClose }: { entry: Entry; onClose: () => void }
             className="max-h-[70vh] w-full object-contain bg-theme-bg dark:bg-theme-bg-dark"
             onError={(event) => {
               event.currentTarget.onerror = null;
-              event.currentTarget.src = '/assets/projects/xmbwavemenu.png';
+              event.currentTarget.src = '/assets/projects/xmbwavemenu.webp';
             }}
           />
         ) : (

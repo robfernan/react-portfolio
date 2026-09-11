@@ -18,7 +18,7 @@ import {
 import { db } from '../services/PersistenceService';
 import { Aircraft } from '../types/aviation';
 import sampleAircrafts from '../data/sampleAircrafts.json';
-import cgEnvelopeImage from '../../assets/centerofgravitycessna172.png';
+import cgEnvelopeImage from '../../assets/centerofgravitycessna172.webp';
 
 // --- 1. ARCHITECTURAL TYPE DEFINITIONS ---
 

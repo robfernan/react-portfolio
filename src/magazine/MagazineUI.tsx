@@ -82,7 +82,7 @@ export function MagazineEntry({ entry, onOpenImage }: { entry: import('./data').
             className="w-full h-full object-cover"
             onError={(event) => {
               event.currentTarget.onerror = null;
-              event.currentTarget.src = '/assets/projects/xmbwavemenu.png';
+              event.currentTarget.src = '/assets/projects/xmbwavemenu.webp';
             }}
           />
         ) : (

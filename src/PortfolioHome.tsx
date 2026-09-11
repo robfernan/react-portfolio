@@ -33,7 +33,7 @@ const NOW_BUILDING: Featured[] = [
       'Recreating the iconic 2002 Sony website as a modern interactive experience — authentic layouts, motion, and detail.',
     language: 'TypeScript',
     updated: 'Recently',
-    image: '/assets/home/sony2002recreation.png',
+    image: '/assets/home/sony2002recreation.webp',
     href: 'https://github.com/robfernan/sony2002-recreationsite',
   },
   {
@@ -42,7 +42,7 @@ const NOW_BUILDING: Featured[] = [
       'Xbox-inspired desktop launcher built with Love2D (LÖVE) — a custom frameless draggable window, gamepad support, and smooth XMB-style navigation.',
     language: 'Lua',
     updated: 'Active build',
-    image: '/assets/projects/love2d_xboxlauncher.png',
+    image: '/assets/projects/love2d_xboxlauncher.webp',
     href: 'https://github.com/robfernan/Love2D_XboxLauncher',
   },
   {
@@ -88,7 +88,7 @@ export default function PortfolioHome() {
         <section className="mb-16 sm:mb-24">
           <figure className="overflow-hidden border border-theme-accent/25 dark:border-theme-accent-dark bg-theme-card dark:bg-theme-card-dark shadow-lg">
             <img
-              src="/assets/home/banner.png"
+              src="/assets/home/banner.webp"
               alt="Robert Fernandez — Developer, Designer, Pilot"
               className="block h-auto w-full"
             />
@@ -168,7 +168,7 @@ export default function PortfolioHome() {
                       const img = e.currentTarget;
                       if (img.dataset.fallbackApplied) return;
                       img.dataset.fallbackApplied = '1';
-                      img.src = '/assets/projects/xmbwavemenu.png';
+                      img.src = '/assets/projects/xmbwavemenu.webp';
                     }}
                   />
                 </div>

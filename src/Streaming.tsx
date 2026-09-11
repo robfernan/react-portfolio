@@ -6,20 +6,20 @@ const popularVideos: { category: string; items: Video[] }[] = [
   {
     category: 'Gaming Videos',
     items: [
-      { title: 'Last Day on Earth Gameplay', url: 'https://www.youtube.com/live/-Er2Pmy0HZI?si=rr01QQwgWI6XbJDb', thumb: '/assets/streaming/gameplay-video1.jpg' },
-      { title: 'theHunter Classic Gameplay', url: 'https://youtu.be/eXnNIszUU7E?si=IPZ_z_-1IyRqVwnG', thumb: '/assets/streaming/gameplay-video2.jpg' },
-      { title: 'Halloween Stream theHunter Classic', url: 'https://www.twitch.tv/videos/2303292671', thumb: '/assets/streaming/gameplay-video3.jpg' }
+      { title: 'Last Day on Earth Gameplay', url: 'https://www.youtube.com/live/-Er2Pmy0HZI?si=rr01QQwgWI6XbJDb', thumb: '/assets/streaming/gameplay-video1.webp' },
+      { title: 'theHunter Classic Gameplay', url: 'https://youtu.be/eXnNIszUU7E?si=IPZ_z_-1IyRqVwnG', thumb: '/assets/streaming/gameplay-video2.webp' },
+      { title: 'Halloween Stream theHunter Classic', url: 'https://www.twitch.tv/videos/2303292671', thumb: '/assets/streaming/gameplay-video3.webp' }
     ]
   },
   {
     category: 'Drawing',
-    items: [ { title: 'Car Sketch Video', url: 'https://youtu.be/-7a2JQIbCOk?si=gVuh0eYNBZvQ292f', thumb: '/assets/streaming/drawing-video.jpg' } ]
+    items: [ { title: 'Car Sketch Video', url: 'https://youtu.be/-7a2JQIbCOk?si=gVuh0eYNBZvQ292f', thumb: '/assets/streaming/drawing-video.webp' } ]
   },
   {
     category: 'Coding',
     items: [
-      { title: 'XMB in SFML', url: 'https://www.youtube.com/watch?v=qLEClZEXr68&t=11850s', thumb: '/assets/streaming/coding-video1.jpg' },
-      { title: 'Personal Website Build', url: 'https://www.twitch.tv/videos/2334965535', thumb: '/assets/streaming/coding-video2.jpg' }
+      { title: 'XMB in SFML', url: 'https://www.youtube.com/watch?v=qLEClZEXr68&t=11850s', thumb: '/assets/streaming/coding-video1.webp' },
+      { title: 'Personal Website Build', url: 'https://www.twitch.tv/videos/2334965535', thumb: '/assets/streaming/coding-video2.webp' }
     ]
   }
 ];
@@ -42,8 +42,8 @@ export default function Streaming() {
   }, []);
 
   // Light + dark variants exist for both channel banners; pick by current theme.
-  const youtubeThumb = isDark ? '/assets/streaming/youtube-thumbnail-dark.jpg' : '/assets/streaming/youtube-thumbnail-light.jpg';
-  const twitchThumb = isDark ? '/assets/streaming/twitch-thumbnail-dark.jpg' : '/assets/streaming/twitch-thumbnail-light.jpg';
+  const youtubeThumb = isDark ? '/assets/streaming/youtube-thumbnail-dark.webp' : '/assets/streaming/youtube-thumbnail-light.webp';
+  const twitchThumb = isDark ? '/assets/streaming/twitch-thumbnail-dark.webp' : '/assets/streaming/twitch-thumbnail-light.webp';
 
   return (
     <div className="max-w-7xl mx-auto py-12 px-4 bg-theme-bg dark:bg-theme-bg-dark transition-colors duration-300">

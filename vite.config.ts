@@ -20,6 +20,10 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
-    sourcemap: true
+    // No source maps in production (smaller download, less exposed internals).
+    // Set to 'hidden' if you still want them locally for debugging.
+    sourcemap: false,
+    // We code-split the heavy AviationPro app; only warn on genuinely large chunks.
+    chunkSizeWarningLimit: 600
   }
 })

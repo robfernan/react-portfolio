@@ -5,30 +5,6 @@ A multi-page personal portfolio built with **React 19**, **TypeScript**, and **T
 **Live:** [robertfernandez.dev](https://robertfernandez.dev) · **Repo:** [robfernan/react-portfolio](https://github.com/robfernan/react-portfolio)
 **Original version:** [HTML/CSS/JS Portfolio](https://github.com/robfernan/html-css-js-portfolio)
 
-## 📸 Screenshots
-
-> The screenshots below are for the **Dark Minimal** theme. More theme previews further down.
-
-| Home | Works (Magazine) | Aviation | Streaming |
-|------|------------------|----------|-----------|
-| ![Home](public/screenshots/homepagescreenshot.png) | ![Works](public/screenshots/projectscreenshot.png) | ![Aviation](public/screenshots/aviationscreenshot.png) | ![Streaming](public/screenshots/streamingscreenshot.png) |
-
-Other themes:
-
-<div align="center">
-<b>Theme Previews:</b><br>
-Light Minimal<br>
-<img src="public/screenshots/lightminimalscreenshot.png" width="200" alt="Light Minimal" />
-<br>Light 90s<br>
-<img src="public/screenshots/light90screenshot.png" width="200" alt="Light 90s" />
-<br>Light Slate<br>
-<img src="public/screenshots/lightslatescreenshot.png" width="200" alt="Light Slate" />
-<br>Dark 90s<br>
-<img src="public/screenshots/dark90screenshot.png" width="200" alt="Dark 90s" />
-<br>Dark Slate<br>
-<img src="public/screenshots/darkslate.png" width="200" alt="Dark Slate" />
-</div>
-
 ## 🎯 About
 
 This is a **modern, component-based rebuild** of my foundational HTML/CSS/JavaScript portfolio. It demonstrates progression to professional-grade web development using industry-standard tooling:
