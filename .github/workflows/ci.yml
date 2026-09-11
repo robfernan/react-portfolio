@@ -98,10 +98,12 @@ jobs:
           else
             git commit -m "deploy: $(date -u +%Y-%m-%dT%H:%M:%SZ) [skip ci]"
             
-            # Push using Authorization header (avoids URL parsing issues)
+            # Use credential helper for auth (most reliable method)
+            git config credential.helper "store"
+            echo "https://x-access-token:${DEPLOY_TOKEN}@github.com" > ~/.git-credentials
+            chmod 600 ~/.git-credentials
+            
             echo "Pushing to ${GITHUB_REPOSITORY} (branch: deploy)"
-            git push -H "Authorization: token ${DEPLOY_TOKEN}" \
-                   "https://github.com/${GITHUB_REPOSITORY}.git" \
-                   deploy-branch:deploy --force
+            git push "https://github.com/${GITHUB_REPOSITORY}.git" deploy-branch:deploy --force
             echo "✅ Deployed to 'deploy' branch."
           fi
