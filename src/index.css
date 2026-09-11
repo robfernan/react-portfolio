@@ -97,6 +97,63 @@ textarea {
   background-clip: text;
 }
 
+/* ===== Shared action button (single source of truth for hover/active states) =====
+   Used by every primary CTA across pages + AviationPro so they all behave the same. */
+.btn-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.5rem;
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  white-space: nowrap;
+  cursor: pointer;
+  border: 1px solid transparent;
+  background-color: var(--color-action);
+  color: #ffffff;
+}
+.btn-action:hover {
+  filter: brightness(0.94);
+}
+.btn-action:active {
+  filter: brightness(0.86);
+}
+.dark .btn-action {
+  background-color: var(--color-action-dark);
+  color: #1a1a1a;
+}
+
+/* Secondary / outline variant of the action button */
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.5rem;
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  white-space: nowrap;
+  cursor: pointer;
+  border: 1px solid color-mix(in srgb, var(--color-accent) 45%, transparent);
+  background-color: transparent;
+  color: var(--color-primary);
+}
+.btn-outline:hover {
+  background-color: color-mix(in srgb, var(--color-accent) 12%, transparent);
+}
+.btn-outline:active {
+  background-color: color-mix(in srgb, var(--color-accent) 20%, transparent);
+}
+.dark .btn-outline {
+  border-color: color-mix(in srgb, var(--color-accent-dark) 55%, transparent);
+  color: var(--color-primary-dark);
+}
+
 /* ===== Premium Typography (lookbook aesthetic) ===== */
 .font-display {
   font-family: 'Playfair Display', Georgia, serif;
@@ -247,22 +304,23 @@ table input::placeholder {
   color: #6b7280 !important;
 }
 
-/* Focus states for table inputs */
+/* Focus states for table inputs — use the theme accent, not a hard-coded blue */
 table input:focus {
-  outline: 2px solid #3b82f6 !important;
+  outline: 2px solid var(--color-action) !important;
   outline-offset: 0px !important;
-  background-color: rgba(59, 130, 246, 0.1) !important;
+  background-color: color-mix(in srgb, var(--color-accent) 14%, transparent) !important;
 }
 
-/* Force table header cells to use theme colors */
+/* Table header cells sit on the standard dark card surface (not a light tint).
+   The per-cell classes in FlightPlanForm already set this; this is a safety net. */
 table thead th {
-  background-color: var(--color-accent) !important;
-  color: white !important;
+  background-color: var(--color-card);
+  color: var(--color-primary);
 }
 
 .dark table thead th {
-  background-color: var(--color-accent-dark) !important;
-  color: white !important;
+  background-color: var(--color-card-dark);
+  color: var(--color-primary-dark);
 }
 
 
