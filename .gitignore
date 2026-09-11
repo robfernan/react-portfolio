@@ -1,7 +1,6 @@
 # .gitignore for portfolio project
 # Keep build artifacts, dependencies and IDE files out of Git
 node_modules/
-dist/
 build/
 .vscode/
 .env

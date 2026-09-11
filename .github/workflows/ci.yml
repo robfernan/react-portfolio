@@ -37,7 +37,7 @@ jobs:
         run: npm run build
 
   # ===========================================================================
-  # DEPLOY — build fresh, push clean production files to 'deploy' branch.
+  # DEPLOY — push clean production files to 'deploy' branch.
   # Hostinger Git connects to this branch → public_html/.
   # Only runs on pushes to main (not PRs).
   # ===========================================================================
@@ -62,9 +62,7 @@ jobs:
       - name: Build production bundle
         run: |
           npm run build
-          echo "=== dist/ contents ==="
-          ls -la dist/
-          echo "File count: $(find dist/ -type f | wc -l)"
+          echo "=== dist/ file count: $(find dist/ -type f | wc -l) ==="
 
       - name: Push production files to 'deploy' branch
         env:
@@ -72,36 +70,25 @@ jobs:
         run: |
           set -e
 
-          # --- CRITICAL: save dist/ outside the repo BEFORE we wipe it ---
-          echo "=== Saving dist/ to /tmp/deploy-dist ==="
-          cp -r dist /tmp/deploy-dist
-          ls -la /tmp/deploy-dist/
-
           # --- Git identity ---
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          # --- Create clean orphan branch (no history, no source) ---
-          echo "=== Creating orphan branch ==="
+          # --- Create clean orphan branch with ONLY dist/ contents ---
           git checkout --orphan deploy-branch
 
           # Remove everything from the index
           git rm -rf --cached . 2>/dev/null || true
 
-          # Wipe working tree (keep only .git)
-          find . -maxdepth 1 ! -name '.git' ! -name '.' -exec rm -rf {} +
+          # Wipe working tree (keep only .git and dist)
+          find . -maxdepth 1 ! -name '.git' ! -name 'dist' ! -name '.' -exec rm -rf {} +
 
-          echo "=== After wipe ==="
+          # Move production files to root
+          cp -r dist/* .
+          rm -rf dist
+
+          echo "=== Deploy files ==="
           ls -la
-
-          # --- Copy production files back in from the safe copy ---
-          echo "=== Restoring dist/ contents to root ==="
-          cp -r /tmp/deploy-dist/* .
-          rm -rf /tmp/deploy-dist
-
-          echo "=== Final deploy files ==="
-          ls -la
-          find . -maxdepth 2 ! -path './.git*' -type f | sort
 
           # --- Commit & push ---
           git add -A
@@ -110,8 +97,6 @@ jobs:
             echo "ℹ️  No changes — skipping deploy."
           else
             git commit -m "deploy: $(date -u +%Y-%m-%dT%H:%M:%SZ) [skip ci]"
-            
-            # Set the remote with token auth
             git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
             git push origin deploy-branch:deploy --force
             echo "✅ Deployed to 'deploy' branch."
