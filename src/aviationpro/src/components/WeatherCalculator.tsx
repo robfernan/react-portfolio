@@ -24,7 +24,7 @@ const getAirportName = async (rawToken: string): Promise<string> => {
 
   try {
     const res = await fetch(
-      `https://aviationweather.gov/api/data/stationinfo?ids=${searchIds}&format=json`
+      `/aviationweather/api/data/stationinfo?ids=${searchIds}&format=json`
     );
 
     if (res.ok) {

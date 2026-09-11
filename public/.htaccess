@@ -4,15 +4,14 @@ Options -MultiViews
 
 # ---------------------------------------------------------------------------
 # 1. Proxy the AviationPro weather API to avoid CORS in production.
-#    Dev uses a Vite proxy; on the static host we rewrite /aviationweather/*
-#    straight through to aviationweather.gov so fetch() calls keep working.
+#    Dev uses a Vite proxy; on the static host we route /aviationweather/*
+#    through a PHP script that fetches server-side and relays the response.
 # ---------------------------------------------------------------------------
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
-  # Proxy weather API requests (must come before the SPA fallback)
-  RewriteCond %{HTTP:Authorization} ^$
-  RewriteRule ^aviationweather/(.*) https://aviationweather.gov/$1 [P,L]
+  # Route weather API requests to the PHP proxy (must come before SPA fallback)
+  RewriteRule ^aviationweather/api/data/(metar|taf|stationinfo)$ /api/proxy.php [QSA,L]
 </IfModule>
 
 <IfModule mod_headers.c>

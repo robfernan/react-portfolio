@@ -39,3 +39,44 @@ jobs:
           name: dist
           path: dist/
           retention-days: 7
+
+  # ---------------------------------------------------------------------------
+  # Deploy — push built dist/ to the 'deploy' branch for Hostinger Git.
+  # Hostinger connects to this branch; it only ever sees production files.
+  # ---------------------------------------------------------------------------
+  deploy:
+    name: Deploy to Hostinger (deploy branch)
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download dist artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Configure git identity
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Push to deploy branch
+        run: |
+          # Create a clean orphan branch with only the built files
+          git checkout --orphan deploy-branch
+          git rm -rf --cached . 2>/dev/null || true
+          cp -r dist/* .
+          rm -rf dist node_modules src public .github .gitignore \
+                 package.json package-lock.json tsconfig*.json \
+                 vite.config.ts tailwind.config.js postcss.config.js \
+                 eslint.config.js .stylelintrc.json README.md
+          # Keep only what's needed for production (index.html, assets/, api/, etc.)
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to deploy — skipping push."
+          else
+            git commit -m "deploy: $(date +%Y-%m-%d\ %H:%M) [skip ci]"
+            git push origin deploy-branch:deploy --force
+            echo "✅ Deployed to 'deploy' branch."
+          fi
