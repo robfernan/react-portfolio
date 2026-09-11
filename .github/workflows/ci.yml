@@ -34,14 +34,7 @@ jobs:
         run: npm ci --legacy-peer-deps
 
       - name: Build (tsc typecheck + vite compile)
-        run: |
-          echo "=== Starting build ==="
-          echo "Node: $(node --version)"
-          echo "npm:  $(npm --version)"
-          npm run build
-          echo "=== Build exit code: $? ==="
-          echo "=== dist/ exists? ==="
-          ls -la dist/ 2>&1 || echo "WARNING: dist/ not found!"
+        run: npm run build
 
   # ===========================================================================
   # DEPLOY — build fresh, push clean production files to 'deploy' branch.
@@ -64,28 +57,14 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: |
-          echo "=== Installing deps ==="
-          npm ci --legacy-peer-deps
-          echo "=== Install exit code: $? ==="
+        run: npm ci --legacy-peer-deps
 
       - name: Build production bundle
         run: |
-          echo "=== Starting build ==="
-          echo "Node: $(node --version)"
-          echo "npm:  $(npm --version)"
-          echo "PWD:  $(pwd)"
-          ls -la
           npm run build
-          BUILD_EXIT=$?
-          echo "=== Build exit code: ${BUILD_EXIT} ==="
-          if [ ${BUILD_EXIT} -ne 0 ]; then
-            echo "ERROR: Build failed!"
-            exit 1
-          fi
-          echo "=== Checking dist/ ==="
-          ls -la dist/ 2>&1 || { echo "FATAL: dist/ not found after build!"; exit 1; }
-          echo "=== File count in dist/: $(find dist/ -type f | wc -l) ==="
+          echo "=== dist/ contents ==="
+          ls -la dist/
+          echo "File count: $(find dist/ -type f | wc -l)"
 
       - name: Push production files to 'deploy' branch
         env:
@@ -93,11 +72,10 @@ jobs:
         run: |
           set -e
 
-          echo "=== Pre-push state ==="
-          echo "PWD: $(pwd)"
-          ls -la
-          echo "dist/ contents:"
-          ls -la dist/
+          # --- CRITICAL: save dist/ outside the repo BEFORE we wipe it ---
+          echo "=== Saving dist/ to /tmp/deploy-dist ==="
+          cp -r dist /tmp/deploy-dist
+          ls -la /tmp/deploy-dist/
 
           # --- Git identity ---
           git config user.name  "github-actions[bot]"
@@ -113,17 +91,17 @@ jobs:
           # Wipe working tree (keep only .git)
           find . -maxdepth 1 ! -name '.git' ! -name '.' -exec rm -rf {} +
 
-          echo "=== After wipe, before copy ==="
+          echo "=== After wipe ==="
           ls -la
 
-          # Copy in ONLY the production build output
-          echo "=== Copying dist/* to root ==="
-          cp -rv dist/* .
-          rm -rf dist
+          # --- Copy production files back in from the safe copy ---
+          echo "=== Restoring dist/ contents to root ==="
+          cp -r /tmp/deploy-dist/* .
+          rm -rf /tmp/deploy-dist
 
-          echo "=== Final files to deploy ==="
+          echo "=== Final deploy files ==="
           ls -la
-          find . -maxdepth 2 ! -path './.git*' -type f | head -30
+          find . -maxdepth 2 ! -path './.git*' -type f | sort
 
           # --- Commit & push ---
           git add -A
