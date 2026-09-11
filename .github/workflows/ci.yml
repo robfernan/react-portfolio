@@ -1,33 +1,39 @@
-name: CI — typecheck & build
+name: CI — build & deploy to Hostinger
 
 on:
   push:
-    branches: [main, master]
+    branches: [main]
   pull_request:
+    branches: [main]
 
-# Only one concurrent run per branch (cancel superseded ones).
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  NODE_VERSION: '22'
+
 jobs:
+  # ===========================================================================
+  # BUILD — typecheck + compile, upload dist/ as an artifact
+  # ===========================================================================
   build:
-    name: Typecheck + Build
+    name: Build
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout source
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: ${{ env.NODE_VERSION }}
           cache: npm
 
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
 
-      - name: Build (includes typecheck via tsc --noEmit)
+      - name: Build (tsc typecheck + vite compile)
         run: npm run build
 
       - name: Upload dist artifact
@@ -37,45 +43,58 @@ jobs:
           path: dist/
           retention-days: 7
 
-  # ---------------------------------------------------------------------------
-  # Deploy — push built dist/ to the 'deploy' branch for Hostinger Git.
-  # Hostinger connects to this branch; it only ever sees production files.
-  # ---------------------------------------------------------------------------
+  # ===========================================================================
+  # DEPLOY — push clean production files to the 'deploy' branch.
+  # Hostinger Git connects to this branch → public_html/.
+  # Only runs on pushes to main (not PRs).
+  # ===========================================================================
   deploy:
-    name: Deploy to Hostinger (deploy branch)
+    name: Deploy to Hostinger
     needs: build
-    if: github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout source (for git context)
+        uses: actions/checkout@v4
+
       - name: Download dist artifact
         uses: actions/download-artifact@v4
         with:
           name: dist
           path: dist/
 
-      - name: Configure git identity
-        run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-      - name: Push to deploy branch
+      - name: Push production files to 'deploy' branch
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -e
-          # Create a clean orphan branch with only the built files
+
+          # --- Git identity for the commit ---
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # --- Create a clean orphan branch (no history, no source files) ---
           git checkout --orphan deploy-branch
-          # Remove everything from the index and working tree
+
+          # Remove everything from the index
           git rm -rf --cached . 2>/dev/null || true
+
+          # Wipe the working tree (keep only .git)
           find . -maxdepth 1 ! -name '.git' ! -name '.' -exec rm -rf {} +
-          # Copy in only the production build output
+
+          # Copy in ONLY the production build output
           cp -r dist/* .
           rm -rf dist
+
+          # --- Commit & push ---
           git add -A
+
           if git diff --cached --quiet; then
-            echo "No changes to deploy — skipping push."
+            echo "ℹ️  No changes — skipping deploy."
           else
-            git commit -m "deploy: $(date +%Y-%m-%d\ %H:%M) [skip ci]"
-            git push origin deploy-branch:deploy --force
+            git commit -m "deploy: $(date -u +%Y-%m-%dT%H:%M:%SZ) [skip ci]"
+            # Force-push to the 'deploy' branch on origin
+            git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" \
+                     deploy-branch:deploy --force
             echo "✅ Deployed to 'deploy' branch."
           fi
