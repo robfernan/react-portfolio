@@ -74,7 +74,7 @@ export default function Streaming() {
             <h2 className="text-2xl font-semibold text-theme-primary dark:text-theme-primary-dark">YouTube</h2>
           </div>
           <a href="https://www.youtube.com/@MungDaal321" target="_blank" rel="noreferrer" className="block mb-4 group">
-            <img loading="lazy" decoding="async" src={youtubeThumb} alt="YouTube Channel" className="w-full rounded-lg transition-shadow" onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/images/placeholder.svg'; }} />
+            <img loading="lazy" decoding="async" src={youtubeThumb} alt="YouTube Channel" width={1280} height={720} className="w-full rounded-lg transition-shadow" onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/images/placeholder.svg'; }} />
           </a>
           <p className="text-theme-secondary dark:text-theme-secondary-dark mb-4">Check out my latest YouTube content and subscribe for updates on gaming, coding, and creative projects.</p>
           <a href="https://www.youtube.com/@MungDaal321" target="_blank" rel="noreferrer" className="inline-block px-4 py-2 rounded bg-theme-action dark:bg-theme-action-dark text-white font-medium hover:opacity-90 transition-opacity">
@@ -89,7 +89,7 @@ export default function Streaming() {
             <h2 className="text-2xl font-semibold text-theme-primary dark:text-theme-primary-dark">Twitch</h2>
           </div>
           <a href="https://www.twitch.tv/mungdaal321" target="_blank" rel="noreferrer" className="block mb-4 group">
-            <img loading="lazy" decoding="async" src={twitchThumb} alt="Twitch Channel" className="w-full rounded-lg transition-shadow" onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/images/placeholder.svg'; }} />
+            <img loading="lazy" decoding="async" src={twitchThumb} alt="Twitch Channel" width={1280} height={720} className="w-full rounded-lg transition-shadow" onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/images/placeholder.svg'; }} />
           </a>
           <p className="text-theme-secondary dark:text-theme-secondary-dark mb-4">Join my live streams for real-time coding, gaming, and creative sessions. Follow to get notified when I go live.</p>
           <a href="https://www.twitch.tv/mungdaal321" target="_blank" rel="noreferrer" className="inline-block px-4 py-2 rounded bg-theme-action dark:bg-theme-action-dark text-white font-medium hover:opacity-90 transition-opacity">
@@ -124,6 +124,8 @@ export default function Streaming() {
                         decoding="async"
                         src={video.thumb}
                         alt={video.title}
+                        width={1280}
+                        height={720}
                         className="w-full aspect-video object-cover transition-transform duration-300 group-hover:scale-[1.04]"
                         onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/images/placeholder.svg'; }}
                       />

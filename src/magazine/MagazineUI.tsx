@@ -79,6 +79,8 @@ export function MagazineEntry({ entry, onOpenImage }: { entry: import('./data').
             decoding="async"
             src={entry.cover}
             alt={entry.title}
+            width={400}
+            height={400}
             className="w-full h-full object-cover"
             onError={(event) => {
               event.currentTarget.onerror = null;
