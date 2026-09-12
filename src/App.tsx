@@ -4,9 +4,9 @@ import PortfolioHome from './PortfolioHome';
 import Magazine from './magazine/Magazine';
 import Streaming from './Streaming';
 import Resume from './Resume';
-// Static import: all modules are pre-loaded in memory so tab/route switches
-// render instantly with zero Suspense fallback delay.
-import AviationProApp from './aviationpro/AviationProApp';
+// Lazy-load AviationPro — it's a heavy sub-app (calculators, weather, flight planning)
+// that only 1-2% of visitors need. Keeps the main bundle lean for everyone else.
+const AviationProApp = React.lazy(() => import('./aviationpro/AviationProApp'));
 import Footer from './Footer';
 import BackToTop from './components/ui/BackToTop';
 import { ThemeProvider, type ThemeKey } from './context/ThemeContext';
@@ -240,7 +240,15 @@ function AppContent() {
                         <Route path="/work" element={<Magazine />} />
                         {/* Legacy routes now render the unified catalogue */}
                         <Route path="/projects" element={<Magazine />} />
-                        <Route path="/aviationpro/*" element={<AviationProApp />} />
+                        <Route path="/aviationpro/*" element={
+                            <React.Suspense fallback={
+                                <div className="flex min-h-[50vh] items-center justify-center">
+                                    <p className="font-mono-tech text-sm tracking-widest uppercase text-theme-accent animate-pulse">Loading AviationPro…</p>
+                                </div>
+                            }>
+                                <AviationProApp />
+                            </React.Suspense>
+                        } />
                         <Route path="/streaming" element={<Streaming />} />
                         <Route path="/resume" element={<Resume />} />
                         {/* Catch-all: styled 404 for any unknown route */}

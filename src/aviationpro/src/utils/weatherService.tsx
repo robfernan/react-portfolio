@@ -42,6 +42,10 @@ interface WeatherResponse {
 const weatherCache = new Map<string, { data: WeatherResponse; timestamp: number }>();
 const CACHE_DURATION = 30 * 60 * 1000; // 30 minutes
 
+// In-flight request deduplication — if two components request the same airport
+// simultaneously, they share one network call instead of firing two.
+const inFlightRequests = new Map<string, Promise<any>>();
+
 /**
  * Fetch METAR data from NOAA Aviation Weather Center
  * Uses the free API through the local dev proxy or Wails desktop bridge.
@@ -57,6 +61,21 @@ const getWeatherUrl = (path: string, icaoCode: string) => {
   // PHP proxy on Hostinger — same-origin, no CORS
   return `/api/proxy.php?path=${path}&ids=${code}&format=json`;
 };
+
+/**
+ * Deduplicated fetch — if a request for the same key is already in flight,
+ * return that Promise instead of firing a second network call.
+ */
+function dedupedFetch(key: string, url: string): Promise<Response> {
+  const existing = inFlightRequests.get(key);
+  if (existing) return existing;
+
+  const promise = fetch(url).finally(() => {
+    inFlightRequests.delete(key);
+  });
+  inFlightRequests.set(key, promise);
+  return promise;
+};
 export async function fetchMETAR(icaoCode: string): Promise<METARData | null> {
   const cacheKey = `metar-${icaoCode.toUpperCase()}`;
   const cached = weatherCache.get(cacheKey);
@@ -66,7 +85,8 @@ export async function fetchMETAR(icaoCode: string): Promise<METARData | null> {
   }
 
   try {
-    const response = await fetch(getWeatherUrl('metar', icaoCode));
+    const url = getWeatherUrl('metar', icaoCode);
+    const response = await dedupedFetch(cacheKey, url);
 
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}`);
@@ -131,7 +151,8 @@ export async function fetchTAF(icaoCode: string): Promise<TAFData | null> {
   }
 
   try {
-    const response = await fetch(getWeatherUrl('taf', icaoCode));
+    const url = getWeatherUrl('taf', icaoCode);
+    const response = await dedupedFetch(cacheKey, url);
 
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}`);
