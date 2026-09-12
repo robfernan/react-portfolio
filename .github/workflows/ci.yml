@@ -85,8 +85,8 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          # --- Copy production files in ---
-          cp -r ${GITHUB_WORKSPACE}/dist/* .
+          # --- Copy production files in (use /. to include dotfiles like .htaccess) ---
+          cp -r ${GITHUB_WORKSPACE}/dist/. .
           echo "=== Files to deploy ==="
           ls -la
 
