@@ -24,7 +24,19 @@ const TOTAL_SPREADS = SPREADS.length;
 type MagazineIssue = (typeof ISSUES)[number];
 
 export default function Magazine() {
-  const [spread, setSpread] = useState(0);
+  // Persist current page across refreshes — read from localStorage on mount
+  const [spread, setSpread] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const saved = parseInt(localStorage.getItem('magazine-spread') || '0', 10);
+      return isNaN(saved) ? 0 : Math.min(Math.max(saved, 0), TOTAL_SPREADS - 1);
+    }
+    return 0;
+  });
+
+  // Save current page whenever it changes
+  useEffect(() => {
+    localStorage.setItem('magazine-spread', String(spread));
+  }, [spread]);
   const [previewEntry, setPreviewEntry] = useState<Entry | null>(null);
   const touchStartX = useRef<number | null>(null);
   const touchStartY = useRef<number | null>(null);
