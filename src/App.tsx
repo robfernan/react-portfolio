@@ -7,6 +7,39 @@ import Resume from './Resume';
 // Lazy-load AviationPro — it's a heavy sub-app (calculators, weather, flight planning)
 // that only 1-2% of visitors need. Keeps the main bundle lean for everyone else.
 const AviationProApp = React.lazy(() => import('./aviationpro/AviationProApp'));
+
+/** Error boundary — if AviationPro crashes, show a clean fallback instead of white-screening the whole site. */
+class AviationErrorBoundary extends React.Component<
+  { children: React.ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="flex min-h-[50vh] flex-col items-center justify-center px-4 text-center">
+          <p className="font-mono-tech text-sm tracking-widest uppercase text-theme-accent">AviationPro</p>
+          <h2 className="mt-3 text-2xl font-bold text-theme-primary dark:text-theme-secondary-dark">Something went wrong</h2>
+          <p className="mt-2 max-w-md text-sm text-theme-secondary dark:text-theme-secondary-dark">
+            The flight planning suite hit an unexpected error. Try refreshing the page.
+          </p>
+          <button
+            onClick={() => window.location.reload()}
+            className="mt-6 px-5 py-2 rounded-lg bg-theme-action dark:bg-theme-action-dark text-white font-semibold"
+          >
+            Reload AviationPro
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 import Footer from './Footer';
 import BackToTop from './components/ui/BackToTop';
 import { ThemeProvider, type ThemeKey } from './context/ThemeContext';
@@ -241,13 +274,15 @@ function AppContent() {
                         {/* Legacy routes now render the unified catalogue */}
                         <Route path="/projects" element={<Magazine />} />
                         <Route path="/aviationpro/*" element={
-                            <React.Suspense fallback={
-                                <div className="flex min-h-[50vh] items-center justify-center">
-                                    <p className="font-mono-tech text-sm tracking-widest uppercase text-theme-accent animate-pulse">Loading AviationPro…</p>
-                                </div>
-                            }>
-                                <AviationProApp />
-                            </React.Suspense>
+                            <AviationErrorBoundary>
+                                <React.Suspense fallback={
+                                    <div className="flex min-h-[50vh] items-center justify-center">
+                                        <p className="font-mono-tech text-sm tracking-widest uppercase text-theme-accent">Loading AviationPro…</p>
+                                    </div>
+                                }>
+                                    <AviationProApp />
+                                </React.Suspense>
+                            </AviationErrorBoundary>
                         } />
                         <Route path="/streaming" element={<Streaming />} />
                         <Route path="/resume" element={<Resume />} />

@@ -90,6 +90,10 @@ export default function PortfolioHome() {
             <img
               src="/assets/home/banner.webp"
               alt="Robert Fernandez — Developer, Designer, Pilot"
+              fetchPriority="high"
+              decoding="async"
+              width={1280}
+              height={320}
               className="block h-auto w-full"
             />
           </figure>

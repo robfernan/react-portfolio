@@ -485,3 +485,14 @@ html {
 *:hover {
   transform: none !important;
 }
+
+/* ============================================================ */
+/* PERFORMANCE: content-visibility — browser skips layout/paint  */
+/* for off-screen sections. Huge win on long pages (Magazine).   */
+/* ============================================================ */
+section,
+article,
+[role="region"] {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 400px; /* approximate height to prevent scroll jump */
+}
