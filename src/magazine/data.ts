@@ -188,7 +188,7 @@ export const ISSUES: Issue[] = [
       {
         title: 'Project Mercury',
         format: 'CROSS-PLATFORM / FLUTTER',
-        cover: '/assets/projects/xmbwavemenu.webp',
+        cover: '/assets/projects/mercury_screenshot.png',
         blurb:
           'Open-source, zero-trust, real-time chat platform built with Flutter. Interactive UI shell across desktop and mobile with collaborative Wacom vector canvas, stylus pressure, custom themes, hardware enclave inspection, and audio rooms.',
         tech: ['Flutter', 'Dart', 'Zero-Trust', 'Wacom Stylus API'],
@@ -199,7 +199,7 @@ export const ISSUES: Issue[] = [
       {
         title: 'PSP Digital Comics Reborn',
         format: 'CROSS-PLATFORM / REACT + VITE',
-        cover: '/assets/projects/psp.webp',
+        cover: '/assets/projects/psp_digital_comics.gif',
         blurb:
           'A faithful cross-platform recreation of the iconic PSP Digital Comics reader for CBZ comic archives. Features authentic page transitions, menu ergonomics, and responsive viewing built with React, TypeScript, and Vite.',
         tech: ['React', 'TypeScript', 'Vite', 'Tailwind CSS', 'CBZ Parser'],

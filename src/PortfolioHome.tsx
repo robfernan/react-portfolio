@@ -33,17 +33,17 @@ const NOW_BUILDING: Featured[] = [
       'Open-source, zero-trust real-time chat platform in Flutter. Fully interactive cross-platform UI shell with collaborative Wacom vector canvas, audio rooms, and custom themes.',
     language: 'Flutter · Dart · Zero-Trust',
     updated: 'Active Build',
-    image: '/assets/projects/xmbwavemenu.webp',
+    image: '/assets/projects/mercury_screenshot.png',
     href: 'https://github.com/robfernan/Mercury',
   },
   {
-    name: 'Sony 2002 Recreation',
+    name: 'PSP Digital Comics Reborn',
     description:
-      'Recreating the iconic 2002 Sony website as a modern interactive experience — authentic layouts, motion, and detail.',
-    language: 'TypeScript · React',
+      'Faithful cross-platform recreation of the iconic PSP Digital Comics reader for CBZ archives with smooth page turns, authentic navigation, and responsive scaling.',
+    language: 'React · TypeScript · Vite',
     updated: 'Active Build',
-    image: '/assets/home/sony2002recreation.webp',
-    href: 'https://github.com/robfernan/sony2002-recreationsite',
+    image: '/assets/projects/psp_digital_comics.gif',
+    href: 'https://github.com/robfernan/psp-comics-reborn',
   },
   {
     name: 'Love2D Xbox Launcher',
