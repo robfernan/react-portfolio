@@ -84,11 +84,14 @@ const certifications: Certification[] = [
 ];
 
 const selectedProjects = [
-  'AviationPro — multi-platform pilot utility suite for desktop, web, Android, and Wear OS.',
-  'PaperWorks Pro — document automation and business tooling for invoices, resumes, and proposals.',
-  'Hopeless Catch — published pixel-art fishing horror game built with Love2D and Lua.',
-  'PSP Digital Comics — cross-platform CBZ reader inspired by the PSP Digital Comics experience.',
-  'Qualia S3 Speedometer — reactive automotive instrument interface on a 480×480 round TFT.',
+  'AviationPro — multi-platform pilot utility suite for desktop, web, Android, and Wear OS (120+ flight hours tested).',
+  'PaperWorks Pro — document automation suite for invoices, resumes, and commercial client proposals.',
+  'Florida Window & Door Maintenance — commercial responsive web platform and mobile invoicing automation tool.',
+  'JT Marine & SoFlo Marine Detailing — commercial web presences and high-DPI marine service print collateral.',
+  'Yoanny Wellness & Style — commercial booking portal and bilingual Palm Beach County service price sheets.',
+  'Project Mercury — open-source, zero-trust real-time chat platform built with Flutter.',
+  'PSP Digital Comics Reborn — cross-platform CBZ comic reader recreation with React, TypeScript & Vite.',
+  'Hopeless Catch — published pixel-art fishing horror game built with Love2D and Lua (Game Jam winner).',
 ];
 
 // At-a-glance differentiators for a skimming recruiter.
@@ -102,10 +105,10 @@ const highlights: Highlight[] = [
 
 // Skills worth surfacing as scannable chips (the rest stay in the grouped list above).
 const featuredSkills = [
-  'React', 'TypeScript', 'JavaScript (ES6+)', 'Go', 'C++', 'Python', 'C#', 'Lua', 'PHP',
+  'React', 'TypeScript', 'JavaScript (ES6+)', 'Flutter', 'Dart', 'Go', 'C++', 'Python', 'C#', 'Lua', 'PHP',
   'Tailwind CSS', 'HTML5', 'CSS3', 'Capacitor', 'Wails', 'NW.js', 'Android Studio',
-  'Adobe Creative Cloud', 'UI/UX Design', 'Brand Identity', 'Canva', 'Inkscape', 'GIMP',
-  'SEO & Analytics', 'Google Search Console', 'Git / GitHub', 'CI/CD Pipelines', 'Linux', 'Windows', 'macOS',
+  'Adobe Creative Cloud', 'Illustrator', 'Photoshop', 'InDesign', 'UI/UX Design', 'Brand Identity',
+  'Pre-Press (CMYK)', 'ADA / WCAG Compliance', 'Canva', 'Git / GitHub', 'CI/CD Pipelines', 'Linux', 'Windows', 'macOS',
 ];
 
 const eyebrow = 'text-[10px] font-semibold tracking-[0.2em] uppercase text-theme-accent dark:text-theme-secondary-dark';
