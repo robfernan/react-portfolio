@@ -13,7 +13,11 @@ const popularVideos: { category: string; items: Video[] }[] = [
   },
   {
     category: 'Drawing',
-    items: [ { title: 'Car Sketch Video', url: 'https://youtu.be/-7a2JQIbCOk?si=gVuh0eYNBZvQ292f', thumb: '/assets/streaming/drawing-video.webp' } ]
+    items: [
+      { title: 'Car Sketch Session', url: 'https://www.youtube.com/watch?v=PcZ4JlOR8Z8', thumb: '/assets/streaming/drawing-video.webp' },
+      { title: 'Automotive Design Sketching', url: 'https://youtu.be/MD2km_LnUf4', thumb: '/assets/streaming/drawing-video.webp' },
+      { title: 'Car Sketch Process', url: 'https://youtu.be/-7a2JQIbCOk?si=gVuh0eYNBZvQ292f', thumb: '/assets/streaming/drawing-video.webp' }
+    ]
   },
   {
     category: 'Coding',
@@ -104,7 +108,7 @@ export default function Streaming() {
       {/* Popular Videos by Category */}
       <div className="mt-12">
         <h2 className="text-2xl font-bold mb-8 text-theme-primary dark:text-theme-primary-dark">Popular Videos</h2>
-        
+
         {popularVideos.map((section) => (
           <div key={section.category} className="mb-10">
             <h3 className="text-lg font-semibold mb-4 text-theme-accent dark:text-theme-accent-dark flex items-center gap-2">
