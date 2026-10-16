@@ -18,6 +18,9 @@ const popularVideos: { category: string; items: Video[] }[] = [
   {
     category: 'Coding',
     items: [
+      { title: 'PSP Digital Comics Reborn (React/TS)', url: 'https://www.youtube.com/watch?v=PD-8Q7aSv90', thumb: '/assets/projects/psp.webp' },
+      { title: 'Love2D Xbox-Inspired Launcher', url: 'https://www.youtube.com/watch?v=KIvuYsxpoYs', thumb: '/assets/projects/love2d_xboxlauncher.webp' },
+      { title: 'XMB Menu Launcher Multi-Themes (HTML5)', url: 'https://www.youtube.com/watch?v=YagOy0VBs-Q', thumb: '/assets/projects/dreamcastps3html.webp' },
       { title: 'XMB in SFML', url: 'https://www.youtube.com/watch?v=qLEClZEXr68&t=11850s', thumb: '/assets/streaming/coding-video1.webp' },
       { title: 'Personal Website Build', url: 'https://www.twitch.tv/videos/2334965535', thumb: '/assets/streaming/coding-video2.webp' }
     ]

@@ -46,7 +46,13 @@ function AviationProApp() {
     <div className="min-h-screen bg-theme-bg dark:bg-theme-bg-dark text-theme-primary dark:text-theme-primary-dark">
       <header className="border-b border-theme-accent/30 dark:border-theme-accent-dark/30 bg-theme-header dark:bg-theme-header-dark">
         <div className="px-2 sm:px-4 lg:px-6 py-1.5 sm:py-2 flex items-center justify-between gap-1 max-w-[1600px] mx-auto w-full">
-          <h1 className="text-lg sm:text-2xl font-bold text-theme-primary dark:text-theme-primary-dark flex-shrink-0"><span className="lg:hidden">AVPRO</span><span className="hidden lg:inline">AviationPro</span></h1>
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <h1 className="text-lg sm:text-2xl font-bold text-theme-primary dark:text-theme-primary-dark flex-shrink-0"><span className="lg:hidden">AVPRO</span><span className="hidden lg:inline">AviationPro</span></h1>
+            <span className="hidden xl:inline-flex items-center gap-1 text-[11px] font-medium px-2 py-0.5 rounded-full border border-theme-accent/30 dark:border-theme-accent-dark text-theme-secondary dark:text-theme-secondary-dark">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              120+ Flight Hours Tested · Offline EFB
+            </span>
+          </div>
           <nav className="flex gap-0.5 flex-1 justify-center overflow-x-auto no-scrollbar">
             {tabs.map(tab => (
               <button

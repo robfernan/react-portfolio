@@ -28,11 +28,20 @@ type Featured = {
 /* Static, curated "Now Building" — no live GitHub fetch for now. */
 const NOW_BUILDING: Featured[] = [
   {
+    name: 'Project Mercury',
+    description:
+      'Open-source, zero-trust real-time chat platform in Flutter. Fully interactive cross-platform UI shell with collaborative Wacom vector canvas, audio rooms, and custom themes.',
+    language: 'Flutter · Dart · Zero-Trust',
+    updated: 'Active Build',
+    image: '/assets/projects/xmbwavemenu.webp',
+    href: 'https://github.com/robfernan/Mercury',
+  },
+  {
     name: 'Sony 2002 Recreation',
     description:
       'Recreating the iconic 2002 Sony website as a modern interactive experience — authentic layouts, motion, and detail.',
-    language: 'TypeScript',
-    updated: 'Recently',
+    language: 'TypeScript · React',
+    updated: 'Active Build',
     image: '/assets/home/sony2002recreation.webp',
     href: 'https://github.com/robfernan/sony2002-recreationsite',
   },
@@ -40,19 +49,10 @@ const NOW_BUILDING: Featured[] = [
     name: 'Love2D Xbox Launcher',
     description:
       'Xbox-inspired desktop launcher built with Love2D (LÖVE) — a custom frameless draggable window, gamepad support, and smooth XMB-style navigation.',
-    language: 'Lua',
-    updated: 'Active build',
+    language: 'Lua · Love2D',
+    updated: 'Active Build',
     image: '/assets/projects/love2d_xboxlauncher.webp',
     href: 'https://github.com/robfernan/Love2D_XboxLauncher',
-  },
-  {
-    name: 'Dreamcast PS3 Theme → HTML5 XMB',
-    description:
-      'A custom cross-platform web interface recreated from an original SEGA Dreamcast PS3 theme, with authentic XMB layouts, gamepad support, and menu navigation.',
-    language: 'HTML5 · CSS · JavaScript',
-    updated: 'Video feature',
-    image: '/assets/projects/dreamcastps3html.webp',
-    href: 'https://www.youtube.com/watch?v=YagOy0VBs-Q',
   },
 ];
 
