@@ -100,20 +100,20 @@ export default function PortfolioHome() {
 
           <div className="grid grid-cols-1 gap-8 border-b border-theme-accent/20 dark:border-theme-accent-dark pb-10 pt-8 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16">
             <div>
-            <p className="text-[11px] font-semibold tracking-[0.25em] uppercase text-theme-accent dark:text-theme-secondary-dark mb-4 flex items-center gap-3">
-              <span className="w-8 h-px bg-theme-accent dark:bg-theme-accent-dark" />
-              Cross-Platform Engineer · Digital Artist · Pilot
-            </p>
+              <p className="text-[11px] font-semibold tracking-[0.25em] uppercase text-theme-accent dark:text-theme-secondary-dark mb-4 flex items-center gap-3">
+                <span className="w-8 h-px bg-theme-accent dark:bg-theme-accent-dark" />
+                Cross-Platform Engineer · Digital Artist · Pilot
+              </p>
 
-            <h1 className="mb-5 text-4xl font-black leading-none text-theme-primary dark:text-theme-secondary-dark sm:text-6xl">
-              Robert Fernandez
-            </h1>
+              <h1 className="mb-5 text-4xl font-black leading-none text-theme-primary dark:text-theme-secondary-dark sm:text-6xl">
+                Robert Fernandez
+              </h1>
 
-            <p className="max-w-3xl text-lg leading-relaxed text-theme-secondary dark:text-theme-secondary-dark sm:text-2xl">
-              Software engineer and digital artist building{' '}
-              <span className="text-theme-primary dark:text-theme-secondary-dark font-medium">cross-platform tools</span>{' '}
-              for web, desktop, mobile, Wear OS, embedded displays, and retro consoles — blending aviation discipline with design-first interfaces.
-            </p>
+              <p className="max-w-3xl text-lg leading-relaxed text-theme-secondary dark:text-theme-secondary-dark sm:text-2xl">
+                Software engineer and digital artist building{' '}
+                <span className="text-theme-primary dark:text-theme-secondary-dark font-medium">cross-platform tools</span>{' '}
+                for web, desktop, mobile, Wear OS, embedded displays, and retro consoles — blending aviation discipline with design-first interfaces.
+              </p>
 
             </div>
 
@@ -148,6 +148,26 @@ export default function PortfolioHome() {
               </div>
             </div>
           </div>
+
+          {/* At-a-Glance Credibility Metrics */}
+          <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4 pt-2">
+            <div className="border-l-2 border-theme-accent dark:border-theme-accent-dark pl-4">
+              <span className="block text-2xl sm:text-3xl font-black text-theme-primary dark:text-theme-secondary-dark">120+</span>
+              <span className="text-xs text-theme-secondary dark:text-theme-secondary-dark font-medium">Flight Hours (AviationPro)</span>
+            </div>
+            <div className="border-l-2 border-theme-accent dark:border-theme-accent-dark pl-4">
+              <span className="block text-2xl sm:text-3xl font-black text-theme-primary dark:text-theme-secondary-dark">5+ Yrs</span>
+              <span className="text-xs text-theme-secondary dark:text-theme-secondary-dark font-medium">Commercial & Studio Work</span>
+            </div>
+            <div className="border-l-2 border-theme-accent dark:border-theme-accent-dark pl-4">
+              <span className="block text-2xl sm:text-3xl font-black text-theme-primary dark:text-theme-secondary-dark">4x</span>
+              <span className="text-xs text-theme-secondary dark:text-theme-secondary-dark font-medium">Adobe Certified Pro</span>
+            </div>
+            <div className="border-l-2 border-theme-accent dark:border-theme-accent-dark pl-4">
+              <span className="block text-2xl sm:text-3xl font-black text-theme-primary dark:text-theme-secondary-dark">4</span>
+              <span className="text-xs text-theme-secondary dark:text-theme-secondary-dark font-medium">Web · Wails · Capacitor · Flutter</span>
+            </div>
+          </div>
         </section>
 
         {/* ======================= NOW BUILDING ======================= */}
@@ -179,25 +199,25 @@ export default function PortfolioHome() {
                   />
                 </div>
                 <div className="p-6 sm:p-8">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-[10px] font-semibold uppercase tracking-wider text-theme-accent dark:text-theme-secondary-dark">In Progress</span>
-                  {item.updated && (
-                    <span className="text-[10px] font-medium uppercase tracking-wider text-theme-secondary/70 dark:text-theme-secondary-dark">{item.updated}</span>
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-[10px] font-semibold uppercase tracking-wider text-theme-accent dark:text-theme-secondary-dark">In Progress</span>
+                    {item.updated && (
+                      <span className="text-[10px] font-medium uppercase tracking-wider text-theme-secondary/70 dark:text-theme-secondary-dark">{item.updated}</span>
+                    )}
+                  </div>
+                  <h3 className="font-bold mb-3 text-theme-primary dark:text-theme-secondary-dark group-hover:text-theme-accent dark:group-hover:text-theme-primary-dark transition-colors">
+                    {item.name}
+                  </h3>
+                  <p className="text-sm sm:text-base text-theme-secondary dark:text-theme-secondary-dark leading-relaxed mb-5">
+                    {item.description}
+                  </p>
+                  {item.language && (
+                    <span className="inline-flex items-center gap-2 text-xs text-theme-secondary dark:text-theme-secondary-dark">
+                      <span className="w-2.5 h-2.5 rounded-full bg-theme-accent dark:bg-theme-accent-dark" />
+                      {item.language}
+                    </span>
                   )}
-                </div>
-                <h3 className="font-bold mb-3 text-theme-primary dark:text-theme-secondary-dark group-hover:text-theme-accent dark:group-hover:text-theme-primary-dark transition-colors">
-                  {item.name}
-                </h3>
-                <p className="text-sm sm:text-base text-theme-secondary dark:text-theme-secondary-dark leading-relaxed mb-5">
-                  {item.description}
-                </p>
-                {item.language && (
-                  <span className="inline-flex items-center gap-2 text-xs text-theme-secondary dark:text-theme-secondary-dark">
-                    <span className="w-2.5 h-2.5 rounded-full bg-theme-accent dark:bg-theme-accent-dark" />
-                    {item.language}
-                  </span>
-                )}
-                <span className="mt-5 block text-[10px] font-semibold uppercase tracking-wider text-theme-accent dark:text-theme-accent-dark">Open full preview</span>
+                  <span className="mt-5 block text-[10px] font-semibold uppercase tracking-wider text-theme-accent dark:text-theme-accent-dark">Open full preview</span>
                 </div>
               </button>
             ))}

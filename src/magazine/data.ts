@@ -223,6 +223,25 @@ export const ISSUES: Issue[] = [
       'The visual systems behind the software: wearable interfaces, automotive graphics, editorial layouts, and design work built with the same care as the code.',
     entries: [
       {
+        title: 'Brand Identity & Commercial Collateral',
+        format: 'BRAND IDENTITY / PRINT',
+        cover: '/assets/projects/FLWindowndoormaintenanceLandingPage.webp',
+        blurb: 'Unified corporate brand system, logo suites, price sheets, and physical marketing collateral for Florida Window & Door. Pre-press configured with CMYK separations and bleed margins.',
+        tech: ['Adobe Illustrator', 'Photoshop CC', 'Canva', 'Pre-Press CMYK'],
+        status: 'Commercial Production',
+        impact: 'Logos • Business Cards • Marketing Collateral • Print-Ready',
+        link: 'https://floridawindowndoormaintenance.com',
+      },
+      {
+        title: 'Business Automation & Proposal Templates',
+        format: 'AUTOMATION / LAYOUT TEMPLATES',
+        cover: '/assets/projects/FloridaInvoiceApp.webp',
+        blurb: 'Standardized invoice, proposal, and price sheet layouts eliminating repetitive manual document construction. Structured typographic hierarchy, ADA-compliant contrast, and automated digital-to-print output.',
+        tech: ['Typography', 'Grid System', 'HTML/CSS/Capacitor', 'ADA Contrast'],
+        status: 'In Production',
+        impact: 'Automated field proposals • Instant print & PDF generation',
+      },
+      {
         title: 'Wear OS Watch Face',
         format: 'WATCH FACE / AVIATION',
         cover: '/assets/projects/watch_face_android_avpro.webp',
@@ -240,7 +259,6 @@ export const ISSUES: Issue[] = [
         status: 'Wearable',
         impact: 'Character-driven interface design',
       },
-
     ],
   },
 ];
