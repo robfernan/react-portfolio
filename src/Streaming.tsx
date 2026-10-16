@@ -14,7 +14,7 @@ const popularVideos: { category: string; items: Video[] }[] = [
   {
     category: 'Drawing',
     items: [
-      { title: 'Car Sketch Session', url: 'https://www.youtube.com/watch?v=PcZ4JlOR8Z8', thumb: '/assets/streaming/drawing-video.webp' },
+      { title: 'Car Sketch Session', url: 'https://www.youtube.com/watch?v=PcZ4JlOR8Z8', thumb: 'public/assets/projects/psp_digital_comics.gif' },
       { title: 'Automotive Design Sketching', url: 'https://youtu.be/MD2km_LnUf4', thumb: '/assets/streaming/drawing-video.webp' },
       { title: 'Car Sketch Process', url: 'https://youtu.be/-7a2JQIbCOk?si=gVuh0eYNBZvQ292f', thumb: '/assets/streaming/drawing-video.webp' }
     ]
