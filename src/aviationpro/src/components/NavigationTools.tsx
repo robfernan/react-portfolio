@@ -10,7 +10,7 @@ const subHeadingCls = "font-semibold text-theme-primary dark:text-theme-primary-
 
 const NavigationTools: React.FC = () => {
   const [activetool, setActiveTool] = useState('distance');
-  
+
   // Distance Calculator State
   const [distanceCalc, setDistanceCalc] = useState({
     lat1: '', lon1: '', lat2: '', lon2: '', result: null as number | null
@@ -39,8 +39,8 @@ const NavigationTools: React.FC = () => {
   const convertTemp = (val: number, from: 'c' | 'f') => {
     setConversions(prev => ({
       ...prev,
-      celsius: from === 'c' ? val.toString() : ((val - 32) * 5/9).toFixed(1),
-      fahrenheit: from === 'f' ? val.toString() : (val * 9/5 + 32).toFixed(1)
+      celsius: from === 'c' ? val.toString() : ((val - 32) * 5 / 9).toFixed(1),
+      fahrenheit: from === 'f' ? val.toString() : (val * 9 / 5 + 32).toFixed(1)
     }));
   };
 
@@ -135,11 +135,10 @@ const NavigationTools: React.FC = () => {
               <button
                 key={tool.id}
                 onClick={() => setActiveTool(tool.id)}
-                className={`flex items-center justify-center gap-2 px-3 sm:px-4 lg:px-5 py-2.5 sm:py-3 lg:py-4 text-[10px] sm:text-xs lg:text-sm font-black tracking-widest uppercase border-r border-theme-accent/20 dark:border-theme-accent-dark/20 last:border-r-0 transition-all duration-200 ${
-                  activetool === tool.id
+                className={`flex items-center justify-center gap-2 px-3 sm:px-4 lg:px-5 py-2.5 sm:py-3 lg:py-4 text-[10px] sm:text-xs lg:text-sm font-black tracking-widest uppercase border-r border-theme-accent/20 dark:border-theme-accent-dark/20 last:border-r-0 transition-all duration-200 ${activetool === tool.id
                     ? 'bg-theme-accent dark:bg-theme-accent-dark text-white'
                     : 'text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-primary dark:hover:text-theme-primary-dark hover:bg-theme-header dark:hover:bg-theme-header-dark'
-                }`}
+                  }`}
               >
                 <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
                 <span>{tool.label}</span>
@@ -163,11 +162,11 @@ const NavigationTools: React.FC = () => {
                   <div className="grid grid-cols-2 gap-3">
                     <div>
                       <label className={labelCls}>Latitude</label>
-                      <input type="number" step="any" value={distanceCalc.lat1} onChange={(e) => setDistanceCalc({...distanceCalc, lat1: e.target.value})} className={inputCls} placeholder="40.7128" />
+                      <input type="number" step="any" value={distanceCalc.lat1} onChange={(e) => setDistanceCalc({ ...distanceCalc, lat1: e.target.value })} className={inputCls} placeholder="40.7128" />
                     </div>
                     <div>
                       <label className={labelCls}>Longitude</label>
-                      <input type="number" step="any" value={distanceCalc.lon1} onChange={(e) => setDistanceCalc({...distanceCalc, lon1: e.target.value})} className={inputCls} placeholder="-74.0060" />
+                      <input type="number" step="any" value={distanceCalc.lon1} onChange={(e) => setDistanceCalc({ ...distanceCalc, lon1: e.target.value })} className={inputCls} placeholder="-74.0060" />
                     </div>
                   </div>
                 </div>
@@ -176,11 +175,11 @@ const NavigationTools: React.FC = () => {
                   <div className="grid grid-cols-2 gap-3">
                     <div>
                       <label className={labelCls}>Latitude</label>
-                      <input type="number" step="any" value={distanceCalc.lat2} onChange={(e) => setDistanceCalc({...distanceCalc, lat2: e.target.value})} className={inputCls} placeholder="34.0522" />
+                      <input type="number" step="any" value={distanceCalc.lat2} onChange={(e) => setDistanceCalc({ ...distanceCalc, lat2: e.target.value })} className={inputCls} placeholder="34.0522" />
                     </div>
                     <div>
                       <label className={labelCls}>Longitude</label>
-                      <input type="number" step="any" value={distanceCalc.lon2} onChange={(e) => setDistanceCalc({...distanceCalc, lon2: e.target.value})} className={inputCls} placeholder="-118.2437" />
+                      <input type="number" step="any" value={distanceCalc.lon2} onChange={(e) => setDistanceCalc({ ...distanceCalc, lon2: e.target.value })} className={inputCls} placeholder="-118.2437" />
                     </div>
                   </div>
                 </div>
@@ -216,30 +215,68 @@ const NavigationTools: React.FC = () => {
                 <div>
                   <h4 className={`mb-3 ${subHeadingCls}`}>From Coordinates</h4>
                   <div className="grid grid-cols-2 gap-3">
-                    <div><label className={labelCls}>Latitude</label><input type="number" step="any" value={bearingCalc.lat1} onChange={(e) => setBearingCalc({...bearingCalc, lat1: e.target.value})} className={inputCls} /></div>
-                    <div><label className={labelCls}>Longitude</label><input type="number" step="any" value={bearingCalc.lon1} onChange={(e) => setBearingCalc({...bearingCalc, lon1: e.target.value})} className={inputCls} /></div>
+                    <div><label className={labelCls}>Latitude</label><input type="number" step="any" value={bearingCalc.lat1} onChange={(e) => setBearingCalc({ ...bearingCalc, lat1: e.target.value })} className={inputCls} /></div>
+                    <div><label className={labelCls}>Longitude</label><input type="number" step="any" value={bearingCalc.lon1} onChange={(e) => setBearingCalc({ ...bearingCalc, lon1: e.target.value })} className={inputCls} /></div>
                   </div>
                 </div>
                 <div>
                   <h4 className={`mb-3 ${subHeadingCls}`}>To Coordinates</h4>
                   <div className="grid grid-cols-2 gap-3">
-                    <div><label className={labelCls}>Latitude</label><input type="number" step="any" value={bearingCalc.lat2} onChange={(e) => setBearingCalc({...bearingCalc, lat2: e.target.value})} className={inputCls} /></div>
-                    <div><label className={labelCls}>Longitude</label><input type="number" step="any" value={bearingCalc.lon2} onChange={(e) => setBearingCalc({...bearingCalc, lon2: e.target.value})} className={inputCls} /></div>
+                    <div><label className={labelCls}>Latitude</label><input type="number" step="any" value={bearingCalc.lat2} onChange={(e) => setBearingCalc({ ...bearingCalc, lat2: e.target.value })} className={inputCls} /></div>
+                    <div><label className={labelCls}>Longitude</label><input type="number" step="any" value={bearingCalc.lon2} onChange={(e) => setBearingCalc({ ...bearingCalc, lon2: e.target.value })} className={inputCls} /></div>
                   </div>
                 </div>
                 <button onClick={calculateBearing} className="w-full py-3 bg-theme-accent dark:bg-theme-accent-dark hover:opacity-90 text-white rounded-md font-semibold transition-opacity">Calculate Bearing</button>
               </div>
-              <div className="p-6 rounded-lg bg-theme-bg dark:bg-theme-bg-dark border border-theme-accent/20 dark:border-theme-accent-dark/20">
-                <h4 className={`text-lg font-bold mb-4 ${subHeadingCls}`}>Result</h4>
+              <div className="p-6 rounded-lg bg-theme-bg dark:bg-theme-bg-dark border border-theme-accent/20 dark:border-theme-accent-dark/20 flex flex-col items-center justify-center">
+                <h4 className={`text-lg font-bold mb-4 ${subHeadingCls} self-start`}>Result & Heading Dial</h4>
                 {bearingCalc.result !== null ? (
-                  <div className="text-center">
-                    <div className="text-3xl font-black mb-2 text-theme-accent dark:text-theme-accent-dark">{bearingCalc.result.toFixed(1)}°</div>
-                    <div className="text-sm text-theme-secondary dark:text-theme-secondary-dark">True Bearing</div>
+                  <div className="flex flex-col items-center">
+                    {/* Compass Rose Visualizer */}
+                    <div className="relative w-48 h-48 sm:w-56 sm:h-56 mb-4 flex items-center justify-center">
+                      {/* Compass Rose Outer Bezel */}
+                      <div className="absolute inset-0 rounded-full border border-theme-accent/40 dark:border-theme-accent-dark/40 bg-theme-card/60 dark:bg-theme-card-dark/60 shadow-inner" />
+
+                      {/* Fixed Compass Rose Card */}
+                      <img
+                        src="/assets/aviation/compass-2024.svg"
+                        alt="Compass Rose"
+                        className="w-full h-full object-contain p-2 select-none pointer-events-none opacity-90 dark:opacity-95"
+                      />
+
+                      {/* Rotating Pointer / Arrow (points directly towards calculated bearing) */}
+                      <div
+                        className="absolute inset-0 flex items-center justify-center transition-transform duration-700 ease-out"
+                        style={{ transform: `rotate(${bearingCalc.result}deg)` }}
+                      >
+                        <img
+                          src="/assets/aviation/compass-arrow.svg"
+                          alt="Bearing Pointer"
+                          className="w-full h-full object-contain select-none pointer-events-none drop-shadow-md"
+                        />
+                      </div>
+
+                      {/* Central Center Cap */}
+                      <div className="absolute w-5 h-5 rounded-full bg-theme-accent dark:bg-theme-accent-dark border-2 border-theme-card dark:border-theme-card-dark shadow z-10" />
+                    </div>
+
+                    <div className="text-3xl font-black mb-1 text-theme-accent dark:text-theme-accent-dark tracking-wider">
+                      {bearingCalc.result.toFixed(1)}°
+                    </div>
+                    <div className="text-xs uppercase tracking-widest font-semibold text-theme-secondary dark:text-theme-secondary-dark">
+                      True Bearing
+                    </div>
                   </div>
                 ) : (
                   <div className="text-center py-8 text-theme-secondary/60 dark:text-theme-secondary-dark/60">
-                    <Navigation className="w-16 h-16 mx-auto mb-4" />
-                    <p>Enter coordinates to calculate bearing</p>
+                    <div className="relative w-32 h-32 mx-auto mb-4 opacity-40">
+                      <img
+                        src="/assets/aviation/compass-2024.svg"
+                        alt="Compass Preview"
+                        className="w-full h-full object-contain grayscale"
+                      />
+                    </div>
+                    <p className="text-sm">Enter coordinates to calculate bearing</p>
                   </div>
                 )}
               </div>
@@ -255,15 +292,15 @@ const NavigationTools: React.FC = () => {
               <div className="space-y-4">
                 <div>
                   <label className={labelCls}>Nautical Miles</label>
-                  <input type="number" step="any" value={conversions.nauticalMiles} onChange={(e) => { setConversions({...conversions, nauticalMiles: e.target.value}); const v = parseFloat(e.target.value); if (!isNaN(v)) convertUnits(v, 'nm'); }} className={inputCls} placeholder="100" />
+                  <input type="number" step="any" value={conversions.nauticalMiles} onChange={(e) => { setConversions({ ...conversions, nauticalMiles: e.target.value }); const v = parseFloat(e.target.value); if (!isNaN(v)) convertUnits(v, 'nm'); }} className={inputCls} placeholder="100" />
                 </div>
                 <div>
                   <label className={labelCls}>Statute Miles</label>
-                  <input type="number" step="any" value={conversions.statuteMiles} onChange={(e) => { setConversions({...conversions, statuteMiles: e.target.value}); const v = parseFloat(e.target.value); if (!isNaN(v)) convertUnits(v, 'sm'); }} className={inputCls} placeholder="115.078" />
+                  <input type="number" step="any" value={conversions.statuteMiles} onChange={(e) => { setConversions({ ...conversions, statuteMiles: e.target.value }); const v = parseFloat(e.target.value); if (!isNaN(v)) convertUnits(v, 'sm'); }} className={inputCls} placeholder="115.078" />
                 </div>
                 <div>
                   <label className={labelCls}>Kilometers</label>
-                  <input type="number" step="any" value={conversions.kilometers} onChange={(e) => { setConversions({...conversions, kilometers: e.target.value}); const v = parseFloat(e.target.value); if (!isNaN(v)) convertUnits(v, 'km'); }} className={inputCls} placeholder="185.2" />
+                  <input type="number" step="any" value={conversions.kilometers} onChange={(e) => { setConversions({ ...conversions, kilometers: e.target.value }); const v = parseFloat(e.target.value); if (!isNaN(v)) convertUnits(v, 'km'); }} className={inputCls} placeholder="185.2" />
                 </div>
                 <div>
                   <label className={`mb-2 text-sm font-medium ${subHeadingCls}`}>Fuel (Avgas 6lb/gal)</label>
@@ -346,11 +383,11 @@ const NavigationTools: React.FC = () => {
               <div className="space-y-4">
                 <div>
                   <label className={labelCls}>UTC Time (HH:MM)</label>
-                  <input type="time" value={timeConverter.utcTime} onChange={(e) => setTimeConverter({...timeConverter, utcTime: e.target.value})} className={inputCls} />
+                  <input type="time" value={timeConverter.utcTime} onChange={(e) => setTimeConverter({ ...timeConverter, utcTime: e.target.value })} className={inputCls} />
                 </div>
                 <div>
                   <label className={labelCls}>Local Time Offset (hours)</label>
-                  <input type="number" step="0.5" value={timeConverter.localOffset} onChange={(e) => setTimeConverter({...timeConverter, localOffset: e.target.value})} className={inputCls} placeholder="-5" min="-12" max="14" />
+                  <input type="number" step="0.5" value={timeConverter.localOffset} onChange={(e) => setTimeConverter({ ...timeConverter, localOffset: e.target.value })} className={inputCls} placeholder="-5" min="-12" max="14" />
                 </div>
                 <button onClick={convertTimeZone} className="w-full py-3 bg-theme-accent dark:bg-theme-accent-dark hover:opacity-90 text-white rounded-md font-semibold transition-opacity">Convert Time</button>
               </div>

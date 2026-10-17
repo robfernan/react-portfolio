@@ -37,23 +37,23 @@ The site spans:
 - **Tailwind CSS v4** — utility-first styling with a custom PostCSS pipeline
 - **Vite** — HMR for instant feedback, optimized code-split production bundles
 
-### 🧮 Interactive tools (AviationPro)
-- Flight planner with wind correction, fuel tracking, VOR data, print & JSON export
-- CX-6 computer: wind triangle, TAS, time-speed-distance, crosswind calculators
-- Live METAR/TAF weather fetcher with VFR/IFR/MVFR/LVFR analysis
-- Weight & balance calculator with CG envelope visualization and Go/No-Go validation
-- Navigation tools: distance/bearing, unit conversions, time-zone converter
-- Persistent logbook (Dexie/localStorage) with search, filter, sort, CSV export
+### 🧮 Interactive Tools (AviationPro EFB Suite)
+- **VFR NavLog (Dead Reckoning Chart)**: True Course, Wind Correction Angle (WCA), True/Magnetic/Compass Heading, Groundspeed, Leg ETE/ETA, Fuel Burn, VOR navigation data, print stylesheet & JSON export
+- **CX-6 Electronic Flight Computer**: Wind Triangle (WCA/GS/HDG), True Airspeed (TAS), Time-Speed-Distance (TSD), Fuel, and Crosswind components
+- **Live Weather Tools & Hazard Analysis**: Live METAR/TAF weather fetcher (via server-side PHP proxy for aviationweather.gov) with VFR/MVFR/IFR/LIFR categorization, plus an **interactive Runway vs. Wind Rose compass visualizer**
+- **Weight & Balance Calculator**: C172 Center of Gravity envelope visualization, fuel burn shift tracking, and Go/No-Go envelope validation
+- **Navigation Tools**: Distance & bearing calculator with an **animated 360° directional gyro / compass rose dial**, unit conversions, time-zone converters, and direct aeronautical briefing links
+- **Persistent Flight Logbook**: Track flight hours, dual/solo cross-country requirements under 14 CFR §61.87 with Dexie/localStorage persistence and CSV export
 
 ## 📄 Pages Overview
 
 | Route | Component | Description |
 |-------|-----------|-------------|
-| `/` | `PortfolioHome.tsx` | Home — journey timeline, featured projects, watch-face showcase, CTAs |
-| `/works`, `/work`, `/projects` | `magazine/Magazine.tsx` | Works — two-page "book spread" project gallery (desktop) with art-platform links |
-| `/aviationpro/*` | `aviationpro/AviationProApp.tsx` | AviationPro — full flight-planning suite embedded in the site |
-| `/streaming` | `Streaming.tsx` | Streaming — YouTube & Twitch content, organized by category |
-| `/resume` | `Resume.tsx` | Résumé — general-overview CV with a print/PDF one-pager export |
+| `/` | `PortfolioHome.tsx` | Home — headline metrics (120+ Flight Hours · Student Pilot, 5+ yrs studio experience), active projects preview, capabilities pills |
+| `/works`, `/work`, `/projects` | `magazine/Magazine.tsx` | Works — curated editorial catalogue & showcase spanning software, tools, client work, retro systems, wearable UI, and digital art |
+| `/aviationpro/*` | `aviationpro/AviationProApp.tsx` | AviationPro — in-browser Electronic Flight Bag (EFB) preview tailored for the portfolio with direct link to the full standalone suite |
+| `/streaming` | `Streaming.tsx` | Streaming — live coding, automotive sketching, retro tech, and gaming channels across YouTube & Twitch |
+| `/resume` | `Resume.tsx` | Résumé — recruiter-ready CV with one-page PDF/print stylesheet |
 
 ### 📝 Résumé (`/resume`)
 A **general-overview résumé** designed for recruiters who land on the site after an application. It opens with a name heading, tagline, and contact links, then covers professional experience (primary role + independent/freelance studio), core technical skills, education & certifications, and selected projects — with bilingual (English/Spanish) noted throughout.
@@ -102,25 +102,26 @@ A **general-overview résumé** designed for recruiters who land on the site aft
 ```
 
 ## 🎯 Featured Projects
+ 
+### Active & Featured Builds
+- **[Project Mercury](https://github.com/robfernan/Mercury)** — Open-source, zero-trust real-time chat platform in Flutter with collaborative vector canvas and audio rooms
+- **[PSP Digital Comics Reborn](https://github.com/robfernan/psp-comics-reborn)** — Faithful cross-platform recreation of the iconic PSP Digital Comics reader for CBZ archives (React, TypeScript, Vite)
+- **[Love2D Xbox Launcher](https://github.com/robfernan/Love2D_XboxLauncher)** — Xbox-inspired desktop launcher built with Love2D (LÖVE) featuring frameless draggable window and gamepad support
+- **[AviationPro](https://github.com/robfernan/AviationPro)** — Professional cross-platform Electronic Flight Bag suite (Go, Wails, React, Capacitor, Wear OS)
+- **[PaperWorks Pro](https://github.com/robfernan/paperworks-pro)** — All-in-one document creation suite for invoices, resumes, and PDF tools (React, TypeScript, shadcn-ui)
+- **[Hopeless Catch](https://mungdaal321.itch.io/hopeless-catch)** — Atmospheric pixel-art fishing game (Love2D, Lua)
 
-### Production & published
-- **AviationPro** — professional flight-planning suite (React, TypeScript, Tailwind CSS)
-- **Hopeless Catch** — atmospheric pixel-art fishing game (Love2D, Lua) — [Play on itch.io](https://mungdaal321.itch.io/hopeless-catch)
-- **Android Watch Face** — minimalist wearable UI design (Samsung Watch Face Studio)
+### Client & Commercial Work
+- **SoFlo Marine Detailing** — Commercial vessel detailing landing page & package selector
+- **Florida Window & Door Maintenance Inc.** — Service landing page and custom Capacitor invoicing/proposal tool
+- **M&G Gutters** — Local-service landing page designed for conversion and clarity
+- **Restaurant Website** — Interactive digital ordering, cart, and receipt flow
 
-### Web & tools
-- **PaperWorks Pro** — all-in-one document creation suite (React, TypeScript, Tailwind CSS)
-- **XMB Wave Menu** — cross-platform launcher with wave effects (HTML/CSS/JS, NW.js, Capacitor)
-- **Restaurant website** — professional service landing page (HTML, CSS, JavaScript)
-- **Personal portfolio** — this site (React, TypeScript, Tailwind CSS)
-
-### Creative & games
-- **Comic Reader (SFML)** — fully functional comic reader with advanced graphics (C++, SFML, OpenGL)
-- **Music Player (Vinyl/Cassette/MiniDisc)** — retro-styled cross-platform player (React, TypeScript, Tailwind CSS)
-
-### Systems & education
-- **PSP Programming** — modern PSP homebrew tutorials (C, SDL2, PSPSDK)
-- **PS1 MIPS Programming** — PlayStation 1 MIPS assembly guides (MIPS Assembly, C, baremetal)
+### Systems & Creative Engineering
+- **XMB Wave Menu** — Cross-platform desktop launcher with authentic wave shader effects (HTML5/CSS3/JS, NW.js, Capacitor)
+- **Qualia S3 ESP32 Speedometer** — Custom embedded automotive dashboard gauge built with ESP-IDF and LVGL
+- **Wear OS Aviation & Minimalist Watch Faces** — Digital & analog wearable interfaces built with Samsung Watch Face Studio
+- **PSP & PS1 Homebrew** — Modern MIPS assembly and C homebrew development projects
 
 ## 🚀 Development (local)
 

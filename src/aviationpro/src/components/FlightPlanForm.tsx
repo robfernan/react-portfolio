@@ -409,7 +409,7 @@ const FlightPlanForm: React.FC = () => {
       {/* Header */}
       <div className="bg-theme-header dark:bg-theme-header-dark border-b-2 border-theme-accent dark:border-theme-accent-dark p-3 sm:p-4 md:p-6">
         <div className="flex flex-row items-center justify-between mb-3 sm:mb-4 gap-3">
-          <h2 className="text-xl sm:text-2xl font-bold">FLIGHT PLAN</h2>
+          <h2 className="text-xl sm:text-2xl font-bold tracking-wide">VFR NAVLOG</h2>
           <div className="flex space-x-2 flex-shrink-0">
             <button 
               onClick={handlePrint}

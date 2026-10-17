@@ -707,17 +707,69 @@ const WeatherCalculator: React.FC = () => {
               </div>
             </div>
 
-            <div className="mt-4 p-4 rounded-lg bg-theme-bg dark:bg-theme-bg-dark border border-theme-accent/35 dark:border-theme-accent-dark/35 space-y-3">
+            <div className="mt-4 p-4 rounded-lg bg-theme-bg dark:bg-theme-bg-dark border border-theme-accent/35 dark:border-theme-accent-dark/35 space-y-4">
               <h3 className="text-sm font-bold text-theme-primary dark:text-theme-primary-dark">Wind Component Breakdown</h3>
               {windResults ? (
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="p-3 rounded bg-theme-card dark:bg-theme-card-dark border border-theme-accent/20 dark:border-theme-accent-dark/20">
-                    <div className="text-xs text-theme-secondary dark:text-theme-secondary-dark">{windResults.isTailwind ? 'Tailwind Component' : 'Headwind Component'}</div>
-                    <div className="text-xl font-black text-theme-primary dark:text-theme-primary-dark">{windResults.headwind} kts</div>
+                <div>
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div className="p-3 rounded bg-theme-card dark:bg-theme-card-dark border border-theme-accent/20 dark:border-theme-accent-dark/20">
+                      <div className="text-xs text-theme-secondary dark:text-theme-secondary-dark">{windResults.isTailwind ? 'Tailwind Component' : 'Headwind Component'}</div>
+                      <div className="text-xl font-black text-theme-primary dark:text-theme-primary-dark">{windResults.headwind} kts</div>
+                    </div>
+                    <div className="p-3 rounded bg-theme-card dark:bg-theme-card-dark border border-theme-accent/20 dark:border-theme-accent-dark/20">
+                      <div className="text-xs text-theme-secondary dark:text-theme-secondary-dark">Crosswind Component</div>
+                      <div className="text-xl font-black text-theme-accent dark:text-theme-accent-dark">{windResults.crosswind} kts</div>
+                    </div>
                   </div>
-                  <div className="p-3 rounded bg-theme-card dark:bg-theme-card-dark border border-theme-accent/20 dark:border-theme-accent-dark/20">
-                    <div className="text-xs text-theme-secondary dark:text-theme-secondary-dark">Crosswind Component</div>
-                    <div className="text-xl font-black text-theme-accent dark:text-theme-accent-dark">{windResults.crosswind} kts</div>
+
+                  {/* Wind vs Runway Visual Compass Rose */}
+                  <div className="p-4 rounded-lg bg-theme-card dark:bg-theme-card-dark border border-theme-accent/20 dark:border-theme-accent-dark/20 flex flex-col items-center">
+                    <div className="text-xs font-semibold uppercase tracking-wider text-theme-secondary dark:text-theme-secondary-dark mb-3">
+                      Runway {String(Math.round(parseFloat(runwayHeading || '0') / 10)).padStart(2, '0') || '--'} vs Wind Vector ({windDirection || '0'}° @ {windSpeed || '0'} kts)
+                    </div>
+                    <div className="relative w-44 h-44 sm:w-52 sm:h-52 flex items-center justify-center">
+                      {/* Compass Card Background */}
+                      <img
+                        src="/assets/aviation/compass-2024.svg"
+                        alt="Compass Rose"
+                        className="w-full h-full object-contain select-none pointer-events-none opacity-80"
+                      />
+
+                      {/* Runway Strip Representation */}
+                      <div
+                        className="absolute w-5 h-28 sm:h-32 bg-neutral-800 dark:bg-neutral-900 border-2 border-white/60 dark:border-white/80 rounded-sm shadow-md flex flex-col justify-between items-center py-1 transition-transform duration-500 ease-out z-10"
+                        style={{ transform: `rotate(${parseFloat(runwayHeading || '0')}deg)` }}
+                        title={`Runway ${runwayHeading}°`}
+                      >
+                        <span className="text-[7px] font-mono font-bold text-amber-400 select-none">
+                          {String(Math.round(parseFloat(runwayHeading || '0') / 10)).padStart(2, '0')}
+                        </span>
+                        <div className="w-0.5 h-full border-r border-dashed border-white/60 my-0.5" />
+                        <span className="text-[7px] font-mono font-bold text-white select-none">
+                          {String(Math.round(((parseFloat(runwayHeading || '0') + 180) % 360) / 10)).padStart(2, '0')}
+                        </span>
+                      </div>
+
+                      {/* Incoming Wind Vector Pointer */}
+                      <div
+                        className="absolute inset-0 flex items-center justify-center transition-transform duration-700 ease-out z-20 pointer-events-none"
+                        style={{ transform: `rotate(${parseFloat(windDirection || '0')}deg)` }}
+                      >
+                        <img
+                          src="/assets/aviation/compass-arrow.svg"
+                          alt="Wind Direction"
+                          className="w-full h-full object-contain filter invert drop-shadow"
+                        />
+                      </div>
+                    </div>
+                    <div className="mt-2 text-[11px] text-theme-secondary dark:text-theme-secondary-dark flex items-center gap-4">
+                      <span className="flex items-center gap-1.5">
+                        <span className="w-2.5 h-2.5 rounded-sm bg-neutral-800 border border-white inline-block" /> Runway Alignment
+                      </span>
+                      <span className="flex items-center gap-1.5">
+                        <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 inline-block" /> Incoming Wind
+                      </span>
+                    </div>
                   </div>
                 </div>
               ) : (

@@ -153,7 +153,7 @@ export default function PortfolioHome() {
           <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4 pt-2">
             <div className="border-l-2 border-theme-accent dark:border-theme-accent-dark pl-4">
               <span className="block text-2xl sm:text-3xl font-black text-theme-primary dark:text-theme-secondary-dark">120+</span>
-              <span className="text-xs text-theme-secondary dark:text-theme-secondary-dark font-medium">Flight Hours (AviationPro)</span>
+              <span className="text-xs text-theme-secondary dark:text-theme-secondary-dark font-medium">Flight Hours · Student Pilot</span>
             </div>
             <div className="border-l-2 border-theme-accent dark:border-theme-accent-dark pl-4">
               <span className="block text-2xl sm:text-3xl font-black text-theme-primary dark:text-theme-secondary-dark">5+ Yrs</span>
