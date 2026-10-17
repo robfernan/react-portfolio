@@ -82,7 +82,7 @@ function AviationProApp() {
           {activeTab === 'logs' && <FlightLogs />}
         </React.Suspense>
       </main>
-      <footer className="w-full py-6 bg-theme-footer dark:bg-theme-footer-dark border-t border-theme-accent/30 dark:border-theme-accent-dark/30 mt-12 transition-colors duration-300">
+      <aside className="w-full py-5 bg-theme-header dark:bg-theme-header-dark border-t border-theme-accent/30 dark:border-theme-accent-dark/30 transition-colors duration-300">
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
           <p className="text-xs sm:text-sm text-theme-secondary dark:text-theme-secondary-dark">
             This in-browser suite is a tailored preview for this portfolio. For the complete, standalone open-source suite with offline PWA support and full feature set, explore the repository:
@@ -99,7 +99,7 @@ function AviationProApp() {
             <span>robfernan/AviationPro on GitHub</span>
           </a>
         </div>
-      </footer>
+      </aside>
     </div>
   );
 }

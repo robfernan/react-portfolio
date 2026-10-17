@@ -405,11 +405,11 @@ const FlightPlanForm: React.FC = () => {
   };
 
   return (
-    <div className="max-w-[1600px] mx-auto w-full bg-theme-card dark:bg-theme-card-dark rounded-lg shadow-lg border-2 border-theme-accent dark:border-theme-accent-dark">
+    <div className="max-w-[1600px] mx-auto w-full bg-theme-card dark:bg-theme-card-dark rounded-lg shadow-lg border border-theme-accent/30 dark:border-theme-accent-dark/30 overflow-hidden">
       {/* Header */}
-      <div className="bg-theme-header dark:bg-theme-header-dark border-b-2 border-theme-accent dark:border-theme-accent-dark p-3 sm:p-4 md:p-6">
+      <div className="bg-theme-header dark:bg-theme-header-dark border-b border-theme-accent/30 dark:border-theme-accent-dark/30 p-3 sm:p-4 md:p-6">
         <div className="flex flex-row items-center justify-between mb-3 sm:mb-4 gap-3">
-          <h2 className="text-xl sm:text-2xl font-bold tracking-wide">VFR NAVLOG</h2>
+          <h2 className="text-xl sm:text-2xl font-bold tracking-wide text-theme-primary dark:text-theme-primary-dark">VFR NAVLOG</h2>
           <div className="flex space-x-2 flex-shrink-0">
             <button 
               onClick={handlePrint}
@@ -500,7 +500,7 @@ const FlightPlanForm: React.FC = () => {
                   cells are wide enough to be legible at 1080p+. */}
               <table className="w-full border-collapse text-xs sm:text-sm min-w-[2400px] lg:min-w-0 bg-theme-card dark:bg-theme-card-dark shadow-lg rounded-lg overflow-hidden">
             <thead>
-              <tr className="bg-theme-accent dark:bg-theme-accent-dark text-white">
+              <tr className="bg-theme-header dark:bg-theme-header-dark text-theme-primary dark:text-theme-primary-dark border-b border-theme-accent/30 dark:border-theme-accent-dark/30">
                 <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 lg:p-4 text-center text-xs sm:text-sm lg:text-base font-semibold min-w-[140px] sm:min-w-[160px]" rowSpan={2}>Checkpoint</th>
                 <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 lg:p-4 text-center text-xs sm:text-sm lg:text-base font-semibold" colSpan={2}>A Planned</th>
                 <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 lg:p-4 text-center text-xs sm:text-sm lg:text-base font-semibold" colSpan={2}>Predicted Wind</th>
@@ -521,7 +521,7 @@ const FlightPlanForm: React.FC = () => {
                 <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 lg:p-4 text-center text-xs sm:text-sm lg:text-base font-semibold" colSpan={3}>VOR</th>
                 <th className="border border-theme-accent/30 dark:border-theme-accent-dark/30 p-2 sm:p-3 lg:p-4 text-center text-xs sm:text-sm lg:text-base font-semibold min-w-[60px] sm:min-w-[80px]">Actions</th>
               </tr>
-              <tr className="bg-theme-accent/90 dark:bg-theme-accent-dark/90 text-white">
+              <tr className="bg-theme-bg dark:bg-theme-bg-dark text-theme-secondary dark:text-theme-secondary-dark border-b border-theme-accent/30 dark:border-theme-accent-dark/30">
                 <th className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 text-center text-[10px] sm:text-xs font-medium min-w-[60px] sm:min-w-[80px]">TC</th>
                 <th className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 text-center text-[10px] sm:text-xs font-medium min-w-[60px] sm:min-w-[80px]">ALT</th>
                 <th className="border border-theme-accent/20 dark:border-theme-accent-dark/20 p-1 sm:p-2 text-center text-[10px] sm:text-xs font-medium min-w-[60px] sm:min-w-[80px]">DIR</th>

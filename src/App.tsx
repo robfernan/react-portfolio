@@ -72,7 +72,6 @@ export default function App() {
 function AppContent() {
     const location = useLocation();
     const isStreaming = location.pathname.startsWith('/streaming');
-    const isAviationPro = location.pathname.startsWith('/aviationpro');
     const displayName = isStreaming ? 'MungDaal321' : 'Robert Fernandez';
 
     // Theme and dark mode state
@@ -293,8 +292,8 @@ function AppContent() {
                         <Route path="*" element={<NotFound />} />
                     </Routes>
                 </main>
-                {!isAviationPro && <Footer theme={theme} />}
-                {!isAviationPro && <BackToTop />}
+                <Footer theme={theme} />
+                <BackToTop />
             </div>
         </ThemeProvider>
     );
