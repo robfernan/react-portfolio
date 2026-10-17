@@ -1,13 +1,26 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
 import PortfolioHome from '@/pages/Home/PortfolioHome';
-import Magazine from '@/pages/Works/Magazine';
-import Streaming from '@/pages/Streaming/Streaming';
-import Resume from '@/pages/Resume/Resume';
 import Header from '@/components/layout/Header';
-// Lazy-load AviationPro — it's a heavy sub-app (calculators, weather, flight planning)
-// that only 1-2% of visitors need. Keeps the main bundle lean for everyone else.
+
+// Route-level code splitting: keep initial bundle ultra-lean for instant FCP/LCP.
+// Secondary routes load on-demand when the user navigates.
+const Magazine = React.lazy(() => import('@/pages/Works/Magazine'));
+const Streaming = React.lazy(() => import('@/pages/Streaming/Streaming'));
+const Resume = React.lazy(() => import('@/pages/Resume/Resume'));
 const AviationProApp = React.lazy(() => import('@/pages/Aviation/AviationProApp'));
+
+/** Consistent, themed page loading skeleton */
+function RouteLoadingFallback({ title }: { title: string }) {
+    return (
+        <div className="flex min-h-[50vh] flex-col items-center justify-center px-4 text-center animate-pulse">
+            <div className="w-10 h-10 rounded-full border-2 border-theme-action border-t-transparent animate-spin mb-4" />
+            <p className="font-mono-tech text-xs tracking-widest uppercase text-theme-accent dark:text-theme-secondary-dark">
+                Loading {title}…
+            </p>
+        </div>
+    );
+}
 
 /** Error boundary — if AviationPro crashes, show a clean fallback instead of white-screening the whole site. */
 class AviationErrorBoundary extends React.Component<
@@ -160,29 +173,25 @@ function AppContent() {
                     setMobileMenuOpen={setMobileMenuOpen}
                 />
                 <main id="main-content" tabIndex={-1} className="flex-1 pb-24 focus:outline-none">
-                    <Routes>
-                        <Route path="/" element={<PortfolioHome />} />
-                        <Route path="/works" element={<Magazine />} />
-                        <Route path="/work" element={<Magazine />} />
-                        {/* Legacy routes now render the unified catalogue */}
-                        <Route path="/projects" element={<Magazine />} />
-                        <Route path="/aviation/*" element={
-                            <AviationErrorBoundary>
-                                <React.Suspense fallback={
-                                    <div className="flex min-h-[50vh] items-center justify-center">
-                                        <p className="font-mono-tech text-sm tracking-widest uppercase text-theme-accent">Loading AviationPro…</p>
-                                    </div>
-                                }>
+                    <React.Suspense fallback={<RouteLoadingFallback title="Page" />}>
+                        <Routes>
+                            <Route path="/" element={<PortfolioHome />} />
+                            <Route path="/works" element={<Magazine />} />
+                            <Route path="/work" element={<Magazine />} />
+                            {/* Legacy routes now render the unified catalogue */}
+                            <Route path="/projects" element={<Magazine />} />
+                            <Route path="/aviation/*" element={
+                                <AviationErrorBoundary>
                                     <AviationProApp />
-                                </React.Suspense>
-                            </AviationErrorBoundary>
-                        } />
-                        <Route path="/aviationpro/*" element={<Navigate to="/aviation" replace />} />
-                        <Route path="/streaming" element={<Streaming />} />
-                        <Route path="/resume" element={<Resume />} />
-                        {/* Catch-all: styled 404 for any unknown route */}
-                        <Route path="*" element={<NotFound />} />
-                    </Routes>
+                                </AviationErrorBoundary>
+                            } />
+                            <Route path="/aviationpro/*" element={<Navigate to="/aviation" replace />} />
+                            <Route path="/streaming" element={<Streaming />} />
+                            <Route path="/resume" element={<Resume />} />
+                            {/* Catch-all: styled 404 for any unknown route */}
+                            <Route path="*" element={<NotFound />} />
+                        </Routes>
+                    </React.Suspense>
                 </main>
                 <Footer theme={theme} />
                 <BackToTop />
