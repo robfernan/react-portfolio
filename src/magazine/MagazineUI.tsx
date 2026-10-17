@@ -65,7 +65,7 @@ export function FlipControls({ canPrev = false, canNext = false, onPrev, onNext,
 /** A single project rendered as a compact magazine entry (used on both pages). */
 export function MagazineEntry({ entry, onOpenImage }: { entry: import('./data').Entry; onOpenImage?: (entry: import('./data').Entry) => void }) {
   return (
-    <article className="group flex gap-3 rounded-xl border border-theme-accent/15 dark:border-theme-accent-dark bg-theme-card dark:bg-theme-card-dark p-3 hover-lift-premium">
+    <article className="group flex gap-3 rounded-xl border border-theme-accent/15 dark:border-theme-accent-dark bg-theme-card dark:bg-theme-card-dark p-3 hover-lift-premium cv-auto">
       {/* Cover thumbnail */}
       <button
         type="button"

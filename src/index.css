@@ -53,11 +53,60 @@
 
 /* Smooth scrolling */
 html {
-  scroll-behavior: auto;
+  scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ==========================================================================
+   Modern CSS: Scroll-Driven Reading Progress Bar (Pure CSS, 0 JS overhead)
+   ========================================================================== */
+@keyframes scroll-progress {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+#scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2.5px;
+  background: linear-gradient(90deg, var(--color-accent), var(--color-action));
+  z-index: 100;
+  animation: scroll-progress auto linear;
+  animation-timeline: scroll(root block);
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   Modern CSS: View Transitions API (Fluid cross-fade between SPA routes)
+   ========================================================================== */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.22s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ==========================================================================
+   Modern CSS: content-visibility for ultra-fast rendering on long pages/tables
+   ========================================================================== */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 500px;
+}
+
 body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   min-width: 320px;
   color: var(--color-primary);

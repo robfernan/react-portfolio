@@ -17,7 +17,7 @@ const PPL_REQUIREMENTS: RequirementItem[] = [
     id: 'total-time',
     label: 'Total Flight Time',
     requirement: '40 hrs minimum total time',
-    current: 126.7,
+    current: 129.2,
     minimum: 40,
     unit: 'hrs',
     met: true,
@@ -106,10 +106,10 @@ const PPL_REQUIREMENTS: RequirementItem[] = [
 ];
 
 const FlightLogs: React.FC = () => {
-  const asOfDate = '8/4/2026';
+  const asOfDate = '10/14/2026';
 
   // Summary stats
-  const totalHours = 126.7;
+  const totalHours = 129.2;
   const soloHours = 10.0;
   const xcHours = 22.7;
   const soloXcHours = 4.7;

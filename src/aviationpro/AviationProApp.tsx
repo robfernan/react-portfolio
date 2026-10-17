@@ -50,7 +50,7 @@ function AviationProApp() {
             <h1 className="text-lg sm:text-2xl font-bold text-theme-primary dark:text-theme-primary-dark flex-shrink-0"><span className="lg:hidden">AVPRO</span><span className="hidden lg:inline">AviationPro</span></h1>
             <span className="hidden xl:inline-flex items-center gap-1 text-[11px] font-medium px-2 py-0.5 rounded-full border border-theme-accent/30 dark:border-theme-accent-dark text-theme-secondary dark:text-theme-secondary-dark">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              120+ Flight Hours Tested · Offline EFB
+              129.2 Flight Hours · Student Pilot EFB
             </span>
           </div>
           <nav className="flex gap-0.5 flex-1 justify-center overflow-x-auto no-scrollbar">

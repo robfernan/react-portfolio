@@ -49,7 +49,7 @@ The site spans:
 
 | Route | Component | Description |
 |-------|-----------|-------------|
-| `/` | `PortfolioHome.tsx` | Home — headline metrics (120+ Flight Hours · Student Pilot, 5+ yrs studio experience), active projects preview, capabilities pills |
+| `/` | `PortfolioHome.tsx` | Home — headline metrics (129+ Flight Hours · Student Pilot, 5+ yrs studio experience), active projects preview, capabilities pills |
 | `/works`, `/work`, `/projects` | `magazine/Magazine.tsx` | Works — curated editorial catalogue & showcase spanning software, tools, client work, retro systems, wearable UI, and digital art |
 | `/aviationpro/*` | `aviationpro/AviationProApp.tsx` | AviationPro — in-browser Electronic Flight Bag (EFB) preview tailored for the portfolio with direct link to the full standalone suite |
 | `/streaming` | `Streaming.tsx` | Streaming — live coding, automotive sketching, retro tech, and gaming channels across YouTube & Twitch |

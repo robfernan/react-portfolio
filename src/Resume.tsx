@@ -86,7 +86,7 @@ const certifications: Certification[] = [
 ];
 
 const selectedProjects = [
-  'AviationPro — multi-platform pilot utility suite for desktop, web, Android, and Wear OS (120+ flight hours tested).',
+  'AviationPro — multi-platform pilot utility suite for desktop, web, Android, and Wear OS (129.2 flight hours).',
   'PaperWorks Pro — document automation suite for invoices, resumes, and commercial client proposals.',
   'Florida Window & Door Maintenance — commercial responsive web platform and mobile invoicing automation tool.',
   'JT Marine & SoFlo Marine Detailing — commercial web presences and high-DPI marine service print collateral.',

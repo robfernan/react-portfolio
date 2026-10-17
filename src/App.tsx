@@ -86,16 +86,16 @@ function AppContent() {
     // Per-page document titles — clearer browser tabs + better SEO per route.
     const pageTitles: Record<string, string> = {
         '': 'Robert Fernandez — Cross-Platform Software Engineer & Digital Artist',
-        '/works': 'Works · Robert Fernandez Portfolio',
-        '/aviationpro': 'AviationPro — Flight Planning Suite · Robert Fernandez',
-        '/streaming': 'Streaming · MungDaal321',
-        '/resume': 'Résumé · Robert Fernandez',
+        'works': 'Works · Robert Fernandez Portfolio',
+        'aviationpro': 'AviationPro — Electronic Flight Bag · Robert Fernandez',
+        'streaming': 'Streaming · MungDaal321',
+        'resume': 'Résumé · Robert Fernandez',
     };
     
     React.useEffect(() => {
         const base = location.pathname.split('/')[1] || '';
-        document.title = pageTitles[base] ?? (isAviationPro ? pageTitles['/aviationpro'] : 'Robert Fernandez — Portfolio');
-    }, [location.pathname, isAviationPro]);
+        document.title = pageTitles[base] ?? 'Robert Fernandez — Portfolio';
+    }, [location.pathname]);
 
     React.useEffect(() => {
         document.documentElement.classList.add('theme-minimal');
@@ -141,6 +141,9 @@ function AppContent() {
     return (
         <ThemeProvider value={{ theme, darkMode, setTheme, toggleDarkMode }}>
             <div className="min-h-screen bg-theme-bg dark:bg-theme-bg-dark transition-colors duration-300 flex flex-col">
+                {/* Scroll-driven reading progress bar */}
+                <div id="scroll-progress-bar" aria-hidden="true" />
+
                 {/* Skip link: first focusable element for keyboard / screen-reader users */}
                 <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-lg focus:bg-theme-action focus:text-white focus:font-semibold">
                     Skip to content
