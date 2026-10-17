@@ -25,17 +25,20 @@ The site spans:
 ## ✨ Features
 
 ### 🎨 Design & UX
-- **Component-based architecture** — reusable React components for consistency
-- **Responsive design** — mobile-first, fully supports iPhone SE (375px) viewports; desktop layouts tuned for 1080p+ legibility
+- **Component-based architecture** — reusable React components for consistency across all sub-apps
+- **Responsive design** — mobile-first, verified from iPhone SE (375px) up to 4K ultra-wide displays (3840px)
+- **Unified container rhythm** — standardized `max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8` layout across header, hero, works, aviation, and footer
 - **Theme system** — CSS custom properties (`theme-*` tokens) with 4 switchable themes + light/dark mode
-  - **90s theme dark mode** uses a warm gold-on-black palette (near-black canvas, glowing gold accent `#e8b24a`, warm off-white text) for a CRT/VHS feel — no blue/aqua cast.
-- **Interactive elements** — hover states, transitions, and micro-interactions
+  - **90s theme dark mode** uses an authentic **Amber CRT Phosphor** palette (`#f59e0b` / `#d97706` over deep black `#0c0a09` canvas) with zero blue cast
+- **ADA / Section 508 / WCAG 2.1 AA compliant** — minimum $\ge 44 \times 44\text{px}$ touch targets, visible focus-rings, ARIA roles/labels, contrast ratios $\ge 4.5:1$, and full `prefers-reduced-motion` support
+- **Zero-CDN, 100% self-hosted typography** — Playfair Display and FontAwesome icons bundled directly from local WOFF2 subsets with preloads for instant, tracker-proof first paints
 
 ### 🛠️ Technical
-- **TypeScript** — strict typing across all components and utilities
-- **React hooks & context** — state management via `useState`, `useEffect`, `ThemeProvider`
-- **Tailwind CSS v4** — utility-first styling with a custom PostCSS pipeline
-- **Vite** — HMR for instant feedback, optimized code-split production bundles
+- **TypeScript** — strict typing across all components, calculators, and utilities
+- **Route-level Code Splitting** — `React.lazy` and `React.Suspense` for secondary pages (`/works`, `/aviation`, `/streaming`, `/resume`) reducing initial gzipped entry bundle to ~75 kB
+- **React hooks & context** — centralized state management via `useState`, `useEffect`, `ThemeProvider`
+- **Tailwind CSS v4** — utility-first styling with `@theme` custom properties and responsive variants
+- **Vite 8** — instant HMR and optimized tree-shaken production builds
 
 ### 🧮 Interactive Tools (AviationPro EFB Suite)
 - **VFR NavLog (Dead Reckoning Chart)**: True Course, Wind Correction Angle (WCA), True/Magnetic/Compass Heading, Groundspeed, Leg ETE/ETA, Fuel Burn, VOR navigation data, print stylesheet & JSON export
@@ -49,14 +52,14 @@ The site spans:
 
 | Route | Component | Description |
 |-------|-----------|-------------|
-| `/` | `PortfolioHome.tsx` | Home — headline metrics (129+ Flight Hours · Student Pilot, 5+ yrs studio experience), active projects preview, capabilities pills |
-| `/works`, `/work`, `/projects` | `magazine/Magazine.tsx` | Works — curated editorial catalogue & showcase spanning software, tools, client work, retro systems, wearable UI, and digital art |
-| `/aviationpro/*` | `aviationpro/AviationProApp.tsx` | AviationPro — in-browser Electronic Flight Bag (EFB) preview tailored for the portfolio with direct link to the full standalone suite |
+| `/` | `PortfolioHome.tsx` | Home — headline capabilities, active featured builds, quick links |
+| `/works`, `/work`, `/projects` | `Magazine.tsx` | Works — curated editorial catalogue & showcase spanning software, tools, client work, retro systems, wearable UI, and digital art |
+| `/aviation/*` | `AviationProApp.tsx` | Aviation — in-browser Electronic Flight Bag (EFB) suite with calculators, weather, and weight & balance tools |
 | `/streaming` | `Streaming.tsx` | Streaming — live coding, automotive sketching, retro tech, and gaming channels across YouTube & Twitch |
-| `/resume` | `Resume.tsx` | Résumé — recruiter-ready CV with one-page PDF/print stylesheet |
+| `/resume` | `Resume.tsx` | Resume — executive recruiter-ready CV with a strict one-page PDF/print stylesheet |
 
-### 📝 Résumé (`/resume`)
-A **general-overview résumé** designed for recruiters who land on the site after an application. It opens with a name heading, tagline, and contact links, then covers professional experience (primary role + independent/freelance studio), core technical skills, education & certifications, and selected projects — with bilingual (English/Spanish) noted throughout.
+### 📝 Resume (`/resume`)
+A **general-overview resume** designed for recruiters who land on the site after an application. It opens with a name heading, tagline, and contact links, then covers professional experience (primary role + independent/freelance studio), core technical skills, education & certifications, and selected projects — with bilingual (English/Spanish) noted throughout.
 
 - **Print / PDF export** — a "Print / PDF" button triggers `window.print()`, and a dedicated `@media print` block in `src/index.css` produces a clean, high-contrast **single-page** document: it hides site chrome and decorative elements, forces a light palette, equalizes the Education + Selected Projects columns, and compacts spacing so everything fits on one US Letter page at 100% scale.
 - Contact links (portfolio / GitHub / LinkedIn) render in the header for both screen and print.
@@ -67,38 +70,35 @@ A **general-overview résumé** designed for recruiters who land on the site aft
 |----------|------------|
 | UI framework | React 19, React DOM 19 |
 | Language | TypeScript |
-| Styling | Tailwind CSS v4 (PostCSS + Autoprefixer), `tailwindcss-animate` |
+| Styling | Tailwind CSS v4, custom CSS variables |
 | Build tool | Vite 8 (`@vitejs/plugin-react`) |
-| Routing | React Router v6 |
-| Icons | FontAwesome Free, Lucide React |
-| Data / persistence | Dexie (+ `dexie-react-hooks`) for the AviationPro logbook |
-| PDF export | jsPDF (AviationPro) + browser print stylesheet (Résumé) |
-| UI primitives | Radix UI (`@radix-ui/react-slot`) |
+| Routing | React Router v7 (`startTransition` enabled) |
+| Icons | FontAwesome Free (bundled WOFF2), Lucide React |
+| Data / persistence | Dexie (+ `dexie-react-hooks`) for the Aviation logbook |
+| PDF export | Browser print stylesheet (Resume) + canvas / JSON export |
+| Typography | Playfair Display (self-hosted WOFF2 with Latin preloads) |
 
 ## 📁 Project Structure
 
 ```
-├── index.html                 # Vite entry HTML
-├── public/                    # Static assets: images, screenshots, fonts
+├── index.html                 # Vite entry HTML (JSON-LD Person/Org schemas + WOFF2 preloads)
+├── public/                    # Static assets: images, screenshots, fonts/
 ├── src/
-│   ├── main.tsx               # React entry point
-│   ├── App.tsx                # Router, theme provider, global header/nav + theme controls
-│   ├── PortfolioHome.tsx      # Home page (/)
-│   ├── Resume.tsx             # Résumé page (/resume) — includes print/PDF support
-│   ├── Streaming.tsx          # Streaming page (/streaming)
-│   ├── Footer.tsx             # Site footer with social links
-│   ├── index.css              # Global styles, Tailwind v4 theme tokens, @media print block
-│   ├── theme-vars.css         # CSS custom properties for the 4 switchable themes
-│   ├── context/               # ThemeProvider (theme + dark-mode state)
-│   ├── components/
-│   │   ├── layout/Layout.tsx
-│   │   └── ui/                # Button, Card, Dialog, Input, BackToTop, LoadingSpinner, cn util
-│   ├── magazine/              # Works page: Magazine.tsx, MagazineUI.tsx, data.ts (projects + art platforms)
-│   └── aviationpro/           # Embedded AviationPro app (full sub-project under src/)
-├── tailwind.config.js         # Tailwind config (theme tokens, xs breakpoint, plugins)
-├── postcss.config.js          # PostCSS pipeline for Tailwind v4
-├── vite.config.ts             # Vite build configuration
-└── tsconfig.json              # TypeScript configuration
+│   ├── main.tsx               # React entry point & SW registration
+│   ├── App.tsx                # Router, lazy route Suspense, theme provider, global header & nav
+│   ├── index.css              # Global styles, Tailwind v4 @theme, @media print block
+│   ├── theme-vars.css         # CSS custom properties for 4 themes (Minimal, Slate, Midnight, 90s)
+│   ├── context/               # ThemeContext (theme + dark-mode state)
+│   ├── components/            # Header, Footer, BackToTop, layout shells
+│   └── pages/
+│       ├── Home/              # PortfolioHome.tsx
+│       ├── Works/             # Magazine.tsx, MagazineUI.tsx, data.ts
+│       ├── Aviation/          # AviationProApp.tsx, CX-6, Weight & Balance, Nav Tools, Weather
+│       ├── Streaming/         # Streaming.tsx
+│       └── Resume/            # Resume.tsx (one-page print optimized)
+├── package.json
+├── tsconfig.json              # TypeScript configuration
+└── vite.config.ts
 ```
 
 ## 🎯 Featured Projects
