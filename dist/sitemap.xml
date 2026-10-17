@@ -11,9 +11,9 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://robertfernandez.dev/aviationpro</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://robertfernandez.dev/aviation</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://robertfernandez.dev/streaming</loc>

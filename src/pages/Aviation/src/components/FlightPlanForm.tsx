@@ -413,13 +413,15 @@ const FlightPlanForm: React.FC = () => {
           <div className="flex space-x-2 flex-shrink-0">
             <button 
               onClick={handlePrint}
-              className="p-2 rounded-lg transition-colors flex items-center justify-center bg-theme-bg dark:bg-theme-bg-dark hover:bg-theme-accent/10 dark:hover:bg-theme-accent-dark/10 text-theme-primary dark:text-theme-primary-dark">
-              <Printer className="w-3 h-3 sm:w-4 sm:h-4" />
+              title="Print NavLog"
+              className="p-2 sm:p-2.5 rounded-lg border border-theme-accent/25 dark:border-theme-accent-dark/30 bg-theme-card dark:bg-theme-card-dark hover:border-theme-accent/50 dark:hover:border-theme-accent-dark/50 text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-primary dark:hover:text-theme-primary-dark transition-all">
+              <Printer className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </button>
             <button 
               onClick={handleDownload}
-              className="p-2 rounded-lg transition-colors flex items-center justify-center bg-theme-bg dark:bg-theme-bg-dark hover:bg-theme-accent/10 dark:hover:bg-theme-accent-dark/10 text-theme-primary dark:text-theme-primary-dark">
-              <Download className="w-3 h-3 sm:w-4 sm:h-4" />
+              title="Download JSON NavLog"
+              className="p-2 sm:p-2.5 rounded-lg border border-theme-accent/25 dark:border-theme-accent-dark/30 bg-theme-card dark:bg-theme-card-dark hover:border-theme-accent/50 dark:hover:border-theme-accent-dark/50 text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-primary dark:hover:text-theme-primary-dark transition-all">
+              <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </button>
           </div>
         </div>

@@ -507,6 +507,12 @@ table thead th {
 
   /* Keep multi-line items from splitting awkwardly across pages. */
   article, li { break-inside: avoid; page-break-inside: avoid; }
+
+  /* Ensure strict 1-page limit for single-page export */
+  @page {
+    size: letter portrait;
+    margin: 8mm 10mm;
+  }
 }
 
 /* Respect users who ask their OS to reduce motion (accessibility). */

@@ -103,7 +103,7 @@ export default function Magazine() {
 
   return (
     <div className="min-h-screen bg-theme-bg dark:bg-theme-bg-dark">
-      <section className="max-w-[1600px] mx-auto px-3 sm:px-4 py-6 sm:py-10" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+      <section className="max-w-7xl mx-auto px-4 py-8 sm:py-12" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
         <header className="mb-5 sm:mb-7 border-b border-theme-accent/20 dark:border-theme-accent-dark pb-4">
           <p className="text-[11px] font-semibold tracking-[0.25em] uppercase text-theme-accent dark:text-theme-secondary-dark mb-3 flex items-center gap-3">
             <span className="w-8 h-px bg-theme-accent dark:bg-theme-accent-dark" />

@@ -251,17 +251,19 @@ const WeightBalanceCalculator: React.FC = () => {
   }, [weightItems, config, limits, activeCategory]);
 
   return (
-    <div className="min-h-screen bg-theme-bg dark:bg-theme-bg-dark text-theme-primary dark:text-theme-primary-dark font-mono tracking-tighter p-4 sm:p-6 lg:p-8 xl:p-10 selection:bg-theme-accent/30 dark:selection:bg-theme-accent-dark/30 overflow-x-hidden">
+    <div className="w-full text-theme-primary dark:text-theme-primary-dark font-mono tracking-tighter selection:bg-theme-accent/30 dark:selection:bg-theme-accent-dark/30">
       <div className="max-w-[1600px] mx-auto space-y-8">
         
-        <div className="flex flex-wrap gap-3 sm:gap-4">
-            <div className="flex border border-theme-accent/30 dark:border-theme-accent-dark/30 bg-theme-card dark:bg-theme-card-dark p-1">
+        <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+            <div className="flex rounded-lg border border-theme-accent/25 dark:border-theme-accent-dark/30 bg-theme-header dark:bg-theme-header-dark p-1 gap-1">
               {['NORMAL', 'UTILITY'].map(cat => (
                 <button 
                   key={cat}
                   onClick={() => setActiveCategory(cat as any)}
-                  className={`px-5 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-black uppercase tracking-widest transition-all ${
-                    activeCategory === cat ? 'bg-theme-accent dark:bg-theme-accent-dark text-white' : 'text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-primary dark:hover:text-theme-primary-dark'
+                  className={`px-4 sm:px-5 py-1.5 sm:py-2 rounded-md text-xs sm:text-sm font-semibold tracking-wide transition-all ${
+                    activeCategory === cat 
+                      ? 'bg-theme-action dark:bg-theme-action-dark text-white shadow-sm' 
+                      : 'text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-primary dark:hover:text-theme-primary-dark'
                   }`}
                 >
                   {cat}
@@ -270,7 +272,7 @@ const WeightBalanceCalculator: React.FC = () => {
             </div>
 
             <button onClick={() => window.print()} title="Print this page"
-              className="p-2.5 sm:p-3 bg-theme-card dark:bg-theme-card-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 hover:bg-theme-header dark:hover:bg-theme-header-dark transition-all group">
+              className="p-2 sm:p-2.5 rounded-lg bg-theme-card dark:bg-theme-card-dark border border-theme-accent/25 dark:border-theme-accent-dark/30 hover:border-theme-accent/50 dark:hover:border-theme-accent-dark/50 transition-all group">
               <Printer className="w-4 h-4 sm:w-5 sm:h-5 text-theme-secondary dark:text-theme-secondary-dark group-hover:text-theme-primary dark:group-hover:text-theme-primary-dark" />
             </button>
           </div>

@@ -5,15 +5,15 @@ const CX6Calculator: React.FC = () => {
   const [activeTab, setActiveTab] = useState('WIND');
 
   return (
-    <div className={`max-w-[1200px] mx-auto w-full flex flex-col h-full border ${'bg-theme-card dark:bg-theme-card-dark border-theme-accent/30 dark:border-theme-accent-dark/30'} shadow-2xl overflow-hidden`}>
+    <div className="max-w-[1200px] mx-auto w-full flex flex-col h-full rounded-lg shadow-lg border border-theme-accent/30 dark:border-theme-accent-dark/30 bg-theme-card dark:bg-theme-card-dark overflow-hidden">
       
       {/* 🛠️ UNIFIED MFD NAVIGATION BAR */}
-      <div className="flex flex-wrap bg-theme-header dark:bg-theme-header-dark border-b border-theme-accent/30 dark:border-theme-accent-dark/30">
-        <TabBtn active={activeTab === 'WIND'} onClick={() => setActiveTab('WIND')} icon={<Wind size={12}/>} label="WIND" />
-        <TabBtn active={activeTab === 'TAS'} onClick={() => setActiveTab('TAS')} icon={<Gauge size={12}/>} label="TAS" />
-        <TabBtn active={activeTab === 'TSD'} onClick={() => setActiveTab('TSD')} icon={<Clock size={12}/>} label="TSD" />
-        <TabBtn active={activeTab === 'FUEL'} onClick={() => setActiveTab('FUEL')} icon={<Fuel size={12}/>} label="FUEL" />
-        <TabBtn active={activeTab === 'X-WIND'} onClick={() => setActiveTab('X-WIND')} icon={<Zap size={12}/>} label="X-WIND" />
+      <div className="flex flex-wrap p-2 bg-theme-header dark:bg-theme-header-dark border-b border-theme-accent/25 dark:border-theme-accent-dark/30 gap-1.5">
+        <TabBtn active={activeTab === 'WIND'} onClick={() => setActiveTab('WIND')} icon={<Wind size={13}/>} label="WIND" />
+        <TabBtn active={activeTab === 'TAS'} onClick={() => setActiveTab('TAS')} icon={<Gauge size={13}/>} label="TAS" />
+        <TabBtn active={activeTab === 'TSD'} onClick={() => setActiveTab('TSD')} icon={<Clock size={13}/>} label="TSD" />
+        <TabBtn active={activeTab === 'FUEL'} onClick={() => setActiveTab('FUEL')} icon={<Fuel size={13}/>} label="FUEL" />
+        <TabBtn active={activeTab === 'X-WIND'} onClick={() => setActiveTab('X-WIND')} icon={<Zap size={13}/>} label="X-WIND" />
       </div>
 
       {/* 🖥️ MAIN INSTRUMENT DISPLAY */}
@@ -149,8 +149,10 @@ const Stat = ({ label, val, color = "text-theme-primary dark:text-theme-primary-
 const TabBtn = ({ active, onClick, icon, label }: any) => (
   <button 
     onClick={onClick} 
-    className={`flex-1 min-w-[70px] sm:min-w-[90px] flex items-center justify-center gap-2 py-3 sm:py-4 lg:py-5 text-[9px] sm:text-xs lg:text-sm font-black tracking-widest border-r border-theme-accent/30 dark:border-theme-accent-dark/30 transition-all ${
-      active ? 'bg-theme-accent dark:bg-theme-accent-dark text-white shadow-[inset_0_0_20px_rgba(0,0,0,0.4)]' : 'text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-primary dark:hover:text-theme-primary-dark hover:bg-theme-card/50 dark:hover:bg-theme-card-dark/50'
+    className={`flex-1 min-w-[70px] sm:min-w-[90px] flex items-center justify-center gap-1.5 py-2 sm:py-2.5 px-3 rounded-md text-xs sm:text-sm font-semibold tracking-wide transition-all border ${
+      active 
+        ? 'bg-theme-action dark:bg-theme-action-dark text-white border-theme-action dark:border-theme-action-dark shadow-sm' 
+        : 'bg-theme-card dark:bg-theme-card-dark text-theme-secondary dark:text-theme-secondary-dark border-theme-accent/20 dark:border-theme-accent-dark/20 hover:border-theme-accent/40 dark:hover:border-theme-accent-dark/40 hover:text-theme-primary dark:hover:text-theme-primary-dark'
     }`}
   >
     {icon} <span>{label}</span>

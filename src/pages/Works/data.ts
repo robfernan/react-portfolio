@@ -41,7 +41,7 @@ export const ISSUES: Issue[] = [
         status: 'Beta v1.0',
         impact: 'Desktop • Android EFB • Wear OS — used by pilots for pre-flight ops',
         github: 'https://github.com/robfernan/AviationPro',
-        tryNow: '/aviationpro',
+        tryNow: '/aviation',
       },
       {
         title: 'PaperWorks Pro',

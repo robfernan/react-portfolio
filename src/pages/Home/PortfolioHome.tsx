@@ -83,7 +83,7 @@ export default function PortfolioHome() {
   return (
     <div className="min-h-screen bg-theme-bg dark:bg-theme-bg-dark transition-colors duration-300">
 
-      <section className="mx-auto w-full max-w-[1600px] px-4 py-12 sm:px-6 sm:py-20 lg:px-10">
+      <section className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 sm:py-20 lg:px-8">
         {/* ============================ HERO ============================ */}
         <section className="mb-16 sm:mb-24">
           <figure className="overflow-hidden border border-theme-accent/25 dark:border-theme-accent-dark bg-theme-card dark:bg-theme-card-dark shadow-lg">
@@ -145,7 +145,7 @@ export default function PortfolioHome() {
                 GitHub
               </a>
               <Link to="/resume" className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg border border-theme-accent/40 dark:border-theme-accent-dark text-theme-primary dark:text-theme-secondary-dark hover:bg-theme-accent/10 font-medium">
-                Résumé
+                Resume
               </Link>
               <div className="basis-full flex flex-wrap gap-2 pt-2 lg:justify-end">
                 {CAPABILITIES.map((c) => (
@@ -158,7 +158,7 @@ export default function PortfolioHome() {
           {/* At-a-Glance Credibility Metrics — Clickable to Evidence */}
           <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4 pt-2">
             <Link
-              to="/aviationpro"
+              to="/aviation"
               className="group border-l-2 border-theme-accent dark:border-theme-accent-dark pl-4 hover:border-theme-action transition-colors block"
               title="Explore AviationPro EFB suite"
             >
@@ -182,7 +182,7 @@ export default function PortfolioHome() {
             <Link
               to="/resume"
               className="group border-l-2 border-theme-accent dark:border-theme-accent-dark pl-4 hover:border-theme-action transition-colors block"
-              title="View certifications on Résumé"
+              title="View certifications on Resume"
             >
               <span className="block text-2xl sm:text-3xl font-black text-theme-primary dark:text-theme-secondary-dark group-hover:text-theme-action transition-colors">4x</span>
               <span className="text-xs text-theme-secondary dark:text-theme-secondary-dark font-medium flex items-center gap-1">
@@ -323,8 +323,8 @@ export default function PortfolioHome() {
                 View repository →
               </a>
             )}
-            {preview.href === '/aviationpro' && (
-              <Link to={preview.href} onClick={() => setPreview(null)} className="mt-4 inline-flex items-center gap-2 border border-theme-accent/40 rounded px-4 py-2 text-xs font-semibold text-theme-primary dark:border-theme-accent-dark dark:text-theme-secondary-dark hover:bg-theme-accent/10 transition-colors">
+            {(preview.href === '/aviation' || preview.href === '/aviationpro') && (
+              <Link to="/aviation" onClick={() => setPreview(null)} className="mt-4 inline-flex items-center gap-2 border border-theme-accent/40 rounded px-4 py-2 text-xs font-semibold text-theme-primary dark:border-theme-accent-dark dark:text-theme-secondary-dark hover:bg-theme-accent/10 transition-colors">
                 Launch tool →
               </Link>
             )}

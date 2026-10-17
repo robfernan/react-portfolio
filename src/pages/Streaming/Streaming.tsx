@@ -91,12 +91,23 @@ export default function Streaming() {
 
         {/* Twitch */}
         <section className="twitch border-t-4 border-purple-600 dark:border-purple-500 bg-theme-card dark:bg-theme-card-dark p-6 flex-1">
-          <div className="flex items-center gap-3 mb-4">
-            <i className="fab fa-twitch text-purple-600 dark:text-purple-500 text-2xl"></i>
-            <h2 className="text-2xl font-semibold text-theme-primary dark:text-theme-primary-dark">Twitch</h2>
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <i className="fab fa-twitch text-purple-600 dark:text-purple-500 text-2xl"></i>
+              <h2 className="text-2xl font-semibold text-theme-primary dark:text-theme-primary-dark">Twitch</h2>
+            </div>
+            <a
+              href="https://www.twitch.tv/mungdaal321"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20 hover:bg-purple-500/20 transition-colors"
+            >
+              <span className="w-2 h-2 rounded-full bg-purple-500 animate-pulse" />
+              mungdaal321
+            </a>
           </div>
-          <a href="https://www.twitch.tv/mungdaal321" target="_blank" rel="noreferrer" className="block mb-4 group">
-            <img loading="lazy" decoding="async" src={twitchThumb} alt="Twitch Channel" width={1280} height={720} className="w-full rounded-lg transition-shadow" onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/images/placeholder.svg'; }} />
+          <a href="https://www.twitch.tv/mungdaal321" target="_blank" rel="noreferrer" className="block mb-4 group overflow-hidden rounded-lg">
+            <img loading="lazy" decoding="async" src={twitchThumb} alt="Twitch Channel" width={1280} height={720} className="w-full rounded-lg transition-transform duration-300 group-hover:scale-[1.02]" onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/images/placeholder.svg'; }} />
           </a>
           <p className="text-theme-secondary dark:text-theme-secondary-dark mb-4">Join my live streams for real-time coding, gaming, and creative sessions. Follow to get notified when I go live.</p>
           <a href="https://www.twitch.tv/mungdaal321" target="_blank" rel="noreferrer" className="inline-block px-4 py-2 rounded bg-theme-action dark:bg-theme-action-dark text-white font-medium hover:opacity-90 transition-opacity">

@@ -128,19 +128,20 @@ const NavigationTools: React.FC = () => {
       {/* Header + Tab Bar */}
       <div className="bg-theme-header dark:bg-theme-header-dark border-b border-theme-accent/30 dark:border-theme-accent-dark/30 p-4 sm:p-6">
         <h2 className={`text-xl sm:text-2xl font-bold mb-4 ${headingCls}`}>Navigation Tools</h2>
-        <div className="flex flex-wrap bg-theme-bg dark:bg-theme-bg-dark border border-theme-accent/30 dark:border-theme-accent-dark/30 rounded-md overflow-hidden">
+        <div className="flex flex-wrap gap-1.5 p-1.5 bg-theme-bg dark:bg-theme-bg-dark border border-theme-accent/25 dark:border-theme-accent-dark/30 rounded-lg">
           {tools.map((tool) => {
             const Icon = tool.icon;
             return (
               <button
                 key={tool.id}
                 onClick={() => setActiveTool(tool.id)}
-                className={`flex items-center justify-center gap-2 px-3 sm:px-4 lg:px-5 py-2.5 sm:py-3 lg:py-4 text-[10px] sm:text-xs lg:text-sm font-black tracking-widest uppercase border-r border-theme-accent/20 dark:border-theme-accent-dark/20 last:border-r-0 transition-all duration-200 ${activetool === tool.id
-                    ? 'bg-theme-accent dark:bg-theme-accent-dark text-white'
-                    : 'text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-primary dark:hover:text-theme-primary-dark hover:bg-theme-header dark:hover:bg-theme-header-dark'
-                  }`}
+                className={`flex items-center justify-center gap-1.5 px-3 sm:px-4 py-2 rounded-md text-xs sm:text-sm font-semibold tracking-wide transition-all border ${
+                  activetool === tool.id
+                    ? 'bg-theme-action dark:bg-theme-action-dark text-white border-theme-action dark:border-theme-action-dark shadow-sm'
+                    : 'bg-theme-card dark:bg-theme-card-dark text-theme-secondary dark:text-theme-secondary-dark border-theme-accent/20 dark:border-theme-accent-dark/20 hover:border-theme-accent/40 dark:hover:border-theme-accent-dark/40 hover:text-theme-primary dark:hover:text-theme-primary-dark'
+                }`}
               >
-                <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
+                <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 <span>{tool.label}</span>
               </button>
             );
