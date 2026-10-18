@@ -226,14 +226,28 @@ export default function Magazine() {
                       </p>
                     </div>
                   </div>
-                  <div className="px-6 pb-6 pt-2 border-t border-theme-accent/15 dark:border-theme-accent-dark/20 flex items-center justify-between">
-                    <button
-                      type="button"
-                      onClick={() => setPreviewEntry(entry)}
-                      className="text-xs font-semibold text-theme-action dark:text-theme-action-dark hover:underline font-mono-tech"
-                    >
-                      Inspect Spec →
-                    </button>
+                  <div className="px-6 pb-6 pt-2 border-t border-theme-accent/15 dark:border-theme-accent-dark/20 flex items-center justify-between gap-2 flex-wrap">
+                    <div className="flex items-center gap-3">
+                      <button
+                        type="button"
+                        onClick={() => setPreviewEntry(entry)}
+                        className="text-xs font-semibold text-theme-action dark:text-theme-action-dark hover:underline font-mono-tech"
+                      >
+                        Inspect Spec →
+                      </button>
+                      {entry.github && (
+                        <a
+                          href={entry.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 text-xs font-medium text-theme-secondary hover:text-theme-primary dark:text-theme-secondary-dark dark:hover:text-theme-primary-dark transition-colors font-mono-tech"
+                          title={`View ${entry.title} GitHub repository`}
+                        >
+                          <i className="fab fa-github text-sm" />
+                          <span>Code ↗</span>
+                        </a>
+                      )}
+                    </div>
                     {entry.tryNow && (
                       <a
                         href={entry.tryNow}
