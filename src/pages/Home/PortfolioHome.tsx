@@ -216,6 +216,57 @@ export default function PortfolioHome() {
           </div>
         </section>
 
+        {/* ======================= DISCIPLINES & PILLARS ======================= */}
+        <section className="mb-16 sm:mb-24">
+          <SectionHeading eyebrow="Disciplines &amp; Craft" title="The Three Pillars" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="p-6 sm:p-8 rounded-2xl border border-theme-accent/25 dark:border-theme-accent-dark/40 bg-theme-card dark:bg-theme-card-dark transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+              <div className="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center font-bold text-lg mb-5 border border-purple-500/20">
+                🎨
+              </div>
+              <h3 className="font-display text-xl font-bold mb-2 text-theme-primary dark:text-theme-primary-dark">Digital Art &amp; Design</h3>
+              <p className="text-sm text-theme-secondary dark:text-theme-secondary-dark leading-relaxed mb-4">
+                4x Adobe Certified Professional specializing in brand systems, vector art, UI architecture, Figcraft/Figma design tokens, and tactile editorial aesthetics.
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                <span className="text-[10px] font-mono-tech px-2 py-0.5 rounded bg-theme-bg dark:bg-theme-bg-dark text-theme-secondary dark:text-theme-secondary-dark">Figcraft / Figma</span>
+                <span className="text-[10px] font-mono-tech px-2 py-0.5 rounded bg-theme-bg dark:bg-theme-bg-dark text-theme-secondary dark:text-theme-secondary-dark">Illustrator</span>
+                <span className="text-[10px] font-mono-tech px-2 py-0.5 rounded bg-theme-bg dark:bg-theme-bg-dark text-theme-secondary dark:text-theme-secondary-dark">UI/UX Systems</span>
+              </div>
+            </div>
+
+            <div className="p-6 sm:p-8 rounded-2xl border border-theme-accent/25 dark:border-theme-accent-dark/40 bg-theme-card dark:bg-theme-card-dark transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+              <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold text-lg mb-5 border border-blue-500/20">
+                💻
+              </div>
+              <h3 className="font-display text-xl font-bold mb-2 text-theme-primary dark:text-theme-primary-dark">Systems &amp; Native Code</h3>
+              <p className="text-sm text-theme-secondary dark:text-theme-secondary-dark leading-relaxed mb-4">
+                Engineering cross-platform runtimes across React, TypeScript, Flutter, Go, C++, Lua, and custom homebrew retro engines (Sony PSP, Microsoft Xbox).
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                <span className="text-[10px] font-mono-tech px-2 py-0.5 rounded bg-theme-bg dark:bg-theme-bg-dark text-theme-secondary dark:text-theme-secondary-dark">React / TypeScript</span>
+                <span className="text-[10px] font-mono-tech px-2 py-0.5 rounded bg-theme-bg dark:bg-theme-bg-dark text-theme-secondary dark:text-theme-secondary-dark">Flutter / Dart</span>
+                <span className="text-[10px] font-mono-tech px-2 py-0.5 rounded bg-theme-bg dark:bg-theme-bg-dark text-theme-secondary dark:text-theme-secondary-dark">C++ / Love2D</span>
+              </div>
+            </div>
+
+            <div className="p-6 sm:p-8 rounded-2xl border border-theme-accent/25 dark:border-theme-accent-dark/40 bg-theme-card dark:bg-theme-card-dark transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+              <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold text-lg mb-5 border border-emerald-500/20">
+                ✈️
+              </div>
+              <h3 className="font-display text-xl font-bold mb-2 text-theme-primary dark:text-theme-primary-dark">Aviation &amp; Telemetry</h3>
+              <p className="text-sm text-theme-secondary dark:text-theme-secondary-dark leading-relaxed mb-4">
+                Student Pilot bringing cockpit discipline to flight planning software, live NOAA METAR weather decoding, runway crosswind trigonometry, and weight &amp; balance.
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                <span className="text-[10px] font-mono-tech px-2 py-0.5 rounded bg-theme-bg dark:bg-theme-bg-dark text-theme-secondary dark:text-theme-secondary-dark">AviationPro EFB</span>
+                <span className="text-[10px] font-mono-tech px-2 py-0.5 rounded bg-theme-bg dark:bg-theme-bg-dark text-theme-secondary dark:text-theme-secondary-dark">NOAA Telemetry</span>
+                <span className="text-[10px] font-mono-tech px-2 py-0.5 rounded bg-theme-bg dark:bg-theme-bg-dark text-theme-secondary dark:text-theme-secondary-dark">129+ Flight Hours</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* ======================= NOW BUILDING ======================= */}
         <section id="now-building" className="mb-8 sm:mb-12 scroll-mt-8">
           <SectionHeading eyebrow="Active Work" title="Now Building" />

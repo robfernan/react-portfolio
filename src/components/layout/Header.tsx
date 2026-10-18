@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import type { ThemeKey } from '@/context/ThemeContext';
 
 interface ThemeOption {
@@ -28,31 +28,38 @@ export default function Header({
   mobileMenuOpen,
   setMobileMenuOpen,
 }: HeaderProps) {
+  const navLinkClass = ({ isActive }: { isActive: boolean }) =>
+    `relative px-3 py-1.5 rounded-full font-medium text-sm transition-all duration-200 focus-visible:ring-2 focus-visible:ring-theme-action ${
+      isActive
+        ? 'bg-theme-accent/20 dark:bg-theme-accent-dark/20 text-theme-primary dark:text-theme-primary-dark font-semibold shadow-inner'
+        : 'text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-action dark:hover:text-theme-action-dark'
+    }`;
+
   return (
-    <header className="border-b border-theme-accent/15 dark:border-theme-accent-dark bg-theme-header dark:bg-theme-header-dark shadow-sm transition-colors duration-300">
+    <header className="border-b border-theme-accent/15 dark:border-theme-accent-dark bg-theme-header dark:bg-theme-header-dark shadow-sm transition-colors duration-300 sticky top-0 z-40 backdrop-blur-md">
       <nav className="max-w-7xl mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
           <Link
             to="/"
-            className="text-xl font-bold text-theme-primary dark:text-theme-primary-dark hover:underline"
+            className="text-xl font-bold text-theme-primary dark:text-theme-primary-dark hover:underline font-display tracking-tight"
           >
             {displayName}
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6">
-            <Link to="/works" className="text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-action font-medium transition-colors focus-visible:ring-2 focus-visible:ring-theme-action rounded-md px-1">
+          <div className="hidden md:flex items-center space-x-2 bg-theme-bg/50 dark:bg-theme-bg-dark/50 p-1 rounded-full border border-theme-accent/20 dark:border-theme-accent-dark/30">
+            <NavLink to="/works" className={navLinkClass}>
               Works
-            </Link>
-            <Link to="/aviation" className="text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-action font-medium transition-colors focus-visible:ring-2 focus-visible:ring-theme-action rounded-md px-1">
+            </NavLink>
+            <NavLink to="/aviation" className={navLinkClass}>
               Aviation
-            </Link>
-            <Link to="/streaming" className="text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-action font-medium transition-colors focus-visible:ring-2 focus-visible:ring-theme-action rounded-md px-1">
+            </NavLink>
+            <NavLink to="/streaming" className={navLinkClass}>
               Streaming
-            </Link>
-            <Link to="/resume" className="text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-action font-medium transition-colors focus-visible:ring-2 focus-visible:ring-theme-action rounded-md px-1">
+            </NavLink>
+            <NavLink to="/resume" className={navLinkClass}>
               Resume
-            </Link>
+            </NavLink>
           </div>
 
           {/* Theme Controls */}
