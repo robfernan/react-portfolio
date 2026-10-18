@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import TextScramble from '@/components/ui/TextScramble';
+import LiveTelemetryBadge from '@/components/ui/LiveTelemetryBadge';
 
 /* ------------------------------------------------------------------ */
 /*  Data                                                               */
@@ -66,8 +68,8 @@ function SectionHeading({ eyebrow, title }: { eyebrow: string; title: string }) 
       <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-theme-accent dark:text-theme-secondary-dark mb-3">
         {eyebrow}
       </p>
-      <h2 className="font-bold text-theme-primary dark:text-theme-secondary-dark">
-        {title}
+      <h2 className="font-bold text-theme-primary dark:text-theme-secondary-dark font-display text-3xl sm:text-4xl">
+        <TextScramble text={title} />
       </h2>
     </div>
   );
@@ -86,7 +88,17 @@ export default function PortfolioHome() {
       <section className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 sm:py-20 lg:px-8">
         {/* ============================ HERO ============================ */}
         <section className="mb-16 sm:mb-24">
-          <figure className="overflow-hidden border border-theme-accent/25 dark:border-theme-accent-dark bg-theme-card dark:bg-theme-card-dark shadow-lg">
+          {/* Top Live Telemetry bar */}
+          <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+            <LiveTelemetryBadge />
+            <div className="hidden sm:flex items-center gap-2 text-xs font-mono-tech text-theme-secondary dark:text-theme-secondary-dark">
+              <span>LAT 28.5383° N</span>
+              <span className="opacity-40">/</span>
+              <span>LON 81.3792° W</span>
+            </div>
+          </div>
+
+          <figure className="overflow-hidden rounded-2xl border border-theme-accent/25 dark:border-theme-accent-dark bg-theme-card dark:bg-theme-card-dark shadow-xl ring-1 ring-black/5">
             <img
               src="/assets/home/banner.webp"
               alt="Robert Fernandez — Developer, Designer, Pilot"
@@ -94,31 +106,31 @@ export default function PortfolioHome() {
               decoding="async"
               width={1280}
               height={320}
-              className="block h-auto w-full"
+              className="block h-auto w-full transition-transform duration-700 hover:scale-[1.01]"
             />
           </figure>
 
           <div className="grid grid-cols-1 gap-8 border-b border-theme-accent/20 dark:border-theme-accent-dark pb-10 pt-8 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16">
             <div>
               <div className="flex flex-wrap items-center gap-3 mb-4">
-                <p className="text-[11px] font-semibold tracking-[0.25em] uppercase text-theme-accent dark:text-theme-secondary-dark flex items-center gap-3">
+                <p className="text-[11px] font-semibold tracking-[0.25em] uppercase text-theme-accent dark:text-theme-secondary-dark flex items-center gap-3 font-mono-tech">
                   <span className="w-8 h-px bg-theme-accent dark:bg-theme-accent-dark" />
                   Cross-Platform Engineer · Digital Artist · Pilot
                 </p>
                 <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  Available for Roles & Projects
+                  Available for Roles &amp; Projects
                 </span>
               </div>
 
-              <h1 className="mb-5 text-4xl font-black leading-none text-theme-primary dark:text-theme-secondary-dark sm:text-6xl">
-                Robert Fernandez
+              <h1 className="mb-5 text-4xl font-black leading-tight text-theme-primary dark:text-theme-secondary-dark sm:text-6xl font-display tracking-tight">
+                <TextScramble text="Robert Fernandez" />
               </h1>
 
-              <p className="max-w-3xl text-lg leading-relaxed text-theme-secondary dark:text-theme-secondary-dark sm:text-2xl">
-                Software engineer and digital artist building{' '}
-                <span className="text-theme-primary dark:text-theme-secondary-dark font-medium">cross-platform tools</span>{' '}
-                for web, desktop, mobile, Wear OS, embedded displays, and retro consoles — blending aviation discipline with design-first interfaces.
+              <p className="max-w-3xl text-lg leading-relaxed text-theme-secondary dark:text-theme-secondary-dark sm:text-2xl font-light">
+                Software engineer and digital artist crafting{' '}
+                <span className="text-theme-primary dark:text-theme-primary-dark font-medium underline decoration-theme-accent/40 underline-offset-4">cross-platform tools</span>{' '}
+                for web, desktop, mobile, Wear OS, embedded displays, and retro consoles — blending aviation precision with editorial design.
               </p>
 
             </div>
@@ -244,8 +256,8 @@ export default function PortfolioHome() {
                         <span className="text-[10px] font-medium uppercase tracking-wider text-theme-secondary/70 dark:text-theme-secondary-dark">{item.updated}</span>
                       )}
                     </div>
-                    <h3 className="font-bold mb-3 text-theme-primary dark:text-theme-secondary-dark group-hover:text-theme-accent dark:group-hover:text-theme-primary-dark transition-colors">
-                      {item.name}
+                    <h3 className="font-bold mb-3 text-theme-primary dark:text-theme-secondary-dark group-hover:text-theme-accent dark:group-hover:text-theme-primary-dark transition-colors font-display text-xl sm:text-2xl">
+                      <TextScramble text={item.name} />
                     </h3>
                     <p className="text-sm sm:text-base text-theme-secondary dark:text-theme-secondary-dark leading-relaxed mb-4">
                       {item.description}
