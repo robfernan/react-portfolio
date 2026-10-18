@@ -22,6 +22,16 @@ Options -MultiViews
 </IfModule>
 
 # ---------------------------------------------------------------------------
+# 1b. URL Normalization: Remove trailing slashes (except for real directories)
+#     This prevents duplicate URL indexing in Google Search Console.
+# ---------------------------------------------------------------------------
+<IfModule mod_rewrite.c>
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_URI} (.+)/$
+  RewriteRule ^ %1 [R=301,L]
+</IfModule>
+
+# ---------------------------------------------------------------------------
 # 2. SPA fallback — serve index.html for any route that isn't a real file/dir,
 #    so deep links like /resume or /works work on refresh & share.
 #

@@ -57,6 +57,7 @@ class AviationErrorBoundary extends React.Component<
 import Footer from '@/components/layout/Footer';
 import BackToTop from './components/ui/BackToTop';
 import { ThemeProvider, type ThemeKey } from './context/ThemeContext';
+import SEOHead from './components/seo/SEOHead';
 
 /** Styled 404 for unknown routes (e.g. /resum) so typos don't hit a blank screen. */
 function NotFound() {
@@ -78,6 +79,7 @@ function NotFound() {
 export default function App() {
     return (
         <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+            <SEOHead />
             <AppContent />
         </Router>
     );
@@ -95,21 +97,6 @@ function AppContent() {
         }
         return false;
     });
-
-    // Per-page document titles — clearer browser tabs + better SEO per route.
-    const pageTitles: Record<string, string> = {
-        '': 'Robert Fernandez — Cross-Platform Software Engineer & Digital Artist',
-        'works': 'Works · Robert Fernandez Portfolio',
-        'aviation': 'AviationPro — Electronic Flight Bag · Robert Fernandez',
-        'aviationpro': 'AviationPro — Electronic Flight Bag · Robert Fernandez',
-        'streaming': 'Streaming · MungDaal321',
-        'resume': 'Resume · Robert Fernandez',
-    };
-    
-    React.useEffect(() => {
-        const base = location.pathname.split('/')[1] || '';
-        document.title = pageTitles[base] ?? 'Robert Fernandez — Portfolio';
-    }, [location.pathname]);
 
     React.useEffect(() => {
         document.documentElement.classList.add('theme-minimal');
