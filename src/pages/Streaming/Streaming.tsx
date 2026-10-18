@@ -52,6 +52,25 @@ export default function Streaming() {
   const youtubeThumb = isDark ? '/assets/streaming/youtube-thumbnail-dark.webp' : '/assets/streaming/youtube-thumbnail-light.webp';
   const twitchThumb = isDark ? '/assets/streaming/twitch-thumbnail-dark.webp' : '/assets/streaming/twitch-thumbnail-light.webp';
 
+  const [activeVideo, setActiveVideo] = useState<Video | null>(null);
+
+  // Helper to get embeddable iframe URL
+  const getEmbedUrl = (url: string) => {
+    if (url.includes('youtube.com/watch?v=')) {
+      const id = url.split('watch?v=')[1]?.split('&')[0];
+      return `https://www.youtube-nocookie.com/embed/${id}?autoplay=1`;
+    }
+    if (url.includes('youtu.be/')) {
+      const id = url.split('youtu.be/')[1]?.split('?')[0];
+      return `https://www.youtube-nocookie.com/embed/${id}?autoplay=1`;
+    }
+    if (url.includes('youtube.com/live/')) {
+      const id = url.split('youtube.com/live/')[1]?.split('?')[0];
+      return `https://www.youtube-nocookie.com/embed/${id}?autoplay=1`;
+    }
+    return url;
+  };
+
   return (
     <div className="max-w-7xl mx-auto py-12 px-4 bg-theme-bg dark:bg-theme-bg-dark transition-colors duration-300">
       <header className="mb-8 border-b border-theme-accent/20 dark:border-theme-accent-dark pb-6">
@@ -59,8 +78,8 @@ export default function Streaming() {
           <span className="w-8 h-px bg-theme-accent dark:bg-theme-accent-dark" />
           MungDaal321 · Live
         </p>
-        <h1 className="text-3xl sm:text-4xl font-black leading-[1.05] mb-3 text-theme-primary dark:text-theme-secondary-dark">Streaming</h1>
-        <p className="text-sm sm:text-base text-theme-secondary dark:text-theme-secondary-dark leading-relaxed max-w-2xl">A working notebook in public — live coding, automotive sketching, embedded experiments, aviation tools, and games.</p>
+        <h1 className="text-3xl sm:text-5xl font-black leading-[1.05] mb-3 text-theme-primary dark:text-theme-secondary-dark font-display">Streaming &amp; Broadcasts</h1>
+        <p className="text-sm sm:text-base text-theme-secondary dark:text-theme-secondary-dark leading-relaxed max-w-2xl font-light">A working notebook in public — live coding, automotive sketching, embedded experiments, aviation tools, and games.</p>
       </header>
 
       <section className="grid grid-cols-1 md:grid-cols-3 gap-px bg-theme-accent/20 dark:bg-theme-accent-dark/30 mb-12 border border-theme-accent/20 dark:border-theme-accent-dark">
@@ -75,13 +94,13 @@ export default function Streaming() {
       {/* Main Platforms Section */}
       <div className="streaming-layout md:grid md:grid-cols-2 md:gap-6 mb-12">
         {/* YouTube */}
-        <section className="youtube border-t-4 border-red-600 dark:border-red-500 bg-theme-card dark:bg-theme-card-dark p-6 flex-1 mb-6 md:mb-0">
+        <section className="youtube border-t-4 border-red-600 dark:border-red-500 bg-theme-card dark:bg-theme-card-dark p-6 flex-1 mb-6 md:mb-0 rounded-b-xl shadow-sm">
           <div className="flex items-center gap-3 mb-4">
             <i className="fab fa-youtube text-red-600 dark:text-red-500 text-2xl"></i>
-            <h2 className="text-2xl font-semibold text-theme-primary dark:text-theme-primary-dark">YouTube</h2>
+            <h2 className="text-2xl font-semibold text-theme-primary dark:text-theme-primary-dark font-display">YouTube</h2>
           </div>
-          <a href="https://www.youtube.com/@MungDaal321" target="_blank" rel="noreferrer" className="block mb-4 group">
-            <img loading="lazy" decoding="async" src={youtubeThumb} alt="YouTube Channel" width={1280} height={720} className="w-full rounded-lg transition-shadow" onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/images/placeholder.svg'; }} />
+          <a href="https://www.youtube.com/@MungDaal321" target="_blank" rel="noreferrer" className="block mb-4 group overflow-hidden rounded-lg">
+            <img loading="lazy" decoding="async" src={youtubeThumb} alt="YouTube Channel" width={1280} height={720} className="w-full rounded-lg transition-transform duration-300 group-hover:scale-105" onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/images/placeholder.svg'; }} />
           </a>
           <p className="text-theme-secondary dark:text-theme-secondary-dark mb-4">Check out my latest YouTube content and subscribe for updates on gaming, coding, and creative projects.</p>
           <a href="https://www.youtube.com/@MungDaal321" target="_blank" rel="noreferrer" className="inline-block px-4 py-2 rounded bg-theme-action dark:bg-theme-action-dark text-white font-medium hover:opacity-90 transition-opacity">
@@ -90,11 +109,11 @@ export default function Streaming() {
         </section>
 
         {/* Twitch */}
-        <section className="twitch border-t-4 border-purple-600 dark:border-purple-500 bg-theme-card dark:bg-theme-card-dark p-6 flex-1">
+        <section className="twitch border-t-4 border-purple-600 dark:border-purple-500 bg-theme-card dark:bg-theme-card-dark p-6 flex-1 rounded-b-xl shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
               <i className="fab fa-twitch text-purple-600 dark:text-purple-500 text-2xl"></i>
-              <h2 className="text-2xl font-semibold text-theme-primary dark:text-theme-primary-dark">Twitch</h2>
+              <h2 className="text-2xl font-semibold text-theme-primary dark:text-theme-primary-dark font-display">Twitch</h2>
             </div>
             <a
               href="https://www.twitch.tv/mungdaal321"
@@ -118,23 +137,25 @@ export default function Streaming() {
 
       {/* Popular Videos by Category */}
       <div className="mt-12">
-        <h2 className="text-2xl font-bold mb-8 text-theme-primary dark:text-theme-primary-dark">Popular Videos</h2>
+        <div className="flex items-center justify-between mb-8 border-b border-theme-accent/20 dark:border-theme-accent-dark pb-4">
+          <h2 className="text-2xl font-bold text-theme-primary dark:text-theme-primary-dark font-display">Featured Archive Videos</h2>
+          <span className="text-xs font-mono-tech text-theme-secondary dark:text-theme-secondary-dark">Click to play in theater mode</span>
+        </div>
 
         {popularVideos.map((section) => (
           <div key={section.category} className="mb-10">
-            <h3 className="text-lg font-semibold mb-4 text-theme-accent dark:text-theme-accent-dark flex items-center gap-2">
+            <h3 className="text-lg font-semibold mb-4 text-theme-accent dark:text-theme-accent-dark flex items-center gap-2 font-display">
               <span className="w-1 h-6 bg-theme-accent dark:bg-theme-accent-dark rounded"></span>
               {section.category}
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               {section.items.map((video) => {
                 return (
-                  <a
+                  <button
                     key={video.title}
-                    href={video.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="group rounded border border-theme-accent/30 dark:border-theme-accent-dark/30 bg-theme-card dark:bg-theme-card-dark overflow-hidden hover:border-theme-accent dark:hover:border-theme-accent-dark transition-all duration-300 hover:shadow-lg block"
+                    type="button"
+                    onClick={() => setActiveVideo(video)}
+                    className="group rounded-xl border border-theme-accent/30 dark:border-theme-accent-dark/30 bg-theme-card dark:bg-theme-card-dark overflow-hidden hover:border-theme-action dark:hover:border-theme-action-dark transition-all duration-300 hover:shadow-lg text-left block w-full focus:outline-none"
                   >
                     <div className="relative overflow-hidden bg-theme-bg dark:bg-theme-bg-dark">
                       <img
@@ -147,19 +168,73 @@ export default function Streaming() {
                         className="w-full aspect-video object-cover transition-transform duration-300 group-hover:scale-[1.04]"
                         onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/images/placeholder.svg'; }}
                       />
+                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span className="w-12 h-12 rounded-full bg-theme-action/90 text-white flex items-center justify-center text-lg shadow-lg">
+                          ▶
+                        </span>
+                      </div>
                     </div>
                     <div className="p-3">
-                      <p className="text-sm font-medium text-theme-primary dark:text-theme-primary-dark line-clamp-2 group-hover:text-theme-accent dark:group-hover:text-theme-accent-dark transition-colors">
+                      <p className="text-sm font-medium text-theme-primary dark:text-theme-primary-dark line-clamp-2 group-hover:text-theme-action dark:group-hover:text-theme-action-dark transition-colors">
                         {video.title}
                       </p>
                     </div>
-                  </a>
+                  </button>
                 );
               })}
             </div>
           </div>
         ))}
       </div>
+
+      {/* In-Page Video Theater Modal */}
+      {activeVideo && (
+        <dialog
+          open
+          className="fixed inset-0 z-50 m-0 p-4 w-full h-full max-w-none max-h-none bg-black/85 backdrop-blur-md flex items-center justify-center border-0 text-inherit"
+          onKeyDown={(e) => { if (e.key === 'Escape') setActiveVideo(null); }}
+        >
+          <button
+            type="button"
+            className="absolute inset-0 cursor-default bg-transparent border-0"
+            aria-label="Close video"
+            onClick={() => setActiveVideo(null)}
+          />
+          <div className="relative z-10 w-full max-w-4xl bg-theme-card dark:bg-theme-card-dark rounded-2xl overflow-hidden shadow-2xl border border-theme-accent/30 dark:border-theme-accent-dark/40">
+            <div className="flex items-center justify-between p-4 border-b border-theme-accent/20 dark:border-theme-accent-dark/30">
+              <h3 className="font-display font-bold text-base sm:text-lg text-theme-primary dark:text-theme-primary-dark truncate pr-4">
+                {activeVideo.title}
+              </h3>
+              <div className="flex items-center gap-2">
+                <a
+                  href={activeVideo.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs font-mono-tech px-2.5 py-1 rounded border border-theme-accent/40 text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-primary"
+                >
+                  Open in Tab ↗
+                </a>
+                <button
+                  type="button"
+                  onClick={() => setActiveVideo(null)}
+                  className="w-8 h-8 rounded-full border border-theme-accent/30 flex items-center justify-center text-xs font-bold text-theme-primary dark:text-theme-secondary-dark hover:bg-theme-accent/10"
+                >
+                  ✕
+                </button>
+              </div>
+            </div>
+            <div className="aspect-video w-full bg-black">
+              <iframe
+                src={getEmbedUrl(activeVideo.url)}
+                title={activeVideo.title}
+                className="w-full h-full border-0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          </div>
+        </dialog>
+      )}
     </div>
   );
 }

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import TextScramble from '@/components/ui/TextScramble';
 import LiveTelemetryBadge from '@/components/ui/LiveTelemetryBadge';
+import AviationTelemetryRibbon from '@/components/ui/AviationTelemetryRibbon';
 
 /* ------------------------------------------------------------------ */
 /*  Data                                                               */
@@ -266,6 +267,9 @@ export default function PortfolioHome() {
                 <span className="text-[10px] font-mono-tech px-2 py-0.5 rounded bg-theme-bg dark:bg-theme-bg-dark text-theme-secondary dark:text-theme-secondary-dark">129+ Flight Hours</span>
               </div>
             </div>
+          </div>
+          <div className="mt-8">
+            <AviationTelemetryRibbon />
           </div>
         </section>
 

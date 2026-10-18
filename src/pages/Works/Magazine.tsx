@@ -101,45 +101,153 @@ export default function Magazine() {
     pageLabel = `Pages ${currentSpread.left! + 1}–${currentSpread.right! + 1} of ${TOTAL_PAGES}`;
   }
 
+  // Persist view mode (spread vs grid)
+  const [viewMode, setViewMode] = useState<'spread' | 'grid'>('spread');
+  const [filter, setFilter] = useState<string>('all');
+
   return (
     <div className="min-h-screen bg-theme-bg dark:bg-theme-bg-dark">
       <section className="max-w-7xl mx-auto px-4 py-8 sm:py-12" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
         <header className="mb-5 sm:mb-7 border-b border-theme-accent/20 dark:border-theme-accent-dark pb-4">
-          <p className="text-[11px] font-semibold tracking-[0.25em] uppercase text-theme-accent dark:text-theme-secondary-dark mb-3 flex items-center gap-3">
-            <span className="w-8 h-px bg-theme-accent dark:bg-theme-accent-dark" />
-            The Works · 2026
-          </p>
-          <h1 className="font-black leading-[1.05] text-theme-primary dark:text-theme-secondary-dark mb-3">
+          <div className="flex flex-wrap items-center justify-between gap-4 mb-3">
+            <p className="text-[11px] font-semibold tracking-[0.25em] uppercase text-theme-accent dark:text-theme-secondary-dark flex items-center gap-3">
+              <span className="w-8 h-px bg-theme-accent dark:bg-theme-accent-dark" />
+              The Works · 2026 Archive
+            </p>
+            {/* View Mode Toggle */}
+            <div className="inline-flex rounded-lg border border-theme-accent/30 dark:border-theme-accent-dark/40 bg-theme-card/60 dark:bg-theme-card-dark/60 p-1 font-mono-tech text-xs">
+              <button
+                type="button"
+                onClick={() => setViewMode('spread')}
+                className={`px-3 py-1 rounded-md transition-colors ${
+                  viewMode === 'spread'
+                    ? 'bg-theme-action dark:bg-theme-action-dark text-white font-bold'
+                    : 'text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-primary'
+                }`}
+              >
+                📖 Magazine Spread
+              </button>
+              <button
+                type="button"
+                onClick={() => setViewMode('grid')}
+                className={`px-3 py-1 rounded-md transition-colors ${
+                  viewMode === 'grid'
+                    ? 'bg-theme-action dark:bg-theme-action-dark text-white font-bold'
+                    : 'text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-primary'
+                }`}
+              >
+                ⊞ Studio Grid
+              </button>
+            </div>
+          </div>
+
+          <h1 className="font-black leading-[1.05] text-theme-primary dark:text-theme-secondary-dark mb-3 text-3xl sm:text-5xl font-display">
             A magazine of everything I build
           </h1>
-          <p className="text-sm sm:text-base text-theme-secondary dark:text-theme-secondary-dark leading-relaxed max-w-2xl">
-            {TOTAL_PAGES} pages, one catalogue — products, client work, games, systems, and studio craft. Use the arrows to move through the archive.
+          <p className="text-sm sm:text-base text-theme-secondary dark:text-theme-secondary-dark leading-relaxed max-w-2xl font-light">
+            {TOTAL_PAGES} issues, one unified catalogue — products, client work, retro consoles, systems engineering, and visual craft.
           </p>
+
+          {/* Interactive Category Filter */}
+          <div className="flex flex-wrap gap-2 pt-4">
+            {['all', 'Products', 'Systems & Tools', 'Consoles & Retro', 'Art & Graphics'].map((cat) => (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => setFilter(cat)}
+                className={`text-xs font-mono-tech px-3 py-1 rounded-full border transition-all ${
+                  filter === cat
+                    ? 'border-theme-action bg-theme-action/10 dark:bg-theme-action-dark/20 text-theme-action dark:text-theme-action-dark font-semibold'
+                    : 'border-theme-accent/30 dark:border-theme-accent-dark/40 text-theme-secondary dark:text-theme-secondary-dark hover:border-theme-accent'
+                }`}
+              >
+                {cat === 'all' ? '● Show All' : cat}
+              </button>
+            ))}
+          </div>
         </header>
 
-        <div className="mb-5 sm:mb-7">
-          <FlipControls
-            canPrev={spread > 0}
-            canNext={spread < TOTAL_SPREADS - 1}
-            onPrev={goPrev}
-            onNext={goNext}
-            centerLabel={pageLabel}
-          />
-        </div>
+        {viewMode === 'spread' ? (
+          <>
+            <div className="mb-5 sm:mb-7">
+              <FlipControls
+                canPrev={spread > 0}
+                canNext={spread < TOTAL_SPREADS - 1}
+                onPrev={goPrev}
+                onNext={goNext}
+                centerLabel={pageLabel}
+              />
+            </div>
 
-        {/* Book spread: two pages side by side, or single centered page */}
-        <div className={`grid gap-4 sm:gap-6 ${isSinglePage ? 'grid-cols-1 max-w-[85%] mx-auto' : 'lg:grid-cols-2'}`}>
-          {currentSpread.left !== undefined && (
-            <MagazinePage issue={ISSUES[currentSpread.left]} pageIndex={currentSpread.left} onOpenImage={setPreviewEntry} />
-          )}
-          {currentSpread.right !== undefined && (
-            <MagazinePage issue={ISSUES[currentSpread.right]} pageIndex={currentSpread.right} onOpenImage={setPreviewEntry} />
-          )}
-        </div>
+            {/* Book spread: two pages side by side, or single centered page */}
+            <div className={`grid gap-4 sm:gap-6 ${isSinglePage ? 'grid-cols-1 max-w-[85%] mx-auto' : 'lg:grid-cols-2'}`}>
+              {currentSpread.left !== undefined && (
+                <MagazinePage issue={ISSUES[currentSpread.left]} pageIndex={currentSpread.left} onOpenImage={setPreviewEntry} />
+              )}
+              {currentSpread.right !== undefined && (
+                <MagazinePage issue={ISSUES[currentSpread.right]} pageIndex={currentSpread.right} onOpenImage={setPreviewEntry} />
+              )}
+            </div>
 
-        <p className="mt-5 text-center text-[11px] tracking-wide text-theme-secondary/70 dark:text-theme-secondary-dark/60">
-          Tip: use the arrows, keyboard, or swipe to move through the magazine.
-        </p>
+            <p className="mt-5 text-center text-[11px] tracking-wide text-theme-secondary/70 dark:text-theme-secondary-dark/60 font-mono-tech">
+              Tip: use the arrows, keyboard, or swipe to turn pages.
+            </p>
+          </>
+        ) : (
+          /* Studio Grid View: All issues and entries laid out in an expansive grid */
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {ISSUES.filter(issue => filter === 'all' || issue.kicker.toLowerCase().includes(filter.toLowerCase()) || issue.title.toLowerCase().includes(filter.toLowerCase())).flatMap((issue, issueIdx) =>
+              issue.entries.map((entry) => (
+                <article
+                  key={entry.title}
+                  className="rounded-2xl border border-theme-accent/20 dark:border-theme-accent-dark bg-theme-card dark:bg-theme-card-dark overflow-hidden flex flex-col justify-between hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                >
+                  <div>
+                    {entry.cover && (
+                      <div className="aspect-[16/9] overflow-hidden bg-theme-bg dark:bg-theme-bg-dark">
+                        <img
+                          src={entry.cover}
+                          alt={entry.title}
+                          className="h-full w-full object-cover transition-transform duration-500 hover:scale-105 cursor-pointer"
+                          onClick={() => setPreviewEntry(entry)}
+                          loading="lazy"
+                        />
+                      </div>
+                    )}
+                    <div className="p-6">
+                      <p className="text-[10px] font-mono-tech uppercase tracking-wider text-theme-accent dark:text-theme-accent-dark mb-1">
+                        Issue {String(issueIdx + 1).padStart(2, '0')} · {issue.kicker}
+                      </p>
+                      <h3 className="font-display text-xl font-bold mb-2 text-theme-primary dark:text-theme-primary-dark">
+                        {entry.title}
+                      </h3>
+                      <p className="text-sm text-theme-secondary dark:text-theme-secondary-dark leading-relaxed mb-4">
+                        {entry.blurb}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="px-6 pb-6 pt-2 border-t border-theme-accent/15 dark:border-theme-accent-dark/20 flex items-center justify-between">
+                    <button
+                      type="button"
+                      onClick={() => setPreviewEntry(entry)}
+                      className="text-xs font-semibold text-theme-action dark:text-theme-action-dark hover:underline font-mono-tech"
+                    >
+                      Inspect Spec →
+                    </button>
+                    {entry.tryNow && (
+                      <a
+                        href={entry.tryNow}
+                        className="text-xs font-bold px-2.5 py-1 rounded bg-theme-action dark:bg-theme-action-dark text-white hover:opacity-90"
+                      >
+                        Run Live App
+                      </a>
+                    )}
+                  </div>
+                </article>
+              ))
+            )}
+          </div>
+        )}
 
         <StudioFooter />
       </section>
