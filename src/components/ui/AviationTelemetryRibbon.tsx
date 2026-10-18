@@ -96,12 +96,20 @@ export default function AviationTelemetryRibbon() {
           </span>
         </div>
 
-        <Link
-          to="/aviation?tab=logs"
-          className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-theme-action dark:text-theme-action-dark hover:underline"
-        >
-          Launch EFB (Flight Logs) →
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link
+            to="/aviation?tab=weather"
+            className="inline-flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded border border-theme-accent/30 text-theme-primary dark:text-theme-secondary-dark hover:bg-theme-accent/10 transition-colors"
+          >
+            Weather Tool ↗
+          </Link>
+          <Link
+            to="/aviation"
+            className="inline-flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider px-3 py-1 rounded bg-theme-action dark:bg-theme-action-dark text-white hover:opacity-90 transition-opacity"
+          >
+            Launch EFB →
+          </Link>
+        </div>
       </div>
 
       {!loading && data && (
