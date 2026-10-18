@@ -18,14 +18,28 @@ function TabFallback() {
 }
 
 function AviationProApp() {
-  // Restore the last active tab from localStorage so a refresh (or returning to the site)
-  // lands you on the exact tool you were using — not always back at Flight Planner.
+  // Restore the last active tab from URL query param (?tab=logs) or localStorage
   const [activeTab, setActiveTab] = useState<string>(() => {
     if (typeof window === 'undefined') return 'planner';
-    const saved = localStorage.getItem('avpro-active-tab');
+    const params = new URLSearchParams(window.location.search);
+    const queryTab = params.get('tab');
     const valid = ['planner', 'cx6', 'weather', 'performance', 'navigation', 'logs'];
+    if (queryTab && valid.includes(queryTab)) return queryTab;
+
+    const saved = localStorage.getItem('avpro-active-tab');
     return saved && valid.includes(saved) ? saved : 'planner';
   });
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const queryTab = params.get('tab');
+      const valid = ['planner', 'cx6', 'weather', 'performance', 'navigation', 'logs'];
+      if (queryTab && valid.includes(queryTab)) {
+        setActiveTab(queryTab);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {

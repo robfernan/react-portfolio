@@ -97,10 +97,10 @@ export default function AviationTelemetryRibbon() {
         </div>
 
         <Link
-          to="/aviation"
+          to="/aviation?tab=logs"
           className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-theme-action dark:text-theme-action-dark hover:underline"
         >
-          Launch EFB Suite →
+          Launch EFB (Flight Logs) →
         </Link>
       </div>
 

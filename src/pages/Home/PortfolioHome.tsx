@@ -118,7 +118,7 @@ export default function PortfolioHome() {
               <div className="flex flex-wrap items-center gap-3 mb-4">
                 <p className="text-[11px] font-semibold tracking-[0.25em] uppercase text-theme-accent dark:text-theme-secondary-dark flex items-center gap-3 font-mono-tech">
                   <span className="w-8 h-px bg-theme-accent dark:bg-theme-accent-dark" />
-                  Cross-Platform Engineer · Digital Artist · Pilot
+                  Full-Stack Web Developer · Cross-Platform Engineer · Digital Artist · Pilot
                 </p>
                 <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
@@ -131,9 +131,9 @@ export default function PortfolioHome() {
               </h1>
 
               <p className="max-w-3xl text-lg leading-relaxed text-theme-secondary dark:text-theme-secondary-dark sm:text-2xl font-light">
-                Software engineer and digital artist crafting{' '}
-                <span className="text-theme-primary dark:text-theme-primary-dark font-medium underline decoration-theme-accent/40 underline-offset-4">cross-platform tools</span>{' '}
-                for web, desktop, mobile, Wear OS, embedded displays, and retro consoles — blending aviation precision with editorial design.
+                Full-stack web developer, systems programmer, and digital artist crafting{' '}
+                <span className="text-theme-primary dark:text-theme-primary-dark font-medium underline decoration-theme-accent/40 underline-offset-4">high-performance web &amp; cross-platform applications</span>{' '}
+                for modern browsers, desktop, mobile, Wear OS, embedded displays, and retro consoles — blending aviation precision with editorial design.
               </p>
 
             </div>
