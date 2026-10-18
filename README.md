@@ -28,34 +28,38 @@ The site spans:
 - **Component-based architecture** — reusable React components for consistency across all sub-apps
 - **Responsive design** — mobile-first, verified from iPhone SE (375px) up to 4K ultra-wide displays (3840px)
 - **Unified container rhythm** — standardized `max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8` layout across header, hero, works, aviation, and footer
+- **Awwwards SOTD-Inspired Motion & Typography** — custom `TextScramble` glyph reveals on headlines and live station telemetry badges (`KDJT · LAT 40.7012° N / LON 74.0090° W`)
 - **Theme system** — CSS custom properties (`theme-*` tokens) with 4 switchable themes + light/dark mode
-  - **90s theme dark mode** uses an authentic **Amber CRT Phosphor** palette (`#f59e0b` / `#d97706` over deep black `#0c0a09` canvas) with zero blue cast
-- **ADA / Section 508 / WCAG 2.1 AA compliant** — minimum $\ge 44 \times 44\text{px}$ touch targets, visible focus-rings, ARIA roles/labels, contrast ratios $\ge 4.5:1$, and full `prefers-reduced-motion` support
+  - **90s theme** uses an amber phosphor CRT palette (`#f59e0b` / `#d97706` over deep black `#0c0a09`) with high-contrast amber/warm tones calibrated for readability (avoiding low-contrast neon/cyan/magenta wash)
+- **ADA / Section 508 / WCAG 2.1 AA compliant** — minimum $\ge 44 \times 44\text{px}$ touch targets, visible focus-rings, ARIA roles/labels, contrast ratios $\ge 4.5:1$ across dark and light palettes, and full `prefers-reduced-motion` support
 - **Zero-CDN, 100% self-hosted typography** — Playfair Display and FontAwesome icons bundled directly from local WOFF2 subsets with preloads for instant, tracker-proof first paints
 
-### 🛠️ Technical
+### 🛠️ Technical & Technical SEO
 - **TypeScript** — strict typing across all components, calculators, and utilities
 - **Route-level Code Splitting** — `React.lazy` and `React.Suspense` for secondary pages (`/works`, `/aviation`, `/streaming`, `/resume`) reducing initial gzipped entry bundle to ~75 kB
+- **Dynamic Route-Level SEO (`SEOHead`)** — client-side canonical URL synchronization, OpenGraph tags, and Schema.org JSON-LD structured data (`SoftwareApplication`, `CollectionPage`, `Person`, `WebSite`)
+- **Agentic Browsing & AI Crawler Support** — standard-compliant `public/llms.txt` per llmstxt.org specification
 - **React hooks & context** — centralized state management via `useState`, `useEffect`, `ThemeProvider`
 - **Tailwind CSS v4** — utility-first styling with `@theme` custom properties and responsive variants
 - **Vite 8** — instant HMR and optimized tree-shaken production builds
 
 ### 🧮 Interactive Tools (AviationPro EFB Suite)
+- **Live Homepage Telemetry Ribbon**: Real-time NOAA METAR weather decoder with live wind barbs, altimeter pressure, VFR/IFR indicators, and direct deep-linking to the **PPL Requirements & Flight Logs checklist (`/aviation?tab=logs`)**
 - **VFR NavLog (Dead Reckoning Chart)**: True Course, Wind Correction Angle (WCA), True/Magnetic/Compass Heading, Groundspeed, Leg ETE/ETA, Fuel Burn, VOR navigation data, print stylesheet & JSON export
 - **CX-6 Electronic Flight Computer**: Wind Triangle (WCA/GS/HDG), True Airspeed (TAS), Time-Speed-Distance (TSD), Fuel, and Crosswind components
 - **Live Weather Tools & Hazard Analysis**: Live METAR/TAF weather fetcher (via server-side PHP proxy for aviationweather.gov) with VFR/MVFR/IFR/LIFR categorization, plus an **interactive Runway vs. Wind Rose compass visualizer**
 - **Weight & Balance Calculator**: C172 Center of Gravity envelope visualization, fuel burn shift tracking, and Go/No-Go envelope validation
 - **Navigation Tools**: Distance & bearing calculator with an **animated 360° directional gyro / compass rose dial**, unit conversions, time-zone converters, and direct aeronautical briefing links
-- **Persistent Flight Logbook**: Track flight hours, dual/solo cross-country requirements under 14 CFR §61.87 with Dexie/localStorage persistence and CSV export
+- **Persistent Flight Logbook**: Track flight hours (129.2 hrs), dual/solo cross-country requirements under 14 CFR §61.87 with Dexie/localStorage persistence and CSV export
 
 ## 📄 Pages Overview
 
 | Route | Component | Description |
 |-------|-----------|-------------|
-| `/` | `PortfolioHome.tsx` | Home — headline capabilities, active featured builds, quick links |
-| `/works`, `/work`, `/projects` | `Magazine.tsx` | Works — curated editorial catalogue & showcase spanning software, tools, client work, retro systems, wearable UI, and digital art |
-| `/aviation/*` | `AviationProApp.tsx` | Aviation — in-browser Electronic Flight Bag (EFB) suite with calculators, weather, and weight & balance tools |
-| `/streaming` | `Streaming.tsx` | Streaming — live coding, automotive sketching, retro tech, and gaming channels across YouTube & Twitch |
+| `/` | `PortfolioHome.tsx` | Home — full-stack web developer headline, live station telemetry badge, Three Pillars module, active featured builds, and live NOAA ribbon |
+| `/works`, `/work`, `/projects` | `Magazine.tsx` | Works — editorial catalogue featuring a dual-mode **`📖 Magazine Spread` vs `⊞ Studio Grid`** toggle with instant category filters |
+| `/aviation/*` | `AviationProApp.tsx` | Aviation — in-browser Electronic Flight Bag (EFB) suite with URL tab deep-linking (`?tab=logs`), CX-6, weather, and weight & balance |
+| `/streaming` | `Streaming.tsx` | Streaming — live coding, automotive sketching, retro tech, and gaming channels with an **in-page Theater Mode video modal** |
 | `/resume` | `Resume.tsx` | Resume — executive recruiter-ready CV with a strict one-page PDF/print stylesheet |
 
 ### 📝 Resume (`/resume`)
