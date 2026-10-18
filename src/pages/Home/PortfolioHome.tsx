@@ -92,9 +92,11 @@ export default function PortfolioHome() {
           <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
             <LiveTelemetryBadge />
             <div className="hidden sm:flex items-center gap-2 text-xs font-mono-tech text-theme-secondary dark:text-theme-secondary-dark">
-              <span>LAT 26.6832° N</span>
+              <span className="font-semibold text-theme-primary dark:text-theme-primary-dark">STN KDJT</span>
               <span className="opacity-40">/</span>
-              <span>LON 80.0956° W</span>
+              <span>LAT 40.7012° N</span>
+              <span className="opacity-40">/</span>
+              <span>LON 74.0090° W</span>
             </div>
           </div>
 
