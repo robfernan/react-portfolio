@@ -338,56 +338,117 @@ function PreviewDialog({ entry, onClose }: { entry: Entry; onClose: () => void }
   const currentImage = images[activeIdx] || entry.cover;
   const currentLabel = entry.screenshotLabels?.[activeIdx];
 
+  const goNext = () => {
+    setActiveIdx((prev) => (prev + 1) % images.length);
+  };
+
+  const goPrev = () => {
+    setActiveIdx((prev) => (prev - 1 + images.length) % images.length);
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (images.length <= 1) return;
+      if (e.key === 'ArrowRight') goNext();
+      if (e.key === 'ArrowLeft') goPrev();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [images.length]);
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4" role="dialog" aria-modal="true" aria-label={`${entry.title} preview`}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4" role="dialog" aria-modal="true" aria-label={`${entry.title} preview`}>
       <button type="button" className="absolute inset-0 cursor-default" aria-label="Close preview" onClick={onClose} />
-      <div className="relative z-10 max-h-[90vh] w-full max-w-4xl overflow-auto border border-theme-accent/40 bg-theme-card p-3 dark:border-theme-accent-dark dark:bg-theme-card-dark sm:p-5">
+      <div className="relative z-10 max-h-[92vh] w-full max-w-4xl flex flex-col rounded-xl border border-theme-accent/40 bg-theme-card p-4 dark:border-theme-accent-dark dark:bg-theme-card-dark sm:p-6 shadow-2xl">
         <div className="mb-3 flex items-start justify-between gap-4">
           <div>
-            <p className="font-mono-tech text-[10px] tracking-[0.18em] text-theme-accent dark:text-theme-accent-dark">PROJECT PREVIEW</p>
-            <h2 className="text-lg font-bold text-theme-primary dark:text-theme-secondary-dark">{entry.title}</h2>
+            <div className="flex items-center gap-2">
+              <p className="font-mono-tech text-[10px] tracking-[0.18em] text-theme-accent dark:text-theme-accent-dark">PROJECT PREVIEW</p>
+              {images.length > 1 && (
+                <span className="font-mono-tech text-[10px] font-semibold text-theme-secondary dark:text-theme-secondary-dark">
+                  ({activeIdx + 1} of {images.length})
+                </span>
+              )}
+            </div>
+            <h2 className="text-lg sm:text-xl font-bold text-theme-primary dark:text-theme-secondary-dark">{entry.title}</h2>
           </div>
-          <button type="button" onClick={onClose} className="border border-theme-accent/30 px-3 py-2 text-xs font-semibold text-theme-primary dark:border-theme-accent-dark dark:text-theme-secondary-dark" aria-label="Close preview">
-            Close
+          <button
+            type="button"
+            onClick={onClose}
+            className="rounded-md border border-theme-accent/30 px-3 py-1.5 text-xs font-semibold text-theme-primary transition-colors hover:bg-theme-accent/10 dark:border-theme-accent-dark dark:text-theme-secondary-dark"
+            aria-label="Close preview"
+          >
+            ✕ Close
           </button>
         </div>
 
+        {/* Multi-image button bar if there are multiple images */}
         {images.length > 1 && (
           <div className="mb-3 flex flex-wrap items-center gap-2 border-b border-theme-accent/20 pb-3">
+            <span className="text-[11px] font-mono-tech uppercase tracking-wider text-theme-secondary dark:text-theme-secondary-dark mr-1">
+              Images:
+            </span>
             {images.map((imgSrc, idx) => {
-              const label = entry.screenshotLabels?.[idx] || `View ${idx + 1}`;
+              const label = entry.screenshotLabels?.[idx] || `Image ${idx + 1}`;
               const isActive = idx === activeIdx;
               return (
                 <button
                   key={imgSrc}
                   type="button"
                   onClick={() => setActiveIdx(idx)}
-                  className={`px-3 py-1 text-xs font-mono-tech rounded transition-all ${
+                  className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono-tech rounded-md transition-all ${
                     isActive
-                      ? 'bg-theme-action text-white font-bold'
-                      : 'border border-theme-accent/40 text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-primary'
+                      ? 'bg-theme-action text-white font-bold shadow-md'
+                      : 'border border-theme-accent/30 bg-theme-card/50 text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-primary hover:border-theme-accent'
                   }`}
+                  aria-label={`View image ${idx + 1}: ${label}`}
                 >
-                  {label}
+                  <span className="inline-block w-2 h-2 rounded-full border border-current" style={{ backgroundColor: isActive ? 'white' : 'transparent' }} />
+                  <span>{label}</span>
                 </button>
               );
             })}
           </div>
         )}
 
+        {/* Image viewport with next/prev controls */}
         {currentImage ? (
-          <div>
+          <div className="relative flex-1 flex flex-col items-center justify-center overflow-hidden rounded-lg bg-theme-bg/60 dark:bg-theme-bg-dark/60 p-2 min-h-[280px]">
             <img
+              key={currentImage}
               src={currentImage}
               alt={`${entry.title} enlarged preview ${currentLabel ? `(${currentLabel})` : ''}`}
-              className="max-h-[70vh] w-full object-contain bg-theme-bg dark:bg-theme-bg-dark"
+              className="max-h-[62vh] w-auto max-w-full object-contain rounded transition-opacity duration-300"
               onError={(event) => {
                 event.currentTarget.onerror = null;
                 event.currentTarget.src = '/assets/projects/xmbwavemenu.webp';
               }}
             />
+
+            {/* Left / Right chevron buttons */}
+            {images.length > 1 && (
+              <>
+                <button
+                  type="button"
+                  onClick={goPrev}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center transition-all focus-ring"
+                  aria-label="Previous image"
+                >
+                  <i className="fas fa-chevron-left text-sm" />
+                </button>
+                <button
+                  type="button"
+                  onClick={goNext}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center transition-all focus-ring"
+                  aria-label="Next image"
+                >
+                  <i className="fas fa-chevron-right text-sm" />
+                </button>
+              </>
+            )}
+
             {currentLabel && (
-              <p className="mt-2 text-center text-xs font-mono-tech text-theme-secondary dark:text-theme-secondary-dark">
+              <p className="mt-3 text-center text-xs font-mono-tech text-theme-secondary dark:text-theme-secondary-dark font-medium">
                 {currentLabel}
               </p>
             )}

@@ -92,9 +92,16 @@ export function MagazineEntry({ entry, onOpenImage }: { entry: import('./data').
             {entry.title}
           </span>
         )}
-        <span className="absolute right-1.5 bottom-1.5 rounded bg-black/60 px-1.5 py-1 text-[9px] font-semibold uppercase tracking-wider text-white">
-          View
-        </span>
+        {entry.screenshots && entry.screenshots.length > 1 ? (
+          <span className="absolute right-1.5 bottom-1.5 flex items-center gap-1 rounded bg-black/75 px-1.5 py-0.5 text-[9px] font-mono-tech font-semibold text-white shadow-sm">
+            <i className="far fa-images text-[8px]" />
+            <span>{entry.screenshots.length}</span>
+          </span>
+        ) : (
+          <span className="absolute right-1.5 bottom-1.5 rounded bg-black/60 px-1.5 py-1 text-[9px] font-semibold uppercase tracking-wider text-white">
+            View
+          </span>
+        )}
       </button>
 
       {/* Body */}

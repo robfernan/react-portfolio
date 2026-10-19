@@ -47,7 +47,23 @@ export const ISSUES: Issue[] = [
       },
       {
         title: 'PaperWorks Pro',
-        cover: '/assets/projects/paperworkspro.webp',
+        cover: '/assets/projects/paperworks_1.webp',
+        screenshots: [
+          '/assets/projects/paperworks_1.webp',
+          '/assets/projects/paperworks_2.webp',
+          '/assets/projects/paperworks_3.webp',
+          '/assets/projects/paperworks_4.webp',
+          '/assets/projects/paperworks_5.webp',
+          '/assets/projects/paperworks_6.webp',
+        ],
+        screenshotLabels: [
+          'Overview',
+          'Document Editor',
+          'Template Selector',
+          'Invoice Generator',
+          'Resume Builder',
+          'Export & Print',
+        ],
         blurb:
           'All-in-one document creation suite combining invoice generator, resume builder, business card designer, and PDF editor for creators and entrepreneurs.',
         tech: ['React', 'TypeScript', 'shadcn-ui', 'Vite'],
@@ -58,7 +74,7 @@ export const ISSUES: Issue[] = [
       {
         title: 'SoFlo Marine Detailing Landing Page',
         format: 'CLIENT / WEB',
-        cover: '/assets/projects/SofloMarineDetailingLandingPage.png',
+        cover: '/assets/projects/soflomarinedetailinglandingpage.webp',
         blurb:
           'Commercial service landing page for SoFlo Marine Detailing. Designed with responsive service galleries, detailing package selectors, and direct quote inquiry forms for vessel owners across South Florida.',
         tech: ['React', 'TypeScript', 'Responsive Web'],
@@ -68,10 +84,10 @@ export const ISSUES: Issue[] = [
       {
         title: "Gladys' Cantina",
         format: 'CLIENT / WEB',
-        cover: '/assets/projects/GladysRestuaranthero_dark.png',
+        cover: '/assets/projects/gladysrestuaranthero_dark.webp',
         screenshots: [
-          '/assets/projects/GladysRestuaranthero_dark.png',
-          '/assets/projects/GladysRestuaranthero_organic.png',
+          '/assets/projects/gladysrestuaranthero_dark.webp',
+          '/assets/projects/gladysrestuaranthero_organic.webp',
         ],
         screenshotLabels: ['Dark Theme Edition', 'Organic Theme Edition'],
         blurb:
@@ -83,7 +99,7 @@ export const ISSUES: Issue[] = [
       {
         title: 'Florida Window & Door Maintenance Inc.',
         format: 'CLIENT / WEB',
-        cover: '/assets/projects/FLWindowndoormaintenanceLandingPage.webp',
+        cover: '/assets/projects/flwindowlandingpage.webp',
         blurb:
           'Service-focused landing page for a Florida maintenance company — clear offerings, contact pathways, and a practical conversion-first layout built from the ground up.',
         tech: ['HTML', 'CSS', 'JavaScript'],
@@ -104,7 +120,17 @@ export const ISSUES: Issue[] = [
       {
         title: 'Florida Window & Door Invoicing / Proposal App',
         format: 'CLIENT / CAPACITOR',
-        cover: '/assets/projects/FloridaInvoiceApp.webp',
+        cover: '/assets/projects/floridainvoicingapp_1.webp',
+        screenshots: [
+          '/assets/projects/floridainvoicingapp_1.webp',
+          '/assets/projects/floridainvoicingapp_2.webp',
+          '/assets/projects/floridainvoicingapp_3.webp',
+        ],
+        screenshotLabels: [
+          'Invoicing Screen',
+          'Proposal Form',
+          'Document Print & Preview',
+        ],
         blurb:
           'A lightweight business tool for creating invoices and proposals for Florida Window & Door Maintenance Inc., built as a browser-first app with a Capacitor path to mobile.',
         tech: ['HTML', 'CSS', 'JavaScript', 'Capacitor'],
@@ -195,7 +221,7 @@ export const ISSUES: Issue[] = [
       {
         title: 'Project Mercury',
         format: 'CROSS-PLATFORM / FLUTTER',
-        cover: '/assets/projects/mercury_screenshot.png',
+        cover: '/assets/projects/mercury_screenshot.webp',
         blurb:
           'Open-source, zero-trust, real-time chat platform built with Flutter. Interactive UI shell across desktop and mobile with collaborative Wacom vector canvas, stylus pressure, custom themes, hardware enclave inspection, and audio rooms.',
         tech: ['Flutter', 'Dart', 'Zero-Trust', 'Wacom Stylus API'],
@@ -249,7 +275,7 @@ export const ISSUES: Issue[] = [
       {
         title: 'Brand Identity & Commercial Collateral',
         format: 'BRAND IDENTITY / PRINT',
-        cover: '/assets/projects/FLWindowndoormaintenanceLandingPage.webp',
+        cover: '/assets/projects/flwindowinvoiceprint.webp',
         blurb: 'Unified corporate brand system, logo suites, price sheets, and physical marketing collateral for Florida Window & Door. Pre-press configured with CMYK separations and bleed margins.',
         tech: ['Adobe Illustrator', 'Photoshop CC', 'Canva', 'Pre-Press CMYK'],
         status: 'Commercial Production',
@@ -268,7 +294,17 @@ export const ISSUES: Issue[] = [
       {
         title: 'Business Automation & Proposal Templates',
         format: 'AUTOMATION / LAYOUT TEMPLATES',
-        cover: '/assets/projects/FloridaInvoiceApp.webp',
+        cover: '/assets/projects/floridainvoicingapp_1.webp',
+        screenshots: [
+          '/assets/projects/floridainvoicingapp_1.webp',
+          '/assets/projects/floridainvoicingapp_2.webp',
+          '/assets/projects/floridainvoicingapp_3.webp',
+        ],
+        screenshotLabels: [
+          'Invoicing Screen',
+          'Proposal Form',
+          'Document Print & Preview',
+        ],
         blurb: 'Standardized invoice, proposal, and price sheet layouts eliminating repetitive manual document construction. Structured typographic hierarchy, ADA-compliant contrast, and automated digital-to-print output.',
         tech: ['Typography', 'Grid System', 'HTML/CSS/Capacitor', 'ADA Contrast'],
         status: 'In Production',
@@ -304,7 +340,7 @@ export const ISSUES: Issue[] = [
       {
         title: "Gladys' Cantina — Catering & Meal Prep Menu",
         format: 'RESTAURANT / PRINT MENU SYSTEM',
-        cover: '/assets/projects/CateringMenu.png',
+        cover: '/assets/projects/cateringmenu.webp',
         blurb: 'Artisan gastronomy catering & weekly meal prep selection menu for Gladys Cantina (West Palm Beach, FL). Structured step-by-step combo ordering pathways (base, protein, sides, sauces), dietary indicators, and clean tabular pricing.',
         tech: ['Adobe InDesign', 'Typography', 'Menu Engineering', 'Print Production'],
         status: 'Client Delivery',

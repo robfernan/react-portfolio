@@ -36,7 +36,7 @@ const NOW_BUILDING: Featured[] = [
       'Open-source, zero-trust real-time chat platform in Flutter. Fully interactive cross-platform UI shell with collaborative Wacom vector canvas, audio rooms, and custom themes.',
     language: 'Flutter · Dart · Zero-Trust',
     updated: 'Active Build',
-    image: '/assets/projects/mercury_screenshot.png',
+    image: '/assets/projects/mercury_screenshot.webp',
     href: 'https://github.com/robfernan/Mercury',
   },
   {
