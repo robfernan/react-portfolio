@@ -150,7 +150,7 @@ export const ISSUES: Issue[] = [
       {
         title: 'Yoanny Wellness & Style Client Booking & Portfolio Site',
         format: 'CLIENT / WEB',
-        cover: '/assets/projects/yoannywellness_pricesheet.webp',
+        cover: '/assets/projects/YoannyWellness_StyleLandingPage.webp',
         blurb:
           'Commercial website and booking inquiry portal for Yoanny Wellness & Style. Designed to showcase salon and licensed cosmetology services, client transformations, and direct appointment inquiry pathways.',
         tech: ['HTML5', 'CSS3', 'JavaScript'],
