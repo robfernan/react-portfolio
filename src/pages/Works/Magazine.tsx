@@ -329,6 +329,15 @@ function StudioFooter() {
 }
 
 function PreviewDialog({ entry, onClose }: { entry: Entry; onClose: () => void }) {
+  const images = entry.screenshots && entry.screenshots.length > 0
+    ? entry.screenshots
+    : entry.cover
+    ? [entry.cover]
+    : [];
+  const [activeIdx, setActiveIdx] = useState(0);
+  const currentImage = images[activeIdx] || entry.cover;
+  const currentLabel = entry.screenshotLabels?.[activeIdx];
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4" role="dialog" aria-modal="true" aria-label={`${entry.title} preview`}>
       <button type="button" className="absolute inset-0 cursor-default" aria-label="Close preview" onClick={onClose} />
@@ -342,16 +351,47 @@ function PreviewDialog({ entry, onClose }: { entry: Entry; onClose: () => void }
             Close
           </button>
         </div>
-        {entry.cover ? (
-          <img
-            src={entry.cover}
-            alt={`${entry.title} enlarged preview`}
-            className="max-h-[70vh] w-full object-contain bg-theme-bg dark:bg-theme-bg-dark"
-            onError={(event) => {
-              event.currentTarget.onerror = null;
-              event.currentTarget.src = '/assets/projects/xmbwavemenu.webp';
-            }}
-          />
+
+        {images.length > 1 && (
+          <div className="mb-3 flex flex-wrap items-center gap-2 border-b border-theme-accent/20 pb-3">
+            {images.map((imgSrc, idx) => {
+              const label = entry.screenshotLabels?.[idx] || `View ${idx + 1}`;
+              const isActive = idx === activeIdx;
+              return (
+                <button
+                  key={imgSrc}
+                  type="button"
+                  onClick={() => setActiveIdx(idx)}
+                  className={`px-3 py-1 text-xs font-mono-tech rounded transition-all ${
+                    isActive
+                      ? 'bg-theme-action text-white font-bold'
+                      : 'border border-theme-accent/40 text-theme-secondary dark:text-theme-secondary-dark hover:text-theme-primary'
+                  }`}
+                >
+                  {label}
+                </button>
+              );
+            })}
+          </div>
+        )}
+
+        {currentImage ? (
+          <div>
+            <img
+              src={currentImage}
+              alt={`${entry.title} enlarged preview ${currentLabel ? `(${currentLabel})` : ''}`}
+              className="max-h-[70vh] w-full object-contain bg-theme-bg dark:bg-theme-bg-dark"
+              onError={(event) => {
+                event.currentTarget.onerror = null;
+                event.currentTarget.src = '/assets/projects/xmbwavemenu.webp';
+              }}
+            />
+            {currentLabel && (
+              <p className="mt-2 text-center text-xs font-mono-tech text-theme-secondary dark:text-theme-secondary-dark">
+                {currentLabel}
+              </p>
+            )}
+          </div>
         ) : (
           <div className="flex min-h-64 items-center justify-center border border-dashed border-theme-accent/30 bg-theme-bg p-8 text-center text-sm text-theme-secondary dark:border-theme-accent-dark dark:bg-theme-bg-dark dark:text-theme-secondary-dark">
             Screenshot coming soon for this project.

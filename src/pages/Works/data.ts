@@ -6,6 +6,8 @@ export type Entry = {
   title: string;
   format?: string;
   cover?: string;
+  screenshots?: string[];
+  screenshotLabels?: string[];
   blurb: string;
   tech?: string[];
   status?: string;
@@ -64,14 +66,19 @@ export const ISSUES: Issue[] = [
         impact: 'Vessel detailing presence • Multi-tier service showcases',
       },
       {
-        title: 'Restaurant Website',
+        title: "Gladys' Cantina",
         format: 'CLIENT / WEB',
-        cover: '/assets/projects/restaurantmenu.webp',
+        cover: '/assets/projects/GladysRestuaranthero_dark.png',
+        screenshots: [
+          '/assets/projects/GladysRestuaranthero_dark.png',
+          '/assets/projects/GladysRestuaranthero_organic.png',
+        ],
+        screenshotLabels: ['Dark Theme Edition', 'Organic Theme Edition'],
         blurb:
-          'Restaurant ordering experience with a browsable menu, cart flow, and receipt option — a small business site treated as a real product rather than a static brochure.',
+          'Gourmet Catering & Meal Prep: Artisan Gastronomy • Custom Bowls & Plates • Event Catering • Weekly Meal Prep. Serving West Palm Beach, Florida and surrounding Palm Beach with interactive ordering flow, menu selection, and digital receipt generation.',
         tech: ['HTML', 'CSS', 'JavaScript'],
         status: 'Production',
-        impact: 'Menu • Cart • Receipt flow',
+        impact: 'Artisan Gastronomy • Custom Bowls & Plates • West Palm Beach, FL',
       },
       {
         title: 'Florida Window & Door Maintenance Inc.',
@@ -295,13 +302,13 @@ export const ISSUES: Issue[] = [
         impact: 'Service Flyer • Brand Consistency • High-DPI Print Output',
       },
       {
-        title: 'Artisan Catering & Meal Plan Selection Menu',
+        title: "Gladys' Cantina — Catering & Meal Prep Menu",
         format: 'RESTAURANT / PRINT MENU SYSTEM',
-        cover: '/assets/projects/restaurantmenu.webp',
-        blurb: 'Custom structured catering and build-your-own entree selection menu. Engineered with step-by-step combo ordering pathways (base, protein, sides, sauces), dietary indicators, and clean tabular pricing.',
+        cover: '/assets/projects/CateringMenu.png',
+        blurb: 'Artisan gastronomy catering & weekly meal prep selection menu for Gladys Cantina (West Palm Beach, FL). Structured step-by-step combo ordering pathways (base, protein, sides, sauces), dietary indicators, and clean tabular pricing.',
         tech: ['Adobe InDesign', 'Typography', 'Menu Engineering', 'Print Production'],
         status: 'Client Delivery',
-        impact: 'Structured Selection Menu • Combo Pricing • Clean Tabular Layout',
+        impact: 'Catering Menu • Custom Bowls & Plates • Event Catering',
       },
       {
         title: 'M&G Gutters — Corporate Identity & Brand Mark',
