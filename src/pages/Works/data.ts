@@ -292,25 +292,6 @@ export const ISSUES: Issue[] = [
         impact: 'Business Cards • Service Price Sheets • Print Production',
       },
       {
-        title: 'Business Automation & Proposal Templates',
-        format: 'AUTOMATION / LAYOUT TEMPLATES',
-        cover: '/assets/projects/floridainvoicingapp_1.webp',
-        screenshots: [
-          '/assets/projects/floridainvoicingapp_1.webp',
-          '/assets/projects/floridainvoicingapp_2.webp',
-          '/assets/projects/floridainvoicingapp_3.webp',
-        ],
-        screenshotLabels: [
-          'Invoicing Screen',
-          'Proposal Form',
-          'Document Print & Preview',
-        ],
-        blurb: 'Standardized invoice, proposal, and price sheet layouts eliminating repetitive manual document construction. Structured typographic hierarchy, ADA-compliant contrast, and automated digital-to-print output.',
-        tech: ['Typography', 'Grid System', 'HTML/CSS/Capacitor', 'ADA Contrast'],
-        status: 'In Production',
-        impact: 'Automated field proposals • Instant print & PDF generation',
-      },
-      {
         title: 'Wear OS Watch Face',
         format: 'WATCH FACE / AVIATION',
         cover: '/assets/projects/watch_face_android_avpro.webp',
