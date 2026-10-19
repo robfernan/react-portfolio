@@ -56,10 +56,10 @@ export const ISSUES: Issue[] = [
       {
         title: 'SoFlo Marine Detailing Landing Page',
         format: 'CLIENT / WEB',
-        cover: '/assets/projects/soflomarinedetailing.webp',
+        cover: '/assets/projects/SofloMarineDetailingLandingPage.png',
         blurb:
           'Commercial service landing page for SoFlo Marine Detailing. Designed with responsive service galleries, detailing package selectors, and direct quote inquiry forms for vessel owners across South Florida.',
-        tech: ['HTML5', 'CSS3', 'JavaScript', 'Responsive Web'],
+        tech: ['React', 'TypeScript', 'Responsive Web'],
         status: 'Client Website',
         impact: 'Vessel detailing presence • Multi-tier service showcases',
       },
