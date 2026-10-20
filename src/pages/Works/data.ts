@@ -339,7 +339,7 @@ export const ISSUES: Issue[] = [
       {
         title: 'SoFlo Marine Detailing — Care Packages & Marketing Collateral',
         format: 'CLIENT / BRAND & PRINT',
-        cover: '/assets/projects/soflomarine_carepackages.webp',
+        cover: '/assets/projects/SoFloMarineDetailingPrint.webp',
         blurb: 'Commercial print marketing collateral and structured boat detailing service packages for SoFlo Marine Detailing. Highlights multi-stage ceramic coatings, gelcoat restoration, wash tiers, and scheduled vessel care with marine-grade visual polish.',
         tech: ['Adobe Illustrator', 'Photoshop CC', 'InDesign', 'Print Layout', 'CMYK Specs'],
         status: 'Client Delivery',
