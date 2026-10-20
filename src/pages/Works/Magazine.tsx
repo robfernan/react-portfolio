@@ -23,6 +23,79 @@ const TOTAL_SPREADS = SPREADS.length;
 
 type MagazineIssue = (typeof ISSUES)[number];
 
+const CATEGORIES = [
+  { id: 'all', label: '● Show All', targetPage: 0 },
+  { id: 'products', label: 'Products', targetPage: 0 },
+  { id: 'systems', label: 'Systems & Tools', targetPage: 0 },
+  { id: 'consoles', label: 'Consoles & Retro', targetPage: 1 },
+  { id: 'art', label: 'Art & Graphics', targetPage: 2 },
+] as const;
+
+function matchesCategoryFilter(issue: MagazineIssue, entry: Entry, catId: string): boolean {
+  if (catId === 'all') return true;
+  const kicker = issue.kicker.toLowerCase();
+  const title = issue.title.toLowerCase();
+  const format = (entry.format || '').toLowerCase();
+  const entryTitle = entry.title.toLowerCase();
+  const tech = (entry.tech || []).join(' ').toLowerCase();
+
+  switch (catId) {
+    case 'products':
+      return (
+        issue.id === 'build' ||
+        format.includes('client') ||
+        format.includes('web') ||
+        kicker.includes('product')
+      );
+    case 'systems':
+      return (
+        issue.id === 'build' ||
+        kicker.includes('tool') ||
+        kicker.includes('systems') ||
+        tech.includes('go') ||
+        tech.includes('wails') ||
+        tech.includes('typescript') ||
+        entryTitle.includes('aviationpro') ||
+        entryTitle.includes('paperworks') ||
+        entryTitle.includes('launcher') ||
+        entryTitle.includes('mips')
+      );
+    case 'consoles':
+      return (
+        issue.id === 'play' ||
+        kicker.includes('retro') ||
+        kicker.includes('game') ||
+        format.includes('retro') ||
+        tech.includes('lua') ||
+        tech.includes('love2d') ||
+        entryTitle.includes('psp') ||
+        entryTitle.includes('sony') ||
+        entryTitle.includes('ps1') ||
+        entryTitle.includes('dreamcast')
+      );
+    case 'art':
+      return (
+        issue.id === 'studio' ||
+        kicker.includes('graphic') ||
+        kicker.includes('visual') ||
+        kicker.includes('watch') ||
+        format.includes('print') ||
+        format.includes('brand') ||
+        format.includes('menu') ||
+        format.includes('watch') ||
+        tech.includes('illustrator') ||
+        tech.includes('indesign') ||
+        tech.includes('photoshop')
+      );
+    default:
+      return (
+        kicker.includes(catId.toLowerCase()) ||
+        title.includes(catId.toLowerCase()) ||
+        entryTitle.includes(catId.toLowerCase())
+      );
+  }
+}
+
 export default function Magazine() {
   // Persist current page across refreshes — read from localStorage on mount
   const [spread, setSpread] = useState(() => {
@@ -150,18 +223,28 @@ export default function Magazine() {
 
           {/* Interactive Category Filter */}
           <div className="flex flex-wrap gap-2 pt-4">
-            {['all', 'Products', 'Systems & Tools', 'Consoles & Retro', 'Art & Graphics'].map((cat) => (
+            {CATEGORIES.map((cat) => (
               <button
-                key={cat}
+                key={cat.id}
                 type="button"
-                onClick={() => setFilter(cat)}
+                onClick={() => {
+                  setFilter(cat.id);
+                  if (viewMode === 'spread') {
+                    const spreadIdx = SPREADS.findIndex(
+                      (s) => s.left === cat.targetPage || s.right === cat.targetPage
+                    );
+                    if (spreadIdx !== -1) {
+                      goTo(spreadIdx);
+                    }
+                  }
+                }}
                 className={`text-xs font-mono-tech px-3 py-1 rounded-full border transition-all ${
-                  filter === cat
+                  filter === cat.id
                     ? 'border-theme-action bg-theme-action/10 dark:bg-theme-action-dark/20 text-theme-action dark:text-theme-action-dark font-semibold'
                     : 'border-theme-accent/30 dark:border-theme-accent-dark/40 text-theme-secondary dark:text-theme-secondary-dark hover:border-theme-accent'
                 }`}
               >
-                {cat === 'all' ? '● Show All' : cat}
+                {cat.label}
               </button>
             ))}
           </div>
@@ -196,8 +279,10 @@ export default function Magazine() {
         ) : (
           /* Studio Grid View: All issues and entries laid out in an expansive grid */
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {ISSUES.filter(issue => filter === 'all' || issue.kicker.toLowerCase().includes(filter.toLowerCase()) || issue.title.toLowerCase().includes(filter.toLowerCase())).flatMap((issue, issueIdx) =>
-              issue.entries.map((entry) => (
+            {ISSUES.flatMap((issue, issueIdx) =>
+              issue.entries
+                .filter((entry) => matchesCategoryFilter(issue, entry, filter))
+                .map((entry) => (
                 <article
                   key={entry.title}
                   className="rounded-2xl border border-theme-accent/20 dark:border-theme-accent-dark bg-theme-card dark:bg-theme-card-dark overflow-hidden flex flex-col justify-between hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
