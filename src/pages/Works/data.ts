@@ -348,28 +348,15 @@ export const ISSUES: Issue[] = [
         impact: 'Mascot Badge • Brand Wordmark • Decals & Merch • High-DPI Print',
       },
       {
-        title: "Gladys' Cantina — Catering & Meal Prep Menu",
-        format: 'RESTAURANT / PRINT MENU SYSTEM',
-        cover: '/assets/projects/cateringmenu.webp',
-        screenshots: [
-          '/assets/projects/cateringmenu.webp',
-          '/assets/projects/gladyscatering_3.webp',
-          '/assets/projects/gladyscatering_4.webp',
-        ],
-        screenshotLabels: [
-          'Full Catering Menu Sheet',
-          'Custom Plate & Bowl Builder Poster',
-          'Signature Catering Display Poster',
-        ],
-        blurb: 'Artisan gastronomy catering & weekly meal prep selection menu for Gladys Cantina (West Palm Beach, FL). Structured step-by-step combo ordering pathways (base, protein, sides, sauces), dietary indicators, and clean tabular pricing.',
-        tech: ['Adobe InDesign', 'Typography', 'Menu Engineering', 'Print Production'],
-        status: 'Client Delivery',
-        impact: 'Catering Menu • Custom Bowls & Plates • Event Catering',
-      },
-      {
         title: 'M&G Gutters — Corporate Identity & Brand Mark',
         format: 'BRAND IDENTITY / LOGO DESIGN',
-        cover: '/assets/projects/MnGGuttersPrint.webp',
+        cover: '/assets/projects/mngguttersprint.webp',
+        screenshots: [
+          '/assets/projects/mngguttersprint.webp',
+        ],
+        screenshotLabels: [
+          'Commercial Print Flyer & Fleet Specs'
+        ],
         blurb: 'Complete visual brand identity, emblem logo suite, and print-ready business stationery for a South Florida gutter contractor. Built with clean vector lines, CMYK color profiles, and clear brand hierarchy.',
         tech: ['Adobe Illustrator', 'Logo Design', 'Vector Graphics', 'CMYK'],
         status: 'Client Delivery',
