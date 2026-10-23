@@ -300,6 +300,18 @@ export const ISSUES: Issue[] = [
         impact: 'Business Cards • Service Price Sheets • Print Production',
       },
       {
+        title: 'ChronoGT Tachometer Watch Face',
+        format: 'GARMIN CONNECT IQ / WEARABLE',
+        cover: '/assets/projects/chronogt.webp',
+        blurb: 'Motorsport-inspired racing tachometer watch face for Garmin smartwatches paying homage to 90s JDM instrument clusters and Gran Turismo. Engineered with 100% procedural 2D vector graphics, sequential shift-light LEDs, real-time health telemetry, and sub-4 KB RAM optimization.',
+        tech: ['Monkey C', 'Garmin Connect IQ 9.3', 'Vector 2D', 'AMOLED AOD'],
+        status: 'Approved & Live on Connect IQ',
+        impact: 'Garmin Store Approved • Certified across 94 watch models • 3.5 KB RAM',
+        link: 'https://apps.garmin.com/en-US/apps/a213d2da-0d13-4e02-ae58-3525fb89306a',
+        github: 'https://github.com/robfernan/ChronoGT',
+        youtube: 'https://youtube.com/shorts/R3h-WX0FZ2w',
+      },
+      {
         title: 'Wear OS Watch Face',
         format: 'WATCH FACE / AVIATION',
         cover: '/assets/projects/watch_face_android_avpro.webp',
@@ -317,6 +329,7 @@ export const ISSUES: Issue[] = [
         status: 'Wearable',
         impact: 'Character-driven interface design',
       },
+
       {
         title: 'JT Marine Services — Commercial Service Flyer',
         format: 'CLIENT / PRINT COLLATERAL',
