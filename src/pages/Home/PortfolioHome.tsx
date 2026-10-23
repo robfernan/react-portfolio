@@ -31,14 +31,15 @@ type Featured = {
 /* Static, curated "Now Building" — no live GitHub fetch for now. */
 const NOW_BUILDING: Featured[] = [
   {
-    name: 'Project Mercury',
+    name: 'ChronoGT Tachometer',
     description:
-      'Open-source, zero-trust real-time chat platform in Flutter. Fully interactive cross-platform UI shell with collaborative Wacom vector canvas, audio rooms, and custom themes.',
-    language: 'Flutter · Dart · Zero-Trust',
-    updated: 'Active Build',
-    image: '/assets/projects/mercury_screenshot.webp',
-    href: 'https://github.com/robfernan/Mercury',
+      'Motorsport-inspired 90s JDM racing tachometer watch face for Garmin smartwatches. Features procedural 2D vector graphics, 5-LED sequential shift lights, live health telemetry, and sub-4 KB RAM optimization.',
+    language: 'Monkey C · Connect IQ · Vector 2D',
+    updated: 'Approved on Garmin Store',
+    image: '/assets/projects/chronogt.gif',
+    href: 'https://apps.garmin.com/en-US/apps/a213d2da-0d13-4e02-ae58-3525fb89306a',
   },
+
   {
     name: 'PSP Digital Comics Reborn',
     description:
