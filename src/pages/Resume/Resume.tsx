@@ -6,27 +6,27 @@ type SkillGroup = { label: string; items: string[] };
 const skillGroups: SkillGroup[] = [
   {
     label: 'Languages & Frameworks',
-    items: ['Go (Wails)', 'C++ (SDL, SFML)', 'Python (CircuitPython)', 'C#', 'Lua (LÖVE2D)', 'JavaScript (ES6+)', 'TypeScript', 'React', 'Tailwind CSS', 'HTML5', 'CSS3', 'PHP'],
+    items: ['Go (Wails)', 'C++ (SDL, SFML)', 'Python (CircuitPython)', 'C#', 'Lua (LÖVE2D)', 'Monkey C (Garmin CIQ)', 'JavaScript (ES6+)', 'TypeScript', 'React', 'Flutter', 'Dart', 'Tailwind CSS', 'HTML5', 'CSS3', 'PHP'],
   },
   {
     label: 'Web & Development',
-    items: ['Responsive Layouts', 'Content Management', 'Cross-Platform Apps', 'CI/CD Pipelines', 'GitHub Actions'],
+    items: ['Responsive Layouts', 'Content Management', 'Cross-Platform Apps', 'CI/CD Pipelines', 'GitHub Actions', 'REST APIs', 'Vite', 'shadcn/ui'],
   },
   {
-    label: 'Desktop & Mobile',
-    items: ['Wails (Desktop)', 'NW.js (Desktop)', 'Capacitor (Android)', 'Samsung Watch Face Studio', 'Android Studio'],
+    label: 'Desktop, Mobile & Wearables',
+    items: ['Garmin Connect IQ (Smartwatches)', 'Wear OS', 'Samsung Watch Face Studio', 'Android Studio', 'Wails (Desktop)', 'NW.js (Desktop)', 'Capacitor (Android/iOS)'],
   },
   {
     label: 'Design & Creative',
-    items: ['Adobe Creative Cloud (Photoshop, Illustrator, Animate, Dreamweaver, Acrobat)', 'UI/UX Design', 'Brand Identity', 'Canva', 'Aesprite', 'Inkscape', 'GIMP'],
+    items: ['Adobe Creative Cloud (Photoshop, Illustrator, InDesign, Animate)', 'UI/UX Design', 'Brand Identity', 'Character Design', 'Canva', 'Aseprite', 'Inkscape', 'GIMP'],
   },
   {
     label: 'SEO & Analytics',
-    items: ['Google Search Console', 'Keyword Research', 'Meta Title & Description Optimization', 'On-Page SEO'],
+    items: ['Google Search Console', 'Keyword Research', 'Meta Title & Description Optimization', 'On-Page SEO', 'Core Web Vitals'],
   },
   {
     label: 'Tools & Platforms',
-    items: ['Git / GitHub', 'Visual Studio Code', 'Visual Studio Community', 'Linux', 'Windows', 'macOS'],
+    items: ['Git / GitHub', 'Visual Studio Code', 'Visual Studio Community', 'Linux (Debian)', 'Windows', 'macOS'],
   },
 ];
 
@@ -53,9 +53,9 @@ const roles: Role[] = [
     period: 'Jan 2021 – Present',
     tag: 'Independent studio — various clients',
     bullets: [
-      'Delivered end-to-end web development and graphic design solutions for commercial clients across South Florida, including Yoanny Wellness & Style, JT Marine Services, and SoFlo Marine Detailing.',
-      'Designed complete visual brand systems — emblem logos, business cards, service tier brochures, and bilingual price sheets — calibrated for high-DPI commercial print production and digital deployment.',
-      'Engineered accessible, high-performance responsive web applications and interactive software using React, TypeScript, Tailwind CSS, Flutter, and native desktop/mobile runtimes (Wails, Capacitor).',
+      'Delivered end-to-end web development, application engineering, and graphic design solutions for commercial clients across South Florida, including Gladys\' Cantina, JT Marine Services, and Yoanny Wellness & Style.',
+      'Designed complete visual brand systems — emblem logos, chef mascots, business cards, service tier brochures, and bilingual price sheets — calibrated for high-DPI commercial print production and digital deployment.',
+      'Engineered accessible, high-performance responsive web applications and interactive software using React, TypeScript, Tailwind CSS, Flutter, and native desktop/mobile/wearable runtimes (Garmin Connect IQ, Wails, Capacitor).',
       'Created custom vector graphics, UI icon systems, and layout templates with strict adherence to ADA/WCAG 2.1 AA accessibility guidelines, color contrast, and typographic readability.',
       'Consulted directly with business owners to translate operational workflows into automated digital document generators and conversion-focused web presences.',
     ],
@@ -86,12 +86,14 @@ const certifications: Certification[] = [
 ];
 
 const selectedProjects = [
+  'ChronoGT Tachometer — motorsport-inspired watch face live on Garmin Connect IQ Store across 94 round smartwatch models (Monkey C).',
   'AviationPro — multi-platform pilot utility suite for desktop, web, Android, and Wear OS (129.2 flight hours).',
-  'PaperWorks Pro — document automation suite for invoices, resumes, and commercial client proposals.',
+  'PaperWorks Pro — document automation suite for invoices, resumes, and commercial client proposals (React, TypeScript).',
   'Florida Window & Door Maintenance — commercial responsive web platform and mobile invoicing automation tool.',
+  'Gladys\' Cantina — gourmet catering web ordering portal, custom gastronomy menu, and mascot brand identity suite.',
   'JT Marine & SoFlo Marine Detailing — commercial web presences and high-DPI marine service print collateral.',
   'Yoanny Wellness & Style — commercial booking portal and bilingual Palm Beach County service price sheets.',
-  'Project Mercury — open-source, zero-trust real-time chat platform built with Flutter.',
+  'Project Mercury — open-source, zero-trust real-time chat platform built with Flutter and Wacom stylus canvas.',
   'PSP Digital Comics Reborn — cross-platform CBZ comic reader recreation with React, TypeScript & Vite.',
   'Hopeless Catch — published pixel-art fishing horror game built with Love2D and Lua (Game Jam winner).',
 ];
@@ -100,14 +102,14 @@ const selectedProjects = [
 type Highlight = { value: string; label: string };
 const highlights: Highlight[] = [
   { value: 'Bilingual', label: 'English · Spanish' },
-  { value: '6+', label: 'Programming languages' },
-  { value: 'Web → Wear OS', label: 'Cross-platform delivery' },
-  { value: 'Published', label: 'Game shipped (LÖVE2D)' },
+  { value: '7+', label: 'Programming languages' },
+  { value: 'Web → Wearables', label: 'Cross-platform delivery' },
+  { value: 'Published', label: 'Garmin & Itch.io Shipped' },
 ];
 
 // Skills worth surfacing as scannable chips (the rest stay in the grouped list above).
 const featuredSkills = [
-  'React', 'TypeScript', 'JavaScript (ES6+)', 'Flutter', 'Dart', 'Go', 'C++', 'Python', 'C#', 'Lua', 'PHP',
+  'React', 'TypeScript', 'JavaScript (ES6+)', 'Garmin Connect IQ', 'Monkey C', 'Flutter', 'Dart', 'Go', 'C++', 'Python', 'C#', 'Lua', 'PHP',
   'Tailwind CSS', 'HTML5', 'CSS3', 'Capacitor', 'Wails', 'NW.js', 'Android Studio',
   'Adobe Creative Cloud', 'Illustrator', 'Photoshop', 'InDesign', 'UI/UX Design', 'Brand Identity',
   'Pre-Press (CMYK)', 'ADA / WCAG Compliance', 'Canva', 'Git / GitHub', 'CI/CD Pipelines', 'Linux', 'Windows', 'macOS',
@@ -261,7 +263,7 @@ export default function Resume() {
         {/* Platforms */}
         <section id="platforms">
           <p className={`${eyebrow} mb-3`}>Platforms</p>
-          <p className="text-sm leading-relaxed text-theme-secondary dark:text-theme-secondary-dark">Web · Windows · macOS · Linux · Android · Wear OS · ESP32-S3 · PlayStation 1 · PSP · PlayStation 2</p>
+          <p className="text-sm leading-relaxed text-theme-secondary dark:text-theme-secondary-dark">Web · Windows · macOS · Linux · Android · Garmin Connect IQ · Wear OS · ESP32-S3 · PlayStation 1 · PSP · PlayStation 2</p>
         </section>
       </section>
     </div>
