@@ -68,7 +68,7 @@ type Certification = { issuer: string; icon: string; detail: string };
 
 const certifications: Certification[] = [
   { issuer: 'Federal Aviation Administration (FAA)', icon: 'fas fa-plane', detail: 'Student Pilot Certificate' },
-  { issuer: 'Adobe Certified Professional', icon: 'fas fa-pen-nib', detail: 'Photoshop CC · Illustrator CC · InDesign CC · Dreamweaver CC · Animate CC' },
+  { issuer: 'Adobe Certified Professional', icon: 'fas fa-pen-nib', detail: 'Photoshop CC · Illustrator CC · Dreamweaver CC · Animate CC' },
   { issuer: 'Microsoft Office Specialist', icon: 'fab fa-microsoft', detail: 'Word · Excel · PowerPoint · Access' },
   { issuer: 'Technical Certifications', icon: 'fas fa-code', detail: 'Microsoft Foundational C# · Responsive Web Design (freeCodeCamp) · CIW Internet Business Associate' },
 ];
