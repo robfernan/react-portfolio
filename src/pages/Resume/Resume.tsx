@@ -35,29 +35,16 @@ type Role = { company: string; title: string; period: string; tag?: string; bull
 const roles: Role[] = [
   {
     company: 'Florida Window & Door Maintenance, Inc.',
-    title: 'Web Developer & Graphic Designer',
-    period: 'Jan 2021 – Present',
+    title: 'Software Developer & UI/UX Designer',
+    period: 'Jan 2021 – Present · Full-Time',
     tag: 'Primary role',
     bullets: [
-      'Designed and maintained the company\'s unified brand identity system, typography standards, logo suites, and commercial stationery across all digital and physical channels.',
-      'Prepared press-ready collateral with accurate color modes (CMYK for commercial offset print / RGB for digital displays), proper 0.125" bleed margins, and trim marks using Adobe Illustrator, InDesign, and Photoshop CC.',
-      'Built and maintained a fully responsive commercial landing page (HTML5, CSS3, JavaScript), integrating on-page SEO best practices and Google Search Console to drive organic search visibility and customer inquiries.',
-      'Architected a cross-platform invoice and proposal automation application (HTML, CSS, JavaScript, Capacitor) deployed to web and mobile — eliminating repetitive manual document construction, reducing administrative billing turnaround by ~80%, and ensuring 100% brand consistency.',
-      'Produced ADA/WCAG-compliant digital forms and customer-facing contracts, ensuring accessible color contrast ratios and clear visual hierarchy for public communications.',
-      'Conducted day-to-day bilingual client and vendor communication in English and Spanish, explaining technical service specifications and coordinating print orders.',
-    ],
-  },
-  {
-    company: 'Robert Fernandez Software Solutions',
-    title: 'Web Developer & Graphic Designer · Independent / Freelance',
-    period: 'Jan 2021 – Present',
-    tag: 'Independent studio — various clients',
-    bullets: [
-      'Delivered end-to-end web development, application engineering, and graphic design solutions for commercial clients across South Florida, including Gladys\' Cantina, JT Marine Services, and Yoanny Wellness & Style.',
-      'Designed complete visual brand systems — emblem logos, chef mascots, business cards, service tier brochures, and bilingual price sheets — calibrated for high-DPI commercial print production and digital deployment.',
-      'Engineered accessible, high-performance responsive web applications and interactive software using React, TypeScript, Tailwind CSS, Flutter, and native desktop/mobile/wearable runtimes (Garmin Connect IQ, Wails, Capacitor).',
-      'Created custom vector graphics, UI icon systems, and layout templates with strict adherence to ADA/WCAG 2.1 AA accessibility guidelines, color contrast, and typographic readability.',
-      'Consulted directly with business owners to translate operational workflows into automated digital document generators and conversion-focused web presences.',
+      'Architected and shipped a cross-platform proposal and invoicing system across desktop and mobile using TypeScript, Capacitor, and Flutter, cutting manual billing entry by 40% and accelerating proposal turnaround by 35%.',
+      'Re-engineered core financial calculation engines in Flutter/Dart, optimizing native mobile memory usage, reactive UI state management, and real-time offline document generation.',
+      'Engineered the company\'s primary commercial web platform (floridawindowndoormaintenance.com) with semantic HTML5, modern CSS, and performance-focused architecture, significantly boosting organic local acquisition via Google Search Console.',
+      'Automated company workflows from legacy physical records and spreadsheets into an integrated digital document pipeline with 100% data integrity.',
+      'Designed commercial price sheets, architectural client packets, and branded digital assets ensuring high visual appeal and ADA/WCAG accessibility compliance.',
+      'Conducted daily bilingual technical consultations with commercial clients and property managers in English and Spanish, translating complex structural repair scopes into digital contracts.',
     ],
   },
 ];
@@ -67,22 +54,23 @@ type School = { name: string; credentials: string[]; activities?: string };
 const education: School[] = [
   {
     name: 'Florida Atlantic University',
-    credentials: ['B.A. General Studies (Computer Science Concentration) — Dec 2022', 'Associate of Arts in Computer Science — May 2021'],
+    credentials: ['Bachelor of Arts (B.A.) — Computer Science Concentration (Minor in History) | Dec 2022', 'Associate of Arts (A.A.) — Computer Science | May 2021'],
     activities: 'FAU Aerospace Experimental Association · Google Developer Student Club',
   },
   {
     name: 'Forest Hill Community High School',
-    credentials: ['High School Diploma (Digital Design Program) — May 2019'],
-    activities: 'SECME · ACE Mentorship Program · Coding Club',
+    credentials: ['High School Diploma — Digital Design Program | May 2019'],
+    activities: 'Prepress, Typography, Vector Imaging · SECME · Coding Club · ACE Mentorship Program',
   },
 ];
 
 type Certification = { issuer: string; icon: string; detail: string };
 
 const certifications: Certification[] = [
-  { issuer: 'Microsoft', icon: 'fab fa-microsoft', detail: 'Foundational C# · Microsoft Office Specialist (Access, PowerPoint, Excel, Word)' },
-  { issuer: 'Adobe', icon: 'fas fa-pen-nib', detail: 'Certified Professional — Animate, Dreamweaver, Illustrator, Photoshop CC' },
-  { issuer: 'Web / Dev', icon: 'fas fa-code', detail: 'Responsive Web Design (freeCodeCamp) · Game Development (Sololearn) · CIW IBA' },
+  { issuer: 'Federal Aviation Administration (FAA)', icon: 'fas fa-plane', detail: 'Student Pilot Certificate' },
+  { issuer: 'Adobe Certified Professional', icon: 'fas fa-pen-nib', detail: 'Photoshop CC · Illustrator CC · InDesign CC · Dreamweaver CC · Animate CC' },
+  { issuer: 'Microsoft Office Specialist', icon: 'fab fa-microsoft', detail: 'Word · Excel · PowerPoint · Access' },
+  { issuer: 'Technical Certifications', icon: 'fas fa-code', detail: 'Microsoft Foundational C# · Responsive Web Design (freeCodeCamp) · CIW Internet Business Associate' },
 ];
 
 const selectedProjects = [
@@ -125,9 +113,11 @@ export default function Resume() {
           <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <h1 className="text-4xl sm:text-6xl font-black leading-none text-theme-primary dark:text-theme-secondary-dark">Robert Fernandez</h1>
-              <p className="mt-3 text-base text-theme-secondary dark:text-theme-secondary-dark">Cross-platform software engineer · digital artist · pilot</p>
+              <p className="mt-3 text-base text-theme-secondary dark:text-theme-secondary-dark">Software Developer & UI/UX Designer · Bilingual (English / Spanish)</p>
               <p id="contact-links" className="mt-4 text-sm leading-relaxed text-theme-secondary dark:text-theme-secondary-dark">
-                <a href="https://robertfernandez.dev" target="_blank" rel="noopener noreferrer" className="hover:underline">Portfolio: robertfernandez.dev</a>
+                <span className="font-medium text-theme-accent dark:text-theme-secondary-dark">West Palm Beach, FL</span>
+                <span aria-hidden> · </span>
+                <a href="https://robertfernandez.dev" target="_blank" rel="noopener noreferrer" className="hover:underline">robertfernandez.dev</a>
                 <span aria-hidden> · </span>
                 <a href="https://github.com/robfernan" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 hover:underline"><i aria-hidden className="fab fa-github" /> github.com/robfernan</a>
                 <span aria-hidden> · </span>
@@ -157,9 +147,9 @@ export default function Resume() {
 
         {/* Profile */}
         <section className="mb-12">
-          <p className={`${eyebrow} mb-3`}>Profile</p>
+          <p className={`${eyebrow} mb-3`}>Professional Summary</p>
           <p className="text-base sm:text-lg leading-relaxed text-theme-secondary dark:text-theme-secondary-dark">
-            Bilingual (English/Spanish) designer-engineer building practical, visually considered software across web, desktop, mobile, Wear OS, embedded displays, and retro consoles. I combine aviation discipline, automotive visual design, and a preference for local-first tools that feel clear under pressure — from responsive landing pages and SEO to cross-platform apps and complete brand identities.
+            Full-Stack Software Engineer & UI/UX Designer with 5+ years of experience engineering cross-platform business automation tools, commercial web applications, and published wearable software on the official Garmin Connect IQ Store. B.A. in Computer Science from Florida Atlantic University with deep production experience in TypeScript, React, Go, and embedded/desktop runtimes. Bridges robust technical systems architecture with accessible, conversion-driven UI/UX design.
           </p>
         </section>
 
