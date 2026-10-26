@@ -396,5 +396,5 @@ export const ART_PLATFORMS = [
   { name: 'Behance', icon: 'fa-behance', href: 'https://www.behance.net/robertfern5088', note: 'UI/UX design' },
   { name: 'Itch.io', logo: '/images/itchio-textless-black.svg', href: 'https://mungdaal321.itch.io/', note: 'Game assets & demos' },
   { name: 'DeviantArt', icon: 'fa-deviantart', href: 'https://www.deviantart.com/rober321', note: 'Sketches & concepts' },
-  { name: 'Blog', icon: 'fa-wordpress', href: 'https://robfernan.wordpress.com/', note: 'WordPress blog' },
+  { name: 'Blog', icon: 'fa-wordpress', href: 'https://robertfernandez1.wordpress.com/', note: 'Archive blog' },
 ];
