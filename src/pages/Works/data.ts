@@ -69,7 +69,7 @@ export const ISSUES: Issue[] = [
         tech: ['React', 'TypeScript', 'shadcn-ui', 'Vite'],
         status: 'Production',
         impact: 'Complete web version • Desktop & Mobile coming soon',
-        github: 'https://github.com/robfernan/paperworks-pro',
+        github: 'https://github.com/robfernan/Paperworks',
       },
       {
         title: 'SoFlo Marine Detailing Landing Page',
