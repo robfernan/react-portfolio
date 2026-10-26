@@ -47,7 +47,7 @@ export const ISSUES: Issue[] = [
         github: 'https://github.com/robfernan/AviationPro',
       },
       {
-        title: 'PaperWorks Pro',
+        title: 'Paperworks',
         cover: '/assets/projects/paperworks_1.webp',
         screenshots: [
           '/assets/projects/paperworks_1.webp',
