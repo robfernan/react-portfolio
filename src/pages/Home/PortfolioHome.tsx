@@ -35,7 +35,7 @@ const NOW_BUILDING: Featured[] = [
     description:
       'Motorsport-inspired 90s JDM racing tachometer watch face for Garmin smartwatches. Features procedural 2D vector graphics, 5-LED sequential shift lights, live health telemetry, and sub-4 KB RAM optimization.',
     language: 'Monkey C · Connect IQ · Vector 2D',
-    updated: 'Approved on Garmin Store',
+    updated: '100+ Installs · Garmin Store',
     image: '/assets/projects/chronogt.gif',
     href: 'https://apps.garmin.com/en-US/apps/a213d2da-0d13-4e02-ae58-3525fb89306a',
   },
