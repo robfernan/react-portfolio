@@ -1,0 +1,20 @@
+# Robert Fernandez — Cross-Platform Software Engineer & Digital Artist
+
+> Design-first software systems across web, desktop, mobile, Wear OS, embedded displays, and retro consoles.
+
+## Core Specializations
+- **Cross-Platform & Native Systems**: React, TypeScript, Flutter, Go, C++, Lua, SFML, Love2D.
+- **Aviation & Precision Calculators**: AviationPro Electronic Flight Bag (EFB), live NOAA METAR/TAF decoders, density altitude, weight and balance calculations.
+- **Retro Computing & Embedded Displays**: Game development and custom utilities for PSP, Xbox, and embedded hardware interfaces.
+
+## Featured Links & Documentation
+- [Homepage](https://robertfernandez.dev/): Primary portfolio overview and active builds.
+- [Works & Systems](https://robertfernandez.dev/works): Complete catalogue of projects, game engines, and production applications.
+- [AviationPro](https://robertfernandez.dev/aviation): Complete in-browser flight planning suite and aeronautical weather tools.
+- [Resume](https://robertfernandez.dev/resume): Professional background, education, and technical competencies.
+- [Streaming](https://robertfernandez.dev/streaming): Creative broadcasts, live coding, and retro engineering.
+
+## Developer & Social Handles
+- GitHub: https://github.com/robfernan
+- LinkedIn: https://linkedin.com/in/robfernan
+- itch.io: https://mungdaal321.itch.io/
