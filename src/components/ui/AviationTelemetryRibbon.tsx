@@ -67,7 +67,18 @@ export default function AviationTelemetryRibbon() {
     async function loadMetars() {
       try {
         const stationIds = XC_STATIONS.map((s) => s.id).join(',');
-        const res = await fetch(`https://aviationweather.gov/api/data/metar?ids=${stationIds}&format=json`);
+        // Web: route through the same-origin proxy so we never trip CORS.
+        //   - Vite dev server proxies /aviationweather -> aviationweather.gov (see vite.config.ts)
+        //   - Hostinger production serves /api/proxy.php (same-origin PHP, see dist/api/proxy.php)
+        // Native (Wails/Capacitor) shells can call the API directly.
+        const isNativeShell = !!(
+          ((window as any).Capacitor && typeof (window as any).Capacitor.isNativePlatform === 'function' && (window as any).Capacitor.isNativePlatform()) ||
+          ((window as any).go?.main?.App)
+        );
+        const url = isNativeShell
+          ? `https://aviationweather.gov/api/data/metar?ids=${stationIds}&format=json`
+          : `/aviationweather/api/data/metar?ids=${stationIds}&format=json`;
+        const res = await fetch(url);
         if (res.ok) {
           const json = await res.json();
           if (Array.isArray(json) && json.length > 0) {

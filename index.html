@@ -1,6 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+		<script>
+			// Apply saved theme + dark mode BEFORE first paint to avoid a flash of the wrong theme.
+			(function () {
+				try {
+					var d = document.documentElement;
+					var t = localStorage.getItem('theme') || 'minimal';
+					var valid = ['minimal', 'slate', 'midnight', '90s'];
+					if (valid.indexOf(t) === -1) t = 'minimal';
+					// Remove any stale theme-* classes, then apply the chosen one.
+					var re = /theme-[a-z0-9]+/g;
+					var cls = d.className.match(re);
+					if (cls) cls.forEach(function (c) { d.classList.remove(c); });
+					d.classList.add('theme-' + t);
+
+					var dark = localStorage.getItem('themeMode') === 'dark';
+					if (!localStorage.getItem('themeMode')) {
+						dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+					}
+					if (dark) d.classList.add('dark');
+				} catch (e) { /* no-op */ }
+			})();
+		</script>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 

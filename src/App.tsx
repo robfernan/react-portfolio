@@ -120,22 +120,22 @@ function AppContent() {
     ];
 
     const [theme, setThemeState] = React.useState<ThemeKey>(() => {
-        const htmlClass = document.documentElement.className.match(/theme-([a-z]+)/)?.[1];
+        // Prefer the persisted key (set by index.html inline script + this app),
+        // fall back to whatever theme-* class is already on <html>.
+        if (typeof window !== 'undefined') {
+            const stored = localStorage.getItem('theme');
+            if (stored && themes.some(t => t.key === stored)) return stored as ThemeKey;
+        }
+        const htmlClass = document.documentElement.className.match(/theme-([a-z0-9]+)/)?.[1];
         return (htmlClass as ThemeKey) || 'minimal';
     });
 
     const setTheme = (themeKey: ThemeKey) => {
         document.documentElement.classList.remove(...themes.map(t => `theme-${t.key}`));
         document.documentElement.classList.add(`theme-${themeKey}`);
+        try { localStorage.setItem('theme', themeKey); } catch {}
         setThemeState(themeKey);
     };
-
-    React.useEffect(() => {
-        // ensure at least the current theme class exists on load
-        if (!document.documentElement.className.includes(`theme-${theme}`)) {
-            document.documentElement.classList.add(`theme-${theme}`);
-        }
-    }, []);
 
     const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
