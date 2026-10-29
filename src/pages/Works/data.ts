@@ -169,13 +169,25 @@ export const ISSUES: Issue[] = [
       'Interactive experiences, retro-console homebrew, and the fun stuff — from published games to baremetal PS1 MIPS.',
     entries: [
       {
+        title: "Sportsman's Quest",
+        format: 'GODOT 4 / 3D SIMULATION',
+        cover: '/assets/projects/sportsmansquest.webp',
+        blurb:
+          'A procedural 3D stalking sim on Whispering Pines — stay downwind, stay quiet, and walk the harvest back to the lodge. Wind & scent mechanics, a retriever with blood-tracking AI, kayak + stand traversal, cryptid encounters (ghost buck, werewolf, wendigo), and day/night hunts across 32 whitetail, foxes, and mallards.',
+        tech: ['Godot 4', 'GDScript', 'Procedural Terrain', 'AI / Pathfinding'],
+        status: 'Published v1.0.0',
+        impact: 'Built in under a day • Web + Windows on itch.io & GitHub Releases',
+        link: 'https://mungdaal321.itch.io/sportsman-quest',
+        github: 'https://github.com/robfernan/sportsmans-quest',
+      },
+      {
         title: 'Hopeless Catch',
         cover: '/assets/projects/hopelesscatch.webp',
         blurb:
           'Atmospheric pixel-art fishing game with procedurally generated landscapes and a subtle narrative twist. A peaceful adventure that hides something deeper.',
         tech: ['Love2D / LÖVE', 'Lua', 'Pixel Art'],
         status: 'Published',
-        impact: 'Winner of Fishing Horror Game Jam • Web + Desktop on itch.io',
+        impact: 'Made for the Fishing Horror Jam • Web + Desktop on itch.io',
         link: 'https://mungdaal321.itch.io/hopeless-catch',
         github: 'https://github.com/robfernan/Hopeless-Catch-Fishing-Horror-Game',
       },

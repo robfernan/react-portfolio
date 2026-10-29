@@ -24,12 +24,48 @@ type Featured = {
   description: string;
   language?: string;
   updated?: string;
+  status?: string; // small badge, e.g. "Published", "Live", "In Progress"
   image: string;
   href?: string;
+  fullHref?: string; // optional secondary link to the full product (e.g. AviationPro on GitHub Pages)
 };
 
 /* Static, curated "Now Building" — no live GitHub fetch for now. */
 const NOW_BUILDING: Featured[] = [
+  {
+    name: "Sportsman's Quest",
+    description:
+      'A procedural 3D stalking sim on Whispering Pines — stay downwind, stay quiet, and walk the harvest back to the lodge. Wind & scent mechanics, a retriever with blood-tracking AI, kayak + stand traversal, cryptid encounters, and day/night hunts.',
+    language: 'Godot 4 · GDScript · Procedural Terrain',
+    status: 'Published',
+    updated: 'v1.0.0 · Built in under a day',
+    image: '/assets/projects/sportsmansquest.webp',
+    href: 'https://mungdaal321.itch.io/sportsman-quest',
+  },
+
+  {
+    name: 'AviationPro EFB',
+    description:
+      'Professional-grade electronic flight bag and mission-planning suite — route planning, CX-6 flight computer, live NOAA METAR/TAF decoding, dynamic weight & balance physics, and crosswind runway analysis. This is the tailored in-site preview; the full product ships across web, desktop, Android EFB, and Wear OS.',
+    language: 'Go · Wails · React · Capacitor',
+    status: 'Live',
+    updated: 'Tailored preview • Full app on GitHub Pages',
+    image: '/assets/projects/aviationpro.webp',
+    href: '/aviation',
+    fullHref: 'https://robfernan.github.io/AviationPro/',
+  },
+
+  {
+    name: 'Sony 2002 Website Recreation',
+    description:
+      'A faithful interactive recreation of the iconic early-2000s Sony promotional site — re-engineered in modern React and TypeScript with authentic layouts, period typography, and vintage web motion.',
+    language: 'React · TypeScript · Tailwind CSS',
+    status: 'In Progress',
+    updated: 'Active build',
+    image: '/assets/home/sony2002recreation.webp',
+    href: 'https://github.com/robfernan/sony2002-recreationsite',
+  },
+
   {
     name: 'ChronoGT Tachometer',
     description:
@@ -114,60 +150,53 @@ export default function PortfolioHome() {
             />
           </figure>
 
-          <div className="grid grid-cols-1 gap-8 border-b border-theme-accent/20 dark:border-theme-accent-dark pb-10 pt-8 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16">
+          <div className="grid grid-cols-1 gap-8 border-b border-theme-accent/20 dark:border-theme-accent-dark pb-10 pt-8 lg:grid-cols-[1.4fr_0.6fr] lg:gap-16">
             <div>
-              <div className="flex flex-wrap items-center gap-3 mb-4">
-                <p className="text-[11px] font-semibold tracking-[0.25em] uppercase text-theme-accent dark:text-theme-secondary-dark flex items-center gap-3 font-mono-tech">
-                  <span className="w-8 h-px bg-theme-accent dark:bg-theme-accent-dark" />
-                  Full-Stack Web Developer · Cross-Platform Engineer · Digital Artist · Pilot
-                </p>
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  Available for Roles &amp; Projects
-                </span>
-              </div>
+              <p className="mb-5 text-xs font-semibold tracking-[0.25em] uppercase text-theme-accent dark:text-theme-secondary-dark flex items-center gap-3 font-mono-tech">
+                <span className="w-8 h-px bg-theme-accent dark:bg-theme-accent-dark" />
+                Full-Stack Web Developer · Cross-Platform Engineer · Digital Artist · Pilot
+              </p>
 
               <h1 className="mb-5 text-4xl font-black leading-tight text-theme-primary dark:text-theme-secondary-dark sm:text-6xl font-display tracking-tight">
                 <TextScramble text="Robert Fernandez" />
               </h1>
 
-              <p className="max-w-3xl text-lg leading-relaxed text-theme-secondary dark:text-theme-secondary-dark sm:text-2xl font-light">
-                Full-stack web developer, systems programmer, and digital artist crafting{' '}
-                <span className="text-theme-primary dark:text-theme-primary-dark font-medium underline decoration-theme-accent/40 underline-offset-4">high-performance web &amp; cross-platform applications</span>{' '}
-                for modern browsers, desktop, mobile, Wear OS, embedded displays, and retro consoles — blending aviation precision with editorial design.
+              <p className="max-w-2xl text-lg leading-relaxed text-theme-secondary dark:text-theme-secondary-dark sm:text-xl font-light">
+                I build design-first software across the web, desktop, mobile, Wear OS, embedded displays, and retro consoles — blending aviation precision with editorial craft.
               </p>
 
+              <div className="mt-7 flex flex-wrap items-center gap-3">
+                <Link
+                  to="/works"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-theme-action dark:bg-theme-action-dark text-white font-semibold hover:opacity-90 transition-opacity focus-visible:ring-2 focus-visible:ring-theme-action"
+                >
+                  See the work
+                  <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </Link>
+                <a
+                  href="https://github.com/robfernan"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg border border-theme-accent/40 dark:border-theme-accent-dark text-theme-primary dark:text-theme-secondary-dark hover:bg-theme-accent/10 dark:hover:bg-theme-card-dark transition-colors font-medium focus-visible:ring-2 focus-visible:ring-theme-action"
+                >
+                  GitHub
+                </a>
+                <Link to="/resume" className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg border border-theme-accent/40 dark:border-theme-accent-dark text-theme-primary dark:text-theme-secondary-dark hover:bg-theme-accent/10 font-medium focus-visible:ring-2 focus-visible:ring-theme-action">
+                  Resume
+                </Link>
+              </div>
             </div>
 
-            <div className="flex flex-wrap content-start gap-3 lg:justify-end">
-              <Link
-                to="/works"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-theme-action dark:bg-theme-action-dark text-white font-semibold hover:opacity-90 transition-opacity"
-              >
-                See the work
-                <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </Link>
-              <a
-                href="https://github.com/robfernan"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg border border-theme-accent/40 dark:border-theme-accent-dark text-theme-primary dark:text-theme-secondary-dark hover:bg-theme-accent/10 dark:hover:bg-theme-card-dark transition-colors font-medium"
-              >
-                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.1 11.1 0 015.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.41-2.69 5.38-5.25 5.67.41.35.78 1.05.78 2.12 0 1.53-.01 2.76-.01 3.14 0 .31.21.68.8.56A11.51 11.51 0 0023.5 12C23.5 5.65 18.35.5 12 .5z" />
-                </svg>
-                GitHub
-              </a>
-              <Link to="/resume" className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg border border-theme-accent/40 dark:border-theme-accent-dark text-theme-primary dark:text-theme-secondary-dark hover:bg-theme-accent/10 font-medium">
-                Resume
-              </Link>
-              <div className="basis-full flex flex-wrap gap-2 pt-2 lg:justify-end">
-                {CAPABILITIES.map((c) => (
-                  <span key={c} className="text-xs font-medium px-3 py-1.5 rounded-full border border-theme-accent/30 dark:border-theme-accent-dark text-theme-secondary dark:text-theme-secondary-dark">{c}</span>
-                ))}
-              </div>
+            <div className="flex flex-col justify-center gap-3 lg:border-l lg:border-theme-accent/15 dark:lg:border-theme-accent-dark/40 lg:pl-8">
+              <span className="inline-flex items-center gap-2 self-start px-3 py-1.5 rounded-full text-[11px] font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                Available for roles &amp; projects
+              </span>
+              <p className="text-xs leading-relaxed text-theme-secondary dark:text-theme-secondary-dark font-mono-tech">
+                129+ flight hours · 4× Adobe Certified Pro · 5+ yrs shipping across web, desktop, mobile &amp; embedded.
+              </p>
             </div>
           </div>
 
@@ -223,10 +252,20 @@ export default function PortfolioHome() {
         {/* ======================= DISCIPLINES & PILLARS ======================= */}
         <section className="mb-16 sm:mb-24">
           <SectionHeading eyebrow="Disciplines &amp; Craft" title="The Three Pillars" />
+          <div className="mb-8 flex flex-wrap gap-2">
+            {CAPABILITIES.map((c) => (
+              <span key={c} className="text-xs font-medium px-3 py-1.5 rounded-full border border-theme-accent/30 dark:border-theme-accent-dark text-theme-secondary dark:text-theme-secondary-dark">{c}</span>
+            ))}
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="p-6 sm:p-8 rounded-2xl border border-theme-accent/25 dark:border-theme-accent-dark/40 bg-theme-card dark:bg-theme-card-dark transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-              <div className="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center font-bold text-lg mb-5 border border-purple-500/20">
-                🎨
+              <div className="w-10 h-10 rounded-xl bg-theme-accent/10 dark:bg-theme-card-dark text-theme-accent dark:text-theme-accent-dark flex items-center justify-center mb-5 border border-theme-accent/20 dark:border-theme-accent-dark/40">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.5-.9 1.5-1.6 0-.4-.2-.7-.4-1-.3-.4-.5-.8-.5-1.4 0-1 .8-1.7 1.8-1.7H16a5 5 0 0 0 5-5c0-3.9-4-7.3-9-7.3Z" />
+                  <circle cx="7.5" cy="12" r="1" fill="currentColor" stroke="none" />
+                  <circle cx="10" cy="8" r="1" fill="currentColor" stroke="none" />
+                  <circle cx="14.5" cy="8" r="1" fill="currentColor" stroke="none" />
+                </svg>
               </div>
               <h3 className="font-display text-xl font-bold mb-2 text-theme-primary dark:text-theme-primary-dark">Digital Art &amp; Design</h3>
               <p className="text-sm text-theme-secondary dark:text-theme-secondary-dark leading-relaxed mb-4">
@@ -240,8 +279,13 @@ export default function PortfolioHome() {
             </div>
 
             <div className="p-6 sm:p-8 rounded-2xl border border-theme-accent/25 dark:border-theme-accent-dark/40 bg-theme-card dark:bg-theme-card-dark transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-              <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold text-lg mb-5 border border-blue-500/20">
-                💻
+              <div className="w-10 h-10 rounded-xl bg-theme-accent/10 dark:bg-theme-card-dark text-theme-accent dark:text-theme-accent-dark flex items-center justify-center mb-5 border border-theme-accent/20 dark:border-theme-accent-dark/40">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <rect x="3" y="4" width="18" height="12" rx="1.5" />
+                  <path d="M2 20h20" />
+                  <path d="m9 8-2 2 2 2" />
+                  <path d="m15 8 2 2-2 2" />
+                </svg>
               </div>
               <h3 className="font-display text-xl font-bold mb-2 text-theme-primary dark:text-theme-primary-dark">Systems &amp; Native Code</h3>
               <p className="text-sm text-theme-secondary dark:text-theme-secondary-dark leading-relaxed mb-4">
@@ -255,8 +299,10 @@ export default function PortfolioHome() {
             </div>
 
             <div className="p-6 sm:p-8 rounded-2xl border border-theme-accent/25 dark:border-theme-accent-dark/40 bg-theme-card dark:bg-theme-card-dark transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-              <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold text-lg mb-5 border border-emerald-500/20">
-                ✈️
+              <div className="w-10 h-10 rounded-xl bg-theme-accent/10 dark:bg-theme-card-dark text-theme-accent dark:text-theme-accent-dark flex items-center justify-center mb-5 border border-theme-accent/20 dark:border-theme-accent-dark/40">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M17.8 19.2 16 13l3.5-3.5c1-1 1-2.5 0-3.4-.9-1-2.4-1-3.4 0L12.6 9.6 6.4 7.8a1 1 0 0 0-1 .3l-.7.7c-.4.4-.3 1 .1 1.3L9 12.5l-2 2H4.5a.8.8 0 0 0-.6 1.3l1.3 1.3 1.3 1.3a.8.8 0 0 0 1.3-.6V14l2-2 3.9 4.2c.3.4.9.5 1.3.1l.7-.7a1 1 0 0 0 .3-1Z" />
+                </svg>
               </div>
               <h3 className="font-display text-xl font-bold mb-2 text-theme-primary dark:text-theme-primary-dark">Aviation &amp; Telemetry</h3>
               <p className="text-sm text-theme-secondary dark:text-theme-secondary-dark leading-relaxed mb-4">
@@ -309,7 +355,7 @@ export default function PortfolioHome() {
                   </div>
                   <div className="p-6 sm:p-8 pb-3">
                     <div className="flex items-center justify-between mb-3">
-                      <span className="text-[10px] font-semibold uppercase tracking-wider text-theme-accent dark:text-theme-secondary-dark">In Progress</span>
+                      <span className="text-[10px] font-semibold uppercase tracking-wider text-theme-accent dark:text-theme-secondary-dark">{item.status || 'In Progress'}</span>
                       {item.updated && (
                         <span className="text-[10px] font-medium uppercase tracking-wider text-theme-secondary/70 dark:text-theme-secondary-dark">{item.updated}</span>
                       )}
@@ -343,12 +389,27 @@ export default function PortfolioHome() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1.5 text-xs font-medium text-theme-secondary hover:text-theme-primary dark:text-theme-secondary-dark dark:hover:text-theme-primary-dark transition-colors"
-                      title={`Open ${item.name} on GitHub`}
+                      title={`Open ${item.name}`}
                     >
-                      <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.1 11.1 0 015.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.41-2.69 5.38-5.25 5.67.41.35.78 1.05.78 2.12 0 1.53-.01 2.76-.01 3.14 0 .31.21.68.8.56A11.51 11.51 0 0023.5 12C23.5 5.65 18.35.5 12 .5z" />
-                      </svg>
-                      GitHub →
+                      {item.href.includes('itch.io') ? (
+                        <span className="itchio-logo !w-3.5 !h-3.5 inline-block flex-none" aria-hidden="true" />
+                      ) : (
+                        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                          <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.1 11.1 0 015.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.41-2.69 5.38-5.25 5.67.41.35.78 1.05.78 2.12 0 1.53-.01 2.76-.01 3.14 0 .31.21.68.8.56A11.51 11.51 0 0023.5 12C23.5 5.65 18.35.5 12 .5z" />
+                        </svg>
+                      )}
+                      {item.href.includes('github.com') ? 'GitHub' : item.href.includes('itch.io') ? 'Play now' : 'Visit'} →
+                    </a>
+                  )}
+                  {item.fullHref && (
+                    <a
+                      href={item.fullHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-theme-accent dark:text-theme-accent-dark hover:underline"
+                      title={`Open the full ${item.name} app`}
+                    >
+                      Full app →
                     </a>
                   )}
                 </div>
@@ -390,7 +451,12 @@ export default function PortfolioHome() {
             <p className="mt-4 text-sm leading-relaxed text-theme-secondary dark:text-theme-secondary-dark">{preview.description}</p>
             {preview.href?.startsWith('http') && (
               <a href={preview.href} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center gap-2 border border-theme-accent/40 rounded px-4 py-2 text-xs font-semibold text-theme-primary dark:border-theme-accent-dark dark:text-theme-secondary-dark hover:bg-theme-accent/10 transition-colors">
-                View repository →
+                {preview.href.includes('github.com') ? 'View repository' : preview.href.includes('itch.io') ? 'Play now in browser' : 'Visit'} →
+              </a>
+            )}
+            {preview.fullHref && (
+              <a href={preview.fullHref} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex items-center gap-2 border border-theme-accent/40 rounded px-4 py-2 text-xs font-semibold text-theme-primary dark:border-theme-accent-dark dark:text-theme-secondary-dark hover:bg-theme-accent/10 transition-colors">
+                Open the full app →
               </a>
             )}
             {(preview.href === '/aviation' || preview.href === '/aviationpro') && (
